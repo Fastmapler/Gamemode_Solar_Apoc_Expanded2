@@ -92,9 +92,9 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					{
 						%client.chatMessage("\c6Power sources can't import power!", 3);
 					}
-					else if (getWordCount(%col.cableLayerBuffer.ropeGroups) > $EOTW::MaxRopeCount)
+					else if (getWordCount(%col.ropeGroups) >= $EOTW::MaxRopeCount)
 					{
-						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::CableSizeLimit, 3);
+						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::MaxRopeCount, 3);
 					}
 					else
 					{
@@ -145,9 +145,9 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					{
 						%client.chatMessage("\c6Working machines can't export power!", 3);
 					}
-					else if (getWordCount(%col.cableLayerBuffer.ropeGroups) > $EOTW::MaxRopeCount)
+					else if (getWordCount(%col.ropeGroups) >= $EOTW::MaxRopeCount)
 					{
-						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::CableSizeLimit, 3);
+						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::MaxRopeCount, 3);
 					}
 					else
 					{

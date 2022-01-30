@@ -295,8 +295,37 @@ function SimGroup::RemoveCableData(%this)
 	if (%this.material !$= "")
 		$EOTW::Material[%this.bl_id, getField(%this.material, 0)] += getField(%this.material, 1);
 			
-	if (isObject(%this.cable))
-		%this.cable.delete();
+	if (isObject(%cable = %this.cable))
+	{
+		if (isObject(%source = %cable.powerSource))
+		{
+			%newGroupList = "";
+			for (%i = 0; %i < getWordCount(%source.ropeGroups); %i++)
+			{
+				%group = getWord(%source.ropeGroups, %i);
+				if (isObject(%group) && isObject(%group.cable) && %group.cable.getID() != %cable.getID())
+					%newGroupList = trim(%newGroupList SPC %group);
+			}
+
+			%source.ropeGroups = %newGroupList;
+		}
+
+		if (isObject(%target = %cable.powerTarget))
+		{
+			%newGroupList = "";
+			for (%i = 0; %i < getWordCount(%target.ropeGroups); %i++)
+			{
+				%group = getWord(%target.ropeGroups, %i);
+				if (isObject(%group) && isObject(%group.cable)  && %group.cable.getID() != %cable.getID())
+					%newGroupList = trim(%newGroupList SPC %group);
+			}
+
+			%target.ropeGroups = %newGroupList;
+		}
+
+		%cable.delete();
+	}
+		
 		
 	%this.delete();
 }
