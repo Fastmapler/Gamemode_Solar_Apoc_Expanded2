@@ -74,6 +74,9 @@ ADDON Bot_Horse
 ADDON Bot_Shark
 ADDON Bot_Zombie
 
+ADDON Gamemode_Solar_Apoc_Expanded2
+ADDON Server_ClayEval
+
 
 //music 
 MUSIC After_School_Special
