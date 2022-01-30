@@ -54,9 +54,9 @@ function ServerCmdInsert(%client, %amount, %material)
 	if (!isObject(%player = %client.player))
 		return;
 
-	%eye = %obj.getEyePoint();
-	%dir = %obj.getEyeVector();
-	%for = %obj.getForwardVector();
+	%eye = %player.getEyePoint();
+	%dir = %player.getEyeVector();
+	%for = %player.getForwardVector();
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
