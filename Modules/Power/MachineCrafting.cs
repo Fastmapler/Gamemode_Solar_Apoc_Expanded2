@@ -1,3 +1,5 @@
+//MachineCrafting.cs
+
 function SetupMatterCraftingData()
 {
 	if (isObject(MatterCraftingData))
