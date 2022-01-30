@@ -199,6 +199,20 @@ function fxDtsBrick::HasMatter(%obj, %matter, %amount, %type)
 	return false;
 }
 
+function fxDtsBrick::GetMatter(%obj, %matter, %type)
+{
+	%data = %obj.getDatablock();
+	for (%i = 0; %i < %data.matterSlots[%type]; %i++)
+	{
+		%matterData = %obj.matter[%type, %i];
+		
+		if (getWord(%matterData, 0) $= %matter)
+			return getWord(%matterData, 1);
+	}
+	
+	return 0;
+}
+
 function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpdate)
 {
 	%data = %obj.getDatablock();
@@ -235,7 +249,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 			
 			%obj.matter[%type, %i] = getWord(%matter, 0) TAB (getWord(%matter, 1) + %change);
 			
-			if (getWord(%obj.matter[%type, %i], 1) <= 0)
+			if (getWord(%obj.matter[%type, %i], 1) < 1)
 				%obj.matter[%type, %i] = "";
 			
 			if(%obj.getDatablock().matterUpdateFunc !$= "" && !%ignoreUpdate)

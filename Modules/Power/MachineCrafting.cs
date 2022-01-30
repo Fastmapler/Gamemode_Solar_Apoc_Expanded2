@@ -54,6 +54,12 @@ function ServerCmdInsert(%client, %amount, %material)
 	if (!isObject(%player = %client.player))
 		return;
 
+	if (%amount <= 0 || %material $= "")
+	{
+		%client.centerPrint("Usage: /Extract <amount> <material>");
+		return;
+	}
+
 	%eye = %player.getEyePoint();
 	%dir = %player.getEyeVector();
 	%for = %player.getForwardVector();
@@ -79,5 +85,44 @@ function ServerCmdInsert(%client, %amount, %material)
 		}
 		else
 			%client.chatMessage("This block has no compatible input slots.");
+	}
+}
+
+function ServerCmdExtract(%client, %amount, %material, %slot)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	if (%amount <= 0 || %material $= "" || %slot $= "")
+	{
+		%client.centerPrint("Usage: /Extract <amount> <material> <output/input/etc.>");
+		return;
+	}
+
+	%eye = %player.getEyePoint();
+	%dir = %player.getEyeVector();
+	%for = %player.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+	{
+		%data = %hit.getDatablock();
+		if (%data.matterSlots[%slot] > 0)
+		{
+			if (isObject(%matter = GetMatterType(%material)))
+			{
+				%change = getMin(%amount, %hit.GetMatter(%matter.name, %slot)) * -1;
+
+				%finalChange = %hit.changeMatter(%matter.name, %change, %slot) * -1;
+
+				%client.chatMessage("Extracted " @ %finalChange @ " units of " @ %matter.name @ ".");
+				$EOTW::Material[%client.bl_id, %matter.name] += %finalChange;
+			}
+			else
+				%client.chatMessage("Material type " @ %material @ " not found.");
+		}
+		else
+			%client.chatMessage("This brick has no " @ %slot @ " slot.");
 	}
 }
