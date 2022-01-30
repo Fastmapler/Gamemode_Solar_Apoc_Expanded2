@@ -1,3 +1,7 @@
+$EOTW::CableSizeLimit = 16;
+$EOTW::MaxRopeCount = 4;
+$EOTW::CableCostMulti = 1;
+
 datablock itemData(CableLayerItem)
 {
 	uiName = "Cable Layer";
@@ -88,9 +92,13 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					{
 						%client.chatMessage("\c6Power sources can't import power!", 3);
 					}
+					else if (getWordCount(%col.cableLayerBuffer.ropeGroups) > $EOTW::MaxRopeCount)
+					{
+						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::CableSizeLimit, 3);
+					}
 					else
 					{
-						%cost = mCeil(vectorDist(%obj.cableLayerBuffer.getPosition(), %col.getPosition()));
+						%cost = mCeil(vectorDist(%obj.cableLayerBuffer.getPosition(), %col.getPosition()) * $EOTW::CableCostMulti);
 						%cableType = getMatterType(%client.CableLayerMat);
 						%matInv = ($EOTW::Material[%client.bl_id, %cableType.name] + 0);
 						
@@ -109,7 +117,11 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 							}
 						}
 						
-						if (%matInv >= %cost)
+						if (%cost > $EOTW::CableSizeLimit)
+						{
+							%client.chatMessage("\c6Cable is too long! Max Cost: " @ $EOTW::CableSizeLimit, 3);
+						}
+						else if (%matInv >= %cost)
 						{
 							$EOTW::Material[%client.bl_id, %cableType.name] -= %cost;
 							
@@ -132,6 +144,10 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					if (%col.getDatablock().energyGroup $= "Machine")
 					{
 						%client.chatMessage("\c6Working machines can't export power!", 3);
+					}
+					else if (getWordCount(%col.cableLayerBuffer.ropeGroups) > $EOTW::MaxRopeCount)
+					{
+						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::CableSizeLimit, 3);
 					}
 					else
 					{
@@ -209,7 +225,7 @@ function Player::CableLayerMessage(%obj)
 				}
 				else
 				{
-					%cost = mCeil(vectorDist(%obj.cableLayerBuffer.getPosition(), %col.getPosition()));
+					%cost = mCeil(vectorDist(%obj.cableLayerBuffer.getPosition(), %col.getPosition()) * $EOTW::CableCostMulti);
 					
 					if (%cost > $EOTW::Material[%client.bl_id, %cableType.name])
 						%matInv = "\c0" @ %matInv;
