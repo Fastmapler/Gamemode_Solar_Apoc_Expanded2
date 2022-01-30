@@ -90,7 +90,7 @@ function GameConnection::PrintEOTWInfo(%client)
 function GetRandomSpawnLocation(%initPos, %failCount)
 {
 	if (%initPos !$= "")
-		%eye = (getField(%initPos,0) + getRandom(-32, 32) / 2 + 0.25) SPC (getField(%initPos,1) + getRandom(-32, 32) / 2 + 0.25) SPC 512; //getRandom(0, 1664)
+		%eye = (getField(%initPos,0) + getRandom(-32, 32) / 2 + 0.25) SPC (getField(%initPos,1) + getRandom(-32, 32) / 2 + 0.25) SPC 500; //getRandom(0, 1664)
 	else
 		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 1) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 1) SPC 512;
 	%dir = "0 0 -1";
@@ -99,7 +99,7 @@ function GetRandomSpawnLocation(%initPos, %failCount)
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 512)), %mask, %this);
 	
-	if (getWord(%ray,3) < 55 && %failCount < 100)
+	if (getWord(%ray,3) < 55 && %failCount < 500)
 		return GetRandomSpawnLocation(%initPos, %failCount + 1); //Try again lol
 		
 	%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
