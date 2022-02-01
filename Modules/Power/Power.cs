@@ -33,10 +33,25 @@ function PowerMasterLoop()
 			%cable.doPowerTransferFull();
 		}
 	}
-	
+
 	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
 	if (isObject(PowerGroupCablePower))
 		PowerGroupCablePower.Shuffle();
+
+	if (isObject(PowerGroupPipeMatter))
+	for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i++)
+	{
+		%cable = PowerGroupPipeMatter.getObject(%i);
+		if (getSimTime() - %cable.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
+		{
+			%cable.lastEnergyUpdate = getSimTime();
+			%cable.doMatterTransferFull();
+		}
+	}
+	
+	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
+	if (isObject(PowerGroupPipeMatter))
+		PowerGroupPipeMatter.Shuffle();
 	
 	//Move matter using matter pipes
 	if (isObject(PowerGroupPipeMatter))
@@ -71,33 +86,6 @@ function PowerMasterLoop()
 }
 schedule(10, 0, "PowerMasterLoop");
 
-function SimObject::doPowerTransferBuffer(%obj)
-{
-	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
-	{
-		%obj.delete();
-		return;
-	}
-		
-		
-	%obj.transferAmount = getMin(%obj.powerSource.energy, %obj.powerTransfer);
-	%obj.transferAmount = getMin(%obj.transferAmount, %obj.powerTarget.getDatablock().energyMaxBuffer);
-}
-
-function SimObject::doPowerTransfer(%obj)
-{
-	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
-	{
-		%obj.delete();
-		return;
-	}
-	
-	%obj.transferAmount = getMin(%obj.transferAmount, %obj.powerTarget.getDatablock().energyMaxBuffer - %obj.powerTarget.energy);
-	%obj.powerSource.energy -= %obj.transferAmount;
-	%obj.powerTarget.energy += %obj.transferAmount;
-	%obj.transferAmount = 0;
-}
-
 function SimObject::doPowerTransferFull(%obj)
 {
 	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
@@ -120,6 +108,52 @@ function SimObject::doPowerTransferFull(%obj)
 		%obj.energy += %transferAmount;
 	}
 }
+
+function SimObject::doMatterTransferFull(%obj)
+{
+	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
+	{
+		%obj.delete();
+		return;
+	}
+	
+	if (%obj.buffer !$= "")
+	{
+		%typelist = "Input" TAB "Buffer";
+		for (%j = 0; %j < getFieldCount(%typelist); %i++)
+		{
+			%type = getField(%typelist, %j);
+			%change = %obj.powerTarget.ChangeMatter(getField(%obj.buffer, 0), getField(%obj.buffer, 1), %type);
+			%obj.buffer = getField(%obj.buffer, 0) TAB (getField(%obj.buffer, 1) - %totalChange);
+
+			if (getField(%obj.buffer, 1) <= 0)
+			{
+				%obj.buffer = "";
+				break;
+			}
+		}
+	}
+
+	%data = %obj.powerSource.getDatablock();
+
+	%typelist = "Buffer" TAB "Output";
+	for (%j = 0; %j < getFieldCount(%typelist); %i++)
+	{
+		%type = getField(%typelist, %j);
+		for (%i = 0; %i < %data.matterSlots[%type]; %i++)
+		{
+			%matterData = %obj.powerSource.matter[%type, %i];
+			if (getField(%matterData, 0) !$= "" && (getField(%matterData, 0) $= getField(%obj.buffer, 0) || getField(%obj.buffer, 0) $= "")
+			{
+				%transferAmount = getMin(%obj.powerTransfer - getField(%obj.buffer, 1), getField(%matterData, 1));
+				%totalChange = %obj.powerSource.ChangeMatter(getField(%matterData, 0), %transferAmount * -1, %type);
+				%obj.buffer = getField(%matterData, 0) TAB (getField(%obj.buffer, 1) - %totalChange);
+				break;
+			}
+		}
+	}
+}
+
 
 package EOTWPower
 {
@@ -152,6 +186,11 @@ package EOTWPower
 	
 	function CreateTransferRope(%source, %target, %rate, %material, %amt, %type)
 	{
+		if (!isObject(PowerGroupCablePower))
+			new SimSet(PowerGroupCablePower);
+		if (!isObject(PowerGroupPipeMatter))
+			new SimSet(PowerGroupPipeMatter);
+
 		%cable = new SimObject();
 		
 		%cable.powerSource = %source;
@@ -159,8 +198,22 @@ package EOTWPower
 		%cable.powerTransfer = %rate;
 		
 		%color = getColorFromHex(getMatterType(%material).color);
-		%diameter = 0.1;
-		%slack = getRandom(25, 50) * 0.01;
+
+		switch$(%type)
+		{
+				case "Power":
+					%diameter = 0.1;
+					%slack = 0.25;
+					%offset = 0;
+					PowerGroupCablePower.add(%cable);
+				case "Matter":
+					%diameter = 0.2;
+					%slack = 0;
+					%offset = -0.9;
+					PowerGroupPipeMatter.add(%cable);
+				default:
+					return;
+		}
 		
 		%creationData = %source SPC %target SPC %color SPC %diameter SPC %slack;
 
@@ -168,18 +221,17 @@ package EOTWPower
 
 		%group = _getRopeGroup(getSimTime(), %source.getGroup().bl_id, %creationData);
 
-		createRope(%source.getPosition(), %target.getPosition(), %color, %diameter, %slack, %group);
+		%offsetSource = (%source.getDatablock().brickSizeZ / 12) * %offset;
+		%offsetTarget = (%source.getDatablock().brickSizeZ / 12) * %offset;
+		createRope(vectorAdd(%source.getPosition(), "0 0 " @ %offsetSource), vectorAdd(%target.getPosition(), "0 0 " @ %offsetTarget), %color, %diameter, %slack, %group);
 		
 		%group.material = %material TAB %amt;
 		%group.cable = %cable;
 
 		%source.ropeGroups = trim(%source.ropeGroups SPC %group);
 		%target.ropeGroups = trim(%target.ropeGroups SPC %group);
-		
-		if (!isObject(PowerGroupCablePower))
-			new SimSet(PowerGroupCablePower);
-				
-		PowerGroupCablePower.add(%cable);
+
+		return %cable;
 	}
 };
 activatePackage("EOTWPower");
@@ -192,7 +244,7 @@ function fxDtsBrick::HasMatter(%obj, %matter, %amount, %type)
 	{
 		%matterData = %obj.matter[%type, %i];
 		
-		if (getWord(%matterData, 0) $= %matter && getWord(%matterData, 1) >= %amount)
+		if (getField(%matterData, 0) $= %matter && getField(%matterData, 1) >= %amount)
 			return true;
 	}
 	
@@ -206,8 +258,8 @@ function fxDtsBrick::GetMatter(%obj, %matter, %type)
 	{
 		%matterData = %obj.matter[%type, %i];
 		
-		if (getWord(%matterData, 0) $= %matter)
-			return getWord(%matterData, 1);
+		if (getField(%matterData, 0) $= %matter)
+			return getField(%matterData, 1);
 	}
 	
 	return 0;
@@ -237,19 +289,19 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 	{
 		%matter = %obj.matter[%type, %i];
 		
-		if (getWord(%matter, 0) $= %matterName)
+		if (getField(%matter, 0) $= %matterName)
 		{
-			%testAmount = getWord(%matter, 1) + %amount;
+			%testAmount = getField(%matter, 1) + %amount;
 			%change = %amount;
 			
 			if (%testAmount > %data.matterMaxBuffer)
-				%change = %data.matterMaxBuffer - getWord(%matter, 1);
+				%change = %data.matterMaxBuffer - getField(%matter, 1);
 			else if (%testAmount < 0)
-				%change = getWord(%matter, 1) * -1;
+				%change = getField(%matter, 1) * -1;
 			
-			%obj.matter[%type, %i] = getWord(%matter, 0) TAB (getWord(%matter, 1) + %change);
+			%obj.matter[%type, %i] = getField(%matter, 0) TAB (getField(%matter, 1) + %change);
 			
-			if (getWord(%obj.matter[%type, %i], 1) < 1)
+			if (getField(%obj.matter[%type, %i], 1) < 1)
 				%obj.matter[%type, %i] = "";
 			
 			if(%obj.getDatablock().matterUpdateFunc !$= "" && !%ignoreUpdate)
@@ -268,7 +320,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 	{
 		%matter = %obj.matter[%type, %i];
 		
-		if (getWord(%matter, 0) $= "")
+		if (getField(%matter, 0) $= "")
 		{
 			%change = %amount > %data.matterMaxBuffer ? %data.matterMaxBuffer : %amount;
 			%obj.matter[%type, %i] = %matterName TAB %change;
