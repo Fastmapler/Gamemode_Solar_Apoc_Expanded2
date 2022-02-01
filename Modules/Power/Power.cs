@@ -120,11 +120,11 @@ function SimObject::doMatterTransferFull(%obj)
 	if (%obj.buffer !$= "")
 	{
 		%typelist = "Input" TAB "Buffer";
-		for (%j = 0; %j < getFieldCount(%typelist); %i++)
+		for (%j = 0; %j < getFieldCount(%typelist); %j++)
 		{
 			%type = getField(%typelist, %j);
 			%change = %obj.powerTarget.ChangeMatter(getField(%obj.buffer, 0), getField(%obj.buffer, 1), %type);
-			%obj.buffer = getField(%obj.buffer, 0) TAB (getField(%obj.buffer, 1) - %totalChange);
+			%obj.buffer = getField(%obj.buffer, 0) TAB (getField(%obj.buffer, 1) - %change);
 
 			if (getField(%obj.buffer, 1) <= 0)
 			{
@@ -137,13 +137,13 @@ function SimObject::doMatterTransferFull(%obj)
 	%data = %obj.powerSource.getDatablock();
 
 	%typelist = "Buffer" TAB "Output";
-	for (%j = 0; %j < getFieldCount(%typelist); %i++)
+	for (%j = 0; %j < getFieldCount(%typelist); %j++)
 	{
 		%type = getField(%typelist, %j);
 		for (%i = 0; %i < %data.matterSlots[%type]; %i++)
 		{
 			%matterData = %obj.powerSource.matter[%type, %i];
-			if (getField(%matterData, 0) !$= "" && (getField(%matterData, 0) $= getField(%obj.buffer, 0) || getField(%obj.buffer, 0) $= "")
+			if (getField(%matterData, 0) !$= "" && (getField(%matterData, 0) $= getField(%obj.buffer, 0) || getField(%obj.buffer, 0) $= ""))
 			{
 				%transferAmount = getMin(%obj.powerTransfer - getField(%obj.buffer, 1), getField(%matterData, 1));
 				%totalChange = %obj.powerSource.ChangeMatter(getField(%matterData, 0), %transferAmount * -1, %type);
@@ -197,6 +197,7 @@ package EOTWPower
 		%cable.powerTarget = %target;
 		%cable.powerTransfer = %rate;
 		
+		%rate = mCeil(%rate);
 		%color = getColorFromHex(getMatterType(%material).color);
 
 		switch$(%type)

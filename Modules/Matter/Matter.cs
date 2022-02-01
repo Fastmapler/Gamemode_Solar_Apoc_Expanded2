@@ -19,15 +19,15 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Vines";		color="226027ff";	tier=2;	spawnWeight=050;	spawnVeinSize=2;	spawnValue=16;	collectTime=1500;	 };
 		//Basic Gatherable Materials
 		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	tier=3;	spawnWeight=100;	spawnVeinSize=4;	spawnValue=32;	collectTime=13000;	cableTransfer=1024;	 };
-		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	pipeTransfer=128;	 };
+		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	pipeTransfer=16;	 };
 		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=48;	collectTime=15000;	 };
 		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	tier=4;	spawnWeight=030;	spawnVeinSize=3;	spawnValue=56;	collectTime=20000;	 };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	tier=4;	spawnWeight=010;	spawnVeinSize=2;	spawnValue=8;	collectTime=22000;	 };
 		//Alloys
 		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff";	tier=5;	cableTransfer=4096;	};
 		new ScriptObject(MatterType) { name="Energium";		color="d69c6bff";	tier=6;	cableTransfer=16384;};
-		new ScriptObject(MatterType) { name="Rosium";		color="ca959eff";	tier=5;	pipeTransfer=512;	};
-		new ScriptObject(MatterType) { name="Naturum";		color="83bc8cff";	tier=6;	pipeTransfer=2048;	};
+		new ScriptObject(MatterType) { name="Rosium";		color="ca959eff";	tier=5;	pipeTransfer=64;	};
+		new ScriptObject(MatterType) { name="Naturum";		color="83bc8cff";	tier=6;	pipeTransfer=256;	};
 		new ScriptObject(MatterType) { name="Steel";		color="2f2d2fff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Addy Base";	color="561f1cff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Adamantine";	color="bf1f21ff";	tier=6;	};
