@@ -1,6 +1,6 @@
 datablock fxDTSBrickData(brickEOTWMatterReactorData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/MatterReactor.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Matter Reactor";
@@ -21,7 +21,7 @@ $EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 3
 
 datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/MatterReactor.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Alloy Forge";
@@ -42,7 +42,7 @@ $EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 
 
 datablock fxDTSBrickData(brickEOTWRefineryData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/MatterReactor.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Refinery";
@@ -63,7 +63,7 @@ $EOTW::CustomBrickCost["brickEOTWRefineryData"] = 1.00 TAB "7a7a7aff" TAB 384 TA
 
 datablock fxDTSBrickData(brickEOTWSeperatorData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/MatterReactor.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Seperator";

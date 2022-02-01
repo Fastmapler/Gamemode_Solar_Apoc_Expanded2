@@ -1,0 +1,19 @@
+Export Properties:
+  Scale: 1
+  Floating point precision: 0.000001
+Exporting selected objects to BLB.
+  Found 1 object.
+Processing definition objects.
+  [WARNING:IOBLBW007] No brick bounds definition found. Calculated brick size may be undesirable.
+  [WARNING:IOBLBW002] Brick name was supposed to be in the bounds definition object but no such object exists, file name used instead.
+  Calculated brick size: 2 wide 2 deep and 2 bricks tall
+  [WARNING:IOBLBW004] No brick grid definitions found. Full cuboid brick grid may be undesirable.
+  No custom collision definitions found.
+  Using bounds as the collision cuboid.
+Processing meshes.
+  Exporting object: Cube
+    [WARNING:IOBLBW011] 4 triangles converted to quads.
+    [WARNING:IOBLBW012] 6 n-gons skipped.
+  Brick quads: 29
+Writing to file.
+  Output file: C:\Users\AidanTM\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2\Modules\Power\Bricks\MatterReactor.blb
