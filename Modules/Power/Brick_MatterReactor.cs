@@ -42,7 +42,7 @@ $EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 
 
 datablock fxDTSBrickData(brickEOTWRefineryData)
 {
-	brickFile = "./Bricks/MatterReactor.blb";
+	brickFile = "./Bricks/Refinery.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Refinery";
@@ -63,7 +63,7 @@ $EOTW::CustomBrickCost["brickEOTWRefineryData"] = 1.00 TAB "7a7a7aff" TAB 384 TA
 
 datablock fxDTSBrickData(brickEOTWSeperatorData)
 {
-	brickFile = "./Bricks/MatterReactor.blb";
+	brickFile = "./Bricks/Seperator.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Seperator";
