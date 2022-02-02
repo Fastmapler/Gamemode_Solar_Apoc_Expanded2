@@ -1,9 +1,10 @@
 $EOTW::PowerTickRate = 20;
 
 exec("./MachineCrafting.cs");
-exec("./Brick_Debug.cs");
+exec("./Brick_Generators.cs");
 exec("./Brick_Capacitors.cs");
 exec("./Brick_MatterReactor.cs");
+exec("./Brick_Debug.cs");
 
 function PowerMasterLoop()
 {
@@ -154,6 +155,43 @@ function SimObject::doMatterTransferFull(%obj)
 			}
 		}
 	}
+}
+
+function fxDtsBrick::ChangePower(%obj, %change)
+{
+	%data = %obj.getDatablock();
+
+	if ((%maxEnergy = %data.energyMaxBuffer) <= 0)
+		return 0;
+
+	if (%change > 0)
+	{
+		%totalChange = getMin(%change, %maxEnergy - %change);
+		%obj.energy += %totalChange;
+		return %totalChange;
+	}
+	else if (%change < 0)
+	{
+		if ((%change * -1) > %obj.energy)
+			%totalChange = %obj.energy * -1;
+		else
+			%totalChange = %change;
+
+		%obj.energy += %totalChange;
+		return %totalChange;
+	}
+
+	return;
+}
+
+function fxDtsBrick::SetPower(%obj, %value)
+{
+	%obj.energy = mClamp(%value, 0, %obj.getDatablock().energyMaxBuffer);
+}
+
+function fxDtsBrick::GetPower(%obj)
+{
+	return %obj.energy;
 }
 
 
