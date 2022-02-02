@@ -7,54 +7,54 @@ datablock fxDTSBrickData(brickEOTWMicroCapacitorData)
 	subCategory = "Power Storage";
 	uiName = "Micro Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 20000;
+	energyMaxBuffer = 16000;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
-	//iconName = "./Bricks/Icon_MicroCapacitor";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWMicroCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 16 TAB "Silver" TAB 32 TAB "Copper";
 
-datablock fxDTSBrickData(brickEOTWBasicCapacitorData)
+datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Storage";
 	uiName = "Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 250000;
+	energyMaxBuffer = 64000;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
-	//iconName = "./Bricks/Icon_Capacitor";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor1";
 };
-$EOTW::CustomBrickCost["brickEOTWBasicCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWCapacitor1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Copper";
 
-datablock fxDTSBrickData(brickEOTWDoubleCapacitorData)
-{
-	brickFile = "./Bricks/Capacitor.blb";
-	category = "Solar Apoc";
-	subCategory = "Power Storage";
-	uiName = "Dual Capacitor";
-	energyGroup = "Storage";
-	energyMaxBuffer = 500000;
-	loopFunc = "";
-    inspectFunc = "EOTW_DefaultInspectLoop";
-	//iconName = "./Bricks/Icon_Capacitor";
-};
-$EOTW::CustomBrickCost["brickEOTWDoubleCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Electrum";
-
-datablock fxDTSBrickData(brickEOTWQuadCapacitorData)
+datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Storage";
 	uiName = "Quad Capacitor";
 	energyGroup = "Storage";
+	energyMaxBuffer = 256000;
+	loopFunc = "";
+    inspectFunc = "EOTW_DefaultInspectLoop";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor2";
+};
+$EOTW::CustomBrickCost["brickEOTWCapacitor2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Electrum";
+
+datablock fxDTSBrickData(brickEOTWCapacitor3Data)
+{
+	brickFile = "./Bricks/Capacitor.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Storage";
+	uiName = "Quad-Quad Capacitor";
+	energyGroup = "Storage";
 	energyMaxBuffer = 999999;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
-	//iconName = "./Bricks/Icon_Capacitor";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor3";
 };
-$EOTW::CustomBrickCost["brickEOTWQuadCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Plastic" TAB 64 TAB "Energium";
+$EOTW::CustomBrickCost["brickEOTWCapacitor3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Iron" TAB 128 TAB "Plastic" TAB 64 TAB "Energium";
 
 function Player::EOTW_DefaultInspectLoop(%player, %brick)
 {
@@ -72,7 +72,7 @@ function Player::EOTW_DefaultInspectLoop(%player, %brick)
 	%data = %brick.getDatablock();
 	%printText = "<color:ffffff>";
 
-    %printText = %printText @ (%brick.energy + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+    %printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
 
 	%client.centerPrint(%printText, 1);
 	

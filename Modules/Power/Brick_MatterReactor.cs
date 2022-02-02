@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Matter Reactor";
-	//iconName = "./Bricks/Icon_Generator";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
 	
 	energyGroup = "Machine";
 	energyMaxBuffer = 12800;
@@ -25,7 +25,7 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Alloy Forge";
-	//iconName = "./Bricks/Icon_Generator";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/AlloyForge";
 	
 	energyGroup = "Machine";
 	energyMaxBuffer = 12800;
@@ -46,7 +46,7 @@ datablock fxDTSBrickData(brickEOTWRefineryData)
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Refinery";
-	//iconName = "./Bricks/Icon_Generator";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Refinery";
 	
 	energyGroup = "Machine";
 	energyMaxBuffer = 12800;
@@ -67,7 +67,7 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Seperator";
-	//iconName = "./Bricks/Icon_Generator";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Seperator";
 	
 	energyGroup = "Machine";
 	energyMaxBuffer = 12800;
@@ -108,9 +108,9 @@ function Player::EOTW_MatterReactorInspectLoop(%player, %brick)
 	}
 
 	if (isObject(%craft = %brick.craftingProcess))
-		%printText = %printText @ (%brick.energy + 0) @ " EU (" @ mFloor((%brick.craftingPower / %craft.energyCost * 100)) @ "\%)\n";
+		%printText = %printText @ (%brick.getPower() + 0) @ " EU (" @ mFloor((%brick.craftingPower / %craft.energyCost * 100)) @ "\%)\n";
 	else
-		%printText = %printText @ (%brick.energy + 0) @ " EU\n";
+		%printText = %printText @ (%brick.getPower() + 0) @ " EU\n";
 
 	for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
 	{
@@ -134,7 +134,9 @@ function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
 	
 	%data = %obj.getDatablock();
 	
-	%obj.craftingPower += mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.energy);
+	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
+	%obj.craftingPower += %change;
+	%obj.changePower(%change * -1);
 	
 	if (%obj.craftingPower >= %obj.craftingProcess.energyCost)
 	{

@@ -1,6 +1,6 @@
 //Can we just find the folder names automatically?
-$EOTW::Modules = "Core Environment Fauna Matter Player Power Tools Weapons";
-
+$EOTW::Modules = "Core Fauna Matter Player Power Tools Weapons";
+//"Core Environment Fauna Matter Player Power Tools Weapons"
 for (%i = 0; %i < getWordCount($EOTW::Modules); %i++)
 	exec("./Modules/" @ getWord($EOTW::Modules, %i) @ "/" @ getWord($EOTW::Modules, %i) @ ".cs");
 
