@@ -93,6 +93,7 @@ function SimObject::doPowerTransferFull(%obj)
 		%obj.delete();
 		return;
 	}
+	%obj.powerTransfer = mCeil(%obj.powerTransfer);
 	
 	if (%obj.energy > 0)
 	{
@@ -116,6 +117,7 @@ function SimObject::doMatterTransferFull(%obj)
 		%obj.delete();
 		return;
 	}
+	%obj.powerTransfer = mCeil(%obj.powerTransfer);
 	
 	if (%obj.buffer !$= "")
 	{
@@ -196,8 +198,7 @@ package EOTWPower
 		%cable.powerSource = %source;
 		%cable.powerTarget = %target;
 		%cable.powerTransfer = %rate;
-		
-		%rate = mCeil(%rate);
+
 		%color = getColorFromHex(getMatterType(%material).color);
 
 		switch$(%type)
