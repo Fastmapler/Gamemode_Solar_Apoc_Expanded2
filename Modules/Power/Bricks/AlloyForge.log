@@ -5,14 +5,15 @@ Exporting selected objects to BLB.
   Found 1 object.
 Processing definition objects.
   [WARNING:IOBLBW007] No brick bounds definition found. Calculated brick size may be undesirable.
+  [WARNING:IOBLBW000] Calculated bounds have a non-integer size 4.000002 4.000002 12.00000, rounding up.
   [WARNING:IOBLBW002] Brick name was supposed to be in the bounds definition object but no such object exists, file name used instead.
-  Calculated brick size: 4 wide 4 deep and 4 bricks tall
+  Calculated brick size: 5 wide 5 deep and 4 bricks tall
   [WARNING:IOBLBW004] No brick grid definitions found. Full cuboid brick grid may be undesirable.
   No custom collision definitions found.
   Using bounds as the collision cuboid.
 Processing meshes.
   Exporting object: Cube
-    [WARNING:IOBLBW011] 78 triangles converted to quads.
-  Brick quads: 78
+    [WARNING:IOBLBW011] 136 triangles converted to quads.
+  Brick quads: 136
 Writing to file.
-  Output file: C:\Users\AidanTM\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2\Modules\Power\Bricks\MatterReactor.blb
+  Output file: C:\Users\AidanTM\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2\Modules\Power\Bricks\AlloyForge.blb

@@ -21,7 +21,7 @@ $EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 3
 
 datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 {
-	brickFile = "./Bricks/MatterReactor.blb";
+	brickFile = "./Bricks/AlloyForge.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Processing";
 	uiName = "Alloy Forge";
