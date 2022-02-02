@@ -1,6 +1,6 @@
 datablock fxDTSBrickData(brickEOTWDebugGeneratorData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/SolarPanel.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Source";
 	uiName = "Debug Generator";
