@@ -94,7 +94,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					}
 					else if (getWordCount(%col.ropeGroups) >= $EOTW::MaxRopeCount)
 					{
-						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::MaxRopeCount, 3);
+						%client.chatMessage("\c6Too many connected ropes! Max ropes: " @ $EOTW::MaxRopeCount, 3);
 					}
 					else
 					{
@@ -147,7 +147,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					}
 					else if (getWordCount(%col.ropeGroups) >= $EOTW::MaxRopeCount)
 					{
-						%client.chatMessage("\c6Too many connected cables! Max cables: " @ $EOTW::MaxRopeCount, 3);
+						%client.chatMessage("\c6Too many connected ropes! Max ropes: " @ $EOTW::MaxRopeCount, 3);
 					}
 					else
 					{
