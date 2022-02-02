@@ -207,7 +207,7 @@ function Player::PipeLayerMessage(%obj)
 		
 	if (isObject(%obj.PipeLayerBuffer))
 	{
-		%source = %obj.PipeLayerBuffer.getDatablock().uiName SPC "(" @ %obj.PipeLayerBuffer.energy @ "/" @ %obj.PipeLayerBuffer.getDatablock().energyMaxBuffer @ ")";
+		%source = %obj.PipeLayerBuffer.getDatablock().uiName;
 		%cost = "--";
 		if (isObject(%col) && (%col.getType() & $TypeMasks::FxBrickObjectType))
 		{
@@ -226,7 +226,7 @@ function Player::PipeLayerMessage(%obj)
 					else
 						%matInv = "\c6" @ %matInv;
 					
-					%target = "\c6" @ %col.getDatablock().uiName SPC "(" @ %col.energy @ "/" @ %col.getDatablock().energyMaxBuffer @ ")";
+					%target = "\c6" @ %col.getDatablock().uiName;
 				}
 			}
 			else
@@ -242,7 +242,7 @@ function Player::PipeLayerMessage(%obj)
 		{
 			if (%col.getDatablock().energyGroup !$= "")
 			{
-				%source = "\c6" @ %col.getDatablock().uiName SPC "(" @ %col.energy @ "/" @ %col.getDatablock().energyMaxBuffer @ ")";
+				%source = "\c6" @ %col.getDatablock().uiName;
 			}
 			else
 				%source = "\c0" @ %col.getDatablock().uiName;
@@ -262,7 +262,7 @@ function Player::PipeLayerMessage(%obj)
 			%source = "--";
 	}
 			
-	%client.centerPrint("<just:left>\c6Source: " @ %source @ "<br>\c6Target: " @ %target @ "<br>\c6Material: " @ %matInv @ "\c6/" @ %cost @ " <color:" @ %PipeType.color @ ">" @ %PipeType.name @ "\c6 (" @ %PipeType.PipeTransfer @ "W)", 1);
+	%client.centerPrint("<just:left>\c6Source: " @ %source @ "<br>\c6Target: " @ %target @ "<br>\c6Material: " @ %matInv @ "\c6/" @ %cost @ " <color:" @ %PipeType.color @ ">" @ %PipeType.name @ "\c6 (" @ %PipeType.PipeTransfer @ "u/S)", 1);
 		
 	%obj.PipeLayerMessageLoop = %obj.schedule(100, "PipeLayerMessage");
 }
@@ -279,7 +279,7 @@ package Tool_PipeLayer
 				{
 					case "Lead": %client.PipeLayerMat = "Rosium";
 					case "Rosium": %client.PipeLayerMat = "Naturum";
-					case "Naturum": %client.PipeLayerMat = "Copper";
+					case "Naturum": %client.PipeLayerMat = "Lead";
 					default: %client.PipeLayerMat = "Lead";
 				}
 			}
