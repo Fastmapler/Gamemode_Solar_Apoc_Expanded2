@@ -16,7 +16,7 @@ $EOTW::CustomBrickCost["brickEOTWMicroCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 
 
 datablock fxDTSBrickData(brickEOTWBasicCapacitorData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Storage";
 	uiName = "Capacitor";
@@ -30,7 +30,7 @@ $EOTW::CustomBrickCost["brickEOTWBasicCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 
 
 datablock fxDTSBrickData(brickEOTWDoubleCapacitorData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Storage";
 	uiName = "Dual Capacitor";
@@ -44,7 +44,7 @@ $EOTW::CustomBrickCost["brickEOTWDoubleCapacitorData"] = 1.00 TAB "7a7a7aff" TAB
 
 datablock fxDTSBrickData(brickEOTWQuadCapacitorData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Storage";
 	uiName = "Quad Capacitor";
@@ -72,7 +72,7 @@ function Player::EOTW_CapacitorInspectLoop(%player, %brick)
 	%data = %brick.getDatablock();
 	%printText = "<color:ffffff>";
 
-    %printText = %printText @ (%brick.energy + 0) @ " EU\n";
+    %printText = %printText @ (%brick.energy + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
 
 	%client.centerPrint(%printText, 1);
 	
