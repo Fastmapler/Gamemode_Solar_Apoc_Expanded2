@@ -3,7 +3,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 	brickFile = "./Bricks/SolarPanel.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Source";
-	uiName = "Debug Generator";
+	uiName = "Solar Panel";
 	energyGroup = "Source";
 	energyMaxBuffer = 1600;
 	loopFunc = "EOTW_SolarPanelLoop";
