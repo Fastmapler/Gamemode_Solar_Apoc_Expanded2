@@ -158,7 +158,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 		{
 			if (isObject(%col.getGroup()) && %col.getGroup().material !$= "")
 			{
-				%col.getGroup().RemovePipeData();
+				%col.getGroup().RemoveCableData();
 				%client.chatMessage("\c6Pipe sucessfully removed.", 1);
 			}
 		}
