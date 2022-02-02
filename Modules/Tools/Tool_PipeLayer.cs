@@ -138,7 +138,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 			}
 			else
 			{
-				else if (%col.getDatablock().matterSlots["Buffer"] <= 0 && %col.getDatablock().matterSlots["Output"] <= 0)
+				if (%col.getDatablock().matterSlots["Buffer"] <= 0 && %col.getDatablock().matterSlots["Output"] <= 0)
 				{
 					%client.chatMessage("\c6Target has no material output or buffer!", 3);
 				}
