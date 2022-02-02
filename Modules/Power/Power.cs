@@ -164,9 +164,12 @@ function fxDtsBrick::ChangePower(%obj, %change)
 	if ((%maxEnergy = %data.energyMaxBuffer) <= 0)
 		return 0;
 
+	if (%obj.energy $= "" || %obj.energy < 0)
+		%obj.energy = 0;
+
 	if (%change > 0)
 	{
-		%totalChange = getMin(%change, %maxEnergy - %change);
+		%totalChange = getMin(%change, %maxEnergy - %obj.energy);
 		%obj.energy += %totalChange;
 		return %totalChange;
 	}
@@ -186,11 +189,19 @@ function fxDtsBrick::ChangePower(%obj, %change)
 
 function fxDtsBrick::SetPower(%obj, %value)
 {
+	if (%obj.energy $= "" || %obj.energy < 0)
+		%obj.energy = 0;
+
 	%obj.energy = mClamp(%value, 0, %obj.getDatablock().energyMaxBuffer);
+
+	return %obj.energy;
 }
 
 function fxDtsBrick::GetPower(%obj)
 {
+	if (%obj.energy $= "" || %obj.energy < 0)
+		%obj.energy = 0;
+
 	return %obj.energy;
 }
 
