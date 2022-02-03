@@ -97,9 +97,9 @@ function GetRandomSpawnLocation(%initPos, %failCount)
 	%for = "0 1 0";
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 512)), %mask, %this);
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
 	
-	if (getWord(%ray,3) < 55 && %failCount < 500)
+	if (getWord(%ray,3) < $EOTW::LavaHeight && %failCount < 500)
 		return GetRandomSpawnLocation(%initPos, %failCount + 1); //Try again lol
 		
 	%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
