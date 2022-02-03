@@ -168,7 +168,7 @@ function spawnGatherableRandom(%eye)
 
 function SpawnGatherableVein()
 {
-	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 2) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 2) SPC 512;
+	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 2) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 2) SPC 495;
 	%matter = GetRandomSpawnMaterial();
 	
 	%veinSize = getRandom(1, %matter.spawnVeinSize);
@@ -182,7 +182,7 @@ function SpawnGatherableVein()
 		%for = "0 1 0";
 		%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 		%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-		%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 512)), %mask, %this);
+		%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
 		%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
 		if(isObject(%hit = firstWord(%ray)))
 		{

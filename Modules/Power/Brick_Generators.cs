@@ -64,8 +64,8 @@ function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 
 	%client.centerPrint(%printText, 1);
 
-	%wattage = 640;
+	%wattage = 320;
 	%brick.ChangePower(%wattage / $EOTW::PowerTickRate);
 	
-	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_DefaultInspectLoop", %brick);
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_HandCrankInspectLoop", %brick);
 }

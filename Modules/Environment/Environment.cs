@@ -1,6 +1,4 @@
 exec("./Lava.cs");
-//"-2048 -2048 2048 2048"
-$EOTW::WorldBounds = "-512 -512 512 512";
 
 function EnvMasterSetup()
 {
