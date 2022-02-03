@@ -24,3 +24,14 @@ function CreateLavaStatic()
 	$EOTW::LavaStatic = %shape;
 }
 schedule(100, 0, "CreateLavaStatic");
+
+function setLavaHeight(%height)
+{
+	if (!isObject($EOTW::LavaStatic))
+		CreateLavaStatic();
+	
+	$EOTW::LavaStatic.setTransform("0 0 " @ %height);
+
+	if (isObject(EnvMaster))
+		servercmdEnvGui_SetVar(EnvMaster, "WaterHeight", %height);
+}

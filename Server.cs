@@ -1,6 +1,6 @@
 //Can we just find the folder names automatically?
-$EOTW::Modules = "Core Fauna Matter Player Power Tools Weapons";
-//"Core Environment Fauna Matter Player Power Tools Weapons"
+$EOTW::Modules = "Core Environment Fauna Matter Player Power Tools Weapons";
+
 for (%i = 0; %i < getWordCount($EOTW::Modules); %i++)
 	exec("./Modules/" @ getWord($EOTW::Modules, %i) @ "/" @ getWord($EOTW::Modules, %i) @ ".cs");
 
@@ -9,5 +9,3 @@ for (%i = 0; %i < getWordCount($EOTW::Modules); %i++)
 
 //We also should try to keep external add-on requirements to a mininum, barring default blockland add-ons. This will make
 //Solar apoc much easier to run, especially when setting up new servers.
-
-//TODO: Readme Doc for this stuff.

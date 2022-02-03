@@ -1,6 +1,6 @@
 exec("./Lava.cs");
-
-$EOTW::WorldBounds = "-2048 -2048 2048 2048";
+//"-2048 -2048 2048 2048"
+$EOTW::WorldBounds = "-512 -512 512 512";
 
 function EnvMasterSetup()
 {
@@ -10,7 +10,7 @@ function EnvMasterSetup()
 	if(!isObject(EnvMaster))
 			new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 	
-	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap.bls", 3, "", 2);
+	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap2.bls", 3, "", 2);
 	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
 	setNewWater("Add-Ons/Water_BrickLava/bricklava.water");
 	
@@ -23,17 +23,16 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "SimpleMode",0);
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 	servercmdEnvGui_SetVar(EnvMaster, "SunAzimuth", 75);
-	servercmdEnvGui_SetVar(EnvMaster, "WaterHeight",53);
+	setLavaHeight(35);
 	servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0.5 0 0.05");
 	servercmdEnvGui_SetVar(EnvMaster, "GroundColor", "0.4 0.4 0.4 1.0");
 	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
-	schedule(96, 0, "servercmdEnvGui_SetVar", EnvMaster, "SunAzimuth", 75);
 	
 	EnvMasterLoop();
 	
 	$EOTW::Initilized = true;
 }
-schedule(100,0,"EnvMasterSetup");
+schedule(200,0,"EnvMasterSetup");
 
 function SetWorldColor(%day)
 {
