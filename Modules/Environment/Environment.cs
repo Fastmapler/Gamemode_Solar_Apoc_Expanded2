@@ -1,5 +1,7 @@
 exec("./Lava.cs");
 
+$EOTW::LoadMap = false;
+
 function EnvMasterSetup()
 {
 	if ($EOTW::Initilized)
@@ -8,7 +10,9 @@ function EnvMasterSetup()
 	if(!isObject(EnvMaster))
 			new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 	
-	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap2.bls", 3, "", 2);
+	if ($EOTW::LoadMap)
+		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap2.bls", 3, "", 2);
+
 	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
 	setNewWater("Add-Ons/Water_BrickLava/bricklava.water");
 	
