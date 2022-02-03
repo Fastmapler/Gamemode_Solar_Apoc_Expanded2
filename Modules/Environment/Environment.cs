@@ -19,10 +19,8 @@ function EnvMasterSetup()
 	{
 		setLavaHeight(-1);
 	}
-		
 
 	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
-	setNewWater("Add-Ons/Water_BrickLava/bricklava.water");
 	
 	$EOTW::TimeScale = 1;
 	$EOTW::TimeDialation = 0.003;
