@@ -76,5 +76,5 @@ function Player::EOTW_DefaultInspectLoop(%player, %brick)
 
 	%client.centerPrint(%printText, 1);
 	
-	%player.PoweredBlockInspectLoop = %player.schedule(2000 / $EOTW::PowerTickRate, "EOTW_DefaultInspectLoop", %brick);
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_DefaultInspectLoop", %brick);
 }

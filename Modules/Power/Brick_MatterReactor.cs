@@ -124,7 +124,7 @@ function Player::EOTW_MatterReactorInspectLoop(%player, %brick)
 
 	%client.centerPrint(%printText, 1);
 	
-	%player.PoweredBlockInspectLoop = %player.schedule(2000 / $EOTW::PowerTickRate, "EOTW_MatterReactorInspectLoop", %brick);
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_MatterReactorInspectLoop", %brick);
 }
 
 function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
