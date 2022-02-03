@@ -51,14 +51,17 @@ $EOTW::CustomBrickCost["brick4x1x5windowData"] = 1.00 TAB "7a7a7aff" TAB 48 TAB 
 $EOTW::CustomBrickCost["brickVehicleSpawnData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 64 TAB "Glass";
 $EOTW::CustomBrickCost["brickTeledoorData"] = 0.85 TAB "7a7a7aff" TAB 40 TAB "Sturdium" TAB 8 TAB "Diamond" TAB 256 TAB "Iron";
 
-function ServerCmdInsert(%client, %amount, %material)
+function ServerCmdInput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD); }
+function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD)
 {
 	if (!isObject(%player = %client.player))
 		return;
 
-	if (%amount <= 0 || %material $= "")
+	%material = trim(%material SPC %matB SPC %matC SPC %matD);
+
+	if (%amount <= 0 || %material $= "" || %slot $= "")
 	{
-		%client.centerPrint("Usage: /Extract <amount> <material>");
+		%client.chatMessage("Usage: /Insert <input/output/buffer> <amount> <material>");
 		return;
 	}
 
@@ -71,7 +74,7 @@ function ServerCmdInsert(%client, %amount, %material)
 	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
 	{
 		%data = %hit.getDatablock();
-		if (%data.matterSlots["Input"] > 0)
+		if (%data.matterSlots[%slot] > 0)
 		{
 			if (isObject(%matter = GetMatterType(%material)))
 			{
@@ -79,28 +82,30 @@ function ServerCmdInsert(%client, %amount, %material)
 
 				%finalChange = %hit.changeMatter(%matter.name, %change, "Input");
 
-				%client.chatMessage("Inputted " @ %finalChange @ " units of " @ %matter.name @ ".");
+				%client.chatMessage("You input " @ %finalChange @ " units of " @ %matter.name @ "into the " @ %slot @ ".");
 				$EOTW::Material[%client.bl_id, %matter.name] -= %finalChange;
 			}
 			else
 				%client.chatMessage("Material type " @ %material @ " not found.");
 		}
 		else
-			%client.chatMessage("This block has no compatible input slots.");
+			%client.chatMessage("This block has no compatible \"" @ %slot @ "\" slot.");
 	}
 }
 
-function ServerCmdExtract(%client, %amount, %material, %slot)
+function ServerCmdOutput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
+function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD)
 {
 	if (!isObject(%player = %client.player))
 		return;
 
+	%material = trim(%material SPC %matB SPC %matC SPC %matD);
+
 	if (%amount <= 0 || %material $= "" || %slot $= "")
 	{
-		%client.centerPrint("Usage: /Extract <amount> <material> <output/input/etc.>");
+		%client.chatMessage("Usage: /Extract <output/input/buffer> <amount> <material>");
 		return;
 	}
-
 	%eye = %player.getEyePoint();
 	%dir = %player.getEyeVector();
 	%for = %player.getForwardVector();

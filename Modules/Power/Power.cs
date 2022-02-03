@@ -352,7 +352,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 			
 			%obj.matter[%type, %i] = getField(%matter, 0) TAB (getField(%matter, 1) + %change);
 			
-			if (getField(%obj.matter[%type, %i], 1) < 1)
+			if ((getField(%matter, 1) + %change) <= 0)
 				%obj.matter[%type, %i] = "";
 			
 			if(%obj.getDatablock().matterUpdateFunc !$= "" && !%ignoreUpdate)
@@ -363,7 +363,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 	}
 	
 	//So we don't remove from an empty slot, somehow
-	if (%amount < 0)
+	if (%amount <= 0)
 		return 0;
 	
 	//Double pass to add to an empty slot. It is only 3-4 loops at most... right?
