@@ -14,19 +14,19 @@ $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 0.85 TAB "7a7a7aff" TAB 64 T
 
 function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 {
-	if (%obj.energy $= "" || %obj.energy < 0)
-		%obj.energy = 0;
-	
-    %wattage = 160;
-
 	if ($EOTW::Time < 12)
 	{
 		%val = ($EOTW::Time / 12) * $pi;
 	    %ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
-	    %dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 512);
-		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType);
-		if(!isObject(%hit = firstWord(%ray)) || %hit == %obj)
-            %obj.ChangePower(%wattage / $EOTW::PowerTickRate);
+	    %dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 500);
+		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType);
+		%hit = firstWord(%ray);
+		if(!isObject(%hit) || (%hit == %obj))
+		{
+			%wattage = 160;
+			%obj.ChangePower(%wattage / $EOTW::PowerTickRate);
+		}
+            
 	}
 }
 
