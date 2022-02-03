@@ -27,6 +27,13 @@ schedule(100, 0, "CreateLavaStatic");
 
 function setLavaHeight(%height)
 {
+	$EOTW::LavaHeight = %height;
+
+	if (%height <= 0)
+		setNewWater("NONE");
+	else
+		setNewWater("Add-Ons/Water_BrickLava/bricklava.water");
+	
 	if (!isObject($EOTW::LavaStatic))
 		CreateLavaStatic();
 	

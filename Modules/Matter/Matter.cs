@@ -1,5 +1,7 @@
 exec("./ItemCrafting.cs");
 
+$EOTW::MatterDensity = 5000 / (2048 * 2048);
+
 function SetupMatterData()
 {
 	if (isObject(MatterData))
@@ -108,7 +110,7 @@ function GatherableSpawnLoop(%despawnValue)
 	if(!isObject(Gatherables))
 		MainBrickgroup.add(new SimGroup(Gatherables) { bl_id = 1337; name = "God"; });
 		
-	if (Gatherables.getCount() < 5000)
+	if (Gatherables.getCount() < (getMapArea() * $EOTW::MatterDensity))
 		SpawnGatherableVein();
 	
 	for (%j = 0; %j < 30 && %despawnValue < Gatherables.getCount(); %j++)

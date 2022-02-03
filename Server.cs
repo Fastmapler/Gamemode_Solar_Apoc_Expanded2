@@ -3,6 +3,10 @@ $EOTW::Modules = "Core Environment Fauna Matter Player Power Tools Weapons";
 
 //"-2048 -2048 2048 2048"
 $EOTW::WorldBounds = "-512 -512 512 512";
+function getMapArea()
+{
+	return (getWord($EOTW::WorldBounds, 2) - getWord($EOTW::WorldBounds, 0)) * (getWord($EOTW::WorldBounds, 3) - getWord($EOTW::WorldBounds, 1));
+}
 
 for (%i = 0; %i < getWordCount($EOTW::Modules); %i++)
 	exec("./Modules/" @ getWord($EOTW::Modules, %i) @ "/" @ getWord($EOTW::Modules, %i) @ ".cs");
