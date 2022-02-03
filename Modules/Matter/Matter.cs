@@ -1,3 +1,5 @@
+exec("./ItemCrafting.cs");
+
 function SetupMatterData()
 {
 	if (isObject(MatterData))

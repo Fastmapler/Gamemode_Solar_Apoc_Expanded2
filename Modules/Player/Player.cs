@@ -124,6 +124,27 @@ function Player::LookingAtBrick(%obj, %brick)
 	return false;
 }
 
+function Player::GetMatterCount(%obj, %matter)
+{
+	if (!isObject(%client = %obj.client))
+		return;
+
+	return $EOTW::Material[%client.bl_id, %matter] + 0;
+}
+
+function Player::ChangeMatterCount(%obj, %matter, %count)
+{
+	if (!isObject(%client = %obj.client))
+		return;
+
+	$EOTW::Material[%client.bl_id, %matter] += %count;
+
+	if ($EOTW::Material[%client.bl_id, %matter] < 0)
+		$EOTW::Material[%client.bl_id, %matter] = 0;
+
+	return $EOTW::Material[%client.bl_id, %matter];
+}
+
 package EOTW_Player
 {
 	function GameConnection::createPlayer(%client, %trans)

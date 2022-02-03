@@ -69,7 +69,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 		return;
 	
 	%pos = %obj.getEyePoint();
-	%vector = vectorAdd(%pos, vectorScale(%obj.getEyeVector(), 1000));
+	%vector = vectorAdd(%pos, vectorScale(%obj.getEyeVector(), 5));
 	%targets = $TypeMasks::FxBrickObjectType | $TypeMasks::PlayerObjectType | $TypeMasks::VehicleObjectType | $TypeMasks::TerrainObjectType | $TypeMasks::StaticShapeObjectType;
 	%ray = ContainerRayCast(%pos, %vector, %targets, %obj);
 	%col = getWord(%ray, 0);
@@ -199,7 +199,7 @@ function Player::CableLayerMessage(%obj)
 		return;
 		
 	%pos = %obj.getEyePoint();
-	%vector = vectorAdd(%pos, vectorScale(%obj.getEyeVector(), 1000));
+	%vector = vectorAdd(%pos, vectorScale(%obj.getEyeVector(), 5));
 	%targets = $TypeMasks::FxBrickObjectType | $TypeMasks::PlayerObjectType | $TypeMasks::VehicleObjectType | $TypeMasks::TerrainObjectType | $TypeMasks::StaticShapeObjectType;
 	%ray = ContainerRayCast(%pos, %vector, %targets, %obj);
 	%col = getWord(%ray, 0);
