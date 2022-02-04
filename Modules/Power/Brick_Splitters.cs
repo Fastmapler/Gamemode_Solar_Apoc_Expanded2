@@ -9,7 +9,7 @@ datablock fxDTSBrickData(brickEOTWSplitterData)
     matterMaxBuffer = 1024;
 	matterSlots["Buffer"] = 1;
 	loopFunc = "EOTW_SplitterUpdate";
-    inspectFunc = "EOTW_DefaultInspectLoop";
+    inspectFunc = "EOTW_SplitterInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 
     isSplitter = true;
@@ -22,6 +22,38 @@ datablock fxDTSBrickData(brickEOTWInertSplitterData : brickEOTWSplitterData)
 	loopFunc = "";
 };
 $EOTW::CustomBrickCost["brickEOTWInertSplitterData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+
+function Player::EOTW_SplitterInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+
+    %printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+    for (%i = 0; %i < %data.matterSlots["Buffer"]; %i++)
+	{
+		%matter = %brick.Matter["Buffer", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Buffer " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Buffer " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_SplitterInspectLoop", %brick);
+}
 
 function fxDtsBrick::EOTW_SplitterUpdate(%obj)
 {
