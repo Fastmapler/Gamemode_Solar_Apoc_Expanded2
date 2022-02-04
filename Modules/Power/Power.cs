@@ -235,7 +235,7 @@ package EOTWPower
 		}
 	}
 	
-	function CreateTransferRope(%source, %target, %rate, %material, %amt, %type)
+	function CreateTransferRope(%source, %sourcePortPos, %target, %targetPortPos, %rate, %material, %amt, %type)
 	{
 		if (!isObject(PowerGroupCablePower))
 			new SimSet(PowerGroupCablePower);
@@ -255,27 +255,22 @@ package EOTWPower
 				case "Power":
 					%diameter = 0.1;
 					%slack = 0.25;
-					%offset = 0;
 					PowerGroupCablePower.add(%cable);
 				case "Matter":
 					%diameter = 0.2;
 					%slack = 0;
-					%offset = -0.9;
 					PowerGroupPipeMatter.add(%cable);
 				default:
 					return;
 		}
-		
+	
 		%creationData = %source SPC %target SPC %color SPC %diameter SPC %slack;
 
 		_removeRopeGroup(%creationData);
 
 		%group = _getRopeGroup(getSimTime(), %source.getGroup().bl_id, %creationData);
+		createRope(%sourcePortPos, %targetPortPos, %color, %diameter, %slack, %group);
 
-		%offsetSource = (%source.getDatablock().brickSizeZ / 12) * %offset;
-		%offsetTarget = (%source.getDatablock().brickSizeZ / 12) * %offset;
-		createRope(vectorAdd(%source.getPosition(), "0 0 " @ %offsetSource), vectorAdd(%target.getPosition(), "0 0 " @ %offsetTarget), %color, %diameter, %slack, %group);
-		
 		%group.material = %material TAB %amt;
 		%group.cable = %cable;
 
@@ -384,4 +379,60 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 	}
 	
 	return 0;
+}
+
+function fxDtsBrick::getPortPosition(%brick,%type,%pos)
+{
+	%datablock = %brick.getDatablock();
+	%position = setWord(%brick.getPosition(),2,0);
+	if(%datablock.portGoToEdge[%type])
+	{
+		//move position to the nearest edge of the brick
+		%relPos = vectorNormalize(vectorSub(%pos,%position));
+		%relY = getWord(%relPos,0);
+		%relX = getWord(%relPos,1);
+		%angle = mAcos((%relX) / (mSqrt(mPow(%relX,2) + mPow(%relY,2))));
+
+		%fullAngle = %angle;
+		if(%relY > 0)
+		{
+			%fullAngle = -(%angle - (2 * $pi));
+		}
+
+		%side = (%fullAngle / ($pi / 2) + 0.5) % 4;
+		if(%side % 2 == 0)
+		{
+			%x = %datablock.brickSizeX / 4;
+			if(%side == 2)
+			{
+				%x = -%x;
+			}
+
+			%quadAngle = %angle;
+			if(%fullAngle < $PI)
+			{
+				%quadAngle = -%quadAngle;
+				
+			}
+			talk(%quadAngle);
+			
+			
+			%y = %x * mTan(%quadAngle);
+		}
+		else
+		{
+			%y = %datablock.brickSizeY / 4;
+			if(%side == 1)
+			{
+				%y = -%y;
+			}
+			
+			%quadAngle = %angle;
+			
+			%x = %y / mTan(%quadAngle);
+		}
+		%position = VectorAdd(%position,%y SPC %x SPC "0");
+	}
+	%newPosition = vectorSub(vectorAdd(%position,"0 0 " @ %datablock.portHeight[%type]),"0 0 " @ (%datalock.brickSizeZ / 10));
+	return %newPosition;
 }

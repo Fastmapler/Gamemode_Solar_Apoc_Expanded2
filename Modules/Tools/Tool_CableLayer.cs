@@ -131,7 +131,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 								%transferRate = 2;
 								
 							%client.chatMessage("\c6Cable target set to " @ %col.getDatablock().uiName @ ". Cable created!", 3);
-							CreateTransferRope(%obj.cableLayerBuffer, %col, %transferRate, %cableType.name, %cost, "Power");
+							CreateTransferRope(%obj.cableLayerBuffer, %obj.cableLayerBufferPort, %col,%col.getPortPosition("PowerIn",%hitpos), %transferRate, %cableType.name, %cost, "Power");
 							%obj.cableLayerBuffer = "";
 						}
 						else
@@ -152,6 +152,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					else
 					{
 						%obj.cableLayerBuffer = %col;
+						%obj.cableLayerBufferPort = %col.getPortPosition("PowerOut",%hitpos);
 						%client.chatMessage("\c6Cable source set to " @ %col.getDatablock().uiName, 3);
 					}
 					
@@ -208,6 +209,7 @@ function Player::CableLayerMessage(%obj)
 	%cableType = getMatterType(%client.CableLayerMat);
 	%matInv = ($EOTW::Material[%client.bl_id, %cableType.name] + 0);
 	
+	%source = "--";
 	%target = "--";
 	%cost = "--";
 		
@@ -238,9 +240,6 @@ function Player::CableLayerMessage(%obj)
 			else
 				%target = "\c0" @ %col.getDatablock().uiName;
 		}
-		else
-			%target = "--";
-			
 	}
 	else if (isObject(%col))
 	{
@@ -263,9 +262,7 @@ function Player::CableLayerMessage(%obj)
 				%source = "\c6Power Cable (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
 				%target = "\c7(Remove)";
 			}
-		}
-		else
-			%source = "--";
+		}	
 	}
 			
 	%client.centerPrint("<just:left>\c6Source: " @ %source @ "<br>\c6Target: " @ %target @ "<br>\c6Material: " @ %matInv @ "\c6/" @ %cost @ " <color:" @ %cableType.color @ ">" @ %cableType.name @ "\c6 (" @ %cableType.cableTransfer @ "W)", 1);

@@ -9,6 +9,11 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 	loopFunc = "EOTW_SolarPanelLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
+
+	//port info
+	portGoToEdge["PowerOut"] = true;
+	portHeight["PowerOut"] = "0.2";
+
 };
 $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 0.85 TAB "7a7a7aff" TAB 64 TAB "Silver" TAB 64 TAB "Rosium" TAB 64 TAB "Teflon";
 
