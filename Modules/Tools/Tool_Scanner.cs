@@ -61,7 +61,7 @@ datablock shapeBaseImageData(MiningScannerImage)
 
 function MiningScannerImage::onFire(%this, %obj, %slot)
 {
-	%player.MiningScannerPing(64, 5000);
+	%obj.MiningScannerPing(64, 5000);
 }
 
 function Player::MiningScannerPing(%obj, %range, %time)
@@ -74,7 +74,7 @@ function Player::MiningScannerPing(%obj, %range, %time)
 
 function fxDtsBrick::TempColorFX(%obj, %fx, %time)
 {
-    if (isObject(%obj.TempColorFxSchedule))
+    if (%obj.TempColorFxSchedule !$= "")
         return;
 
     %obj.TempColorFxSchedule = %obj.schedule(%time, "TempColorFxEnd", %obj.getColorFXID());
