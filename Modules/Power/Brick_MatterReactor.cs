@@ -37,6 +37,12 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
+
+	//port info
+	portGoToEdge["PowerIn"] = true;
+	portGoToEdge["MatterIn"] = true;
+	portHeight["PowerIn"] = "0.5";
+	portHeight["MatterIn"] = "0.2";
 };
 $EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 96 TAB "Glass";
 
