@@ -128,7 +128,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 							%transferRate = 2;
 							
 						%client.chatMessage("\c6Pipe target set to " @ %col.getDatablock().uiName @ ". Pipe created!", 3);
-						CreateTransferRope(%obj.PipeLayerBuffer, %col, %transferRate, %PipeType.name, %cost, "Matter");
+						CreateTransferRope(%obj.PipeLayerBuffer, %obj.cableLayerBufferPort, %col.getPortPosition("MatterIn",%hitpos), %col, %transferRate, %PipeType.name, %cost, "Matter");
 						%obj.PipeLayerBuffer = "";
 					}
 					else
@@ -149,6 +149,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 				else
 				{
 					%obj.PipeLayerBuffer = %col;
+					%obj.PipeLayerBufferPort = %col.getPortPosition("MatterOut",%hitpos);
 					%client.chatMessage("\c6Pipe source set to " @ %col.getDatablock().uiName, 3);
 				}
 				
@@ -202,6 +203,7 @@ function Player::PipeLayerMessage(%obj)
 	%PipeType = getMatterType(%client.PipeLayerMat);
 	%matInv = ($EOTW::Material[%client.bl_id, %PipeType.name] + 0);
 	
+	%source = "--";
 	%target = "--";
 	%cost = "--";
 		
@@ -232,8 +234,6 @@ function Player::PipeLayerMessage(%obj)
 			else
 				%target = "\c0" @ %col.getDatablock().uiName;
 		}
-		else
-			%target = "--";
 			
 	}
 	else if (isObject(%col))
@@ -258,8 +258,6 @@ function Player::PipeLayerMessage(%obj)
 				%target = "\c7(Remove)";
 			}
 		}
-		else
-			%source = "--";
 	}
 			
 	%client.centerPrint("<just:left>\c6Source: " @ %source @ "<br>\c6Target: " @ %target @ "<br>\c6Material: " @ %matInv @ "\c6/" @ %cost @ " <color:" @ %PipeType.color @ ">" @ %PipeType.name @ "\c6 (" @ %PipeType.PipeTransfer @ "u/S)", 1);
