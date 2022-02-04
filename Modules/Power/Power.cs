@@ -3,6 +3,7 @@ $EOTW::PowerTickRate = 20;
 exec("./MachineCrafting.cs");
 exec("./Brick_Generators.cs");
 exec("./Brick_Capacitors.cs");
+exec("./Brick_Splitters.cs");
 exec("./Brick_MatterReactor.cs");
 exec("./Brick_Debug.cs");
 
@@ -70,6 +71,19 @@ function PowerMasterLoop()
 	if (isObject(PowerGroupCablePower))
 		PowerGroupCablePower.Shuffle();
 	
+	//Run storage/sorting devices
+	if (isObject(PowerGroupStorage))
+	for (%i = 0; %i < PowerGroupStorage.getCount(); %i++)
+	{
+		%brick = PowerGroupStorage.getObject(%i);
+		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
+		{
+			%brick.lastEnergyUpdate = getSimTime();
+			if(%brick.getDatablock().loopFunc !$= "")
+				%brick.doCall(%brick.getDatablock().loopFunc);
+		}
+	}
+
 	//Run machines
 	if (isObject(PowerGroupMachine))
 	for (%i = 0; %i < PowerGroupMachine.getCount(); %i++)
