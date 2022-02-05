@@ -80,9 +80,9 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 			{
 				%change = getMin(%amount, $EOTW::Material[%client.bl_id, %matter.name]);
 
-				%finalChange = %hit.changeMatter(%matter.name, %change, "Input");
+				%finalChange = %hit.changeMatter(%matter.name, %change, %slot);
 
-				%client.chatMessage("You input " @ %finalChange @ " units of " @ %matter.name @ "into the " @ %slot @ ".");
+				%client.chatMessage("You input " @ %finalChange @ " units of " @ %matter.name @ " into the " @ %slot @ ".");
 				$EOTW::Material[%client.bl_id, %matter.name] -= %finalChange;
 			}
 			else

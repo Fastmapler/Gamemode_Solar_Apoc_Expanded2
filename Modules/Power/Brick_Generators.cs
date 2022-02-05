@@ -83,6 +83,7 @@ datablock fxDTSBrickData(brickEOTWStirlingEngineData)
 	uiName = "Stirling Engine";
 	energyGroup = "Source";
 	energyMaxBuffer = 12800;
+	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 1;
 	loopFunc = "EOTW_StirlingEngineUpdate";
     inspectFunc = "EOTW_StirlingEngineInspectLoop";
@@ -98,13 +99,9 @@ function fxDtsBrick::EOTW_StirlingEngineUpdate(%obj)
 
 	if (%obj.storedFuel <= 0)
 	{
-		%matter = %obj.matter["Input", 0];
-		%matterType = getMatterType(%matter);
-
+		%matterType = getMatterType(getField(%obj.matter["Input", 0], 0));
 		if (isObject(%matterType) && %matterType.fuelCapacity > 0)
-		{
 			%obj.storedFuel += %obj.changeMatter(%matterType.name, -16, "Input") * %matterType.fuelCapacity * -1;
-		}
 	}
 }
 
@@ -125,16 +122,16 @@ function Player::EOTW_StirlingEngineInspectLoop(%player, %brick)
 	%printText = "<color:ffffff>";
 
     %printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
-    for (%i = 0; %i < %data.matterSlots["Buffer"]; %i++)
+    for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
 	{
-		%matter = %brick.Matter["Buffer", %i];
+		%matter = %brick.Matter["Input", %i];
 
 		if (%matter !$= "")
-			%printText = %printText @ "Buffer " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+			%printText = %printText @ "Input " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
 		else
-			%printText = %printText @ "Buffer " @ (%i + 1) @ ": --" @ "\n";
+			%printText = %printText @ "Input " @ (%i + 1) @ ": --" @ "\n";
 	}
-	%printText = %printText @ %obj.storedFuel @ "u of Unburned Fuel";
+	%printText = %printText @ (%brick.storedFuel + 0) @ "u of Unburned Fuel";
 
 	%client.centerPrint(%printText, 1);
 	

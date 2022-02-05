@@ -384,7 +384,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 	if (%amount <= 0)
 		return 0;
 	
-	//Double pass to add to an empty slot. It is only 3-4 loops at most... right?
+	//Double pass to add to an empty slot.
 	for (%i = 0; %i < %data.matterSlots[%type]; %i++)
 	{
 		%matter = %obj.matter[%type, %i];
