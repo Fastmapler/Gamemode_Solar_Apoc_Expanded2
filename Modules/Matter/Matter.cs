@@ -16,16 +16,16 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	tier=1;	spawnWeight=300;	spawnVeinSize=6;	spawnValue=512;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	fuelCapacity=2; };
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	tier=1;	spawnWeight=400;	spawnVeinSize=4;	spawnValue=256;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=40; };
 		new ScriptObject(MatterType) { name="Glass";		color="181d26a8";	tier=2;	spawnWeight=150;	spawnVeinSize=4;	spawnValue=64;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=45; };
-		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	tier=2;	spawnWeight=200;	spawnVeinSize=5;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=50; };
-		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	tier=4;	spawnWeight=005;	spawnVeinSize=2;	spawnValue=40;	collectTime=24000;	placable=true;	health=999;	heatCapacity=75; };
+		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	tier=2;	spawnWeight=200;	spawnVeinSize=5;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=50;	gatherableDB="brickEOTWGatherableMetalData";	};
+		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	tier=4;	spawnWeight=005;	spawnVeinSize=2;	spawnValue=40;	collectTime=24000;	placable=true;	health=999;	heatCapacity=75;	gatherableDB="brickEOTWGatherableMetalData";	};
 		//Growable Organics
 		new ScriptObject(MatterType) { name="Moss";			color="75ba6dff";	tier=1;	spawnWeight=050;	spawnVeinSize=2;	spawnValue=4;	collectTime=1000;	 };
 		new ScriptObject(MatterType) { name="Vines";		color="226027ff";	tier=2;	spawnWeight=050;	spawnVeinSize=2;	spawnValue=16;	collectTime=1500;	 };
 		//Basic Gatherable Materials
-		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	tier=3;	spawnWeight=100;	spawnVeinSize=4;	spawnValue=32;	collectTime=13000;	cableTransfer=1024;	 };
-		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	 };
-		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=48;	collectTime=15000;	pipeTransfer=16; };
-		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	tier=4;	spawnWeight=030;	spawnVeinSize=3;	spawnValue=56;	collectTime=20000;	 };
+		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	tier=3;	spawnWeight=100;	spawnVeinSize=4;	spawnValue=32;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";	cableTransfer=1024;	 };
+		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	 };
+		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=48;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";	pipeTransfer=16; };
+		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	tier=4;	spawnWeight=030;	spawnVeinSize=3;	spawnValue=56;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";	 };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	tier=4;	spawnWeight=010;	spawnVeinSize=2;	spawnValue=8;	collectTime=22000;	 };
 		//Alloys
 		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff";	tier=5;	cableTransfer=4096;	};
@@ -214,7 +214,12 @@ function SpawnGatherable(%pos, %matter, %despawnLife)
 	if (!isObject(%matter))
 		%matter = GetRandomSpawnMaterial();
 	
-	%data = CreateBrick(EnvMaster, brickEOTWGatherableMetalData, %pos, getColorFromHex(%matter.color), getRandom(0, 3)); //brickEOTWGatherableMetalData //brick1x1FData
+	if (%matter.gatherableDB !$= "")
+		%brickDB = %matter.gatherableDB.getID();
+	else
+		%brickDB = brick1x1fData;
+	
+	%data = CreateBrick(EnvMaster, %brickDB, %pos, getColorFromHex(%matter.color), getRandom(0, 3)); //brickEOTWGatherableMetalData //brick1x1FData
 	%brick = getField(%data, 0);
 	if(getField(%data, 1)) { %brick.delete(); return; }
 	
