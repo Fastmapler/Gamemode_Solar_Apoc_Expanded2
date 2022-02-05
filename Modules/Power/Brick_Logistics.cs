@@ -91,3 +91,25 @@ function fxDtsBrick::EOTW_SplitterUpdate(%obj)
     %obj.ChangePower(%totalEnergyChange * -1);
     %obj.ChangeMatter(getField(%buffer, 0), %totalEnergyChange * -1, "Buffer");
 }
+
+datablock fxDTSBrickData(brickEOTWTrashBinData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Logistics";
+	uiName = "Trash Bin";
+	energyGroup = "Storage";
+	energyMaxBuffer = 16000;
+    matterMaxBuffer = 1024;
+	matterSlots["Input"] = 1;
+	loopFunc = "EOTW_TrashBinUpdate";
+    inspectFunc = "";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron";
+
+function fxDtsBrick::EOTW_TrashBinLoop(%obj)
+{
+    %obj.energy = 0;
+    %obj.matter["Input", 0] = "";
+}
