@@ -94,6 +94,15 @@ function SetupMatterData()
 }
 SetupMatterData();
 
+datablock fxDTSBrickData(brickEOTWGatherableMetalData)
+{
+	brickFile = "./Bricks/GatherableMetal.blb";
+	category = "Special";
+	subCategory = " Custom";
+	uiName = "Gatherable mMetal";
+	//iconName = "./Bricks/4x 1-2h Cube";
+};
+
 function GetMatterType(%type)
 {
 	for (%i = 0; %i < MatterData.getCount(); %i++)
@@ -192,7 +201,7 @@ function SpawnGatherableVein()
 				%pos = vectorAdd(%pos,"0 0 0.4");
 				
 			if (!%hit.isCollectable)
-				SpawnGatherable(%pos, %matter, %despawnLife);
+				SpawnGa0therable(%pos, %matter, %despawnLife);
 		}
 	}
 }
@@ -205,7 +214,7 @@ function SpawnGatherable(%pos, %matter, %despawnLife)
 	if (!isObject(%matter))
 		%matter = GetRandomSpawnMaterial();
 	
-	%data = CreateBrick(EnvMaster, brick1x1FData, %pos, getColorFromHex(%matter.color), 0);
+	%data = CreateBrick(EnvMaster, brickEOTWGatherableMetalData, %pos, getColorFromHex(%matter.color), getRandom(0, 3)); //brickEOTWGatherableMetalData //brick1x1FData
 	%brick = getField(%data, 0);
 	if(getField(%data, 1)) { %brick.delete(); return; }
 	
@@ -269,12 +278,19 @@ function Player::CollectLoop(%player, %brick)
 			
 		cancel(%brick.cancelCollecting);
 		
-		if (%brick.gatherProcess >= %brick.matterType.collectTime)
+		%reqFuel = %brick.matterType.requiredCollectFuel;
+		if (%reqFuel !$= "" && %player.GetMatterCount(getField(%reqFuel, 0)) < getField(%reqFuel, 1))
 		{
+			%client.centerPrint("<br><color:FFFFFF>You need atleast " @ getField(%reqFuel, 1) SPC getField(%reqFuel, 0) @ " to gather this " @ %brick.matterType.name @ "!", 3);
+		}
+		else if (%brick.gatherProcess >= %brick.matterType.collectTime)
+		{
+			if (%reqFuel !$= "")
+				%player.ChangeMatterCount(getField(%reqFuel, 0), getField(%reqFuel, 1) * -1);
+
 			$EOTW::Material[%client.bl_id, %brick.matterType.name] += %brick.matterType.spawnValue;
 			%client.centerPrint("<br><color:FFFFFF>Collected a gatherable " @ %brick.material @ " brick.<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, %brick.matterType.name] SPC %brick.matterType.name @ ".", 3);
 			%brick.killBrick();
-			return;
 		}
 		else
 		{
