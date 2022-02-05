@@ -407,7 +407,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 function fxDtsBrick::getPortPosition(%brick,%type,%pos)
 {
 	%datablock = %brick.getDatablock();
-	%position = setWord(%brick.getPosition(),2,0);
+	%position = vectorSub(%brick.getPosition(), "0 0 " @ %datablock.brickSizeZ / 10);
 	if(%datablock.portGoToEdge[%type])
 	{
 		//move position to the nearest edge of the brick
@@ -454,6 +454,6 @@ function fxDtsBrick::getPortPosition(%brick,%type,%pos)
 		}
 		%position = VectorAdd(%position,%y SPC %x SPC "0");
 	}
-	%newPosition = vectorSub(vectorAdd(%position,"0 0 " @ %datablock.portHeight[%type]),"0 0 " @ (%datalock.brickSizeZ / 10));
+	%newPosition = vectorAdd(%position,"0 0 " @ %datablock.portHeight[%type]);
 	return %newPosition;
 }
