@@ -13,5 +13,8 @@ $EOTW::CustomBrickCost["brickEOTWDebugGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 
 
 function fxDtsBrick::EOTW_DebugGeneratorLoop(%obj)
 {
-	%obj.changePower(20);
+	if (%obj.customOutput > 0)
+		%obj.changePower(%obj.customOutput);
+	else
+		%obj.changePower(20);
 }
