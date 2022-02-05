@@ -231,9 +231,9 @@ package FloatingBricks
 		for(%i = 0; %i < %count; %i++)
 		{
 			%brick = %brickgroup.getobject(%i);
-			if(%brick.getNumUpBricks() != 0 && %brick.getNumDownBricks == 0)
+			if(%brick.isFloatingBrick)
 			{
-				%brick.plant();
+				floatingBrickFixPlant(%brick);
 			}
 		}
 		
@@ -242,32 +242,39 @@ package FloatingBricks
 };
 activatePackage("FloatingBricks");
 
-function maketestBrick(%this)
+function floatingBrickFixPlant(%brick)
 {
-	%ghost = %this.player.tempBrick;
+	%datablock = %brick.getDatablock();
+	%position = %brick.getPosition();
+	%angleID = %brick.angleID;
+	%rotation = %brick.rotation;
+	%printID = %brick.printID;
+	%colorID = %brick.colorID;
+	
+	%brick.delete();
+
 	%brick = new fxDTSBrick()
 	{
-		client = %this;
-		position = %ghost.getPosition();
-		dataBlock = %ghost.getDatablock().getName();
-		angleID = %ghost.angleID;
-		rotation = %ghost.rotation;
-		printID = %ghost.printID;
-		colorID = %ghost.colorID;
+		position = %position;
+		dataBlock = %datablock.getName();
+		angleID = %angleID;
+		rotation = %rotation;
+		printID = %printID;
+		colorID = %colorID;
 		colorFX = 0;
 		shapeFX = 0;
 		isPlanted = true;
+		isFloatingBrick = true;
+		isBaseplate = true;
 	};
 	
 	// add the brick to the player's brickgroup
-	%group = nameToID("BrickGroup_" @ %this.bl_id);
+	%group = nameToID("BrickGroup_888888");
 	%group.add(%brick);
 	
 	%brick.plant();
+	%brick.playSound("FloatingPlantSound");
 	
 	// not sure if this is required
 	%brick.setTrusted(true);
-	
-	// add the brick to their undo stack and set their timeout
-	%this.undoStack.push(%brick TAB "PLANT");
 }
