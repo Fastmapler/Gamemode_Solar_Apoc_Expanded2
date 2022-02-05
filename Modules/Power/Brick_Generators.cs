@@ -45,7 +45,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	energyMaxBuffer = 6400;
 	loopFunc = "";
     inspectFunc = "EOTW_HandCrankInspectLoop";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
 $EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 0.85 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
 
