@@ -218,8 +218,22 @@ package FloatingBricks
 					
 					// fixes a strange bug
 					if(%brick.getNumUpBricks() != 0)
+					{
 						%brick.onToolBreak(); // wtf
+					}
 				}
+			}
+		}
+
+		//public brick group
+		%brickgroup = brickGroup_888888.getid();
+		%count = %brickgroup.getCount();
+		for(%i = 0; %i < %count; %i++)
+		{
+			%brick = %brickgroup.getobject(%i);
+			if(%brick.getNumUpBricks() != 0 && %brick.getNumDownBricks == 0)
+			{
+				%brick.plant();
 			}
 		}
 		
@@ -227,3 +241,33 @@ package FloatingBricks
 	}
 };
 activatePackage("FloatingBricks");
+
+function maketestBrick(%this)
+{
+	%ghost = %this.player.tempBrick;
+	%brick = new fxDTSBrick()
+	{
+		client = %this;
+		position = %ghost.getPosition();
+		dataBlock = %ghost.getDatablock().getName();
+		angleID = %ghost.angleID;
+		rotation = %ghost.rotation;
+		printID = %ghost.printID;
+		colorID = %ghost.colorID;
+		colorFX = 0;
+		shapeFX = 0;
+		isPlanted = true;
+	};
+	
+	// add the brick to the player's brickgroup
+	%group = nameToID("BrickGroup_" @ %this.bl_id);
+	%group.add(%brick);
+	
+	%brick.plant();
+	
+	// not sure if this is required
+	%brick.setTrusted(true);
+	
+	// add the brick to their undo stack and set their timeout
+	%this.undoStack.push(%brick TAB "PLANT");
+}
