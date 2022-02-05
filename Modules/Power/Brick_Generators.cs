@@ -47,7 +47,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
     inspectFunc = "EOTW_HandCrankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
-$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 0.85 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
 
 function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 {
@@ -69,7 +69,7 @@ function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 
 	%client.centerPrint(%printText, 1);
 
-	%wattage = 320;
+	%wattage = 160;
 	%brick.ChangePower(%wattage / $EOTW::PowerTickRate);
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_HandCrankInspectLoop", %brick);
@@ -89,7 +89,7 @@ datablock fxDTSBrickData(brickEOTWStirlingEngineData)
     inspectFunc = "EOTW_StirlingEngineInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
-$EOTW::CustomBrickCost["brickEOTWStirlingEngineData"] = 0.85 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWStirlingEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 192 TAB "Lead" TAB 96 TAB "Gold";
 
 function fxDtsBrick::EOTW_StirlingEngineUpdate(%obj)
 {
