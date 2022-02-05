@@ -23,6 +23,9 @@ function PowerMasterLoop()
 				%brick.doCall(%brick.getDatablock().loopFunc);
 		}
 	}
+
+	if (isObject(PowerGroupSource))
+		PowerGroupSource.Shuffle();
 	
 	//Move power using power cables
 	if (isObject(PowerGroupCablePower))
@@ -84,6 +87,9 @@ function PowerMasterLoop()
 		}
 	}
 
+	if (isObject(PowerGroupStorage))
+		PowerGroupStorage.Shuffle();
+
 	//Run machines
 	if (isObject(PowerGroupMachine))
 	for (%i = 0; %i < PowerGroupMachine.getCount(); %i++)
@@ -96,6 +102,9 @@ function PowerMasterLoop()
 				%brick.doCall(%brick.getDatablock().loopFunc);
 		}
 	}
+
+	if (isObject(PowerGroupMachine))
+		PowerGroupMachine.Shuffle();
 	
 	$EOTW::PowerMasterLoop = schedule(1000 / $EOTW::PowerTickRate, 0, "PowerMasterLoop");
 }
@@ -428,8 +437,6 @@ function fxDtsBrick::getPortPosition(%brick,%type,%pos)
 				%quadAngle = -%quadAngle;
 				
 			}
-			talk(%quadAngle);
-			
 			
 			%y = %x * mTan(%quadAngle);
 		}
