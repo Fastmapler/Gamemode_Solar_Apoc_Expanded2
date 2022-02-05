@@ -218,8 +218,22 @@ package FloatingBricks
 					
 					// fixes a strange bug
 					if(%brick.getNumUpBricks() != 0)
+					{
 						%brick.onToolBreak(); // wtf
+					}
 				}
+			}
+		}
+
+		//public brick group
+		%brickgroup = brickGroup_888888.getid();
+		%count = %brickgroup.getCount();
+		for(%i = 0; %i < %count; %i++)
+		{
+			%brick = %brickgroup.getobject(%i);
+			if(%brick.isFloatingBrick)
+			{
+				floatingBrickFixPlant(%brick);
 			}
 		}
 		
@@ -227,3 +241,40 @@ package FloatingBricks
 	}
 };
 activatePackage("FloatingBricks");
+
+function floatingBrickFixPlant(%brick)
+{
+	%datablock = %brick.getDatablock();
+	%position = %brick.getPosition();
+	%angleID = %brick.angleID;
+	%rotation = %brick.rotation;
+	%printID = %brick.printID;
+	%colorID = %brick.colorID;
+	
+	%brick.delete();
+
+	%brick = new fxDTSBrick()
+	{
+		position = %position;
+		dataBlock = %datablock.getName();
+		angleID = %angleID;
+		rotation = %rotation;
+		printID = %printID;
+		colorID = %colorID;
+		colorFX = 0;
+		shapeFX = 0;
+		isPlanted = true;
+		isFloatingBrick = true;
+		isBaseplate = true;
+	};
+	
+	// add the brick to the player's brickgroup
+	%group = nameToID("BrickGroup_888888");
+	%group.add(%brick);
+	
+	%brick.plant();
+	%brick.playSound("FloatingPlantSound");
+	
+	// not sure if this is required
+	%brick.setTrusted(true);
+}
