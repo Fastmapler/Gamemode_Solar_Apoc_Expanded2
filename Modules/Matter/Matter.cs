@@ -13,7 +13,7 @@ function SetupMatterData()
 	new SimSet(MatterData)
 	{
 		//Buildable Material
-		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	tier=1;	spawnWeight=300;	spawnVeinSize=6;	spawnValue=512;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	fuelCapacity=1; };
+		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	tier=1;	spawnWeight=300;	spawnVeinSize=6;	spawnValue=512;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	fuelCapacity=2; };
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	tier=1;	spawnWeight=400;	spawnVeinSize=4;	spawnValue=256;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=40; };
 		new ScriptObject(MatterType) { name="Glass";		color="181d26a8";	tier=2;	spawnWeight=150;	spawnVeinSize=4;	spawnValue=64;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=45; };
 		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	tier=2;	spawnWeight=200;	spawnVeinSize=5;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=50; };
@@ -36,17 +36,17 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Addy Base";	color="561f1cff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Adamantine";	color="bf1f21ff";	tier=6;	};
 		//Other Organics
-		new ScriptObject(MatterType) { name="Bio Fuel";		color="93690eff";	tier=3;	fuelCapacity=65;	};
+		new ScriptObject(MatterType) { name="Bio Fuel";		color="93690eff";	tier=3;	fuelCapacity=128;	};
 		new ScriptObject(MatterType) { name="Gibs";			color="82281fff";	tier=2;	};
 		new ScriptObject(MatterType) { name="Rubber";		color="18161aff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Leather";		color="503623ff";	tier=3;	};
 		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	tier=3;	spawnWeight=50;	spawnVeinSize=4;	spawnValue=96;	collectTime=10000;	fuelCapacity=30;	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	tier=3;	spawnWeight=50;	spawnVeinSize=4;	spawnValue=96;	collectTime=10000;	fuelCapacity=67;	};
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=15;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	};
 		new ScriptObject(MatterType) { name="Uranium";		color="007c3fff";	tier=4;	spawnWeight=15;	spawnVeinSize=2;	spawnValue=64;	collectTime=18000;	requiredCollectFuel=("Sulfur" TAB 32);	};
 		//Chemicals
-		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=100;	};
+		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=150;	};
 		new ScriptObject(MatterType) { name="Sulfur";		color="93690eff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Ethanol";		color="953800ff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Ethylene";		color="a5a189ff";	tier=4;	};
@@ -201,7 +201,7 @@ function SpawnGatherableVein()
 				%pos = vectorAdd(%pos,"0 0 0.4");
 				
 			if (!%hit.isCollectable)
-				SpawnGa0therable(%pos, %matter, %despawnLife);
+				SpawnGatherable(%pos, %matter, %despawnLife);
 		}
 	}
 }
