@@ -21,7 +21,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 	subCategory = "Power Storage";
 	uiName = "Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 64000;
+	energyMaxBuffer = 1000000;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor1";
@@ -35,7 +35,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 	subCategory = "Power Storage";
 	uiName = "Quad Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 256000;
+	energyMaxBuffer = 4000000;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor2";
@@ -49,7 +49,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 	subCategory = "Power Storage";
 	uiName = "Quad-Quad Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 999999;
+	energyMaxBuffer = 16000000;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor3";
@@ -72,7 +72,7 @@ function Player::EOTW_DefaultInspectLoop(%player, %brick)
 	%data = %brick.getDatablock();
 	%printText = "<color:ffffff>";
 
-    %printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+    %printText = %printText @ (%brick.getPower()) @ "/" @ %data.energyMaxBuffer @ " EU\n";
 
 	%client.centerPrint(%printText, 1);
 	

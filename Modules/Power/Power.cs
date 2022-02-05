@@ -3,7 +3,7 @@ $EOTW::PowerTickRate = 20;
 exec("./MachineCrafting.cs");
 exec("./Brick_Generators.cs");
 exec("./Brick_Capacitors.cs");
-exec("./Brick_Splitters.cs");
+exec("./Brick_Logistics.cs");
 exec("./Brick_MatterReactor.cs");
 exec("./Brick_Debug.cs");
 
@@ -122,15 +122,15 @@ function SimObject::doPowerTransferFull(%obj)
 	if (%obj.energy > 0)
 	{
 		%transferAmount = getMin(%obj.energy, %obj.powerTarget.getDatablock().energyMaxBuffer - %obj.powerTarget.energy);
-		%obj.powerTarget.energy += %transferAmount;
-		%obj.energy -= %transferAmount;
+		%obj.powerTarget.changePower(%transferAmount);
+		%obj.energy += (%transferAmount * -1);
 	}
 	
 	if (%obj.energy <= 0)
 	{
 		%transferAmount = getMin(%obj.powerSource.energy, %obj.powerTransfer);
-		%obj.powerSource.energy -= %transferAmount;
-		%obj.energy += %transferAmount;
+		%obj.powerSource.changePower(%transferAmount * -1);
+		%obj.energy += (%transferAmount);
 	}
 }
 
@@ -192,18 +192,18 @@ function fxDtsBrick::ChangePower(%obj, %change)
 
 	if (%change > 0)
 	{
-		%totalChange = getMin(%change, %maxEnergy - %obj.energy);
-		%obj.energy += %totalChange;
+		%totalChange = getMin(%change, uint_sub(%maxEnergy, %obj.energy));
+		%obj.energy = uint_add(%obj.energy, %totalChange);
 		return %totalChange;
 	}
 	else if (%change < 0)
 	{
-		if ((%change * -1) > %obj.energy)
-			%totalChange = %obj.energy * -1;
+		if (uint_mul(%change, -1) > %obj.energy)
+			%totalChange = uint_mul(%obj.energy, -1);
 		else
 			%totalChange = %change;
 
-		%obj.energy += %totalChange;
+		%obj.energy = uint_add(%obj.energy, %totalChange);
 		return %totalChange;
 	}
 
@@ -384,7 +384,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpda
 	if (%amount <= 0)
 		return 0;
 	
-	//Double pass to add to an empty slot. It is only 3-4 loops at most... right?
+	//Double pass to add to an empty slot.
 	for (%i = 0; %i < %data.matterSlots[%type]; %i++)
 	{
 		%matter = %obj.matter[%type, %i];
