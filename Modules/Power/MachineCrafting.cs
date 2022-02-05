@@ -73,6 +73,14 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
 	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
 	{
+		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
+		{
+			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
+			{
+				%client.sendTrustFailureMessage(%hit.getGroup());
+				return;
+			}
+		}
 		%data = %hit.getDatablock();
 		if (%data.matterSlots[%slot] > 0)
 		{
@@ -114,6 +122,14 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
 	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
 	{
+		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
+		{
+			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
+			{
+				%client.sendTrustFailureMessage(%hit.getGroup());
+				return;
+			}
+		}
 		%data = %hit.getDatablock();
 		if (%data.matterSlots[%slot] > 0)
 		{

@@ -79,6 +79,15 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 	{
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
+			if (getTrustLevel(%obj, %col) < $TrustLevel::Hammer)
+			{
+				if (%col.stackBL_ID $= "" || %col.stackBL_ID != %client.getBLID())
+				{
+					%client.sendTrustFailureMessage(%col.getGroup());
+					return;
+				}
+			}
+			
 			if (%col.getDatablock().energyGroup !$= "")
 			{
 				if (%obj.cableLayerBuffer !$= "")

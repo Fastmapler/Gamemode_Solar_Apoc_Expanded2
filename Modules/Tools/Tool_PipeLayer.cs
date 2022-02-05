@@ -76,6 +76,15 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 	
 	if (isObject(%col))
 	{
+		if (getTrustLevel(%obj, %col) < $TrustLevel::Hammer)
+		{
+			if (%col.stackBL_ID $= "" || %col.stackBL_ID != %client.getBLID())
+			{
+				%client.sendTrustFailureMessage(%col.getGroup());
+				return;
+			}
+		}
+		
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
 			if (%obj.PipeLayerBuffer !$= "")
