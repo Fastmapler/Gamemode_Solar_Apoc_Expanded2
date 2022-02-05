@@ -1,6 +1,6 @@
 exec("./Lava.cs");
 
-$EOTW::LoadMap = false;
+$EOTW::LoadMap = true;
 
 function EnvMasterSetup()
 {
@@ -13,6 +13,7 @@ function EnvMasterSetup()
 	if ($EOTW::LoadMap)
 	{
 		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap2.bls", 3, "", 2);
+		$EOTW::WorldBounds = "-512 -512 512 512";
 		setLavaHeight(35);
 	}
 	else

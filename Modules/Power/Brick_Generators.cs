@@ -26,12 +26,11 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 	    %dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 500);
 		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType);
 		%hit = firstWord(%ray);
-		if(!isObject(%hit) || (%hit == %obj))
+		if((!isObject(%hit) || (%hit == %obj)) && !%obj.getUpBrick(0))
 		{
 			%wattage = 160;
 			%obj.ChangePower(%wattage / $EOTW::PowerTickRate);
 		}
-            
 	}
 }
 
