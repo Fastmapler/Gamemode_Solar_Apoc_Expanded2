@@ -9,7 +9,7 @@ if(isFile("Add-Ons/System_ReturnToBlockland/server.cs"))
 		exec("Add-Ons/System_ReturnToBlockland/hooks/serverControl.cs");
 
 	// register the prefs for the RTB menu
-	RTB_registerPref("Enable Floating Bricks?", "Floating Bricks", "Pref::FloatingBricks::Enabled", "bool", "Server_Floating_Bricks", 1, 0, 0);
+	RTB_registerPref("Enable Floating Bricks?", "Floating Bricks", "Pref::FloatingBricks::Enabled", "bool", "Server_Floating_Bricks", 0, 0, 0);
 	RTB_registerPref("Admin Only?", "Floating Bricks", "Pref::FloatingBricks::AdminOnly", "bool", "Server_Floating_Bricks", 0, 0, 0);
 	RTB_registerPref("Floating Brick Plant Timeout", "Floating Bricks", "Pref::FloatingBricks::Timeout", "int 0 60", "Server_Floating_Bricks", 1, 0, 0);
 }
@@ -17,7 +17,7 @@ else
 {
 	// RTB doesn't exist, assign default values
 	// if you don't have RTB, change these in console and they will save automatically upon exit
-	$Pref::FloatingBricks::Enabled = true;
+	$Pref::FloatingBricks::Enabled = false;
 	$Pref::FloatingBricks::AdminOnly = false;
 	$Pref::FloatingBricks::Timeout = 1;
 }
