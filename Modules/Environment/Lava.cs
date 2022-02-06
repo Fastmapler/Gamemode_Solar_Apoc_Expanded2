@@ -40,5 +40,8 @@ function setLavaHeight(%height)
 	$EOTW::LavaStatic.setTransform("0 0 " @ %height);
 
 	if (isObject(EnvMaster))
+	{
 		servercmdEnvGui_SetVar(EnvMaster, "WaterHeight", %height);
+		servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0.5 0 0.05");
+	}
 }
