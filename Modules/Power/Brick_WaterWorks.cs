@@ -14,7 +14,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
     matterMaxBuffer = 128;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Steel" TAB 32 TAB "Silver" TAB 96 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWWaterPumpData"] = "Uses energy to pump water from deep underground.";
 
 function Player::EOTW_WaterPumpInspectLoop(%player, %brick)
@@ -65,4 +65,28 @@ function fxDtsBrick::EOTW_WaterPumpLoop(%obj)
         %obj.craftingPower += %change;
         %obj.changePower(%change * -1);
     }
+}
+
+
+datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Source";
+	uiName = "Thermoelectric Boiler";
+	energyGroup = "Source";
+	energyMaxBuffer = 0;
+	loopFunc = "EOTW_ThermoelectricBoilerLoop";
+	inspectFunc = "EOTW_DefaultInspectLoop";
+	matterMaxBuffer = 100000;
+	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 2;
+	//iconName = "./Bricks/Icon_Generator";
+};
+$EOTW::CustomBrickCost["brickEOTWThermoelectricBoilerData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWThermoelectricBoilerData"] = "[[(WIP)]] Uses hot coolant or hot cryostablizer to heat water into steam.";
+
+function fxDtsBrick::EOTW_ThermoelectricBoilerLoop(%obj)
+{
+
 }
