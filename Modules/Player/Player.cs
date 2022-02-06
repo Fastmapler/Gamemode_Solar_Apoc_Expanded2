@@ -46,6 +46,11 @@ function GameConnection::PrintEOTWInfo(%client)
 	{
 		if (%client.buildMaterial $= "")
 			%client.buildMaterial = MatterData.getObject(0).name;
+
+		if ($EOTW::BrickDescription[%db.getName()] !$= "")
+		{
+			%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
+		}
 		
 		if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
 		{
@@ -84,6 +89,9 @@ function GameConnection::PrintEOTWInfo(%client)
 		}
 	}
 	
+	if (%centerText !$= "")
+		%client.centerPrint(%centerText, 1);
+
 	%client.bottomPrint("<just:center>\c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
 }
 
