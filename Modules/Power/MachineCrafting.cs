@@ -77,7 +77,7 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 		{
 			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
 			{
-				%client.sendTrustFailureMessage(%hit.getGroup());
+				%client.chatMessage("The owner of that object does not trust you enough.");
 				return;
 			}
 		}
@@ -111,7 +111,7 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 
 	if (%amount <= 0 || %material $= "" || %slot $= "")
 	{
-		%client.chatMessage("Usage: /Extract <output/input/buffer> <amount> <material>");
+		%client.chatMessage("The owner of that object does not trust you enough.");
 		return;
 	}
 	%eye = %player.getEyePoint();

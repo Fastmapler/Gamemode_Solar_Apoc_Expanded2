@@ -77,17 +77,17 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 	
 	if (isObject(%col))
 	{
+		if (getTrustLevel(%obj, %col) < $TrustLevel::Hammer)
+		{
+
+			if (%col.stackBL_ID $= "" || %col.stackBL_ID != %client.getBLID())
+			{
+				%client.chatMessage("The owner of that object does not trust you enough.");
+				return;
+			}
+		}
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
-			if (getTrustLevel(%obj, %col) < $TrustLevel::Hammer)
-			{
-				if (%col.stackBL_ID $= "" || %col.stackBL_ID != %client.getBLID())
-				{
-					%client.sendTrustFailureMessage(%col.getGroup());
-					return;
-				}
-			}
-			
 			if (%col.getDatablock().energyGroup !$= "")
 			{
 				if (%obj.cableLayerBuffer !$= "")
@@ -228,7 +228,7 @@ function Player::CableLayerMessage(%obj)
 		%cost = "--";
 		if (isObject(%col) && (%col.getType() & $TypeMasks::FxBrickObjectType))
 		{
-			if (%col.getDatablock().energyGroup !$= "")
+			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				if (%obj.cableLayerBuffer == %col)
 				{
@@ -254,7 +254,7 @@ function Player::CableLayerMessage(%obj)
 	{
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
-			if (%col.getDatablock().energyGroup !$= "")
+			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				%source = "\c6" @ %col.getDatablock().uiName SPC "(" @ %col.energy @ "/" @ %col.getDatablock().energyMaxBuffer @ ")";
 			}

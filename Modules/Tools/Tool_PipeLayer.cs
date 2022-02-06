@@ -80,11 +80,11 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 		{
 			if (%col.stackBL_ID $= "" || %col.stackBL_ID != %client.getBLID())
 			{
-				%client.sendTrustFailureMessage(%col.getGroup());
+				%client.chatMessage("The owner of that object does not trust you enough.");
 				return;
 			}
 		}
-		
+
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
 			if (%obj.PipeLayerBuffer !$= "")
@@ -222,7 +222,7 @@ function Player::PipeLayerMessage(%obj)
 		%cost = "--";
 		if (isObject(%col) && (%col.getType() & $TypeMasks::FxBrickObjectType))
 		{
-			if (%col.getDatablock().energyGroup !$= "")
+			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				if (%obj.PipeLayerBuffer == %col)
 				{
@@ -249,7 +249,7 @@ function Player::PipeLayerMessage(%obj)
 	{
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
-			if (%col.getDatablock().energyGroup !$= "")
+			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				%source = "\c6" @ %col.getDatablock().uiName;
 			}
