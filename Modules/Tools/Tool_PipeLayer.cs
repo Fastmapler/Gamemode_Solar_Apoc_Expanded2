@@ -137,7 +137,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 							%transferRate = 2;
 							
 						%client.chatMessage("\c6Pipe target set to " @ %col.getDatablock().uiName @ ". Pipe created!", 3);
-						CreateTransferRope(%obj.PipeLayerBuffer, %obj.cableLayerBufferPort, %col.getPortPosition("MatterIn",%hitpos), %col, %transferRate, %PipeType.name, %cost, "Matter");
+						CreateTransferRope(%obj.PipeLayerBuffer, %obj.cableLayerBufferPort, %col, %col.getPortPosition("MatterIn",%hitpos), %transferRate, %PipeType.name, %cost, "Matter");
 						%obj.PipeLayerBuffer = "";
 					}
 					else
