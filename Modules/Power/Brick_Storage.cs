@@ -89,11 +89,11 @@ datablock fxDTSBrickData(brickEOTWMatterTank1Data)
 	uiName = "Matter Tank";
     matterMaxBuffer = 50000;
 	matterSlots["Buffer"] = 1;
-    inspectFunc = "EOTW_SplitterInspectLoop";
+    inspectFunc = "EOTW_MatterTankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWMatterTank1Data"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWMatterTank1Data"] = "Buffers a large amount of one type of material";
+$EOTW::BrickDescription["brickEOTWMatterTank1Data"] = "Buffers up to 50,000u of one type of material";
 
 datablock fxDTSBrickData(brickEOTWMatterTank2Data)
 {
@@ -103,8 +103,39 @@ datablock fxDTSBrickData(brickEOTWMatterTank2Data)
 	uiName = "Celled Matter Tank";
     matterMaxBuffer = 50000;
 	matterSlots["Buffer"] = 4;
-    inspectFunc = "EOTW_SplitterInspectLoop";
+    inspectFunc = "EOTW_MatterTankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWMatterTank2Data"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
 $EOTW::BrickDescription["brickEOTWMatterTank2Data"] = "A matter tank with four slots for four unique materials.";
+
+function Player::EOTW_MatterTankInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+
+    for (%i = 0; %i < %data.matterSlots["Buffer"]; %i++)
+	{
+		%matter = %brick.Matter["Buffer", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Buffer " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Buffer " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_MatterTankInspectLoop", %brick);
+}

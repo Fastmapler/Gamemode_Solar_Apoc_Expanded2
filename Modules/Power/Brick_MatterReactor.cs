@@ -182,11 +182,13 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 			for (%k = 0; %craftData.output[%k] !$= ""; %k++)
 			{
 				//This long check cheks to see if there is another material occupying the output(s), or if the output is too full to output into when done
-				if ((getField(%output, 0) !$= "" && getField(%output, 0) !$= getField(%craftData.output[%k], 0)) || (getField(%craftData.output[%k], 1) + getField(%output, 1) > %data.matterMaxBuffer))
+				if ((getField(%output, 0) !$= "" && getField(%output, 0) !$= getField(%craftData.output[%k], 0) && %craftData.output[%k + 1] $= "") || (getField(%craftData.output[%k], 1) + getField(%output, 1) > %data.matterMaxBuffer))
 				{
 					%craftFail = true;
 					break;
 				}
+				else if (getField(%output, 0) $= getField(%craftData.output[%k], 0))
+					break;
 			}
 		}
 		
@@ -225,11 +227,13 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 				for (%k = 0; %craftData.output[%k] !$= ""; %k++)
 				{
 					//This long check cheks to see if there is another material occupying the output(s), or if the output is too full to output into when done
-					if ((getField(%output, 0) !$= "" && getField(%output, 0) !$= getField(%craftData.output[%k], 0)) || (getField(%craftData.output[%k], 1) + getField(%output, 1) > %data.matterMaxBuffer))
+					if ((getField(%output, 0) !$= "" && getField(%output, 0) !$= getField(%craftData.output[%k], 0) && %craftData.output[%k + 1] $= "") || (getField(%craftData.output[%k], 1) + getField(%output, 1) > %data.matterMaxBuffer))
 					{
 						%craftFail = true;
 						break;
 					}
+					else if (getField(%output, 0) $= getField(%craftData.output[%k], 0))
+						break;
 				}
 				
 				if (%craftFail)
