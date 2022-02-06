@@ -460,7 +460,7 @@ package EOTW_Matter
 			{
 				%db = %client.inventory[%client.currInvSlot];
 				
-				if ($EOTW::CustomBrickCost[%db.getName()] $= "")
+				if (isObject(%db) && $EOTW::CustomBrickCost[%db.getName()] $= "")
 				{
 					%pos = getFieldFromValue($EOTW::PlacableList, %client.buildMaterial);
 					
