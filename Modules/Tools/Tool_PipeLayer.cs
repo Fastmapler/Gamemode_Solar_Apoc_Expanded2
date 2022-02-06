@@ -54,7 +54,7 @@ datablock shapeBaseImageData(PipeLayerImage)
 	
 	stateName[2]					= "Fire";
 	stateScript[2]					= "onFire";
-	stateTimeoutValue[2]			= 0.1;
+	stateTimeoutValue[2]			= 0.0;
 	stateAllowImageChange[2]		= false;
 	stateTransitionOnTimeout[2]		= "checkFire";
 	
@@ -166,7 +166,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 		}
 		else if (%col.getType() & $TypeMasks::StaticShapeObjectType)
 		{
-			if (isObject(%col.getGroup()) && %col.getGroup().material !$= "")
+			if (isObject(%col.getGroup()) && %obj.PipeLayerBuffer !$= "" && %col.getGroup().material !$= "")
 			{
 				%col.getGroup().RemoveCableData();
 				%client.chatMessage("\c6Pipe sucessfully removed.", 1);
@@ -182,6 +182,9 @@ function PipeLayerImage::onMount(%this, %obj, %slot)
    if (!isObject(%client = %obj.client))
 		return;
 		
+	%obj.PipeLayerBuffer = "";
+	cancel(%obj.PipeLayerMessageLoop);
+	
 	if (%client.PipeLayerMat $= "")
 		%client.PipeLayerMat = "Lead";
 	

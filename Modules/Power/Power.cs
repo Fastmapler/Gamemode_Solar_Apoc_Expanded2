@@ -114,7 +114,7 @@ function SimObject::doPowerTransferFull(%obj)
 {
 	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
 	{
-		%obj.delete();
+		%obj.parent.RemoveCableData();
 		return;
 	}
 	%obj.powerTransfer = mCeil(%obj.powerTransfer);
@@ -138,7 +138,7 @@ function SimObject::doMatterTransferFull(%obj)
 {
 	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
 	{
-		%obj.delete();
+		%obj.parent.RemoveCableData();
 		return;
 	}
 	%obj.powerTransfer = mCeil(%obj.powerTransfer);
@@ -296,6 +296,7 @@ package EOTWPower
 
 		%group.material = %material TAB %amt;
 		%group.cable = %cable;
+		%cable.parent = %group;
 
 		%source.ropeGroups = trim(%source.ropeGroups SPC %group);
 		%target.ropeGroups = trim(%target.ropeGroups SPC %group);
