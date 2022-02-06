@@ -64,6 +64,10 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Deuterium";	color="ffffffff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Coolant";		color="9ab6b5ff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Cryostablizer";color="89a3b8ff";	tier=5;	};
+		//Heated Coolants
+		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";	tier=1;	};
+		new ScriptObject(MatterType) { name="Hot Coolant";	color="9ab6b5ff";	tier=3;	};
+		new ScriptObject(MatterType) { name="Hot Cryostablizer";	color="89a3b8ff";	tier=5;	};
 		//Nuclear
 		new ScriptObject(MatterType) { name="Fissile Fuel";	color="56643bff";	tier=6;	fuelCapacity=300;	};
 		new ScriptObject(MatterType) { name="Nuclear Waste";color="605042ff";	tier=3;	};
