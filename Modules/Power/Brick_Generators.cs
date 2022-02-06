@@ -1,3 +1,4 @@
+//Solar Panel
 datablock fxDTSBrickData(brickEOTWSolarPanelData)
 {
 	brickFile = "./Bricks/SolarPanel.blb";
@@ -35,20 +36,21 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 	}
 }
 
-datablock fxDTSBrickData(brickEOTWManualCrankData)
+//Manual Crank
+datablock fxDTSBrickData(brickEOTWHandCrankData)
 {
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Source";
-	uiName = "Manual Crank";
+	uiName = "Hand Crank";
 	energyGroup = "Source";
 	energyMaxBuffer = 6400;
 	loopFunc = "";
     inspectFunc = "EOTW_HandCrankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
-$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWManualCrankData"] = "A simple device that produces power when activated.";
+$EOTW::CustomBrickCost["brickEOTWHandCrankData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWHandCrankData"] = "A simple device that produces power when activated.";
 
 function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 {
@@ -76,6 +78,7 @@ function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_HandCrankInspectLoop", %brick);
 }
 
+//Stirling Engine
 datablock fxDTSBrickData(brickEOTWStirlingEngineData)
 {
 	brickFile = "./Bricks/Generator.blb";
@@ -140,6 +143,75 @@ function Player::EOTW_StirlingEngineInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_StirlingEngineInspectLoop", %brick);
 }
 
+//Steam Engine
+datablock fxDTSBrickData(brickEOTWSteamEngineData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Source";
+	uiName = "Steam Engine";
+	energyGroup = "Source";
+	energyMaxBuffer = 12800;
+	matterMaxBuffer = 2048;
+	matterSlots["Input"] = 2;
+	loopFunc = "EOTW_SteamEngineLoop";
+    inspectFunc = "EOTW_DefaultInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
+};
+$EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam.";
+
+function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
+{
+
+}
+
+//Steam Turbine
+datablock fxDTSBrickData(brickEOTWSteamTurbineData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Source";
+	uiName = "Steam Turbine";
+	energyGroup = "Source";
+	energyMaxBuffer = 4096;
+	loopFunc = "EOTW_SteamTurbineLoop";
+	inspectFunc = "EOTW_DefaultInspectLoop";
+	matterMaxBuffer = 100000;
+	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 1;
+	//iconName = "./Bricks/Icon_Generator";
+};
+$EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "[[(WIP)]] Uses steam to create large amounts of power. Returns steam as water.";
+
+function fxDtsBrick::EOTW_SteamTurbineLoop(%obj)
+{
+
+}
+
+//Soul Reactor
+datablock fxDTSBrickData(brickEOTWSoulReactorData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Source";
+	uiName = "Plutonium RTG";
+	energyGroup = "Source";
+	energyMaxBuffer = 4096;
+	loopFunc = "EOTW_SoulReactorLoop";
+	inspectFunc = "EOTW_DefaultInspectLoop";
+	//iconName = "./Bricks/Icon_Generator";
+};
+$EOTW::CustomBrickCost["EOTW_SoulReactorLoop"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["EOTW_SoulReactorLoop"] = "[[(WIP)]] Dusts nearby monster corpses for power.";
+
+function fxDtsBrick::EOTW_SteamTurbineLoop(%obj)
+{
+
+}
+
+//Radioisotope
 datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
 {
 	brickFile = "./Bricks/Generator.blb";
@@ -149,6 +221,7 @@ datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
 	energyGroup = "Source";
 	energyMaxBuffer = 64;
 	loopFunc = "EOTW_RadioIsotopeGeneratorLoop";
+	inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 };
 $EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 128 TAB "Plutonium" TAB 480 TAB "Lead";
@@ -158,3 +231,5 @@ function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
 		%obj.changePower(40 / $EOTW::PowerTickRate);
 }
+
+exec("./Brick_MFR.cs");
