@@ -14,7 +14,7 @@ function EnvMasterSetup()
 	{
 		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap2.bls", 3, "", 2);
 		$EOTW::WorldBounds = "-512 -512 512 512";
-		setLavaHeight(35);
+		schedule(1000, 0, "setLavaHeight", 35);
 	}
 	else
 	{
@@ -32,7 +32,6 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "SimpleMode",0);
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 	servercmdEnvGui_SetVar(EnvMaster, "SunAzimuth", 75);
-	servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0.5 0 0.05");
 	servercmdEnvGui_SetVar(EnvMaster, "GroundColor", "0.4 0.4 0.4 1.0");
 	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
 	
