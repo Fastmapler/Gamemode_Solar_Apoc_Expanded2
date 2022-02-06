@@ -2,7 +2,7 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 {
 	brickFile = "./Bricks/MatterReactor.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Processing";
+	subCategory = "Processors";
 	uiName = "Matter Reactor";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
 	
@@ -24,7 +24,7 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 {
 	brickFile = "./Bricks/AlloyForge.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Processing";
+	subCategory = "Processors";
 	uiName = "Alloy Forge";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/AlloyForge";
 	
@@ -52,7 +52,7 @@ datablock fxDTSBrickData(brickEOTWRefineryData)
 {
 	brickFile = "./Bricks/Refinery.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Processing";
+	subCategory = "Processors";
 	uiName = "Refinery";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Refinery";
 	
@@ -74,7 +74,7 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 {
 	brickFile = "./Bricks/Seperator.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Processing";
+	subCategory = "Processors";
 	uiName = "Seperator";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Seperator";
 	

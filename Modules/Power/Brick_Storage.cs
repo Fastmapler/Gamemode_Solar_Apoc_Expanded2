@@ -1,10 +1,8 @@
-//Brick_Capacitors
-
 datablock fxDTSBrickData(brickEOTWMicroCapacitorData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Power Storage";
+	subCategory = "Storage Device";
 	uiName = "Micro Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 16000;
@@ -19,7 +17,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Power Storage";
+	subCategory = "Storage Device";
 	uiName = "Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 1000000;
@@ -34,7 +32,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Power Storage";
+	subCategory = "Storage Device";
 	uiName = "Quad Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 4000000;
@@ -49,7 +47,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Power Storage";
+	subCategory = "Storage Device";
 	uiName = "Quad-Quad Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 16000000;
@@ -82,3 +80,31 @@ function Player::EOTW_DefaultInspectLoop(%player, %brick)
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_DefaultInspectLoop", %brick);
 }
+
+datablock fxDTSBrickData(brickEOTWMatterTank1Data)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Storage Device";
+	uiName = "Matter Tank";
+    matterMaxBuffer = 50000;
+	matterSlots["Buffer"] = 1;
+    inspectFunc = "EOTW_SplitterInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWMatterTank1Data"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWMatterTank1Data"] = "Buffers a large amount of one type of material";
+
+datablock fxDTSBrickData(brickEOTWMatterTank2Data)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Storage Device";
+	uiName = "Celled Matter Tank";
+    matterMaxBuffer = 50000;
+	matterSlots["Buffer"] = 4;
+    inspectFunc = "EOTW_SplitterInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWMatterTank2Data"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWMatterTank2Data"] = "A matter tank with four slots for four unique materials.";

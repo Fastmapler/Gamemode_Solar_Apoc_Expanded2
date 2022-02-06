@@ -201,7 +201,7 @@ datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
 	inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 };
-$EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 128 TAB "Plutonium" TAB 480 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 128 TAB "Polonium" TAB 480 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produces power.";
 
 function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)

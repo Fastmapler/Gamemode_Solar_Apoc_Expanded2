@@ -2,7 +2,7 @@ $EOTW::PowerTickRate = 20;
 
 exec("./MachineCrafting.cs");
 exec("./Brick_Generators.cs");
-exec("./Brick_Capacitors.cs");
+exec("./Brick_Storage.cs");
 exec("./Brick_Logistics.cs");
 exec("./Brick_MatterReactor.cs");
 exec("./Brick_WaterWorks.cs");
