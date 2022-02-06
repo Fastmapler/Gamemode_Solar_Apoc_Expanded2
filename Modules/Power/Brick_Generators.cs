@@ -16,6 +16,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 
 };
 $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 0.85 TAB "7a7a7aff" TAB 64 TAB "Silver" TAB 64 TAB "Rosium" TAB 64 TAB "Teflon";
+$EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality.";
 
 function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 {
@@ -47,6 +48,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
 $EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 32 TAB "Copper" TAB 48 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWManualCrankData"] = "A simple device that produces power when activated.";
 
 function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 {
@@ -89,6 +91,7 @@ datablock fxDTSBrickData(brickEOTWStirlingEngineData)
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
 $EOTW::CustomBrickCost["brickEOTWStirlingEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 192 TAB "Lead" TAB 96 TAB "Gold";
+$EOTW::BrickDescription["brickEOTWStirlingEngineData"] = "Burns various materials to produce decent amounts of power.";
 
 function fxDtsBrick::EOTW_StirlingEngineUpdate(%obj)
 {

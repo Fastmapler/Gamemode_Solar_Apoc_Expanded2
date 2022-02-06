@@ -13,6 +13,7 @@ datablock fxDTSBrickData(brickEOTWMicroCapacitorData)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWMicroCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 16 TAB "Silver" TAB 32 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWMicroCapacitorData"] = "A compact low capacity capacitor that is only 1x1 big.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 {
@@ -27,6 +28,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor1";
 };
 $EOTW::CustomBrickCost["brickEOTWCapacitor1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWCapacitor1Data"] = "Buffers large amounts of power. This one is set at 1,000,000 EU.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 {
@@ -41,6 +43,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor2";
 };
 $EOTW::CustomBrickCost["brickEOTWCapacitor2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Electrum";
+$EOTW::BrickDescription["brickEOTWCapacitor2Data"] = "Buffers huge amounts of power. This one is set at 4,000,000 EU.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 {
@@ -55,6 +58,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor3";
 };
 $EOTW::CustomBrickCost["brickEOTWCapacitor3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Iron" TAB 128 TAB "Plastic" TAB 64 TAB "Energium";
+$EOTW::BrickDescription["brickEOTWCapacitor3Data"] = "Buffers insane amounts of power. This one is set at 16,000,000 EU.";
 
 function Player::EOTW_DefaultInspectLoop(%player, %brick)
 {

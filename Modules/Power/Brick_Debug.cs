@@ -10,6 +10,7 @@ datablock fxDTSBrickData(brickEOTWDebugGeneratorData)
 	//iconName = "./Bricks/Icon_Generator";
 };
 $EOTW::CustomBrickCost["brickEOTWDebugGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWDebugGeneratorData"] = "Produces free power.";
 
 function fxDtsBrick::EOTW_DebugGeneratorLoop(%obj)
 {

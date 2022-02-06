@@ -15,6 +15,7 @@ datablock fxDTSBrickData(brickEOTWSplitterData)
     isSplitter = true;
 };
 $EOTW::CustomBrickCost["brickEOTWSplitterData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWSplitterData"] = "Equally splits its energy and buffered material into splitters above and below.";
 
 datablock fxDTSBrickData(brickEOTWInertSplitterData : brickEOTWSplitterData)
 {
@@ -22,6 +23,7 @@ datablock fxDTSBrickData(brickEOTWInertSplitterData : brickEOTWSplitterData)
 	loopFunc = "";
 };
 $EOTW::CustomBrickCost["brickEOTWInertSplitterData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWInertSplitterData"] = "Can take in energy and materials from splitters, but won't split them again.";
 
 function Player::EOTW_SplitterInspectLoop(%player, %brick)
 {
