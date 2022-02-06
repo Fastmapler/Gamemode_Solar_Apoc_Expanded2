@@ -139,3 +139,22 @@ function Player::EOTW_StirlingEngineInspectLoop(%player, %brick)
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_StirlingEngineInspectLoop", %brick);
 }
+
+datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Source";
+	uiName = "Plutonium RTG";
+	energyGroup = "Source";
+	energyMaxBuffer = 64;
+	loopFunc = "EOTW_RadioIsotopeGeneratorLoop";
+	//iconName = "./Bricks/Icon_Generator";
+};
+$EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 128 TAB "Plutonium" TAB 480 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produces power.";
+
+function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
+{
+		%obj.changePower(40 / $EOTW::PowerTickRate);
+}
