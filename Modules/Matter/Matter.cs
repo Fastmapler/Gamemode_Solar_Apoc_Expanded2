@@ -177,7 +177,7 @@ schedule(10, 0, "GatherableSpawnLoop");
 function spawnGatherableRandom(%eye)
 {
 	if (%eye $= "")
-		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 2) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 2) SPC 1000;
+		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 1000;
 		
 	%dir = "0 0 -1";
 	%for = "0 1 0";
@@ -197,7 +197,7 @@ function spawnGatherableRandom(%eye)
 
 function SpawnGatherableVein()
 {
-	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 2) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 2) SPC 495;
+	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 495;
 	%matter = GetRandomSpawnMaterial();
 	
 	%veinSize = getRandom(1, %matter.spawnVeinSize);
