@@ -67,12 +67,33 @@ function fxDtsBrick::EOTW_WaterPumpLoop(%obj)
     }
 }
 
+datablock fxDTSBrickData(brickEOTWSteamEngineData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Water Works";
+	uiName = "Steam Engine";
+	energyGroup = "Source";
+	energyMaxBuffer = 12800;
+	matterMaxBuffer = 2048;
+	matterSlots["Input"] = 2;
+	loopFunc = "EOTW_SteamEngineLoop";
+    inspectFunc = "EOTW_DefaultInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
+};
+$EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam.";
+
+function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
+{
+
+}
 
 datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 {
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
-	subCategory = "Power Source";
+	subCategory = "Water Works";
 	uiName = "Thermoelectric Boiler";
 	energyGroup = "Source";
 	energyMaxBuffer = 0;
