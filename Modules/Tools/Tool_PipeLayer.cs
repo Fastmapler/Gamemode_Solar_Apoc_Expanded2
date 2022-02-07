@@ -44,7 +44,7 @@ datablock shapeBaseImageData(PipeLayerImage)
 	colorShiftColor = PipeLayerItem.colorShiftColor;
 	
 	stateName[0]					= "Start";
-	stateTimeoutValue[0]			= 0.5;
+	stateTimeoutValue[0]			= 0.0;
 	stateTransitionOnTimeout[0]	 	= "Ready";
 	stateSound[0]					= weaponSwitchSound;
 	
