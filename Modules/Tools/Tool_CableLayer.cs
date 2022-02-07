@@ -175,7 +175,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 			if (isObject(%col.getGroup()) && %obj.cableLayerBuffer $= "" && %col.getGroup().material !$= "")
 			{
 				%col.getGroup().RemoveCableData();
-				%client.chatMessage("\c6Cable sucessfully removed.", 1);
+				%client.chatMessage("\c6Rope sucessfully removed.", 1);
 			}
 		}
 	}
@@ -271,7 +271,7 @@ function Player::CableLayerMessage(%obj)
 			if (isObject(%group) && %group.material !$= "")
 			{
 				%matter = getMatterType(getField(%group.material, 0));
-				%source = "\c6Power Cable (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
+				%source = "\c6Rope (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
 				%target = "\c7(Remove)";
 			}
 		}	

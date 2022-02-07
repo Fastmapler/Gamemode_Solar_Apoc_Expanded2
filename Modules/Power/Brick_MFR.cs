@@ -1,5 +1,5 @@
 //The Modular Fission Reactor, the ultimate solution for power.
-
+//Other names include: My Fantastic Reactor, Mega Flippin' Reactor, etc.
 
 ////Brick parts
 //MFR Hull: Baseplate for the MFR. Build using "Construction" themed materials (ie Adamantine, Steel, Lead)

@@ -166,10 +166,10 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 		}
 		else if (%col.getType() & $TypeMasks::StaticShapeObjectType)
 		{
-			if (isObject(%col.getGroup()) && %obj.PipeLayerBuffer !$= "" && %col.getGroup().material !$= "")
+			if (isObject(%col.getGroup()) && %obj.PipeLayerBuffer $= "" && %col.getGroup().material !$= "")
 			{
 				%col.getGroup().RemoveCableData();
-				%client.chatMessage("\c6Pipe sucessfully removed.", 1);
+				%client.chatMessage("\c6Rope sucessfully removed.", 1);
 			}
 		}
 	}
@@ -225,7 +225,7 @@ function Player::PipeLayerMessage(%obj)
 		%cost = "--";
 		if (isObject(%col) && (%col.getType() & $TypeMasks::FxBrickObjectType))
 		{
-			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
+			if (%col.getDatablock().matterMaxBuffer > 0 && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				if (%obj.PipeLayerBuffer == %col)
 				{
@@ -252,7 +252,7 @@ function Player::PipeLayerMessage(%obj)
 	{
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
-			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
+			if (%col.getDatablock().matterMaxBuffer > 0 && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				%source = "\c6" @ %col.getDatablock().uiName;
 			}
@@ -266,7 +266,7 @@ function Player::PipeLayerMessage(%obj)
 			if (isObject(%group) && %group.material !$= "")
 			{
 				%matter = getMatterType(getField(%group.material, 0));
-				%source = "\c6Matter Pipe (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
+				%source = "\c6Rope (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
 				%target = "\c7(Remove)";
 			}
 		}
