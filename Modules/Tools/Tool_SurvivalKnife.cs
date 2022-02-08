@@ -85,7 +85,7 @@ AddDamageType("Knifestab",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded22/Mod
 datablock ProjectileData(SurvivalKnifeStabProjectile)
 {
     shapeFile = "base/data/shapes/empty.dts";
-    directDamage        = 20;
+    directDamage        = 10;
     directDamageType  = $DamageType::knifestab;
     radiusDamageType  = $DamageType::knifestab;
 
@@ -96,11 +96,11 @@ datablock ProjectileData(SurvivalKnifeStabProjectile)
     brickExplosionMaxVolumeFloating = 2;
     explosion           = KnifethrownExplosion;
 
-    muzzleVelocity      = 50;
+    muzzleVelocity      = 75;
     velInheritFactor    = 1;
 
     armingDelay         = 0;
-    lifetime            = 75;
+    lifetime            = 125;
     fadeDelay           = 70;
     bounceElasticity    = 0;
     bounceFriction      = 0;
