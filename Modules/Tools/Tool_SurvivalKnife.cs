@@ -96,7 +96,7 @@ datablock ProjectileData(SurvivalKnifeStabProjectile)
     brickExplosionMaxVolumeFloating = 2;
     explosion           = KnifethrownExplosion;
 
-    muzzleVelocity      = 75;
+    muzzleVelocity      = 80;
     velInheritFactor    = 1;
 
     armingDelay         = 0;
@@ -291,7 +291,7 @@ function Player::GibFaunaLoop(%obj, %target)
             if (%target.gatherProcess >= %totalTime)
             {
                 $EOTW::Material[%client.bl_id, "Gibs"] += mCeil(%target.getDatablock().maxDamage / 2);
-                %client.centerPrint("<br><color:FFFFFF>Gibbing and gutting the " @ %target.getDataBlock().hName @ ".<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, "Gibs"] @ " Gibs.", 3);
+                %client.centerPrint("<br><color:FFFFFF>Gibbed the " @ %target.getDataBlock().hName @ ".<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, "Gibs"] @ " Gibs.", 3);
                 %target.removeBody(true);
             }
             else
