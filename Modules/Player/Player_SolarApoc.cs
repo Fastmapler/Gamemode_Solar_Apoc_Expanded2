@@ -17,8 +17,8 @@ datablock PlayerData(PlayerSolarApoc : PlayerStandardArmor)
 	
 	airControl = 0.25;
 	
-	maxTools = 4;
-	maxWeapons = 4;
+	maxTools = 5;
+	maxWeapons = 5;
 
 	uiName = "Solar Apoc Player";
 	showEnergyBar = true;
