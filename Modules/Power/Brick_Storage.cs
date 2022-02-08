@@ -5,7 +5,7 @@ datablock fxDTSBrickData(brickEOTWMicroCapacitorData)
 	subCategory = "Storage Device";
 	uiName = "Micro Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 16000;
+	energyMaxBuffer = 1280;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
@@ -20,13 +20,13 @@ datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 	subCategory = "Storage Device";
 	uiName = "Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 1000000;
+	energyMaxBuffer = 62500;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor1";
 };
 $EOTW::CustomBrickCost["brickEOTWCapacitor1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Copper";
-$EOTW::BrickDescription["brickEOTWCapacitor1Data"] = "Buffers large amounts of power. This one is set at 1,000,000 EU.";
+$EOTW::BrickDescription["brickEOTWCapacitor1Data"] = "Buffers large amounts of power. This one is set at 62,500 EU.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 {
@@ -35,13 +35,13 @@ datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 	subCategory = "Storage Device";
 	uiName = "Quad Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 4000000;
+	energyMaxBuffer = 250000;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor2";
 };
 $EOTW::CustomBrickCost["brickEOTWCapacitor2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Electrum";
-$EOTW::BrickDescription["brickEOTWCapacitor2Data"] = "Buffers huge amounts of power. This one is set at 4,000,000 EU.";
+$EOTW::BrickDescription["brickEOTWCapacitor2Data"] = "Buffers huge amounts of power. This one is set at 250,000 EU.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 {
@@ -50,13 +50,13 @@ datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 	subCategory = "Storage Device";
 	uiName = "Quad-Quad Capacitor";
 	energyGroup = "Storage";
-	energyMaxBuffer = 16000000;
+	energyMaxBuffer = 999999;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor3";
 };
 $EOTW::CustomBrickCost["brickEOTWCapacitor3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Iron" TAB 128 TAB "Plastic" TAB 64 TAB "Energium";
-$EOTW::BrickDescription["brickEOTWCapacitor3Data"] = "Buffers insane amounts of power. This one is set at 16,000,000 EU.";
+$EOTW::BrickDescription["brickEOTWCapacitor3Data"] = "Buffers insane amounts of power. This one is set at 999,999 EU.";
 
 function Player::EOTW_DefaultInspectLoop(%player, %brick)
 {

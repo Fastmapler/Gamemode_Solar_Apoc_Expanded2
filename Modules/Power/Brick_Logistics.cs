@@ -5,7 +5,7 @@ datablock fxDTSBrickData(brickEOTWSplitterData)
 	subCategory = "Logistics";
 	uiName = "Normal Splitter";
 	energyGroup = "Storage";
-	energyMaxBuffer = 16000;
+	energyMaxBuffer = 640;
     matterMaxBuffer = 1024;
 	matterSlots["Buffer"] = 1;
 	loopFunc = "EOTW_SplitterUpdate";
@@ -101,8 +101,8 @@ datablock fxDTSBrickData(brickEOTWTrashBinData)
 	subCategory = "Logistics";
 	uiName = "Trash Bin";
 	energyGroup = "Storage";
-	energyMaxBuffer = 16000;
-    matterMaxBuffer = 1024;
+	energyMaxBuffer = 999999;
+    matterMaxBuffer = 999999;
 	matterSlots["Input"] = 1;
 	loopFunc = "EOTW_TrashBinUpdate";
     inspectFunc = "";

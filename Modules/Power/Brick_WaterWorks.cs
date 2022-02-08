@@ -5,8 +5,8 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	subCategory = "Water Works";
 	uiName = "Water Pump";
 	energyGroup = "Machine";
-	energyMaxBuffer = 640;
-    energyWattage = 160;
+	energyMaxBuffer = 100;
+    energyWattage = 10;
 	loopFunc = "EOTW_WaterPumpLoop";
     inspectFunc = "EOTW_WaterPumpInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
@@ -53,7 +53,7 @@ function Player::EOTW_WaterPumpInspectLoop(%player, %brick)
 function fxDtsBrick::EOTW_WaterPumpLoop(%obj)
 {
     %data = %obj.getDatablock();
-    %costPerUnit = 320;
+    %costPerUnit = 20;
 	if (%obj.craftingPower >= %costPerUnit)
 	{
 		%change = %obj.changeMatter("Water", 1, "Output");
@@ -74,7 +74,7 @@ datablock fxDTSBrickData(brickEOTWSteamEngineData)
 	subCategory = "Water Works";
 	uiName = "Steam Engine";
 	energyGroup = "Source";
-	energyMaxBuffer = 12800;
+	energyMaxBuffer = 400;
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 2;
 	loopFunc = "EOTW_SteamEngineLoop";
@@ -82,7 +82,7 @@ datablock fxDTSBrickData(brickEOTWSteamEngineData)
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
 $EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam.";
+$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam. Use power for slight burn boost.";
 
 function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
 {
@@ -96,7 +96,7 @@ datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 	subCategory = "Water Works";
 	uiName = "Thermoelectric Boiler";
 	energyGroup = "Source";
-	energyMaxBuffer = 0;
+	energyMaxBuffer = 400;
 	loopFunc = "EOTW_ThermoelectricBoilerLoop";
 	inspectFunc = "EOTW_DefaultInspectLoop";
 	matterMaxBuffer = 100000;
@@ -105,7 +105,7 @@ datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 	//iconName = "./Bricks/Icon_Generator";
 };
 $EOTW::CustomBrickCost["brickEOTWThermoelectricBoilerData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWThermoelectricBoilerData"] = "[[(WIP)]] Uses hot coolant or hot cryostablizer to heat water into steam.";
+$EOTW::BrickDescription["brickEOTWThermoelectricBoilerData"] = "[[(WIP)]] Uses hot coolant or hot cryostablizer to heat water into steam. Use power for slight burn boost.";
 
 function fxDtsBrick::EOTW_ThermoelectricBoilerLoop(%obj)
 {

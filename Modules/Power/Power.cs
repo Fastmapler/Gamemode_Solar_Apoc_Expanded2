@@ -192,6 +192,36 @@ function fxDtsBrick::ChangePower(%obj, %change)
 
 	if (%change > 0)
 	{
+		%totalChange = getMin(%change, %maxEnergy - %obj.energy);
+		%obj.energy += %totalChange;
+		return %totalChange;
+	}
+	else if (%change < 0)
+	{
+		if (%change * -1 > %obj.energy)
+			%totalChange = %obj.energy * -1;
+		else
+			%totalChange = %change;
+
+		%obj.energy += %totalChange;
+		return %totalChange;
+	}
+
+	return;
+}
+
+function fxDtsBrick::ChangePower_uInt(%obj, %change)
+{
+	%data = %obj.getDatablock();
+
+	if ((%maxEnergy = %data.energyMaxBuffer) <= 0)
+		return 0;
+
+	if (%obj.energy $= "" || %obj.energy < 0)
+		%obj.energy = 0;
+
+	if (%change > 0)
+	{
 		%totalChange = getMin(%change, uint_sub(%maxEnergy, %obj.energy));
 		%obj.energy = uint_add(%obj.energy, %totalChange);
 		return %totalChange;

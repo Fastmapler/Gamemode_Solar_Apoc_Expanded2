@@ -7,10 +7,10 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
 	
 	energyGroup = "Machine";
-	energyMaxBuffer = 12800;
+	energyMaxBuffer = 200;
 	loopFunc = "EOTW_MatterReactorLoop";
 	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 640;
+	energyWattage = 20;
 	inspectFunc = "EOTW_MatterReactorInspectLoop";
 	
 	matterMaxBuffer = 2048;
@@ -29,10 +29,10 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/AlloyForge";
 	
 	energyGroup = "Machine";
-	energyMaxBuffer = 12800;
+	energyMaxBuffer = 200;
 	loopFunc = "EOTW_MatterReactorLoop";
 	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 640;
+	energyWattage = 20;
 	inspectFunc = "EOTW_MatterReactorInspectLoop";
 	
 	matterMaxBuffer = 2048;
@@ -57,10 +57,10 @@ datablock fxDTSBrickData(brickEOTWRefineryData)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Refinery";
 	
 	energyGroup = "Machine";
-	energyMaxBuffer = 12800;
+	energyMaxBuffer = 200;
 	loopFunc = "EOTW_MatterReactorLoop";
 	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 640;
+	energyWattage = 20;
 	inspectFunc = "EOTW_MatterReactorInspectLoop";
 	
 	matterMaxBuffer = 2048;
@@ -79,10 +79,10 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Seperator";
 	
 	energyGroup = "Machine";
-	energyMaxBuffer = 12800;
+	energyMaxBuffer = 200;
 	loopFunc = "EOTW_MatterReactorLoop";
 	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 640;
+	energyWattage = 20;
 	inspectFunc = "EOTW_MatterReactorInspectLoop";
 	
 	matterMaxBuffer = 2048;

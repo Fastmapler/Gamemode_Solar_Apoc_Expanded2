@@ -6,7 +6,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 	subCategory = "Power Source";
 	uiName = "Solar Panel";
 	energyGroup = "Source";
-	energyMaxBuffer = 1600;
+	energyMaxBuffer = 100;
 	loopFunc = "EOTW_SolarPanelLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
@@ -30,7 +30,7 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 		%hit = firstWord(%ray);
 		if((!isObject(%hit) || (%hit == %obj)) && !%obj.getUpBrick(0))
 		{
-			%wattage = 160;
+			%wattage = 10;
 			%obj.ChangePower(%wattage / $EOTW::PowerTickRate);
 		}
 	}
@@ -44,7 +44,7 @@ datablock fxDTSBrickData(brickEOTWHandCrankData)
 	subCategory = "Power Source";
 	uiName = "Hand Crank";
 	energyGroup = "Source";
-	energyMaxBuffer = 6400;
+	energyMaxBuffer = 100;
 	loopFunc = "";
     inspectFunc = "EOTW_HandCrankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
@@ -72,7 +72,7 @@ function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 
 	%client.centerPrint(%printText, 1);
 
-	%wattage = 160;
+	%wattage = 20;
 	%brick.ChangePower(%wattage / $EOTW::PowerTickRate);
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_HandCrankInspectLoop", %brick);
@@ -86,7 +86,7 @@ datablock fxDTSBrickData(brickEOTWStirlingEngineData)
 	subCategory = "Power Source";
 	uiName = "Stirling Engine";
 	energyGroup = "Source";
-	energyMaxBuffer = 12800;
+	energyMaxBuffer = 200;
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 1;
 	loopFunc = "EOTW_StirlingEngineUpdate";
@@ -98,11 +98,11 @@ $EOTW::BrickDescription["brickEOTWStirlingEngineData"] = "Burns various material
 
 function fxDtsBrick::EOTW_StirlingEngineUpdate(%obj)
 {
-	%wattage = 640;
+	%wattage = 40;
 	if (%obj.storedFuel > 0)
 		%obj.storedFuel -= %obj.changePower(mMin(%obj.storedFuel, %wattage / $EOTW::PowerTickRate));
 
-	if (%obj.storedFuel <= 0)
+	if (%obj.storedFuel < 1)
 	{
 		%matterType = getMatterType(getField(%obj.matter["Input", 0], 0));
 		if (isObject(%matterType) && %matterType.fuelCapacity > 0)
@@ -151,7 +151,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	subCategory = "Power Source";
 	uiName = "Steam Turbine";
 	energyGroup = "Source";
-	energyMaxBuffer = 4096;
+	energyMaxBuffer = 250;
 	loopFunc = "EOTW_SteamTurbineLoop";
 	inspectFunc = "EOTW_DefaultInspectLoop";
 	matterMaxBuffer = 100000;
@@ -175,7 +175,7 @@ datablock fxDTSBrickData(brickEOTWSoulReactorData)
 	subCategory = "Power Source";
 	uiName = "Soul Reactor";
 	energyGroup = "Source";
-	energyMaxBuffer = 4096;
+	energyMaxBuffer = 250;
 	loopFunc = "EOTW_SoulReactorLoop";
 	inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
@@ -206,7 +206,8 @@ $EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produ
 
 function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
-		%obj.changePower(40 / $EOTW::PowerTickRate);
+	%wattage = 5;
+	%obj.changePower(%wattage / $EOTW::PowerTickRate);
 }
 
 exec("./Brick_MFR.cs");
