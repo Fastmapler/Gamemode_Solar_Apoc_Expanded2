@@ -9,7 +9,7 @@ datablock fxDTSBrickData(brickEOTWOilGeyserData)
 
 function brickEOTWOilGeyserData::onPlant(%this, %obj)
 {
-	talk("TEST2: " @ %obj);
+	%obj.OilCapacity = getRandom(64, 128) * 2;
 	
 	Parent::onPlant(%this, %obj);
 }
