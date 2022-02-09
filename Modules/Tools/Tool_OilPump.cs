@@ -39,6 +39,8 @@ datablock shapeBaseImageData(OilPumpImage)
 
 	doColorShift = OilPumpItem.doColorShift;
 	colorShiftColor = OilPumpItem.colorShiftColor;
+
+	printPlayerBattery = true;
 	
 	stateName[0]					= "Start";
 	stateTimeoutValue[0]			= 0.5;
@@ -75,7 +77,7 @@ function OilPumpImage::onFire(%this, %obj, %slot)
         if (%hit.getDataBlock().getName() $= "brickEOTWOilGeyserData" && %hit.OilCapacity > 0)
         {
             if(%hit.beingCollected > 0 && %hit.beingCollected != %client.bl_id)
-                %cl.centerPrint("<color:FFFFFF>Someone is already collecting that material brick!", 3);
+                %hit.centerPrint("<color:FFFFFF>Someone is already draining that oil geyser!", 3);
             else
             {
                 %hit.lastGatherTick = getSimTime();
@@ -102,6 +104,44 @@ function Player::collectOilLoop(%obj, %target)
     %ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
     if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick" && %hit == %target)
     {
-        %obj.collectOilSchedule = %obj.schedule(16, "collectOilLoop", %target);
+		%energyPerTick = 1;
+		%PowerTickRate = 50;
+		if (%obj.GetBatteryEnergy() < %energyPerTick)
+		{
+			%client.chatMessage("\c6You need to sustain " @ (%energyPerTick * %PowerTickRate) @ " EU drain per second to drain the well! Charge at a charge pad brick.");
+		}
+		else
+		{
+			%target.gatherProcess += getSimTime() - %hit.lastGatherTick;
+
+			%obj.ChangeBatteryEnergy(%energyPerTick * -1);
+
+			%totalTime = mClamp(2000 - (%target.OilCapacity * 2), 100, 2000);
+			if (%target.gatherProcess >= %totalTime)
+			{
+				%oilPerCycle = getMin(8, %target.OilCapacity);
+				%obj.ChangeMatterCount("Crude Oil", %oilPerCycle);
+				%client.chatMessage("\c6Sapped " @ %oilPerCycle @ " crude oil.");
+
+				%target.gatherProcess = 0;
+
+				%target.OilCapacity -= %oilPerCycle;
+
+				if (%target.OilCapacity <= 0)
+				{
+					%target.killBrick();
+					return;
+				}
+			}
+
+			%client.centerPrint("\c6Sucking Crude Oil... (" @ %target.OilCapacity @ "u crude oil left)<br>\c6" @ mFloor((%target.gatherProcess / %totalTime) * 100) @ "% done.",1);
+
+			%hit.lastGatherTick = getSimTime();
+			%hit.beingCollected = %client.bl_id;
+			cancel(%hit.cancelCollecting);
+			%hit.cancelCollecting = %hit.schedule(10000, "cancelCollecting");
+			%obj.collectOilSchedule = %obj.schedule(1000 / %PowerTickRate, "collectOilLoop", %target);
+		}
+		
     }
 }

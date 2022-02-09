@@ -9,13 +9,25 @@ datablock fxDTSBrickData(brickEOTWOilGeyserData)
 
 function brickEOTWOilGeyserData::onPlant(%this, %obj)
 {
-	%obj.OilCapacity = getRandom(64, 128) * 2;
-	
+	if (!isObject(OilGeyserSet))
+		new SimSet(OilGeyserSet);
+
+	%obj.OilCapacity = getRandom(16, 32) * 8;
+	Gatherables.add(%obj);
+	OilGeyserSet.add(%obj);
+	%obj.despawnLife = getRandom(300, 500);
+
 	Parent::onPlant(%this, %obj);
 }
 
 function SpawnOilGeyser(%eye)
 {
+	if (!isObject(OilGeyserSet))
+		new SimSet(OilGeyserSet);
+
+	if (OilGeyserSet.getCount() > 10)
+		return;
+
 	if (%eye $= "")
 		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 1000;
 		
@@ -30,6 +42,8 @@ function SpawnOilGeyser(%eye)
 		if (%hit.getClassName() !$= "FxPlane" && strPos(%hit.getDatablock().uiName,"Ramp") > -1)
 			%pos = vectorAdd(%pos,"0 0 0.4");
 		
+		%pos = vectorAdd(%pos,"0 0 0.2");
+
         %output = CreateBrick(EnvMaster, brickEOTWOilGeyserData, %pos, getColorFromHex(getMatterType("Crude Oil").color), getRandom(0, 3));
 
         if (getField(%output, 1) == 0)

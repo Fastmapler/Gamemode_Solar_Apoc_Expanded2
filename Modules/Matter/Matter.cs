@@ -67,7 +67,12 @@ function GatherableSpawnLoop(%despawnValue)
 			%brick.DespawnLife--;
 				
 			if (%brick.DespawnLife <= 0)
-				%brick.delete();
+			{
+				if (%brick.OilCapacity > 0)
+					%brick.OilCapacity -= 8;
+				else
+					%brick.delete();
+			}
 				
 		}
 		

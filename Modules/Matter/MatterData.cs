@@ -42,13 +42,13 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=15;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	gatherableDB="brickEOTWGatherableCrystalData";	};
 		new ScriptObject(MatterType) { name="Uranium";		color="007c3fff";	tier=4;	spawnWeight=15;	spawnVeinSize=2;	spawnValue=64;	collectTime=18000;	requiredCollectFuel=("Sulfur" TAB 32);	gatherableDB="brickEOTWGatherableCrystalData";	};
 		//Chemicals
-		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=400/96;	};
+		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=500/96;	};
 		new ScriptObject(MatterType) { name="Sulfur";		color="93690eff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Ethanol";		color="953800ff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Ethylene";		color="a5a189ff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff";	tier=5;	};
-		new ScriptObject(MatterType) { name="Rocket Fuel";	color="f8cfaaff";	tier=5;	fuelCapacity=600/64;	};
+		new ScriptObject(MatterType) { name="Rocket Fuel";	color="f8cfaaff";	tier=5;	fuelCapacity=750/64;	};
 		new ScriptObject(MatterType) { name="Dielectrics";	color="264b38ff";	tier=5;	};
 		//Water Based
 		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";	tier=1;	};

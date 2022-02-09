@@ -3,7 +3,7 @@ function Player::GetBatteryText(%obj)
     if (!isObject(%client = %obj.client))
             return;
 
-    %text = "[\c4";
+    %text = "\c6[\c4";
 
     %i = 0.05;
 
