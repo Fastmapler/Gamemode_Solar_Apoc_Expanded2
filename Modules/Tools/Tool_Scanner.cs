@@ -39,6 +39,8 @@ datablock shapeBaseImageData(MiningScannerImage)
 
 	doColorShift = MiningScannerItem.doColorShift;
 	colorShiftColor = MiningScannerItem.colorShiftColor;
+
+	printPlayerBattery = true;
 	
 	stateName[0]					= "Start";
 	stateTimeoutValue[0]			= 1.0;
@@ -61,7 +63,19 @@ datablock shapeBaseImageData(MiningScannerImage)
 
 function MiningScannerImage::onFire(%this, %obj, %slot)
 {
-	%obj.MiningScannerPing(64, 5000);
+	if (!isObject(%client = %obj.client))
+        return;
+
+	%energyCost = 100;
+	if (%obj.GetBatteryEnergy() >= %energyCost)
+	{
+		%obj.ChangeBatteryEnergy(%energyCost * -1);
+		%obj.MiningScannerPing(64, 5000);
+	}
+	else
+	{
+		%client.chatMessage("\c6You need atleast " @ %energyCost @ " EU per use! Charge at a charge pad brick.");
+	}
 }
 
 function Player::MiningScannerPing(%obj, %range, %time)

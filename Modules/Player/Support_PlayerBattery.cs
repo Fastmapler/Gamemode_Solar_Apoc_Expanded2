@@ -3,14 +3,14 @@ function Player::GetBatteryText(%obj)
     if (!isObject(%client = %obj.client))
             return;
 
-    %text = "[\c3";
+    %text = "[\c4";
 
-    %i = 0;
+    %i = 0.05;
 
     while (%i <= (%obj.GetBatteryEnergy() / %obj.GetMaxBatteryEnergy()))
     {
         %text = %text @ "|";
-        %i += 0.1;
+        %i += 0.05;
     }
 
     %text = %text @ "\c0";
@@ -18,10 +18,10 @@ function Player::GetBatteryText(%obj)
     while (%i <= 1.0)
     {
         %text = %text @ "|";
-        %i += 0.1;
+        %i += 0.05;
     }
 
-    %text = "] (" @ %obj.GetBatteryEnergy() @ "/" @ %obj.GetMaxBatteryEnergy() @ " EU)";
+    %text = %text @ "\c6] (" @ %obj.GetBatteryEnergy() @ "/" @ %obj.GetMaxBatteryEnergy() @ " EU)";
 
     return %text;
 }
