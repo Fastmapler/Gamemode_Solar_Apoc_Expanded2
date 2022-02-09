@@ -89,6 +89,8 @@ function OilPumpImage::onFire(%this, %obj, %slot)
 
 function Player::collectOilLoop(%obj, %target)
 {
+	cancel(%obj.collectOilSchedule);
+	
     if (!isObject(%client = %obj.client))
         return;
 
@@ -100,6 +102,6 @@ function Player::collectOilLoop(%obj, %target)
     %ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
     if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick" && %hit == %target)
     {
-        
+        %obj.collectOilSchedule = %obj.schedule(16, "collectOilLoop", %target);
     }
 }

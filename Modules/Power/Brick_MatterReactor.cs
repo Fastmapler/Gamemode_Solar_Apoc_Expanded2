@@ -249,3 +249,25 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 		}
 	}
 }
+
+datablock fxDTSBrickData(brickEOTWBreweryData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Processors";
+	uiName = "Brewery";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
+	
+	energyGroup = "Machine";
+	energyMaxBuffer = 200;
+	loopFunc = "EOTW_MatterReactorLoop";
+	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
+	energyWattage = 10;
+	inspectFunc = "EOTW_MatterReactorInspectLoop";
+	
+	matterMaxBuffer = 2048;
+	matterSlots["Input"] = 4;
+	matterSlots["Output"] = 1;
+};
+$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 240 TAB "Lead" TAB 64 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";
