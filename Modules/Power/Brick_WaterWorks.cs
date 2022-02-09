@@ -1,6 +1,6 @@
 datablock fxDTSBrickData(brickEOTWWaterPumpData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/WaterPump.blb";
 	category = "Solar Apoc";
 	subCategory = "Water Works";
 	uiName = "Water Pump";
