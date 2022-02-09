@@ -5,7 +5,7 @@ datablock fxDTSBrickData(brickEOTWChargePadData)
 	subCategory = "Support";
 	uiName = "Charge Pad";
 	energyGroup = "Machine";
-	energyMaxBuffer = 6400;
+	energyMaxBuffer = 200;
 	loopFunc = "EOTW_ChargePadLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
@@ -28,5 +28,5 @@ function fxDtsBrick::EOTW_ChargePadLoop(%obj)
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 2)), %mask, %obj);
 	
 	if (isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "Player")
-		%obj.changePower(%player.ChangeBatteryEnergy(%obj.getPower()) * -1);
+		%obj.changePower(%hit.ChangeBatteryEnergy(%obj.getPower()) * -1);
 }
