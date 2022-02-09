@@ -356,7 +356,7 @@ package EOTW_Matter
 					if (%hit.isCollectable)
 					{
 						if(%hit.beingCollected > 0 && %hit.beingCollected != %client.bl_id)
-							%cl.centerPrint("<color:FFFFFF>Someone is already collecting that material brick!", 3);
+							%client.centerPrint("<color:FFFFFF>Someone is already collecting that material brick!", 3);
 						else
 						{
 							%hit.lastGatherTick = getSimTime();

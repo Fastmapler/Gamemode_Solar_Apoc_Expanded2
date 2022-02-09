@@ -42,51 +42,56 @@ function GameConnection::PrintEOTWInfo(%client)
 	
 	%health = %health @ "<color:ffffff>/" @ %player.getDatablock().maxDamage;
 	
-	if (isObject(%image = %player.getMountedImage(0)) && %image.getName() $= "BrickImage" && isObject(%db = %client.inventory[%client.currInvSlot]))
+	if (isObject(%image = %player.getMountedImage(0)))
 	{
-		if (%client.buildMaterial $= "")
-			%client.buildMaterial = MatterData.getObject(0).name;
+		if (%image.getName() $= "BrickImage" && isObject(%db = %client.inventory[%client.currInvSlot]))
+		{
+			if (%client.buildMaterial $= "")
+				%client.buildMaterial = MatterData.getObject(0).name;
 
-		if ($EOTW::BrickDescription[%db.getName()] !$= "")
-		{
-			%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
-		}
-		
-		if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
-		{
-			%cost = $EOTW::CustomBrickCost[%db.getName()];
-			
-			%brickText = "<br>";
-			
-			if (getField(%cost, 0) < 1.0)
-				%brickText = %brickText @ "(" @ ((1.0 - getField(%cost, 0)) * 100) @ "% Refund Fee!)";
-				
-			for (%i = 2; %i < getFieldCount(%cost); %i += 2)
+			if ($EOTW::BrickDescription[%db.getName()] !$= "")
 			{
-				%volume = getField(%cost, %i);
-				%matter = getMatterType(getField(%cost, %i + 1));
+				%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
+			}
+			
+			if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
+			{
+				%cost = $EOTW::CustomBrickCost[%db.getName()];
+				
+				%brickText = "<br>";
+				
+				if (getField(%cost, 0) < 1.0)
+					%brickText = %brickText @ "(" @ ((1.0 - getField(%cost, 0)) * 100) @ "% Refund Fee!)";
+					
+				for (%i = 2; %i < getFieldCount(%cost); %i += 2)
+				{
+					%volume = getField(%cost, %i);
+					%matter = getMatterType(getField(%cost, %i + 1));
+					%name = %matter.name;
+					%color = "<color:" @ %matter.color @ ">";
+					%inv = $EOTW::Material[%client.bl_id, %name] + 0;
+					if (%inv < %volume) %inv = "\c0" @ %inv;
+				
+					%brickText = %brickText SPC %inv @ "\c6/" @ %volume SPC %color @ %name @ "\c6,";
+				}
+				
+				%brickText = getSubStr(%brickText, 0, strLen(%brickText) - 1);
+			}
+			else
+			{
+				%matter = getMatterType(%client.buildMaterial);
 				%name = %matter.name;
 				%color = "<color:" @ %matter.color @ ">";
 				%inv = $EOTW::Material[%client.bl_id, %name] + 0;
+			
+				%volume = %db.brickSizeX * %db.brickSizeY * %db.brickSizeZ;
 				if (%inv < %volume) %inv = "\c0" @ %inv;
-			
-				%brickText = %brickText SPC %inv @ "\c6/" @ %volume SPC %color @ %name @ "\c6,";
+				
+				%brickText = "<br>" @ %color @ %name @ "\c6: " @ %inv @ "\c6/" @ %volume SPC "[" @ %db.getName() @ "]";
 			}
-			
-			%brickText = getSubStr(%brickText, 0, strLen(%brickText) - 1);
 		}
-		else
-		{
-			%matter = getMatterType(%client.buildMaterial);
-			%name = %matter.name;
-			%color = "<color:" @ %matter.color @ ">";
-			%inv = $EOTW::Material[%client.bl_id, %name] + 0;
-		
-			%volume = %db.brickSizeX * %db.brickSizeY * %db.brickSizeZ;
-			if (%inv < %volume) %inv = "\c0" @ %inv;
-			
-			%brickText = "<br>" @ %color @ %name @ "\c6: " @ %inv @ "\c6/" @ %volume SPC "[" @ %db.getName() @ "]";
-		}
+		else if (%image.printPlayerBattery)
+			%brickText = "<br>" @ %player.GetBatteryText();
 	}
 	
 	if (%centerText !$= "")
