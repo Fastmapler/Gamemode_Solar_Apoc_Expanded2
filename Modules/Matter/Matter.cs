@@ -1,5 +1,6 @@
 exec("./ItemCrafting.cs");
 exec("./Item_MaterialPickup.cs");
+exec("./Brick_OilGeyser.cs");
 exec("./MatterData.cs");
 
 $EOTW::MatterDensity = 5000 / (2048 * 2048);
