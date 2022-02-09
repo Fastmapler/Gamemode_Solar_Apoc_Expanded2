@@ -294,7 +294,8 @@ package Tool_CableLayer
 				{
 					case "Copper": %client.CableLayerMat = "Electrum";
 					case "Electrum": %client.CableLayerMat = "Energium";
-					case "Energium": %client.CableLayerMat = "Copper";
+					case "Energium": %client.CableLayerMat = "Infinity";
+					case "Infinity": %client.CableLayerMat = "Copper";
 					default: %client.CableLayerMat = "Copper";
 				}
 			}

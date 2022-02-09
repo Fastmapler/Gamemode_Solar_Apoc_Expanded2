@@ -289,7 +289,8 @@ package Tool_PipeLayer
 				{
 					case "Lead": %client.PipeLayerMat = "Rosium";
 					case "Rosium": %client.PipeLayerMat = "Naturum";
-					case "Naturum": %client.PipeLayerMat = "Lead";
+					case "Naturum": %client.PipeLayerMat = "Infinity";
+					case "Infinity": %client.PipeLayerMat = "Lead";
 					default: %client.PipeLayerMat = "Lead";
 				}
 			}
