@@ -37,7 +37,7 @@ function SpawnOilGeyser(%eye)
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
 	%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
-	if(isObject(%hit = firstWord(%ray)))
+	if(isObject(%hit = firstWord(%ray)) && (getWord(%pos, 2) > $EOTW::LavaHeight) + 1)
 	{
 		if (%hit.getClassName() !$= "FxPlane" && strPos(%hit.getDatablock().uiName,"Ramp") > -1)
 			%pos = vectorAdd(%pos,"0 0 0.4");

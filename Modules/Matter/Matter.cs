@@ -45,7 +45,12 @@ function GatherableSpawnLoop(%despawnValue)
 		MainBrickgroup.add(new SimGroup(Gatherables) { bl_id = 1337; name = "God"; });
 		
 	if (Gatherables.getCount() < (getMapArea() * $EOTW::MatterDensity))
+	{
+		if (getRandom() < 0.01)
+			SpawnOilGeyser();
+		
 		SpawnGatherableVein();
+	}
 	
 	for (%j = 0; %j < 30 && %despawnValue < Gatherables.getCount(); %j++)
 	{
