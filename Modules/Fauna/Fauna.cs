@@ -1,5 +1,79 @@
 exec("./Bot_Unfleshed.cs");
 
+function SetupFaunaSpawnData()
+{
+	if (isObject(FaunaSpawnData))
+	{
+		FaunaSpawnData.deleteAll();
+		FaunaSpawnData.delete();
+	}
+
+	new SimSet(FaunaSpawnData)
+	{
+		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";	spawnWeight=1.0;	spawnCost=16;	maxSpawnGroup=3; };
+	};
+
+	$EOTW::FaunaSpawnWeight = 0;
+	$EOTW::FaunaSpawnList = "";
+	for (%i = 0; %i < FaunaSpawnData.getCount(); %i++)
+	{
+		if (FaunaSpawnData.getObject(%i).spawnWeight > 0)
+		{
+			$EOTW::FaunaSpawnList = $EOTW::FaunaSpawnList TAB FaunaSpawnData.getObject(%i).data;
+			$EOTW::FaunaSpawnWeight += FaunaSpawnData.getObject(%i).spawnWeight;
+		}
+	}
+	$EOTW::FaunaSpawnList = trim($EOTW::FaunaSpawnList);
+}
+SetupFaunaSpawnData();
+
+//The spawning mechanic is a bit more indepth, so I will try my best to show what is going on.
+//TLDR: The function gains "points" overtime, which will then be spent on a random target after a period of time.
+function spawnFaunaLoop()
+{
+	cancel($EOTW::spawnFaunaLoop);
+
+	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < 30)
+	{
+		//Give the spawner a credit, and decrement time left before spawn.
+		$EOTW::MonsterSpawnCredits++;
+		$EOTW::MonsterSpawnDelay--;
+
+		if ($EOTW::MonsterSpawnDelay <= 0)
+		{
+			//Figure out what monster we should spawn
+			%rand = getRandom() * $EOTW::FaunaSpawnWeight;
+			for (%i = 0; %i < FaunaSpawnData.getCount() && %rand > 0; %i++)
+			{
+				%spawnData = FaunaSpawnData.getObject(%i);
+				if (%rand < %spawnData.spawnWeight && $EOTW::MonsterSpawnCredits >= %spawnData.spawnCost)
+					break;
+
+				%spawnData = "";
+				%rand -= %spawnData.spawnWeight;
+			}
+
+			if (isObject(%spawnData))
+			{
+				%totalSpawn = getRandom(1, getMin(mFloor($EOTW::MonsterSpawnCredits / %spawnData.spawnCost), %spawnData.maxSpawnGroup));
+				$EOTW::MonsterSpawnCredits -= %totalSpawn * $EOTW::MonsterSpawnCredits;
+
+				for (%fail = 0; !isObject(%target) && %fail < 100; %fail++)
+					%target = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
+
+				if (isObject(%target))
+					for (%i = 0; %i < %totalSpawn; %i++)
+						spawnNewFauna(VectorAdd(%target.getPosition(), "5 5 5"), %spawnData.data);
+			}
+
+			$EOTW::MonsterSpawnDelay = getRandom(10, 10);
+		}
+	}
+
+	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
+}
+schedule(100, 0, "spawnFaunaLoop");
+
 //spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), UnfleshedHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {

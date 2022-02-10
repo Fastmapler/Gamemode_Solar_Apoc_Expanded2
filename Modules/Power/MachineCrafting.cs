@@ -20,8 +20,8 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Ethylene" TAB 64);		input[1]=("Fluorine" TAB 64);	input[2]=("");					output[0]=("Teflon" TAB 128);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Yellow Cake" TAB 64);	input[1]=("Sulfur" TAB 64);		input[2]=("Fluorine" TAB 64);	output[0]=("Fissile Fuel" TAB 128);	};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Nuclear Waste" TAB 128);	input[1]=("Water" TAB 128);		input[2]=("");					output[0]=("Fissile Fuel" TAB 64);	};
-		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Water" TAB 128);			input[1]=("Sodium" TAB 64);		input[2]=("");					output[0]=("Coolant" TAB 128);		};
-		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Coolant" TAB 128);		input[1]=("Dielectrics" TAB 64);input[2]=("");					output[0]=("Cryostablizer" TAB 128);};
+		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=400;	input[0]=("Water" TAB 128);			input[1]=("Sodium" TAB 64);		input[2]=("");					output[0]=("Coolant" TAB 128);		};
+		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=800;	input[0]=("Coolant" TAB 128);		input[1]=("Dielectrics" TAB 64);input[2]=("");					output[0]=("Cryostablizer" TAB 128);};
 		//Alloy Forge
 		new ScriptObject(MatterCraftType) { type="Alloy Forge";		energycost=200;	input[0]=("Iron" TAB 96);			input[1]=("Coal" TAB 32);		output[0]=("Steel" TAB 96);		};
 		new ScriptObject(MatterCraftType) { type="Alloy Forge";		energycost=200;	input[0]=("Gold" TAB 96);			input[1]=("Silver" TAB 32);		output[0]=("Electrum" TAB 128);	};
