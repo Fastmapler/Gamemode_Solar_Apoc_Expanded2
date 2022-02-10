@@ -80,10 +80,11 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 	hEmote = 1;
 
 	//Total Weight, % Chance to be gibbable on death
-	//Note: Extra weight can be added than the loot table weight sum for a chance to drop nothing
+	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
 	EOTWLootTableData = 2.0 TAB 0.2;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1 TAB 32 TAB 64 TAB "Wood";
 	EOTWLootTable[1] = 0.5 TAB 16 TAB 32 TAB "Granite";
+	EOTWLootTable[1] = 0.3 TAB 16 TAB 32 TAB "Leather";
 	EOTWLootTable[2] = 0.1 TAB 8 TAB 16 TAB "Iron";
 };
