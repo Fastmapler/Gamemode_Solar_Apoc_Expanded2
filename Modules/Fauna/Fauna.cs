@@ -214,7 +214,7 @@ package EOTW_Fauna
 		}
 		else
 		{
-			%rand = getRandom(0, getField(%data.EOTWLootTableData, 0));
+			%rand = getRandom() * getField(%data.EOTWLootTableData, 0);
 	
 			for (%i = 0; %data.EOTWLootTable[%i] !$= ""; %i++)
 			{
