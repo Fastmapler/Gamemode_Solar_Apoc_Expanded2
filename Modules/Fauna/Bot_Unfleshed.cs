@@ -11,11 +11,11 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 	maxForwardSpeed		= 3;
 	maxBackwardSpeed	= 1.5;
 	maxSideSpeed		= 3;
-	attackpower			= 10;
 	rideable			= false;
 	canRide				= false;
 	maxDamage			= 75;
 	jumpSound			= "";
+	lavaImmune			= false;
 	
 	//Hole Attributes
 	isHoleBot = 1;
@@ -78,6 +78,8 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 			hIdleSpam = 0;				//Makes them spam click and spam hammer/spraycan
 		hSpasticLook = 1;				//Makes them look around their environment a bit more.
 	hEmote = 1;
+
+	hPlayerscale = "1.0 1.0 1.0";		//The size of the bot
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing

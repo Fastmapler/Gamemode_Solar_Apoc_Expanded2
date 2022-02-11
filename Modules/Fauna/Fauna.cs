@@ -1,4 +1,6 @@
 exec("./Bot_Unfleshed.cs");
+exec("./Bot_Husk.cs");
+exec("./Bot_Swarmer.cs");
 
 function SetupFaunaSpawnData()
 {
@@ -10,7 +12,20 @@ function SetupFaunaSpawnData()
 
 	new SimSet(FaunaSpawnData)
 	{
-		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";	spawnWeight=1.0;	spawnCost=16;	maxSpawnGroup=3; };
+		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=1.0;	spawnCost=10;	maxSpawnGroup=5;	timeRange=(12 TAB 24)	}; //Basic Grunt
+		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=0.8;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(06 TAB 12)	}; //Offensive Grunt
+		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=0.8;	spawnCost=5;	maxSpawnGroup=15;	timeRange=(12 TAB 18)	}; //Horde Grunt
+		//new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 24)	}; //Tank Grunt
+		//new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";	spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24)	}; //Ranger Grunt
+
+		//new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";	spawnWeight=0.4;	spawnCost=45;	maxSpawnGroup=4; 	timeRange=(16 TAB 24)	}; //Basic Elemental
+		//new ScriptObject(FaunaSpawnType) { data="ElementalHoleBot";	spawnWeight=0.4;	spawnCost=100;	maxSpawnGroup=1; 	timeRange=(18 TAB 24)	}; //Upgraded Elemental
+
+		//new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";		spawnWeight=0.2;	spawnCost=60;	maxSpawnGroup=2; 	timeRange=(12 TAB 24)	}; //Blob Infernal
+		//new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(20 TAB 24)	}; //Hunter Infernal
+		//new ScriptObject(FaunaSpawnType) { data="GolemHoleBot";		spawnWeight=0.2;	spawnCost=200;	maxSpawnGroup=1; 	timeRange=(00 TAB 12)	}; //Golem Infernal
+
+		//new ScriptObject(FaunaSpawnType) { data="DeathSquadHoleBot";	spawnWeight=1.0;	spawnCost=500;	maxSpawnGroup=3; 	timeRange=(00 TAB 24)	}; //Death Squad, we got too many points.
 	};
 
 	$EOTW::FaunaSpawnWeight = 0;
@@ -24,6 +39,9 @@ function SetupFaunaSpawnData()
 		}
 	}
 	$EOTW::FaunaSpawnList = trim($EOTW::FaunaSpawnList);
+	$EOTW::FaunaSpawnWeight *= 1.05; //Multiplied weight for chance of no spawn
+
+	if (!isObject(EOTWEnemies)) new SimGroup(EOTWEnemies);
 }
 SetupFaunaSpawnData();
 
@@ -46,7 +64,8 @@ function spawnFaunaLoop()
 			for (%i = 0; %i < FaunaSpawnData.getCount() && %rand > 0; %i++)
 			{
 				%spawnData = FaunaSpawnData.getObject(%i);
-				if (%rand < %spawnData.spawnWeight && $EOTW::MonsterSpawnCredits >= %spawnData.spawnCost)
+				%spawnWeight = ($EOTW::MonsterSpawnCredits > %spawnData.spawnWeight * %spawnData.maxSpawnGroup ? %spawnData.spawnWeight / 2 : %spawnData.spawnWeight); //Prioritize higher cost fauna if we got lots of points
+				if (%rand < %spawnWeight && $EOTW::MonsterSpawnCredits >= %spawnData.spawnCost && $EOTW::Time >= getField(%spawnData.timeRange, 0) && $EOTW::Time <= getField(%spawnData.timeRange, 1))
 					break;
 
 				%spawnData = "";
@@ -56,7 +75,7 @@ function spawnFaunaLoop()
 			if (isObject(%spawnData))
 			{
 				%totalSpawn = getRandom(1, getMin(mFloor($EOTW::MonsterSpawnCredits / %spawnData.spawnCost), %spawnData.maxSpawnGroup));
-				$EOTW::MonsterSpawnCredits -= %totalSpawn * $EOTW::MonsterSpawnCredits;
+				$EOTW::MonsterSpawnCredits -= %totalSpawn * %spawnData.spawnCost;
 
 				for (%fail = 0; !isObject(%target) && %fail < 100; %fail++)
 					%target = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
@@ -66,7 +85,7 @@ function spawnFaunaLoop()
 						spawnNewFauna(VectorAdd(%target.getPosition(), "5 5 5"), %spawnData.data);
 			}
 
-			$EOTW::MonsterSpawnDelay = getRandom(10, 10);
+			$EOTW::MonsterSpawnDelay = getRandom(30, 60);
 		}
 	}
 
@@ -146,9 +165,9 @@ function spawnNewFauna(%trans,%hBotType)
 		hMoveSlowdown = %hBotType.hMoveSlowdown;
 		hMaxMoveSpeed = 1.0;
 		hActivateDirection = %hBotType.hActivateDirection;
+
+		hPlayerscale = %hBotType.hPlayerscale;
 	};
-	
-    if (!isObject(EOTWEnemies)) new SimGroup(EOTWEnemies);
 
 	missionCleanup.add(%player);
 		
@@ -158,6 +177,9 @@ function spawnNewFauna(%trans,%hBotType)
 
 	if (%hBotType.hShoot)
 		%player.mountImage(%hBotType.hWep,0);
+
+	if (%hBotType.hPlayerscale !$= "")
+		%player.setScale(%hBotType.hPlayerscale);
 	
 	%player.hGridPosition = getWords(%trans, 0, 2);
 	%player.scheduleNoQuota(10,spawnProjectile,"audio2d","spawnProjectile","0 0 0", 1);
@@ -305,6 +327,23 @@ package EOTW_Fauna
 
 			return parent::RemoveBody(%player);
 		}
+	}
+	function AIPlayer::lavaDamage(%obj, %amt)
+	{
+		Player::lavaDamage(%obj, %amt);
+	}
+	function Player::lavaDamage(%obj, %amt)
+	{
+		if (%obj.getDataBlock().lavaImmune)
+			return;
+
+		%obj.Damage (0, %obj.getPosition(), %amt, $DamageType::Lava);
+		if (isEventPending(%obj.lavaSchedule))
+		{
+			cancel(%obj.lavaSchedule);
+			%obj.lavaSchedule = 0;
+		}
+		%obj.lavaSchedule = %obj.schedule (300, lavaDamage, %amt);
 	}
 };
 activatePackage("EOTW_Fauna");
