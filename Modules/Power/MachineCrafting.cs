@@ -13,7 +13,7 @@ function SetupMatterCraftingData()
 		//Matter Rector
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=100;	input[0]=("Vines" TAB 16);			input[1]=("Moss" TAB 4);		input[2]=("");					output[0]=("Bio Fuel" TAB 20);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Hydrogen" TAB 64);		input[1]=("Petroleum" TAB 96);	input[2]=("Fluorine" TAB 32);	output[0]=("Rocket Fuel" TAB 64);	};
-		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Petroleum" TAB 96);		input[1]=("Hydrogen" TAB 64);	input[2]=("");					output[0]=("Sulfur" TAB 64);		};
+		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Petroleum" TAB 96);		input[1]=("Hydrogen" TAB 64);	input[2]=("Water" TAB 64);		output[0]=("Sulfur" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Fluorine" TAB 16);		input[1]=("Sulfur" TAB 64);		input[2]=("");					output[0]=("Dielectrics" TAB 64);	};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Sulfur" TAB 64);			input[1]=("Ethanol" TAB 64);	input[2]=("");					output[0]=("Ethylene" TAB 128);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Ethylene" TAB 64);		input[1]=("Oxygen" TAB 64);		input[2]=("");					output[0]=("Plastic" TAB 128);		};
