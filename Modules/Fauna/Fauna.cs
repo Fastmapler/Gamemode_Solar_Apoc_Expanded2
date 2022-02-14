@@ -13,8 +13,8 @@ function SetupFaunaSpawnData()
 	new SimSet(FaunaSpawnData)
 	{
 		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=1.0;	spawnCost=10;	maxSpawnGroup=5;	timeRange=(12 TAB 24);	}; //Basic Grunt
-		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=0.8;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(06 TAB 12);	}; //Offensive Grunt
-		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=0.8;	spawnCost=5;	maxSpawnGroup=15;	timeRange=(12 TAB 18);	}; //Horde Grunt
+		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=0.8;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(00 TAB 12);	}; //Offensive Grunt
+		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=0.8;	spawnCost=5;	maxSpawnGroup=15;	timeRange=(12 TAB 24);	}; //Horde Grunt
 		//new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 24);	}; //Tank Grunt
 		//new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";	spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
