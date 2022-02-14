@@ -101,7 +101,7 @@ package FloatingBricks
 		// check if player exists
 		// check if player's ghost brick exists
 		// check if the brick error is float
-		if(!$Pref::FloatingBricks::Enabled || !isObject(%player = %this.player) || !isObject(%ghost = %player.tempBrick) || %ghost.checkPlantingError() !$= "float")
+		if(!isObject(%player = %this.player) || !isObject(%ghost = %player.tempBrick) || %ghost.checkPlantingError() !$= "float" || (!$Pref::FloatingBricks::Enabled && !%ghost.getDatablock().isGridless))
 			return %r;
 
 		%admin = %this.isAdmin;
