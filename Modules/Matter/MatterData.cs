@@ -98,9 +98,5 @@ function SetupMatterData()
 		}
 	}
 	$EOTW::MatSpawnList = trim($EOTW::MatSpawnList);
-
-
-	$EOTW::SteamToWaterRatio = 5;
-
 }
 SetupMatterData();
