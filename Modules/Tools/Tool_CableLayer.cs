@@ -1,4 +1,4 @@
-$EOTW::CableSizeLimit = 16;
+$EOTW::CableSizeLimit = 18;
 $EOTW::MaxRopeCount = 4;
 $EOTW::CableCostMulti = 1;
 
