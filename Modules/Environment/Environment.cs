@@ -180,8 +180,8 @@ function EnvMasterLoop()
 	%sizeVal = %colVal * mSqrt(%flare);
 	%realSizeVal = %colVal * mSqrt(%realFlare);
 	%sunCol = vectorScale($EOTW::WorldColor, (%realSizeVal + %sizeVal) * 0.5);
-	%ambCol = vectorScale($EOTW::WorldColor, %realSizeVal * 0.7);
-	%shadCol = vectorScale($EOTW::WorldColor, %realSizeVal * 0.4);
+	%ambCol = vectorScale($EOTW::WorldColor, getMax(%realSizeVal * 0.7, 0.3));
+	%shadCol = vectorScale($EOTW::WorldColor, getMax(%realSizeVal * 0.4, 0.3));
 	servercmdEnvGui_SetVar(EnvMaster, "VignetteColor", vectorScale($EOTW::WorldColor, %colVal) SPC (($EOTW::SunSize * %colVal) / 5));
 	servercmdEnvGui_SetVar(EnvMaster, "SkyColor", vectorScale($EOTW::WorldColor, %colVal));
 	servercmdEnvGui_SetVar(EnvMaster, "DirectLightColor", %sunCol);
