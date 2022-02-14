@@ -153,18 +153,33 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	energyGroup = "Source";
 	energyMaxBuffer = 250;
 	loopFunc = "EOTW_SteamTurbineLoop";
-	inspectFunc = "EOTW_DefaultInspectLoop";
-	matterMaxBuffer = 100000;
+	inspectFunc = "EOTW_SplitterInspectLoop";
+	matterMaxBuffer = 256;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 	//iconName = "./Bricks/Icon_Generator";
 };
 $EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "[[(WIP)]] Uses steam to create large amounts of power. Returns steam as water.";
+$EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Uses steam to create large amounts of power. Returns steam as water.";
 
 function fxDtsBrick::EOTW_SteamTurbineLoop(%obj)
 {
+	if (%obj.CondensatorBuffer > 0)
+	{
+		%obj.CondensatorBuffer -= %obj.changeMatter("Water", %obj.CondensatorBuffer, "Output");
+	}
+	else
+	{
+		%steamAmount = %obj.GetMatter("Steam", "Input");
+		if (%steamAmount > 0)
+		{
+			%change = %obj.changePower(%steamAmount);
+			%obj.changeMatter("Steam", %change * -1, "Input");
 
+			%obj.CondensatorBuffer += mFloor(%change / $EOTW::SteamToWaterRatio);
+			%obj.CondensatorBuffer -= %obj.changeMatter("Water", %obj.CondensatorBuffer, "Output");
+		}
+	}
 }
 
 //Soul Reactor
@@ -180,10 +195,10 @@ datablock fxDTSBrickData(brickEOTWSoulReactorData)
 	inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 };
-$EOTW::CustomBrickCost["EOTW_SoulReactorLoop"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["EOTW_SoulReactorLoop"] = "[[(WIP)]] Dusts nearby monster corpses for power.";
+$EOTW::CustomBrickCost["brickEOTWSoulReactorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWSoulReactorData"] = "[[(WIP)]] Dusts nearby monster corpses for power.";
 
-function fxDtsBrick::EOTW_SteamTurbineLoop(%obj)
+function fxDtsBrick::EOTW_SoulReactorLoop(%obj)
 {
 
 }

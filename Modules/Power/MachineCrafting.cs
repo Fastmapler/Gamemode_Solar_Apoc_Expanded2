@@ -72,6 +72,8 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 		return;
 	}
 
+	%amount = Round(%amount);
+
 	%eye = %player.getEyePoint();
 	%dir = %player.getEyeVector();
 	%for = %player.getForwardVector();
@@ -121,6 +123,9 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 		%client.chatMessage("Usage: /Extract <input/output/buffer> <amount> <material>");
 		return;
 	}
+
+	%amount = Round(%amount);
+
 	%eye = %player.getEyePoint();
 	%dir = %player.getEyeVector();
 	%for = %player.getForwardVector();

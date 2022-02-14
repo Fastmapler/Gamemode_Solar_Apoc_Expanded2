@@ -74,19 +74,82 @@ datablock fxDTSBrickData(brickEOTWSteamEngineData)
 	subCategory = "Water Works";
 	uiName = "Steam Engine";
 	energyGroup = "Source";
-	energyMaxBuffer = 400;
-	matterMaxBuffer = 2048;
+	energyMaxBuffer = 0;
+	matterMaxBuffer = 250;
 	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 1;
 	loopFunc = "EOTW_SteamEngineLoop";
-    inspectFunc = "EOTW_DefaultInspectLoop";
+    inspectFunc = "EOTW_SteamEngineInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
 $EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam. Use power for slight burn boost.";
+$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam.";
 
 function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
 {
+	%wattage = 100;
+	if (%obj.storedFuel > 0)
+	{
+		%fuelConsumption = getMin(%obj.storedFuel, %wattage / $EOTW::PowerTickRate);
+		%waterChange -= %obj.changeMatter("Water", (%fuelConsumption * -1) / $EOTW::SteamToWaterRatio, "Input");
+		%steamCreated = %obj.changeMatter("Steam", %waterChange * $EOTW::SteamToWaterRatio, "Output");
+		%obj.storedFuel -= %steamCreated * 0.85; //The steam engine has a +15% efficency to power. Get on steam power.
+		//Also compesates for the small loss of water when using the steam turbine.
+	}	
 
+	if (%obj.storedFuel < 1)
+	{
+		for (%i = 0; %i < %obj.getDatablock().matterSlots["Input"]; %i++)
+		{
+			%matterType = getMatterType(getField(%obj.matter["Input", %i], 0));
+			if (isObject(%matterType) && %matterType.fuelCapacity > 0)
+			{
+				%obj.storedFuel += %obj.changeMatter(%matterType.name, -32, "Input") * %matterType.fuelCapacity * -1;
+				break;
+			}
+		}
+	}
+}
+
+function Player::EOTW_SteamEngineInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+    for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
+	{
+		%matter = %brick.Matter["Input", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Input " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Input " @ (%i + 1) @ ": --" @ "\n";
+	}
+	%printText = %printText @ (%brick.storedFuel + 0) @ "u of Unburned Fuel<br>";
+
+	 for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
+	{
+		%matter = %brick.Matter["Output", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Output " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Output " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_SteamEngineInspectLoop", %brick);
 }
 
 datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
@@ -99,7 +162,7 @@ datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 	energyMaxBuffer = 400;
 	loopFunc = "EOTW_ThermoelectricBoilerLoop";
 	inspectFunc = "EOTW_DefaultInspectLoop";
-	matterMaxBuffer = 100000;
+	matterMaxBuffer = 256;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 2;
 	//iconName = "./Bricks/Icon_Generator";
