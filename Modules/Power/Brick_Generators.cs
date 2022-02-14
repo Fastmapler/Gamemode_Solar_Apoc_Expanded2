@@ -31,7 +31,14 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 		if((!isObject(%hit) || (%hit == %obj)) && !%obj.getUpBrick(0))
 		{
 			%wattage = 10;
-			%obj.ChangePower(%wattage / $EOTW::PowerTickRate);
+			%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
+
+			if (%obj.ProcessTime >= 1)
+			{
+				%ProcessTimeChange = mFloor(%obj.ProcessTime);
+				%obj.ChangePower(%ProcessTimeChange);
+				%obj.ProcessTime -= %ProcessTimeChange;
+			}
 		}
 	}
 }
@@ -73,7 +80,14 @@ function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 	%client.centerPrint(%printText, 1);
 
 	%wattage = 20;
-	%brick.ChangePower(%wattage / $EOTW::PowerTickRate);
+	%brick.ProcessTime += %wattage / $EOTW::PowerTickRate;
+
+	if (%brick.ProcessTime >= 1)
+	{
+		%ProcessTimeChange = mFloor(%brick.ProcessTime);
+		%brick.ChangePower(%ProcessTimeChange);
+		%brick.ProcessTime -= %ProcessTimeChange;
+	}
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_HandCrankInspectLoop", %brick);
 }
@@ -106,7 +120,7 @@ function fxDtsBrick::EOTW_StirlingEngineUpdate(%obj)
 	{
 		%matterType = getMatterType(getField(%obj.matter["Input", 0], 0));
 		if (isObject(%matterType) && %matterType.fuelCapacity > 0)
-			%obj.storedFuel += %obj.changeMatter(%matterType.name, -16, "Input") * %matterType.fuelCapacity * -1;
+			%obj.storedFuel += mFloor(%obj.changeMatter(%matterType.name, -16, "Input") * %matterType.fuelCapacity * -1);
 	}
 }
 
@@ -222,7 +236,14 @@ $EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produ
 function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
 	%wattage = 5;
-	%obj.changePower(%wattage / $EOTW::PowerTickRate);
+	%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
+
+	if (%obj.ProcessTime >= 1)
+	{
+		%ProcessTimeChange = mFloor(%obj.ProcessTime);
+		%obj.ChangePower(%ProcessTimeChange);
+		%obj.ProcessTime -= %ProcessTimeChange;
+	}
 }
 
 exec("./Brick_MFR.cs");

@@ -278,7 +278,7 @@ package EOTW_Matter
 				
 						if(%inv < %volume)
 						{
-							%cl.centerPrint("\c0Whoops!<br>\c6You don't have enough " @ %name @ " to place that brick!<br>\c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %name]) SPC "more.", 3);
+							%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %name @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %name]) SPC "more.", 3);
 							return;
 						}
 					}
@@ -302,7 +302,7 @@ package EOTW_Matter
 					%mat = %cl.buildMaterial;
 					
 					if($EOTW::Material[%cl.bl_id, %mat] < %volume)
-						%cl.centerPrint("\c0Whoops!<br>\c6You don't have enough " @ %cl.buildMaterial @ " to place that brick!<br>\c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.", 3);
+						%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %cl.buildMaterial @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.", 3);
 					else
 					{
 						%brick = Parent::servercmdPlantBrick(%cl); if(!isObject(%brick)) return %brick;
