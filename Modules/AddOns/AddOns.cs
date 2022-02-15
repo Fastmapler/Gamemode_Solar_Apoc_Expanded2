@@ -1,0 +1,1 @@
+exec("./Weapon_AdventurePackRemaster/server.cs");

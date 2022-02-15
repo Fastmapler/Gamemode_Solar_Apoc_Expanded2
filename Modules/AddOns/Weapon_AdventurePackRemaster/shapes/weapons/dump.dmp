@@ -1,0 +1,584 @@
+First pass:  enumerate scene...
+
+Processing Node Bounds with parent ROOT
+Bounding box found
+Processing Node Sequence::trig with parent ROOT
+Processing Node Sequence::fire with parent ROOT
+Processing Node Sequence::untrig with parent ROOT
+Processing Node Sequence::bolt with parent ROOT
+Processing Node Sequence::magout with parent ROOT
+Processing Node Sequence::magin with parent ROOT
+Processing Node __mainTree with parent ROOT
+Found subtree starting at Node "__mainTree"
+
+Second pass:  put shape structure together...
+
+Adding detail named "detail0" of size 0 to subtree "__mainTree".
+Adding node "__mainTree" with parent "__mainTree" to subtree rooted on node "__mainTree".
+Adding node "__meshes" with parent "__mainTree" to subtree rooted on node "__mainTree".
+Adding node "slide" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "trd0" with parent "slide" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "trd".
+Adding mesh of size 0 to object "trd".
+Adding node "mag" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "mag detail0" with parent "mag" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "mag detail".
+Adding mesh of size 0 to object "mag detail".
+Adding node "sxc0" with parent "mag" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "sxc".
+Adding mesh of size 0 to object "sxc".
+Adding node "muzzlePoint" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "mountPoint" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "ejectPoint" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "trigger" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "trigger detail0" with parent "trigger" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "trigger detail".
+Adding mesh of size 0 to object "trigger detail".
+Adding node "Root" with parent "__meshes" to subtree rooted on node "__mainTree".
+Adding node "chass detail0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "chass detail".
+Adding mesh of size 0 to object "chass detail".
+Adding node "black detail0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "black detail".
+Adding mesh of size 0 to object "black detail".
+Adding node "barre detail0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "barre detail".
+Adding mesh of size 0 to object "barre detail".
+Adding node "grip detail0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "grip detail".
+Adding mesh of size 0 to object "grip detail".
+Adding node "pad detail0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "pad detail".
+Adding mesh of size 0 to object "pad detail".
+Adding node "tack detail0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "tack detail".
+Adding mesh of size 0 to object "tack detail".
+Adding node "bvfd0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "bvfd".
+Adding mesh of size 0 to object "bvfd".
+Adding node "cdvdf0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "cdvdf".
+Adding mesh of size 0 to object "cdvdf".
+Adding node "vcddcvffffdrr0" with parent "Root" to subtree rooted on node "__mainTree".
+Attaching object to node.
+Adding object named "vcddcvffffdrr".
+Adding mesh of size 0 to object "vcddcvffffdrr".
+
+Third pass:  Collapsing unneeded nodes...
+
+Removing node "__mainTree"
+Removing node "__meshes"
+
+Add default object states...
+
+Adding object state to 1 detail level(s) of mesh "trd".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.28689, z=-0.71911
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "trigger detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.64550, z=-0.43737
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "mag detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.39924, z=-0.25991
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "barre detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "sxc".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.39924, z=-0.25991
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "black detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "bvfd".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "cdvdf".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "chass detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "grip detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "pad detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "tack detail".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding object state to 1 detail level(s) of mesh "vcddcvffffdrr".
+Adding frame.
+Object is visible.
+Object offset transform for mesh dl=0:
+    scale:            x=1.00000, y=1.00000, z=1.00000
+    stretch rotation: x=0.00000, y=0.00000, z=0.00000, w=1.00000
+    translation:      x=0.00000, y=0.00000, z=0.00000
+    actual rotation:  x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+
+Add default node states...
+
+Adding node rotation at time 0.000000 for node "slide".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "slide".
+  translation:     x=0.00000, y=-0.28689, z=0.71911
+---------------------------------
+Adding node rotation at time 0.000000 for node "trd0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "trd0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "mag".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "mag".
+  translation:     x=0.00000, y=-0.39924, z=0.25991
+---------------------------------
+Adding node rotation at time 0.000000 for node "mag detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "mag detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "sxc0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "sxc0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "muzzlePoint".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "muzzlePoint".
+  translation:     x=0.00000, y=0.31271, z=0.69074
+---------------------------------
+Adding node rotation at time 0.000000 for node "mountPoint".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "mountPoint".
+  translation:     x=0.00000, y=-0.80129, z=0.32479
+---------------------------------
+Adding node rotation at time 0.000000 for node "ejectPoint".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "ejectPoint".
+  translation:     x=0.05138, y=-0.28443, z=0.68545
+---------------------------------
+Adding node rotation at time 0.000000 for node "trigger".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "trigger".
+  translation:     x=0.00000, y=-0.64550, z=0.43737
+---------------------------------
+Adding node rotation at time 0.000000 for node "trigger detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "trigger detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "Root".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "Root".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "chass detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "chass detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "black detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "black detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "barre detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "barre detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "grip detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "grip detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "pad detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "pad detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "tack detail0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "tack detail0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "bvfd0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "bvfd0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "cdvdf0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "cdvdf0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+Adding node rotation at time 0.000000 for node "vcddcvffffdrr0".
+  rotation:     x=0.00000, y=0.00000, z=0.00000, w=1.00000
+---------------------------------
+Adding node translation at time 0.000000 for node "vcddcvffffdrr0".
+  translation:     x=0.00000, y=0.00000, z=0.00000
+---------------------------------
+
+Adding 6 sequences...
+
+Adding sequence 0 named "trig"
+One-shot sequence.  Enabled animation:   TUA    , Forced animation:  Duration = 0.03333, secPerFrame = 0.01667, # frames = 2
+Sequence includes 1 nodes, 0 objects, and 0 ifl materials
+  0 rotations, 1 translations, 0 scales
+
+Adding node translation at time 0.266667 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+Adding node translation at time 0.300000 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+
+Adding 1 ground transform frames at 0.033333 sec per frame intervals.
+
+Adding sequence 1 named "fire"
+One-shot sequence.  Enabled animation:   TUA    , Forced animation:  Duration = 0.10000, secPerFrame = 0.02500, # frames = 4
+Sequence includes 2 nodes, 0 objects, and 0 ifl materials
+  0 rotations, 2 translations, 0 scales
+
+Adding node translation at time 0.100000 for node "slide".
+  translation:     x=0.00000, y=-0.49199, z=0.71911
+---------------------------------
+Adding node translation at time 0.133333 for node "slide".
+  translation:     x=0.00000, y=-0.50007, z=0.71911
+---------------------------------
+Adding node translation at time 0.166667 for node "slide".
+  translation:     x=0.00000, y=-0.50876, z=0.71911
+---------------------------------
+Adding node translation at time 0.200000 for node "slide".
+  translation:     x=0.00000, y=-0.28689, z=0.71911
+---------------------------------
+Adding node translation at time 0.100000 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+Adding node translation at time 0.133333 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+Adding node translation at time 0.166667 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+Adding node translation at time 0.200000 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+
+Adding 2 ground transform frames at 0.100000 sec per frame intervals.
+
+Ground transform frame:
+   trans=(0.000000,0.000000,0.000000)
+   rot=(0.000000,0.000000,0.000000,1.000000)
+Adding sequence 2 named "untrig"
+One-shot sequence.  Enabled animation:   TUA    , Forced animation:  Duration = 0.03333, secPerFrame = 0.01667, # frames = 2
+Sequence includes 1 nodes, 0 objects, and 0 ifl materials
+  0 rotations, 1 translations, 0 scales
+
+Adding node translation at time 0.300000 for node "trigger".
+  translation:     x=0.00000, y=-0.72331, z=0.43737
+---------------------------------
+Adding node translation at time 0.333333 for node "trigger".
+  translation:     x=0.00000, y=-0.64550, z=0.43737
+---------------------------------
+
+Adding 1 ground transform frames at 0.033333 sec per frame intervals.
+
+Adding sequence 3 named "bolt"
+One-shot sequence.  Enabled animation:   TUA    , Forced animation:  Duration = 0.20000, secPerFrame = 0.02857, # frames = 7
+Sequence includes 1 nodes, 0 objects, and 0 ifl materials
+  0 rotations, 1 translations, 0 scales
+
+Adding node translation at time 0.333333 for node "slide".
+  translation:     x=0.00000, y=-0.28689, z=0.71911
+---------------------------------
+Adding node translation at time 0.366667 for node "slide".
+  translation:     x=0.00000, y=-0.37323, z=0.71911
+---------------------------------
+Adding node translation at time 0.400000 for node "slide".
+  translation:     x=0.00000, y=-0.43578, z=0.71911
+---------------------------------
+Adding node translation at time 0.433333 for node "slide".
+  translation:     x=0.00000, y=-0.50876, z=0.71911
+---------------------------------
+Adding node translation at time 0.466667 for node "slide".
+  translation:     x=0.00000, y=-0.28689, z=0.71911
+---------------------------------
+Adding node translation at time 0.500000 for node "slide".
+  translation:     x=0.00000, y=-0.29739, z=0.71911
+---------------------------------
+Adding node translation at time 0.533333 for node "slide".
+  translation:     x=0.00000, y=-0.28689, z=0.71911
+---------------------------------
+
+Adding 3 ground transform frames at 0.100000 sec per frame intervals.
+
+Ground transform frame:
+   trans=(0.000000,0.000000,0.000000)
+   rot=(0.000000,0.000000,0.000000,1.000000)
+Ground transform frame:
+   trans=(0.000000,0.000000,0.000000)
+   rot=(0.000000,0.000000,0.000000,1.000000)
+Adding sequence 4 named "magout"
+One-shot sequence.  Enabled animation:   TUA    , Forced animation:  Duration = 0.03333, secPerFrame = 0.01667, # frames = 2
+Sequence includes 1 nodes, 0 objects, and 0 ifl materials
+  0 rotations, 1 translations, 0 scales
+
+Adding node translation at time 0.600000 for node "mag".
+  translation:     x=0.00000, y=-0.39924, z=-769.54016
+---------------------------------
+Adding node translation at time 0.633333 for node "mag".
+  translation:     x=0.00000, y=-0.39924, z=-769.54016
+---------------------------------
+
+Adding 1 ground transform frames at 0.033333 sec per frame intervals.
+
+Adding sequence 5 named "magin"
+One-shot sequence.  Enabled animation:   TUA    , Forced animation:  Duration = 0.03333, secPerFrame = 0.01667, # frames = 2
+Sequence includes 0 nodes, 0 objects, and 0 ifl materials
+  0 rotations, 0 translations, 0 scales
+
+
+Adding 1 ground transform frames at 0.033333 sec per frame intervals.
+
+
+Optimizing meshes...
+
+Optimizing mesh "trd" detail level 0.
+24 verts before joining verts
+24 verts after joining verts
+12 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+6 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "trigger detail" detail level 0.
+24 verts before joining verts
+24 verts after joining verts
+12 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+6 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "mag detail" detail level 0.
+110 verts before joining verts
+110 verts after joining verts
+60 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+30 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "barre detail" detail level 0.
+232 verts before joining verts
+232 verts after joining verts
+172 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+46 strips with average length 6.43 (range 4 to 24) and 32 reversals
+
+Optimizing mesh "sxc" detail level 0.
+74 verts before joining verts
+74 verts after joining verts
+40 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+20 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "black detail" detail level 0.
+4 verts before joining verts
+4 verts after joining verts
+2 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+1 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "bvfd" detail level 0.
+24 verts before joining verts
+24 verts after joining verts
+12 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+6 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "cdvdf" detail level 0.
+74 verts before joining verts
+74 verts after joining verts
+40 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+20 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "chass detail" detail level 0.
+193 verts before joining verts
+193 verts after joining verts
+119 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+49 strips with average length 4.59 (range 4 to 9) and 8 reversals
+
+Optimizing mesh "grip detail" detail level 0.
+80 verts before joining verts
+80 verts after joining verts
+44 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+22 strips with average length 4.09 (range 3 to 7) and 2 reversals
+
+Optimizing mesh "pad detail" detail level 0.
+36 verts before joining verts
+36 verts after joining verts
+20 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+10 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Optimizing mesh "tack detail" detail level 0.
+88 verts before joining verts
+88 verts after joining verts
+56 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+26 strips with average length 4.23 (range 4 to 7) and 2 reversals
+
+Optimizing mesh "vcddcvffffdrr" detail level 0.
+68 verts before joining verts
+68 verts after joining verts
+38 faces before stripping
+Using Quick, dirty, & ugly stripping method.
+19 strips with average length 4.00 (range 4 to 4) and 0 reversals
+
+Shape Hierarchy:
+
+   Details:
+      detail0, Subtree 0, objectDetail 0, size 0
+
+   Subtrees:
+      Subtree 0
+         slide
+            trd0 --> Object trd with following details:  0
+         mag
+            mag detail0 --> Object mag detail with following details:  0
+            sxc0 --> Object sxc with following details:  0
+         muzzlePoint
+         mountPoint
+         ejectPoint
+         trigger
+            trigger detail0 --> Object trigger detail with following details:  0
+         Root
+            chass detail0 --> Object chass detail with following details:  0
+            black detail0 --> Object black detail with following details:  0
+            barre detail0 --> Object barre detail with following details:  0
+            grip detail0 --> Object grip detail with following details:  0
+            pad detail0 --> Object pad detail with following details:  0
+            tack detail0 --> Object tack detail with following details:  0
+            bvfd0 --> Object bvfd with following details:  0
+            cdvdf0 --> Object cdvdf with following details:  0
+            vcddcvffffdrr0 --> Object vcddcvffffdrr with following details:  0
+
+   Sequences:
+        0: trig
+        1: fire
+        2: untrig
+        3: bolt
+        4: magout
+        5: magin
+
+   Material list:
+   material #0: "gray75".
+   material #1: "gray50".
+   material #2: "black".
+   material #3: "gray25".
+   material #4: "gray85orso".
