@@ -254,7 +254,7 @@ package hl2AmmoSystem
       return;
     }
 
-    if(%col.dataBlock.ammoBox && ( %col.dataBlock.ammoType !$= "" || %col.dataBlock.altAmmoType !$= "" ) && %col.canPickup && %obj.getDamagePercent() < 1 && isObject(%obj.client) && minigameCanUse(%obj.client,%col))
+    if(%col.dataBlock.ammoBox && ( %col.dataBlock.ammoType !$= "" || %col.dataBlock.altAmmoType !$= "" ) && %col.canPickup && %obj.getDamagePercent() < 1 && isObject(%obj.client) && minigameCanUse(%obj.client,%col) && !(isObject(%col.spawnBrick) && $EOTW::ItemCrafting[%col.getDatablock().getName()] !$= ""))
     {
       if( %col.dataBlock.ammoType $= "ALL" )
       {

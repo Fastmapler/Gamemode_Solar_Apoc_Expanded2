@@ -18,8 +18,7 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Sulfur" TAB 64);			input[1]=("Ethanol" TAB 64);	input[2]=("");					output[0]=("Ethylene" TAB 128);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Ethylene" TAB 64);		input[1]=("Oxygen" TAB 64);		input[2]=("");					output[0]=("Plastic" TAB 128);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Ethylene" TAB 64);		input[1]=("Fluorine" TAB 64);	input[2]=("");					output[0]=("Teflon" TAB 128);		};
-		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Yellow Cake" TAB 64);	input[1]=("Sulfur" TAB 64);		input[2]=("Fluorine" TAB 64);	output[0]=("Fissile Fuel" TAB 128);	};
-		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Nuclear Waste" TAB 128);	input[1]=("Water" TAB 128);		input[2]=("");					output[0]=("Fissile Fuel" TAB 64);	};
+		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Yellow Cake" TAB 64);	input[1]=("Sulfur" TAB 64);		input[2]=("Fluorine" TAB 64);	output[0]=("Fissile Uranium" TAB 128);	};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=400;	input[0]=("Water" TAB 128);			input[1]=("Sodium" TAB 64);		input[2]=("");					output[0]=("Coolant" TAB 128);		};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=800;	input[0]=("Coolant" TAB 128);		input[1]=("Dielectrics" TAB 64);input[2]=("");					output[0]=("Cryostablizer" TAB 128);};
 		new ScriptObject(MatterCraftType) { type="Matter Reactor";	energycost=200;	input[0]=("Steel" TAB 48);			input[1]=("Plastic" TAB 64);	input[2]=("Granite" TAB 256);	output[0]=("Plasteel" TAB 1024);	};
@@ -40,10 +39,10 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Bio Fuel" TAB 40);		output[0]=("Ethanol" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Gibs" TAB 40);			output[0]=("Ethanol" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Uranium" TAB 64);		output[0]=("Yellow Cake" TAB 64);	};
-		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=1600;input[0]=("Nuclear Waste" TAB 512);	output[0]=("Polonium" TAB 16);		};
 		//Seperator
 		new ScriptObject(MatterCraftType) { type="Seperator";		energycost=200;	input[0]=("Water" TAB 96);			output[0]=("Hydrogen" TAB 64);		output[1]=("Oxygen" TAB 32);	};
 		new ScriptObject(MatterCraftType) { type="Seperator";		energycost=400;	input[0]=("Brine" TAB 64);			output[0]=("Sodium" TAB 32);		output[1]=("Deuterium" TAB 16);	};
+		new ScriptObject(MatterCraftType) { type="Seperator";		energycost=1600;input[0]=("Nuclear Waste" TAB 512);	output[0]=("Plutonium" TAB 16);		output[1]=("Yellow Cake" TAB 2);};
 		//Brewery
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Water" TAB 64);		input[1]=("Vines" TAB 32);			input[2]=("Moss" TAB 8);		input[3]=("Oxygen" TAB 32);		output[0]=("Healing Mix" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Water" TAB 64);		input[1]=("Rubber" TAB 128);		input[2]=("Ethanol" TAB 64);	input[3]=("Petroleum" TAB 96);	output[0]=("Steroid Mix" TAB 64);		};
@@ -51,6 +50,10 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Brine" TAB 64);		input[1]=("Gold" TAB 96);			input[2]=("Lead" TAB 96);		input[3]=("Moss" TAB 16);		output[0]=("Gatherer Mix" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Brine" TAB 64);		input[1]=("Yellow Cake" TAB 64);	input[2]=("Deuterium" TAB 32);	input[3]=("Lithium" TAB 32);	output[0]=("Overload Mix" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Brine" TAB 64);		input[1]=("Leather"	 TAB 64);		input[2]=("Iron" TAB 128);		input[3]=("Sodium" TAB 32);		output[0]=("Leatherskin Mix" TAB 64);	};
+		//Isotope Bombarder/Breeder //"energy" cost is reached by the production of nuclear waste rather than actual energy.
+		new ScriptObject(MatterCraftType) { type="Breeder";			energycost=200;	input[0]=("Plutonium" TAB 1);		 output[0]=("Fissile Americium" TAB 1);		};
+		new ScriptObject(MatterCraftType) { type="Breeder";			energycost=800;	input[0]=("Fissile Americium" TAB 1);output[0]=("Fissile Curium" 	TAB 1);		};
+
 	};
 }
 SetupMatterCraftingData();
