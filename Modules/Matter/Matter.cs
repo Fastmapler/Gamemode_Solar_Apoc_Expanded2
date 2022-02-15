@@ -278,11 +278,10 @@ package EOTW_Matter
 				
 						if(%inv < %volume)
 						{
-							%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %name @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %name]) SPC "more.", 3);
+							%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %name @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %name]) SPC "more.");
 							return;
 						}
 					}
-					
 					%brick = Parent::servercmdPlantBrick(%cl); if(!isObject(%brick)) return %brick;
 					
 					for (%i = 2; %i < getFieldCount(%cost); %i += 2)
@@ -292,7 +291,6 @@ package EOTW_Matter
 						%name = %matter.name;
 						$EOTW::Material[%cl.bl_id, %name] -= %volume;
 					}
-					
 					%brick.setColor(getColorFromHex(getField(%cost, 1)));
 					%brick.material = "Custom";
 				}
@@ -300,9 +298,9 @@ package EOTW_Matter
 				{
 					%volume = %data.brickSizeX * %data.brickSizeY * %data.brickSizeZ;
 					%mat = %cl.buildMaterial;
-					
+
 					if($EOTW::Material[%cl.bl_id, %mat] < %volume)
-						%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %cl.buildMaterial @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.", 3);
+						%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %cl.buildMaterial @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.");
 					else
 					{
 						%brick = Parent::servercmdPlantBrick(%cl); if(!isObject(%brick)) return %brick;
@@ -380,7 +378,10 @@ package EOTW_Matter
 			if(%trig == 4 && %tog && isObject(%image = %obj.getMountedImage(0)) && %image.getName() $= "BrickImage")
 			{
 				%db = %client.inventory[%client.currInvSlot];
-				
+
+				if (!isObject(%db) && isObject(%obj.tempBrick))
+					%db = %obj.tempBrick.getDatablock();
+
 				if (isObject(%db) && $EOTW::CustomBrickCost[%db.getName()] $= "")
 				{
 					%pos = getFieldFromValue($EOTW::PlacableList, %client.buildMaterial);

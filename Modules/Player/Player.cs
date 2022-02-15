@@ -3,11 +3,14 @@ function PlayerLoop()
 	cancel($Loops:Test);
 	
 	for (%i = 0; %i < ClientGroup.GetCount(); %i++)
-		%client = ClientGroup.getObject(%i).PrintEOTWInfo();
+	{
+		%client = ClientGroup.getObject(%i);
+		%client.PrintEOTWInfo();
+	}
 	
 	$Loops:Test = schedule(100,ClientGroup,"PlayerLoop");
 }
-schedule(10, 0, "PlayerLoop");
+schedule(100, 0, "PlayerLoop");
 
 function GetTimeStamp()
 {
@@ -44,7 +47,12 @@ function GameConnection::PrintEOTWInfo(%client)
 	
 	if (isObject(%image = %player.getMountedImage(0)))
 	{
-		if (%image.getName() $= "BrickImage" && isObject(%db = %client.inventory[%client.currInvSlot]))
+		%db = %client.inventory[%client.currInvSlot];
+
+		if (!isObject(%db) && isObject(%player.tempBrick))
+			%db = %player.tempBrick.getDatablock();
+			
+		if (%image.getName() $= "BrickImage" && isObject(%db))
 		{
 			if (%client.buildMaterial $= "")
 				%client.buildMaterial = MatterData.getObject(0).name;

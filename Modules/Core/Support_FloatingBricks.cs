@@ -263,7 +263,7 @@ package FloatingBricks
 		if (%group.bl_id == 888888)
 		{
 			//return "You cannot modify public bricks";
-			return;
+			return "";
 		}
 		else 
 		{
