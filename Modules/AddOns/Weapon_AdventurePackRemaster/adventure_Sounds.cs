@@ -614,3 +614,111 @@ datablock AudioProfile(devFireSound)
    description = AudioDefault3d;
    preload = true;
 };
+
+//Legacy Sounds
+//
+// sounds for the adventurer weapon pack, shared
+//
+
+  //// reload taps
+datablock AudioProfile(advReloadTap0Sound)
+{
+   filename    = "./Sounds/reload_tap0.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReloadTap1Sound)
+{
+   filename    = "./Sounds/reload_tap1.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReloadTap2Sound)
+{
+   filename    = "./Sounds/reload_tap2.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReloadTap3Sound)
+{
+   filename    = "./Sounds/reload_tap3.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+
+
+  //// reload outs
+datablock AudioProfile(advReloadOut0Sound)
+{
+   filename    = "./Sounds/reload_Out0.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReloadOut1Sound)
+{
+   filename    = "./Sounds/reload_Out1.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReloadOut2Sound)
+{
+   filename    = "./Sounds/reload_Out2.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReloadOut3Sound)
+{
+   filename    = "./Sounds/reload_Out3.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+
+  //// miscellenious reload parts (from tier+tactical)
+datablock AudioProfile(advReload0Sound)
+{
+   filename    = "./Sounds/reload_1.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload1Sound)
+{
+   filename    = "./Sounds/reload_2.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload2Sound)
+{
+   filename    = "./Sounds/reload_3.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload3Sound)
+{
+   filename    = "./Sounds/reload_4.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload4Sound)
+{
+   filename    = "./Sounds/reload_5.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload5Sound)
+{
+   filename    = "./Sounds/reload_6.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload6Sound)
+{
+   filename    = "./Sounds/reload_7.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+datablock AudioProfile(advReload7Sound)
+{
+   filename    = "./Sounds/reload_8.wav";
+   description = AudioClose3d;
+   preload = true;
+};

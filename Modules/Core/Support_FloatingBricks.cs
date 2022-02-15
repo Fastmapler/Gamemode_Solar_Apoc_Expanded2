@@ -239,6 +239,42 @@ package FloatingBricks
 		
 		return Parent::serverLoadSaveFile_End();
 	}
+	function SimGroup::getTrustFailureMessage(%group)
+	{
+		%parent = %group.getGroup ();
+		if (!isObject (%parent))
+		{
+			%msg = "ERROR: SimGroup::getTrustFailureMessage(" @ %group.getName () @ " [" @ %group.getId () @ "]) - brickgroup is not in a parent group";
+			error (%msg);
+			return %msg;
+		}
+		if (%parent != mainBrickGroup.getId ())
+		{
+			%msg = "ERROR: SimGroup::getTrustFailureMessage(" @ %group.getName () @ " [" @ %group.getId () @ "]) - brickgroup is not in the main brick group";
+			error (%msg);
+			return %msg;
+		}
+		if (%group.bl_id $= "")
+		{
+			%msg = "ERROR: SimGroup::getTrustFailureMessage(" @ %group.getName () @ " [" @ %group.getId () @ "]) - brickgroup has no bl_id";
+			error (%msg);
+			return %msg;
+		}
+		if (%group.bl_id == 888888)
+		{
+			//return "You cannot modify public bricks";
+			return;
+		}
+		else 
+		{
+			if (%group.name $= "")
+			{
+				%group.name = "\c1BL_ID: " @ %group.bl_id @ "\c1\c0";
+			}
+			%msg = %group.name @ " does not trust you enough to do that.";
+			return %msg;
+		}
+	}
 };
 activatePackage("FloatingBricks");
 

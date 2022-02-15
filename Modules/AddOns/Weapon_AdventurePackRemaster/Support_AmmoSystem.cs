@@ -368,7 +368,8 @@ package hl2AmmoSystem
       {
         if(%currTool.getName() $= %col.dataBlock.getName() && %col.canPickup && %obj.getDamagePercent() < 1 && minigameCanUse(%obj.client,%col))
         {
-          if(isObject(%col.spawnBrick)) //can pick up ammo from spawned weapons
+          //Disabled ammo pickup from spawn bricks to prevent accidental material waste when getting ammo
+          if(false && isObject(%col.spawnBrick)) //can pick up ammo from spawned weapons
           {
             %newAmmo = $hl2Weapons::AddAmmo[%ammoType];
             if (%obj.toolAmmo[%ammoType] $= "") //not yet defined, give baseline ammo (one mag)

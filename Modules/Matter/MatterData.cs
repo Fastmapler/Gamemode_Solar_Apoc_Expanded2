@@ -66,7 +66,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Hot Cryostablizer";	color="89a3b8ff";	tier=5;	};
 		//Nuclear //Fission Power: Amount of heat units created per unboosted unit. //fissionWasteRate: Amount of nuclear waste produced per unit of fuel consumed
 		new ScriptObject(MatterType) { name="Raw Uranium";		color="007c3fff";	tier=4;	spawnWeight=15;	spawnVeinSize=2;	spawnValue=64;	collectTime=18000;	requiredCollectFuel=("Sulfur" TAB 32);	gatherableDB="brickEOTWGatherableCrystalData";	};
-		new ScriptObject(MatterType) { name="Raw Thorium";		color="007c3fff";	tier=4;	}
+		new ScriptObject(MatterType) { name="Raw Thorium";		color="007c3fff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Fissile Uranium";		color="56643bff";	tier=6;	fuelCapacity=3800/128;	fissionPower=40;  fissionWasteRate=1;	};
 		new ScriptObject(MatterType) { name="Fissile Thorium";		color="56643bff";	tier=6;	fuelCapacity=4800/128;	fissionPower=80;  fissionWasteRate=0.5;	};
 		new ScriptObject(MatterType) { name="Fissile Americium";	color="56643bff";	tier=7;	fuelCapacity=5800/128;	fissionPower=320; fissionWasteRate=4;	};

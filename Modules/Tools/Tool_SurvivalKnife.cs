@@ -275,6 +275,7 @@ function Player::GibFaunaLoop(%obj, %target)
 	if(!isObject(%client = %obj.client) || %obj.getState() $= "DEAD" || !isObject(%target)) return;
 
     cancel(%target.cancelFaunaCollecting);
+    cancel(%target.RemoveBodySchedule);
 
     %eye = %obj.getEyePoint();
     %dir = %obj.getEyeVector();
@@ -300,7 +301,7 @@ function Player::GibFaunaLoop(%obj, %target)
 
                 %target.gatherProcess += getSimTime() - %target.lastFaunaGibTick;
                 %hit.lastFaunaGibTick = getSimTime();
-
+                %target.RemoveBodySchedule = %player.schedule(1000 * 60, "RemoveBody", true);
                 %target.cancelFaunaCollecting = %target.schedule(10000, "cancelFaunaGib");
                 %obj.faunaCollectLoop = %obj.schedule(16, "GibFaunaLoop", %target);
             }
