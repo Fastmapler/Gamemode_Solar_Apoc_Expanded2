@@ -41,10 +41,10 @@ function GatherableSpawnLoop(%despawnValue)
 {
 	cancel($EOTW::GatherableLoop);
 	
-	if(!isObject(Gatherables))
-		MainBrickgroup.add(new SimGroup(Gatherables) { bl_id = 1337; name = "God"; });
+	if(!isObject(BrickGroup_1337))
+		MainBrickgroup.add(new SimGroup(BrickGroup_1337) { bl_id = 1337; name = "God"; });
 		
-	if (Gatherables.getCount() < (getMapArea() * $EOTW::MatterDensity))
+	if (BrickGroup_1337.getCount() < (getMapArea() * $EOTW::MatterDensity))
 	{
 		if (getRandom() < 0.01)
 			SpawnOilGeyser();
@@ -52,9 +52,9 @@ function GatherableSpawnLoop(%despawnValue)
 		SpawnGatherableVein();
 	}
 	
-	for (%j = 0; %j < 30 && %despawnValue < Gatherables.getCount(); %j++)
+	for (%j = 0; %j < 30 && %despawnValue < BrickGroup_1337.getCount(); %j++)
 	{
-		%brick = Gatherables.getObject(%despawnValue);
+		%brick = BrickGroup_1337.getObject(%despawnValue);
 		if (isObject(%brick))
 		{
 			//Just loop through each player instead of doing a radius raycast since that is significantly more expensive comp. wise
@@ -84,7 +84,7 @@ function GatherableSpawnLoop(%despawnValue)
 		%despawnValue++;
 	}
 	
-	if (%despawnValue >= Gatherables.getCount())
+	if (%despawnValue >= BrickGroup_1337.getCount())
 		%despawnValue = 0;
 	
 	$EOTW::GatherableLoop = schedule(50, 0, "GatherableSpawnLoop", %despawnValue);
@@ -158,15 +158,15 @@ function SpawnGatherable(%pos, %matter, %despawnLife)
 	%brick = getField(%data, 0);
 	if(getField(%data, 1)) { %brick.delete(); return; }
 	
-	if(!isObject(Gatherables))
-		MainBrickgroup.add(new SimGroup(Gatherables) { bl_id = 1337; name = "God"; });
+	if(!isObject(BrickGroup_1337))
+		MainBrickgroup.add(new SimGroup(BrickGroup_1337) { bl_id = 1337; name = "God"; });
 		
 	if (%despawnLife > 0)
 		%brick.DespawnLife = %despawnLife;
 	else
 		%brick.DespawnLife = getRandom(100, 300);
 	
-	Gatherables.add(%brick);
+	BrickGroup_1337.add(%brick);
 	
 	%brick.material = %matter.name;
 	%brick.isCollectable = true;
