@@ -67,7 +67,7 @@ function getHitbox( %obj, %col, %pos )
    {
       %col.spawnExplosion(goremodHitProjectile,"2 2 2"); //not sure of arguments :V
 
-      %obj.client.play2d(gamedamage2Sound);
+      //%obj.client.play2d(gamedamage2Sound);
       %col.playThread(0 , jump);
       %col.playThread(2 , jump);
       %col.schedule(50, "playThread", "0", "plant");

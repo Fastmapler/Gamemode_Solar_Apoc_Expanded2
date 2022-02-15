@@ -23,11 +23,11 @@ $hl2Weapons::AddAmmo["Sniper Rifle"] = 4;
 $hl2Weapons::MaxAmmo["Machine Rifle"] = 240;
 $hl2Weapons::AddAmmo["Machine Rifle"] = 24;
 
-$hl2Weapons::MaxAmmo["Taser"] = 12;
-$hl2Weapons::AddAmmo["Taser"] = 3;
+//$hl2Weapons::MaxAmmo["Taser"] = 12;
+//$hl2Weapons::AddAmmo["Taser"] = 3;
 
 $hl2Weapons::MaxAmmo["Machine Gun"] = 200;
 $hl2Weapons::AddAmmo["Machine Gun"] = 50; 
 
-$hl2Weapons::MaxAmmo["riflenade"] = 2;
-$hl2Weapons::AddAmmo["riflenade"] = 1;
+//$hl2Weapons::MaxAmmo["riflenade"] = 2;
+//$hl2Weapons::AddAmmo["riflenade"] = 1;

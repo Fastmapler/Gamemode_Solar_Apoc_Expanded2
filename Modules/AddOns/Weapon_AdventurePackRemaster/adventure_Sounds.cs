@@ -586,18 +586,18 @@ new ScriptObject(WeaponSoftImpactSFX)
 {
 	class = "SFXEffect";
 
-	file[main, 1] = "Add-Ons/Weapon_AdventurePackRemaster/Sounds/Physics/weapon_impact_soft1.wav";
-	file[main, 2] = "Add-Ons/Weapon_AdventurePackRemaster/Sounds/Physics/weapon_impact_soft2.wav";
-	file[main, 3] = "Add-Ons/Weapon_AdventurePackRemaster/Sounds/Physics/weapon_impact_soft3.wav";
+	file[main, 1] = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/AddOns/Weapon_AdventurePackRemaster/sounds/Physics/weapon_impact_soft1.wav";
+	file[main, 2] = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/AddOns/Weapon_AdventurePackRemaster/sounds/Physics/weapon_impact_soft2.wav";
+	file[main, 3] = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/AddOns/Weapon_AdventurePackRemaster/sounds/Physics/weapon_impact_soft3.wav";
 };
 
 new ScriptObject(WeaponHardImpactSFX)
 {
 	class = "SFXEffect";
 
-	file[main, 1] = "Add-Ons/Weapon_AdventurePackRemaster/Sounds/Physics/weapon_impact_hard1.wav";
-	file[main, 2] = "Add-Ons/Weapon_AdventurePackRemaster/Sounds/Physics/weapon_impact_hard2.wav";
-	file[main, 3] = "Add-Ons/Weapon_AdventurePackRemaster/Sounds/Physics/weapon_impact_hard3.wav"; 
+	file[main, 1] = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/AddOns/Weapon_AdventurePackRemaster/sounds/Physics/weapon_impact_hard1.wav";
+	file[main, 2] = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/AddOns/Weapon_AdventurePackRemaster/sounds/Physics/weapon_impact_hard2.wav";
+	file[main, 3] = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/AddOns/Weapon_AdventurePackRemaster/sounds/Physics/weapon_impact_hard3.wav"; 
 };
 
 // template shit for dev :D 

@@ -65,7 +65,7 @@
 		//exec("./weapon_microSMGSilenced.cs");
 		//exec("./weapon_desertPistol.cs");
 		//exec("./weapon_modernAutoPistol.cs");
-		exec("./weapon_LFriendRifle.cs");
+		//exec("./weapon_LFriendRifle.cs");
 		//exec("./weapon_guerillaRifle.cs");
 		//exec("./weapon_serviceRevolver.cs");
 		//exec("./weapon_GMachineGun.cs"); //remake this one

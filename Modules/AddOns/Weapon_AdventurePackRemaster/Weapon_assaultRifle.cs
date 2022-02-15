@@ -157,7 +157,7 @@ datablock ShapeBaseImageData(assaultRifleImage)
    // Projectile && Ammo.
    item = assaultRifleItem;
    ammo = " ";
-   projectile = assaultRifleProjectile;
+   projectile = assaultRifleProjectile1;
    projectileType = Projectile;
 
    casing = BAADRifleDebris;

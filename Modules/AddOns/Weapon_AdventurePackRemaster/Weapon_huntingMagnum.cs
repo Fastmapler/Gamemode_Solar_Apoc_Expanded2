@@ -161,7 +161,7 @@ datablock ShapeBaseImageData(huntingMagnumImage)
    // Projectile && Ammo.
    item = huntingMagnumItem;
    ammo = " ";
-   projectile = huntingMagnumProjectile;
+   projectile = huntingMagnumProjectile1;
    projectileType = Projectile;
 
    casing = BAADBigRifleDebris;

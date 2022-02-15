@@ -144,7 +144,7 @@ datablock ShapeBaseImageData(sniperRepeaterImage)
    // Projectile && Ammo.
    item = sniperRepeaterItem;
    ammo = " ";
-   projectile = sniperRepeaterProjectile;
+   projectile = sniperRepeaterProjectile1;
    projectileType = Projectile;
 
    casing = BAADRifleDebris;

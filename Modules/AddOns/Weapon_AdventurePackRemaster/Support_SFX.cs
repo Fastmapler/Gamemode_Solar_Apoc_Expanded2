@@ -192,7 +192,7 @@ function SFXEffect::onAdd(%this)
                 if (!isObject(%profile))
                 {
                     %profileName = "__SFXEffect_AudioProfile_" @ getSafeVariableName(%fileName) @ "_" @ getSafeVariableName(%description.getName());
-                    echo("making " @ %profileName);
+                    //echo("making " @ %profileName);
                     eval("datablock AudioProfile(" @ %profileName @ "){fileName=%fileName;description=%description;preload=%preload;};");
                     %profile = nameToID(%profileName);
                 }

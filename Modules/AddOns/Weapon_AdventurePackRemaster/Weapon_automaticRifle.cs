@@ -110,7 +110,7 @@ datablock ShapeBaseImageData(automaticRifleImage)
    // Projectile && Ammo.
    item = automaticRifleItem;
    ammo = " ";
-   projectile = automaticRifleProjectile;
+   projectile = automaticRifleProjectile1;
    projectileType = Projectile;
 
    casing = gunShellDebris;

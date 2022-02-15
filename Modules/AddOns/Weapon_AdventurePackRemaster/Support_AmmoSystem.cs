@@ -133,7 +133,7 @@ function hl2DisplayAmmo(%this, %obj, %slot, %delay) {
   }
 
   if (%delay == -1) {
-    clearBottomPrint(%obj.client);
+    clearCenterPrint(%obj.client);
     return;
   }
 
@@ -152,7 +152,7 @@ function hl2DisplayAmmo(%this, %obj, %slot, %delay) {
 
   %ammocol = "<color:ffffff>";
   %str = %str SPC "<font:tahoma:20>AMMO<font:impact:24>" @ ( %altAmmoText !$= "" ? %altAmmoText SPC "<font:tahoma:20>ALT<font:impact:24>" : "" );
-  %obj.client.bottomPrint(%ammocol @ "<font:impact:24><just:right>" @ %str SPC "\n", %delay, 1);
+  %obj.client.centerPrint(%ammocol @ "<font:impact:24><just:right>" @ %str SPC "\n", %delay);
 }
 
 package hl2AmmoSystem

@@ -161,7 +161,7 @@ datablock ShapeBaseImageData(revolverImage)
    // Projectile && Ammo.
    item = revolverItem;
    ammo = " ";
-   projectile = revolverProjectile;
+   projectile = revolverProjectile1;
    projectileType = Projectile;
 
    casing = BAADBigRifleDebris;

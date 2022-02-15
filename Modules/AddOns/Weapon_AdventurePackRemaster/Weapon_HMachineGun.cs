@@ -157,7 +157,7 @@ datablock ShapeBaseImageData(HMachineGunImage)
    // Projectile && Ammo.
    item = HMachineGunItem;
    ammo = " ";
-   projectile = HMachineGunProjectile;
+   projectile = HMachineGunProjectile1;
    projectileType = Projectile;
 
    casing = BAADBigRifleDebris;

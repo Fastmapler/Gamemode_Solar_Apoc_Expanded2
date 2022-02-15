@@ -112,7 +112,7 @@ datablock ShapeBaseImageData(machinePistolImage)
    // Projectile && Ammo.
    item = machinePistolItem;
    ammo = " ";
-   projectile = machinePistolProjectile;
+   projectile = machinePistolProjectile1;
    projectileType = Projectile;
 
    casing = gunShellDebris;

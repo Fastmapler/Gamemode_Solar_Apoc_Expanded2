@@ -54,17 +54,17 @@ datablock ItemData(advAmmoRifleItem : advAmmoItem)
 	ammoType = "Rifle";
 };
 
-datablock ItemData(advAmmoRifleNadeItem : HammerItem)
-{
-	shapeFile = "./shapes/items/AMMO_708.dts";
-	uiName = "Ammo [R. Grenade]";
-	iconName = "";
-	image = "";
-	canPickUp = true;
-	ammoBox = true;
-	altAmmoType = "riflenade";
-	altAmmoAdd = 1;
-};
+//datablock ItemData(advAmmoRifleNadeItem : HammerItem)
+//{
+//	shapeFile = "./shapes/items/AMMO_708.dts";
+//	uiName = "Ammo [R. Grenade]";
+//	iconName = "";
+//	image = "";
+//	canPickUp = true;
+//	ammoBox = true;
+//	altAmmoType = "riflenade";
+//	altAmmoAdd = 1;
+//};
 
 datablock ItemData(advAmmoSniperRifleItem : advAmmoItem)
 {
