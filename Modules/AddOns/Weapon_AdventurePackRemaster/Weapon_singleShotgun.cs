@@ -33,7 +33,7 @@ datablock ProjectileData(singleShotgunProjectile : gunProjectile)
 datablock ProjectileData(singleShotgunBlastProjectile : gunProjectile)
 {
    directDamage        = 40;//8;
-   explosion           = QuietGunerExplosion;
+   explosion           = QuietGunExplosion;
    impactImpulse       = 700;
    verticalImpulse     = 250;
 

@@ -96,7 +96,7 @@ datablock ItemData(advAmmoShotgunItem : advAmmoItem)
 	ammoType = "Shotgun";
 };
 
-datablock ItemData(advAmmoHMGItem : warAmmoItem)
+datablock ItemData(advAmmoHMGItem : advAmmoItem)
 {
 	shapeFile = "./shapes/items/AMMO_708.dts";
 	uiName = "Ammo [Heavy Machine Gun]";

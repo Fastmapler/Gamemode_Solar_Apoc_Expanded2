@@ -522,6 +522,7 @@ datablock ParticleData(advHugeBulletFireParticle)
 
     useInvAlpha = false;
 };
+
 datablock ParticleEmitterData(advHugeBulletFireEmitter)
 {
    ejectionPeriodMS = 1;
@@ -535,7 +536,7 @@ datablock ParticleEmitterData(advHugeBulletFireEmitter)
    phiVariance      = 360;
    overrideAdvance = false;
 
-   particles = "advHugeulletFireParticle";
+   particles = "advHugeBulletFireParticle";
 };
 
 datablock ParticleData(advHugeBulletSmokeParticle)
@@ -568,6 +569,7 @@ datablock ParticleData(advHugeBulletSmokeParticle)
 
     useInvAlpha = false;
 };
+
 datablock ParticleEmitterData(advHugeBulletSmokeEmitter)
 {
    ejectionPeriodMS = 4;
@@ -709,6 +711,13 @@ datablock DebrisData(BAADShotgunDebris)
 	gravModifier = 4;
 };
 
+datablock AudioProfile(QuietImpactSound)
+{
+   filename    = "./Sounds/Physics/QuietBulletHit.wav";
+   description = AudioDefault3d;
+   preload = true;
+};
+
 datablock ExplosionData(QuietGunExplosion : gunExplosion)
 {
    lifeTimeMS = 100;
@@ -737,9 +746,9 @@ datablock ExplosionData(QuietGunExplosion : gunExplosion)
    lightEndColor = "0 0 0";
 };
 
-datablock AudioProfile(QuietImpactSound)
+datablock AudioProfile(QuieterImpactSound)
 {
-   filename    = "./Sounds/Physics/QuietBulletHit.wav";
+   filename    = "./Sounds/Physics/QuieterBulletHit.wav";
    description = AudioDefault3d;
    preload = true;
 };
@@ -770,11 +779,4 @@ datablock ExplosionData(QuieterGunExplosion : gunExplosion)
    lightEndRadius = 1;
    lightStartColor = "1.0 0.75 0.25";
    lightEndColor = "0 0 0";
-};
-
-datablock AudioProfile(QuieterImpactSound)
-{
-   filename    = "./Sounds/Physics/QuieterBulletHit.wav";
-   description = AudioDefault3d;
-   preload = true;
 };

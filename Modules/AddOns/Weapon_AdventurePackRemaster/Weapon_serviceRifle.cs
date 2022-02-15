@@ -144,7 +144,7 @@ datablock ShapeBaseImageData(ServiceRifleImage)
    // Projectile && Ammo.
    item = ServiceRifleItem;
    ammo = " ";
-   projectile = ServiceRifleProjectile;
+   projectile = ServiceRifleProjectile1;
    projectileType = Projectile;
 
    casing = BAADRifleDebris;

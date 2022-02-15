@@ -115,6 +115,12 @@ datablock AudioProfile(baadSlide3Sound)
 
 //reload cock
 
+datablock AudioProfile(advSound)
+{
+   filename    = "./Sounds/Reload/emptysmall.wav";
+   description = AudioClose3d;
+   preload = true;
+};
 datablock AudioProfile(baadCock1Sound)
 {
    filename    = "./Sounds/Reload/cock_1.wav";
@@ -577,7 +583,7 @@ datablock AudioProfile(BAADWhiz3Sound)
 datablock AudioProfile(BAADfireDistantSniperSound)
 {
 	filename    = "./Sounds/Fire/distantFireSniper.wav";
-	description = BAADFireDistant3D;
+	description = AudioClosest3d;
 	preload = true;
 };
 
