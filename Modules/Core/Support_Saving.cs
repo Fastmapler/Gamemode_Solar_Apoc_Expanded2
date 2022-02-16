@@ -42,15 +42,15 @@ function EOTW_SaveData_PlayerData(%client)
     %file = new FileObject();
     if(%file.openForWrite(%saveDir @ "ToolData.cs") && isObject(%player))
     {
-        %file.writeLine("PLAYERTYPE" TAB %player.getDataBlock().getName())
+        %file.writeLine("PLAYERTYPE" TAB %player.getDataBlock().getName());
         for (%i = 0; %i < %player.getDataBlock().maxTools; %i++)
         {
-            if (%tool = isObject(%player.tool[%i]))
+            if (isObject(%tool = %player.tool[%i]))
             {
-                %file.writeLine("TOOL" @ %i TAB %tool.getName());
+                %file.writeLine("TOOL" TAB %i TAB %tool.getName());
 
-                if (%player.toolMag[%i]) !$= "")
-                    %file.writeLine("TOOLMAG" @ %i TAB %player.toolMag[%i]);
+                if (%player.toolMag[%i] !$= "")
+                    %file.writeLine("TOOLMAG" TAB %i TAB %player.toolMag[%i]);
             }
         }
 
@@ -129,15 +129,20 @@ function EOTW_LoadData_PlayerData(%client)
     }
     %file.close();
     %file.delete();
+
+    //Load Tool Data
     %file = new FileObject();
-    %file.openForRead(%saveDir @ "TOOLDATA.cs");
+    %file.openForRead(%saveDir @ "ToolData.cs");
+
+    %i = 0;
     while(!%file.isEOF())
     {
         %line = %file.readLine();
-        set_var_obj(%client, "saved_")
+        set_var_obj(%client, "saved" @ %i, trim(getField(%line, 0) TAB getField(%line, 1) TAB getField(%line, 2) TAB getField(%line, 3)));
+        %i++;
     }
-
-    //Load Tool Data
+    %file.close();
+    %file.delete();
 }
 
 package EOTW_SavingLoading
@@ -161,6 +166,38 @@ package EOTW_SavingLoading
 			%trans = GetRandomSpawnLocation();
 			
 		Parent::createPlayer(%client, %trans);
-	}
+
+        if (isObject(%player = %client.player))
+        {
+            %clearedTools = false;
+            for (%i = 0; %client.saved[%i] !$= ""; %i++)
+            {
+                %saveData = %client.saved[%i];
+                %type = getField(%saveData, 0);
+                switch$ (%type)
+                {
+                    case "PLAYERTYPE":
+                        %player.changeDatablock(getField(%saveData, 1));
+                    case "TOOL":
+                        if (!%clearedTools)
+                        {
+                            %player.clearTools();
+                            %clearedTools = true;
+                        }
+                        if (!isObject(%player.tool[getField(%saveData, 1)]))
+                            %player.weaponCount++;
+                        %player.tool[getField(%saveData, 1)] = getField(%saveData, 2);
+                        messageClient(%client, 'MsgItemPickup', '', getField(%saveData, 1), getField(%saveData, 2));
+                    case "TOOLMAG":
+                        %player.toolMag[getField(%saveData, 1)] = getField(%saveData, 2);
+                    case "TOOLAMMO":
+                        %player.toolAmmo[getField(%saveData, 1)] = getField(%saveData, 2);
+                }
+
+                %client.saved[%i] = "";
+            }
+        }
+    }
+        
 };
 activatePackage("EOTW_SavingLoading");
