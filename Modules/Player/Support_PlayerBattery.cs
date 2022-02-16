@@ -43,7 +43,6 @@ function Player::SetBatteryEnergy(%obj, %set)
 
 function Player::GetMaxBatteryEnergy(%obj)
 {
-    //Will be customizable later(tm)
     if (%obj.MaxBatteryEnergy $= "" || %obj.MaxBatteryEnergy < 0)
         %obj.MaxBatteryEnergy = 5000;
 

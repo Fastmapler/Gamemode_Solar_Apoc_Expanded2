@@ -170,7 +170,7 @@ function setNewWater(%water)
 	}
 }
 
-function purgeFakeGatherables()
+function purgeAllGatherables()
 {
 	%dataNames = "brickEOTWGatherableBasicData brickEOTWGatherableMetalData brickEOTWGatherableCrystalData";
 	for (%i = 0; %i < MainBrickGroup.getCount(); %i++)
@@ -179,7 +179,7 @@ function purgeFakeGatherables()
 		for (%j = 0; %j < %group.getCount(); %j++)
 		{
 			%brick = %group.getObject(%j);
-			if (hasWord(%brick.getDatablock().getName(), %dataNames))
+			if (hasWord(%dataNames, %brick.getDatablock().getName()))
 				%brick.delete();
 		}
 	}

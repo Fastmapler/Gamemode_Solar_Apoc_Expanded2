@@ -33,6 +33,10 @@ function GameConnection::PrintEOTWInfo(%client)
 		%client.bottomPrint("<just:center>\c7You died!");
 		return;
 	}
+
+	%blacklist = "CardsOutImage ChipImage";
+	if (isObject(%image = %player.getMountedImage(0)) && hasWord(%blacklist, %image.getName()))
+		return;
 			
 	%health = mCeil(%player.getDatablock().maxDamage - %player.getDamageLevel());
 	
