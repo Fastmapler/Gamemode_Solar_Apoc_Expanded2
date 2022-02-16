@@ -164,6 +164,8 @@ package FloatingBricks
 		// add the brick to their undo stack and set their timeout
 		%this.undoStack.push(%brick TAB "PLANT");
 		%player.floatingBrickTime = getSimTime();
+
+		return %brick;
 	}
 	
 	// @param fxDTSBrickData %this   :   the brick datablock that was planted

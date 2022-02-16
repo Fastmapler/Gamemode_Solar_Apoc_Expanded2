@@ -301,7 +301,7 @@ function Player::GibFaunaLoop(%obj, %target)
 
                 %target.gatherProcess += getSimTime() - %target.lastFaunaGibTick;
                 %hit.lastFaunaGibTick = getSimTime();
-                %target.RemoveBodySchedule = %player.schedule(1000 * 60, "RemoveBody", true);
+                %target.RemoveBodySchedule = %target.schedule(1000 * 60, "RemoveBody", true);
                 %target.cancelFaunaCollecting = %target.schedule(10000, "cancelFaunaGib");
                 %obj.faunaCollectLoop = %obj.schedule(16, "GibFaunaLoop", %target);
             }
