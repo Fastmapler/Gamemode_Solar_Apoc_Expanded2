@@ -37,6 +37,35 @@ function EOTW_SaveData_PlayerData(%client)
     }
     %file.close();
     %file.delete();
+
+    //Save Tool Data
+    %file = new FileObject();
+    if(%file.openForWrite(%saveDir @ "ToolData.cs") && isObject(%player))
+    {
+        %file.writeLine("PLAYERTYPE" TAB %player.getDataBlock().getName())
+        for (%i = 0; %i < %player.getDataBlock().maxTools; %i++)
+        {
+            if (%tool = isObject(%player.tool[%i]))
+            {
+                %file.writeLine("TOOL" @ %i TAB %tool.getName());
+
+                if (%player.toolMag[%i]) !$= "")
+                    %file.writeLine("TOOLMAG" @ %i TAB %player.toolMag[%i]);
+            }
+        }
+
+        %ammoTypes = "Pistol" TAB "Machine Pistol" TAB "Revolver" TAB "Rifle" TAB "Sniper Rifle" TAB "Machine Rifle" TAB "Shotgun" TAB "Heavy Machine Gun";
+        for (%i = 0; %i < getFieldCount(%ammoTypes); %i++)
+        {
+            %type = getField(%ammoTypes, %i);
+            if (%player.toolAmmo[%type] > 0)
+                %file.writeLine("TOOLAMMO" TAB %type TAB %player.toolAmmo[%type]);
+        }
+
+        //Save misc. data
+    }
+    %file.close();
+    %file.delete();
 }
 
 function EOTW_LoadData_PlayerData(%client)
@@ -100,6 +129,15 @@ function EOTW_LoadData_PlayerData(%client)
     }
     %file.close();
     %file.delete();
+    %file = new FileObject();
+    %file.openForRead(%saveDir @ "TOOLDATA.cs");
+    while(!%file.isEOF())
+    {
+        %line = %file.readLine();
+        set_var_obj(%client, "saved_")
+    }
+
+    //Load Tool Data
 }
 
 package EOTW_SavingLoading
