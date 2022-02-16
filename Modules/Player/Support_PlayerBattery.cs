@@ -34,10 +34,27 @@ function Player::GetBatteryEnergy(%obj)
     return %obj.BatteryEnergy;
 }
 
+function Player::SetBatteryEnergy(%obj, %set)
+{
+     %obj.BatteryEnergy = %set;
+
+    return %obj.GetBatteryEnergy();
+}
+
 function Player::GetMaxBatteryEnergy(%obj)
 {
     //Will be customizable later(tm)
-    return 5000;
+    if (%obj.MaxBatteryEnergy $= "" || %obj.MaxBatteryEnergy < 0)
+        %obj.MaxBatteryEnergy = 5000;
+
+    return %obj.MaxBatteryEnergy;
+}
+
+function Player::SetMaxBatteryEnergy(%obj, %set)
+{
+     %obj.MaxBatteryEnergy = %set;
+
+    return %obj.GetMaxBatteryEnergy();
 }
 
 function Player::ChangeBatteryEnergy(%obj, %change)
