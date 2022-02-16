@@ -28,20 +28,60 @@ function Player::GetBatteryText(%obj)
 
 function Player::GetBatteryEnergy(%obj)
 {
+    if (isObject(%obj.client))
+        return %obj.client.GetBatteryEnergy();
+    else
+        return 0;
+}
+
+function Player::SetBatteryEnergy(%obj, %set)
+{
+     if (isObject(%obj.client))
+        return %obj.client.SetBatteryEnergy(%set);
+    else
+        return 0;
+}
+
+function Player::GetMaxBatteryEnergy(%obj)
+{
+    if (isObject(%obj.client))
+        return %obj.client.GetMaxBatteryEnergy();
+    else
+        return 0;
+}
+
+function Player::SetMaxBatteryEnergy(%obj, %set)
+{
+    if (isObject(%obj.client))
+        return %obj.client.SetMaxBatteryEnergy(%set);
+    else
+        return 0;
+}
+
+function Player::ChangeBatteryEnergy(%obj, %change)
+{
+    if (isObject(%obj.client))
+        return %obj.client.ChangeBatteryEnergy(%change);
+    else
+        return 0;
+}
+
+function GameConnection::GetBatteryEnergy(%obj)
+{
     if (%obj.BatteryEnergy $= "" || %obj.BatteryEnergy < 0)
         %obj.BatteryEnergy = 0;
 
     return %obj.BatteryEnergy;
 }
 
-function Player::SetBatteryEnergy(%obj, %set)
+function GameConnection::SetBatteryEnergy(%obj, %set)
 {
      %obj.BatteryEnergy = %set;
 
     return %obj.GetBatteryEnergy();
 }
 
-function Player::GetMaxBatteryEnergy(%obj)
+function GameConnection::GetMaxBatteryEnergy(%obj)
 {
     if (%obj.MaxBatteryEnergy $= "" || %obj.MaxBatteryEnergy < 0)
         %obj.MaxBatteryEnergy = 5000;
@@ -49,14 +89,14 @@ function Player::GetMaxBatteryEnergy(%obj)
     return %obj.MaxBatteryEnergy;
 }
 
-function Player::SetMaxBatteryEnergy(%obj, %set)
+function GameConnection::SetMaxBatteryEnergy(%obj, %set)
 {
      %obj.MaxBatteryEnergy = %set;
 
     return %obj.GetMaxBatteryEnergy();
 }
 
-function Player::ChangeBatteryEnergy(%obj, %change)
+function GameConnection::ChangeBatteryEnergy(%obj, %change)
 {
     %oldEnergy = %obj.GetBatteryEnergy();
     %obj.BatteryEnergy += %change;

@@ -172,13 +172,6 @@ function Player::ChangeMatterCount(%obj, %matter, %count)
 
 package EOTW_Player
 {
-	function GameConnection::createPlayer(%client, %trans)
-	{
-		if (!isObject(%client.checkpointBrick))
-			%trans = GetRandomSpawnLocation();
-			
-		Parent::createPlayer(%client, %trans);
-	}
 	function Armor::onTrigger(%data, %obj, %trig, %tog)
 	{
 		if(isObject(%client = %obj.client))

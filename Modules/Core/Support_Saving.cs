@@ -18,19 +18,20 @@ function EOTW_SaveData_PlayerData(%client)
 
     //Save Player Battery
     %file = new FileObject();
-    if(isObject(%player) && %file.openForWrite(%saveDir @ "Battery.cs"))
+    if(%file.openForWrite(%saveDir @ "Battery.cs"))
     {
-        %file.writeLine("BATTERY" TAB %player.GetBatteryEnergy());
-        %file.writeLine("MAXBATTERY" TAB %player.GetMaxBatteryEnergy());
+        %file.writeLine("BATTERY" TAB %client.GetBatteryEnergy());
+        %file.writeLine("MAXBATTERY" TAB %client.GetMaxBatteryEnergy());
     }
     %file.close();
     %file.delete();
 
     //Save Position & Checkpoint Position
     %file = new FileObject();
-    if(isObject(%player) && %file.openForWrite(%saveDir @ "Position.cs"))
+    if(%file.openForWrite(%saveDir @ "Position.cs"))
     {
-        %file.writeLine("POSITION" TAB %player.getTransform());
+        if (isObject(%player))
+            %file.writeLine("POSITION" TAB %player.getTransform());
         if (isObject(%client.checkpointBrick))
             %file.writeLine("CHECKPOINT" TAB %client.checkpointBrick.getPosition());
     }
@@ -61,15 +62,15 @@ function EOTW_LoadData_PlayerData(%client)
     //Load Battery
     %file = new FileObject();
     %file.openForRead(%saveDir @ "Battery.cs");
-    while(!%file.isEOF() && isObject(%player))
+    while(!%file.isEOF())
     {
         %line = %file.readLine();
         switch$ (getField(%line, 0))
         {
             case "BATTERY":
-                %player.SetBatteryEnergy(getField(%line, 1));
+                %client.SetBatteryEnergy(getField(%line, 1));
             case "MAXBATTERY":
-                %player.SetMaxBatteryEnergy(getField(%line, 1));
+                %client.SetMaxBatteryEnergy(getField(%line, 1));
         }
     }
     %file.close();
@@ -78,13 +79,13 @@ function EOTW_LoadData_PlayerData(%client)
     //Load Position
     %file = new FileObject();
     %file.openForRead(%saveDir @ "Position.cs");
-    while(!%file.isEOF() && isObject(%player))
+    while(!%file.isEOF())
     {
         %line = %file.readLine();
         switch$ (getField(%line, 0))
         {
             case "POSITION":
-                %player.setTransform(getField(%line, 1));
+                %client.savedSpawnTransform = getField(%line, 1);
             case "CHECKPOINT":
                 initContainerRadiusSearch(getField(%line, 1), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
                 while(isObject(%hit = containerSearchNext()))
@@ -100,3 +101,28 @@ function EOTW_LoadData_PlayerData(%client)
     %file.close();
     %file.delete();
 }
+
+package EOTW_SavingLoading
+{
+    function GameConnection::onClientLeaveGame(%client)
+	{
+		EOTW_SaveData_PlayerData(%client);
+		parent::onClientLeaveGame(%client);
+	}
+    function GameConnection::createPlayer(%client, %trans)
+	{
+        if (!%client.hasSpawnedOnce)
+            EOTW_LoadData_PlayerData(%client);
+
+        if (%client.savedSpawnTransform !$= "")
+        {
+            %trans = %client.savedSpawnTransform;
+            %client.savedSpawnTransform = "";
+        }
+		else if (!isObject(%client.checkpointBrick))
+			%trans = GetRandomSpawnLocation();
+			
+		Parent::createPlayer(%client, %trans);
+	}
+};
+activatePackage("EOTW_SavingLoading");
