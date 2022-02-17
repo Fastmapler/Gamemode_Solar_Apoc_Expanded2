@@ -186,7 +186,7 @@ package EOTW_SavingLoading
                         }
                         if (!isObject(%player.tool[getField(%saveData, 1)]))
                             %player.weaponCount++;
-                        %player.tool[getField(%saveData, 1)] = getField(%saveData, 2);
+                        %player.tool[getField(%saveData, 1)] = getField(%saveData, 2).getID();
                         messageClient(%client, 'MsgItemPickup', '', getField(%saveData, 1), getField(%saveData, 2));
                     case "TOOLMAG":
                         %player.toolMag[getField(%saveData, 1)] = getField(%saveData, 2);
