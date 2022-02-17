@@ -10,11 +10,11 @@ function EnvMasterSetup()
 	if(!isObject(EnvMaster))
 			new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 	
-	if ($EOTW::LoadMap) //serverDirectSaveFileLoad("Saves/Solar Apoc Ex2 Fun 6.bls", 3, "", 1);
+	if ($EOTW::LoadMap) //serverDirectSaveFileLoad("Saves/Gaming.bls", 3, "", 2);
 	{
-		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap2.bls", 3, "", 2);
-		$EOTW::WorldBounds = "-512 -512 512 512";
-		schedule(1000, 0, "setLavaHeight", 35);
+		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
+		$EOTW::WorldBounds = "-1024 -1024 1024 1024";
+		schedule(1000, 0, "setLavaHeight", 20);
 	}
 	else
 	{
