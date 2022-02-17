@@ -64,7 +64,8 @@ function spawnFaunaLoop()
 			for (%i = 0; %i < FaunaSpawnData.getCount() && %rand > 0; %i++)
 			{
 				%spawnData = FaunaSpawnData.getObject(%i);
-				%spawnWeight = ($EOTW::MonsterSpawnCredits > %spawnData.spawnWeight * %spawnData.maxSpawnGroup ? %spawnData.spawnWeight / 2 : %spawnData.spawnWeight); //Prioritize higher cost fauna if we got lots of points
+				%spawnWeight = %spawnData.spawnWeight;
+				//%spawnWeight = ($EOTW::MonsterSpawnCredits > (%spawnData.spawnWeight * %spawnData.maxSpawnGroup * 3) ? %spawnData.spawnWeight / 2 : %spawnData.spawnWeight); //Prioritize higher cost fauna if we got lots of points
 				if (%rand < %spawnWeight && $EOTW::MonsterSpawnCredits >= %spawnData.spawnCost && $EOTW::Time >= getField(%spawnData.timeRange, 0) && $EOTW::Time <= getField(%spawnData.timeRange, 1))
 					break;
 
@@ -81,15 +82,44 @@ function spawnFaunaLoop()
 					%target = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
 
 				if (isObject(%target))
+				{
 					for (%i = 0; %i < %totalSpawn; %i++)
-						spawnNewFauna(VectorAdd(%target.getPosition(), "5 5 5"), %spawnData.data);
-
+					{
+						spawnNewFauna(VectorAdd(%target.getPosition(), GetRandomSpawnLocation(%target.getPosition())), %spawnData.data);
+					}
+				}	
 				$EOTW::MonsterSpawnDelay = getRandom(30, 60);
 			}
 			else
 				$EOTW::MonsterSpawnDelay = getRandom(15, 30);
 		}
 	}
+
+	if (isObject(EOTWEnemies))
+	{
+		for (%j = 0; %j < EOTWEnemies.getCount(); %j++)
+		{
+			%bot = EOTWEnemies.getObject(%j);
+			
+			//Just loop through each player instead of doing a radius raycast since that is significantly more expensive computation wise
+			for (%i = 0; %i < ClientGroup.getCount(); %i++)
+			{
+				%client = ClientGroup.getObject(%i);
+				
+				if (isObject(%player = %client.player) && vectorDist(%player.getPosition(), %brick.getPosition()) < 64 && %bot.DespawnLife < 100)
+				{
+					%bot.DespawnLife = 100;
+					break;
+				}
+			}
+			
+			%bot.DespawnLife--;
+				
+			if (%bot.DespawnLife <= 0)
+					%bot.delete();
+		}
+	}
+	
 
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
@@ -170,6 +200,8 @@ function spawnNewFauna(%trans,%hBotType)
 
 		hPlayerscale = %hBotType.hPlayerscale;
 	};
+
+	%player.despawnLife = getRandom(150, 250);
 
 	missionCleanup.add(%player);
 		

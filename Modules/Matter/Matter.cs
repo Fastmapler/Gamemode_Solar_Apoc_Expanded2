@@ -57,7 +57,7 @@ function GatherableSpawnLoop(%despawnValue)
 		%brick = BrickGroup_1337.getObject(%despawnValue);
 		if (isObject(%brick))
 		{
-			//Just loop through each player instead of doing a radius raycast since that is significantly more expensive comp. wise
+			//Just loop through each player instead of doing a radius raycast since that is significantly more expensive computation wise
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%client = ClientGroup.getObject(%i);
@@ -130,7 +130,7 @@ function SpawnGatherableVein()
 		%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
 		%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
 		%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
-		if(isObject(%hit = firstWord(%ray)))
+		if(isObject(%hit = firstWord(%ray)) && (getWord(%pos, 2) > $EOTW::LavaHeight + 2))
 		{
 			if (%hit.getClassName() !$= "FxPlane" && strPos(%hit.getDatablock().uiName,"Ramp") > -1)
 				%pos = vectorAdd(%pos,"0 0 0.4");

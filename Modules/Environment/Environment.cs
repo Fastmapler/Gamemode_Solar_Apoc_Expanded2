@@ -14,7 +14,7 @@ function EnvMasterSetup()
 	{
 		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
 		$EOTW::WorldBounds = "-1024 -1024 1024 1024";
-		schedule(1000, 0, "setLavaHeight", 20);
+		schedule(1000, 0, "setLavaHeight", 35);
 	}
 	else
 	{

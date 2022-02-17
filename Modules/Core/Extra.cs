@@ -124,7 +124,7 @@ function SimSet::Shuffle(%set)
 
 function ServerCmdGetAllMats(%client)
 {
-	if (true || %client.isSuperAdmin) //Yeah I know but it is just there for players to play around sandbox style as the game is being developed
+	if (%client.isSuperAdmin)
 	{
 		for (%i = 0; %i < MatterData.getCount(); %i++)
 			$EOTW::Material[%client.bl_id, MatterData.getObject(%i).name] += 500000;
