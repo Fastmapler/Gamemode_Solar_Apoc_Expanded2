@@ -42,6 +42,9 @@ function EOTW_SaveData_PlayerData(%client)
     %file = new FileObject();
     if(%file.openForWrite(%saveDir @ "ToolData.cs") && isObject(%player))
     {
+        %file.writeLine("DAMAGELEVEL" TAB %player.getDamageLevel());
+        %file.writeLine("ENERGYLEVEL" TAB %player.getEnergyLevel());
+        %file.writeLine("VELOCITY" TAB %player.getVelocity());
         %file.writeLine("PLAYERTYPE" TAB %player.getDataBlock().getName());
         for (%i = 0; %i < %player.getDataBlock().maxTools; %i++)
         {
@@ -176,6 +179,12 @@ package EOTW_SavingLoading
                 %type = getField(%saveData, 0);
                 switch$ (%type)
                 {
+                    case "DAMAGELEVEL":
+                        %player.setDamagelevel(getField(%saveData, 1));
+                    case "ENERGYLEVEL":
+                        %player.setEnergylevel(getField(%saveData, 1));
+                    case "VELOCITY":
+                        %player.setEnergylevel(getField(%saveData, 1));
                     case "PLAYERTYPE":
                         %player.changeDatablock(getField(%saveData, 1));
                     case "TOOL":
