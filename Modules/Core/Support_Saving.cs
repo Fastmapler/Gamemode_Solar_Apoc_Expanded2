@@ -107,19 +107,27 @@ function EOTW_SaveData_BrickData()
                 {
                     $EOTW::BrickData[%pos, %dataCount++] = %varName TAB %varData;
                 }
-                
             }
         }
     }
     export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
 }
 
-function testing(%line)
+function EOTW_LoadData_BrickData()
 {
-    %subLine = getSubStr(%line, 16, strPos(%line, "_") - 16);
-    %subLine2 = getSubStr(%line, strPos(%line, "_"), strLen(%line));
-    %eval = "$EOTW::BrickData[\"" @ %subLine @ "\"]" @ %subLine2;
-    talk(%eval);
+    %file = new FileObject();
+    %file.openForRead($EOTW::SaveLocation @ "BrickData.cs");
+    while(!%file.isEOF())
+    {
+        %line = %file.readLine();
+        %subLine1 = getSubStr(%line, 16, strPos(%line, "_") - 16);
+        %subLine2 = getSubStr(%line, strPos(%line, "_") + 1, strPos(%line, "=") - strPos(%line, "_") - 2);
+        %subLine3 = getSubStr(%line, strPos(%line, "="), strLen(%line));
+        %eval = "$EOTW::BrickData[\"" @ %subLine1 @ "\", " @ %subLine2 @ "] " @ %subLine3;
+        eval(%eval);
+    }
+    %file.close();
+    %file.delete();
 }
 
 
