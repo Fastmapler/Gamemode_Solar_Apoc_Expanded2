@@ -124,7 +124,7 @@ function SimSet::Shuffle(%set)
 
 function ServerCmdGetAllMats(%client)
 {
-	if (%client.isSuperAdmin)
+	if (true || %client.isSuperAdmin)
 	{
 		for (%i = 0; %i < MatterData.getCount(); %i++)
 			$EOTW::Material[%client.bl_id, MatterData.getObject(%i).name] += 500000;
