@@ -15,9 +15,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	tier=2;	spawnWeight=200;	spawnVeinSize=5;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=50;	gatherableDB="brickEOTWGatherableMetalData";	};
 		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	tier=4;	spawnWeight=005;	spawnVeinSize=2;	spawnValue=40;	collectTime=24000;	placable=true;	health=999;	heatCapacity=75;	gatherableDB="brickEOTWGatherableMetalData";	};
 		//Growable Organics
-		new ScriptObject(MatterType) { name="Moss";			color="75ba6dff";	tier=1;	spawnWeight=050;	spawnVeinSize=2;	spawnValue=4;	collectTime=1000;	gatherableDB="brickEOTWGatherableBasicData";	 };
-		new ScriptObject(MatterType) { name="Vines";		color="226027ff";	tier=2;	spawnWeight=050;	spawnVeinSize=2;	spawnValue=16;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";	 };
-		new ScriptObject(MatterType) { name="Cacti";		color="226027ff";	tier=2;	spawnWeight=050;	spawnVeinSize=2;	spawnValue=8;	collectTime=2000;	gatherableDB="brickEOTWGatherableBasicData";	 };
+		new ScriptObject(MatterType) { name="Moss";			color="75ba6dff";	tier=1;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=4;	collectTime=1000;	gatherableDB="brickEOTWGatherableBasicData";	 };
+		new ScriptObject(MatterType) { name="Vines";		color="226027ff";	tier=2;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=16;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";	 };
+		new ScriptObject(MatterType) { name="Cacti";		color="226027ff";	tier=2;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=8;	collectTime=2000;	gatherableDB="brickEOTWGatherableBasicData";	 };
 		//Basic Gatherable Materials
 		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	tier=3;	spawnWeight=100;	spawnVeinSize=4;	spawnValue=32;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";	cableTransfer=400;	 };
 		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	 };

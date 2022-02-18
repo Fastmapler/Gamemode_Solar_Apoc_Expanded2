@@ -118,8 +118,18 @@ function SpawnGatherableVein()
 	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 495;
 	%matter = GetRandomSpawnMaterial();
 	
-	%veinSize = getRandom(1, %matter.spawnVeinSize);
-	%veinRange = 8;
+	//Chance for super concentrated spawn
+	if (getRandom() < 0.02)
+	{
+		%veinSize = %matter.spawnVeinSize * 2;
+		%veinRange = 4;
+	}
+	else
+	{
+		%veinSize = getRandom(1, %matter.spawnVeinSize);
+		%veinRange = 8;
+	}
+	
 	%despawnLife = getRandom(100, 300);
 	for (%i = 0; %i < %veinSize; %i++)
 	{
