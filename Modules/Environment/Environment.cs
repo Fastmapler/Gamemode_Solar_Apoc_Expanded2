@@ -10,7 +10,7 @@ function EnvMasterSetup()
 	if(!isObject(EnvMaster))
 			new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 	
-	if ($EOTW::LoadMap) //serverDirectSaveFileLoad("Saves/Gaming.bls", 3, "", 2);
+	if ($EOTW::LoadMap) //serverDirectSaveFileLoad("Saves/SAEX2/Autosave - 02-18-22 at 005324.bls", 3, "", 1);
 	{
 		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
 		$EOTW::WorldBounds = "-1024 -1024 1024 1024";
