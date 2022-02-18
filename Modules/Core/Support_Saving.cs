@@ -71,6 +71,58 @@ function EOTW_SaveData_PlayerData(%client)
     %file.delete();
 }
 
+function EOTW_SaveData_BrickData()
+{
+    %blacklist = "888888 999999 1337";
+    %saveList = "Material\tEnergy\tProcessTime\tCondensatorBuffer\tstoredFuel";
+    %saveList = %saveList @ "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
+    %saveList = %saveList @ "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
+    %saveList = %saveList @ "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";
+
+    deleteVariables("$EOTW::BrickData*");
+    for (%j = 0; %j < MainBrickGroup.getCount(); %j++)
+    {
+        %group = MainBrickGroup.getObject(%j);
+        %blid = %group.bl_id;
+
+        if (hasWord(%blacklist, %blid))
+            continue;
+
+        for (%i = 0; %i < %group.getCount(); %i++)
+        {
+            %brick = %group.getObject(%i);
+            %pos = %brick.getPosition();
+
+            if (!%brick.isPlanted)
+                continue;
+
+            $EOTW::BrickData[%pos, 0] = %brick.getDatablock().getName();
+            
+            %dataCount = 0;
+            for (%k = 0; %k < getFieldCount(%saveList); %k++)
+            {
+                %varName = getField(%saveList, %k);
+                %varData = get_var_obj(%brick, %varName);
+                if (%varData !$= "")
+                {
+                    $EOTW::BrickData[%pos, %dataCount++] = %varName TAB %varData;
+                }
+                
+            }
+        }
+    }
+    export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
+}
+
+function testing(%line)
+{
+    %subLine = getSubStr(%line, 16, strPos(%line, "_") - 16);
+    %subLine2 = getSubStr(%line, strPos(%line, "_"), strLen(%line));
+    %eval = "$EOTW::BrickData[\"" @ %subLine @ "\"]" @ %subLine2;
+    talk(%eval);
+}
+
+
 function EOTW_LoadData_PlayerData(%client)
 {
     %player = %client.player;
@@ -85,7 +137,7 @@ function EOTW_LoadData_PlayerData(%client)
         
         //HERESY, HERESY, I DIDN'T HAVE TO TAKE THIS PATH BUT YET I DID. I COULD OF JUST USED SOME FUNCTION TO SHORTEN THIS.
         %subLen = strLen(getSubStr(%line, 0, strPos(%line, "=") - 1)) - strLen(getSubStr(%line, 0, strPos(%line, "_") + 1));
-        %eval = getSubStr(%line, 0, strPos(%line, "_") + 1) @ "[\"" @ getSubStr(%line, strPos(%line, "_") + 1, %subLen) @ "\"] " @ getSubStr(%line, strPos(%line, "="), 420);
+        %eval = getSubStr(%line, 0, strPos(%line, "_") + 1) @ "[\"" @ getSubStr(%line, strPos(%line, "_") + 1, %subLen) @ "\"] " @ getSubStr(%line, strPos(%line, "="), strLen(%line));
         eval(%eval);
     }
     %file.close();
@@ -207,6 +259,26 @@ package EOTW_SavingLoading
             }
         }
     }
-        
+    function fxDtsBrick::onLoadPlant(%obj, %b)
+    {
+        parent::onLoadPlant(%obj, %b);
+
+        if (isObject(%obj) && $EOTW::BrickData[%obj.getPosition(), 0] !$= "" && $EOTW::BrickData[%obj.getPosition(), 0] == %obj.getDatablock().getName())
+        {
+            for (%i = 1; $EOTW::BrickData[%obj.getPosition(), %i] !$= ""; %i++)
+            {
+                %data = $EOTW::BrickData[%obj.getPosition(), %i];
+                %varData = "";
+                for (%j = 1; getField(%data, %j) !$= ""; %j++)
+                    %varData = %varData TAB getField(%data, %j);
+
+                %varData = trim(%varData);
+
+                talk(%data SPC %varData);
+                set_var_obj(%obj, getField(%data, 0), %varData);
+            }
+                
+        }
+    }
 };
 activatePackage("EOTW_SavingLoading");

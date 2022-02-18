@@ -106,7 +106,7 @@ function spawnFaunaLoop()
 			{
 				%client = ClientGroup.getObject(%i);
 				
-				if (isObject(%player = %client.player) && vectorDist(%player.getPosition(), %brick.getPosition()) < 64 && %bot.DespawnLife < 100)
+				if (isObject(%player = %client.player) && vectorDist(%player.getPosition(), %bot.getPosition()) < 64 && %bot.DespawnLife < 100)
 				{
 					%bot.DespawnLife = 100;
 					break;

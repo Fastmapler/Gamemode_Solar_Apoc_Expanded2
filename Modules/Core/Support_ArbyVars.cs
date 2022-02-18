@@ -32,7 +32,7 @@ function get_var(%name) {
 		case "z": return $z[%rest];
 		case "_": return $_[%rest];
 	}
-	error("get_var: invalid variable name " @ %name);
+	//error("get_var: invalid variable name " @ %name);
 	return "";
 }
 function set_var(%name, %val) {
@@ -67,12 +67,12 @@ function set_var(%name, %val) {
 		case "z": $z[%rest] = %val; return;
 		case "_": $_[%rest] = %val; return;
 	}
-	error("set_var: invalid variable name " @ %name);
+	//error("set_var: invalid variable name " @ %name);
 	return "";
 }
 function get_var_obj(%obj, %name) {
 	if(!isObject(%obj)) {
-		error("set_var_obj: object " @ %obj @ " does not exist");
+		//error("set_var_obj: object " @ %obj @ " does not exist");
 		return;
 	}
 	%first = strLwr(getSubStr(%name, 0, 1));
@@ -106,12 +106,12 @@ function get_var_obj(%obj, %name) {
 		case "z": return %obj.z[%rest];
 		case "_": return %obj._[%rest];
 	}
-	error("get_var_obj: invalid variable name " @ %name);
+	//error("get_var_obj: invalid variable name " @ %name);
 	return "";
 }
 function set_var_obj(%obj, %name, %val) {
 	if(!isObject(%obj)) {
-		error("set_var_obj: object " @ %obj @ " does not exist");
+		//error("set_var_obj: object " @ %obj @ " does not exist");
 		return;
 	}
 	%first = strLwr(getSubStr(%name, 0, 1));
@@ -145,6 +145,6 @@ function set_var_obj(%obj, %name, %val) {
 		case "z": %obj.z[%rest] = %val; return;
 		case "_": %obj._[%rest] = %val; return;
 	}
-	error("set_var_obj: invalid variable name " @ %name);
+	//error("set_var_obj: invalid variable name " @ %name);
 	return "";
 }
