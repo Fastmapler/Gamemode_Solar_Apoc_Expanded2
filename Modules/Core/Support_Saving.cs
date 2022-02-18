@@ -6,6 +6,10 @@ function EOTW_SaveData()
     //Save Player Data
     for (%i = 0; %i < ClientGroup.getCount(); %i++)
         EOTW_SaveData_PlayerData(ClientGroup.getObject(%i));
+
+    //Save Brick and Cable Data
+    EOTW_SaveData_BrickData();
+    EOTW_SaveData_CableData();
 }
 
 function EOTW_SaveData_PlayerData(%client)
@@ -111,6 +115,11 @@ function EOTW_SaveData_BrickData()
         }
     }
     export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
+}
+
+function EOTW_SaveData_CableData()
+{
+
 }
 
 function EOTW_LoadData_BrickData()
