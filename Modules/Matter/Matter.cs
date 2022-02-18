@@ -346,7 +346,26 @@ package EOTW_Matter
 				}
 			}
 			else if (%brick.material !$= "Custom" && %brick.material !$= "")
-				$EOTW::Material[%brick.getGroup().bl_id, %brick.material] += %data.brickSizeX * %data.brickSizeY * %data.brickSizeZ;
+			{
+				//Support for returning proper refund for open doors.
+				if (%data.closedCW !$= "")
+				{
+					%newData = %data.closedCW;
+					%volume = %newData.brickSizeX * %newData.brickSizeY * %newData.brickSizeZ;
+				}
+				else if (%data.closedCCW !$= "")
+				{
+					%newData = %data.closedCCW;
+					%volume = %newData.brickSizeX * %newData.brickSizeY * %newData.brickSizeZ;
+				}
+				else
+				{
+					%volume = %data.brickSizeX * %data.brickSizeY * %data.brickSizeZ;
+				}
+
+				$EOTW::Material[%brick.getGroup().bl_id, %brick.material] += %volume;
+			}
+				
 			
 		}
 		
