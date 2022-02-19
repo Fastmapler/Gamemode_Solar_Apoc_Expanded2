@@ -15,3 +15,13 @@ for (%i = 0; %i < getWordCount($EOTW::Modules); %i++)
 
 //We also should try to keep external add-on requirements to a mininum, barring default blockland add-ons. This will make
 //Solar apoc much easier to run, especially when setting up new servers.
+
+//exec("./Modules/Core/Core.cs");
+//exec("./Modules/Environment/Environment.cs");
+//exec("./Modules/Fauna/Fauna.cs");
+//exec("./Modules/Matter/Matter.cs");
+//exec("./Modules/Player/Player.cs");
+//exec("./Modules/Power/Power.cs");
+//exec("./Modules/Tools/Tools.cs");
+//exec("./Modules/Weapons/Weapons.cs");
+//exec("./Modules/AddOns/AddOns.cs");
