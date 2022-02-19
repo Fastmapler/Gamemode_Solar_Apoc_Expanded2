@@ -6,7 +6,7 @@ function PlantLife_TickLoop()
         return;
 
     %totalTicks = 0;
-    for (%i = EOTWPlants.getCount() / 100; %i > 0; %i--)
+    for (%i = EOTWPlants.getCount() / 2; %i > 0; %i--)
         if (getRandom() < %i)
             %totalTicks++;
 
@@ -47,15 +47,36 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
             default: %dir = "0 0 0.5";
         }
 
-        %brick = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir), %obj.getColorID(), %angleID);
-        if (isObject(%brick) && !isObject(%brick.getDownBrick(0)) && !isObject(%brick.getUpBrick(0)))
-            %brick.setDataBlock(brickEOTWDeadPlantData);
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir), %obj.getColorID(), %angleID);
+        %brick = getField(%output, 0);
+        %err = getField(%output, 1);
+        if (isObject(%brick))
+        {
+            %downBrick = %brick.getDownBrick(0);
+            %upBrick = %brick.getUpBrick(0);
+            %brick.Material = "Custom";
+
+            if (%err > 0 || (!isObject(%downBrick) && !isObject(%upBrick)) || (isObject(%downBrick) && %downBrick.getGroup() != %brick.getGroup()) || isObject(%upBrick) && %upBrick.getGroup() != %brick.getGroup())
+            {
+                %brick.dontRefund = true;
+                %brick.delete();
+            }
+        }
+        
     }
     else if (%data.getName() $= "brickEOTWCactiData")
     {
+        //WIP
         %angleID = getRandom(0, 3);
 
-        %brick = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID);
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID);
+        %brick = getField(%output, 0);
+        %err = getField(%output, 1);
+        if (%err > 0)
+        {
+            %brick.dontRefund = true;
+            %brick.delete();
+        }
         if (isObject(%brick) && isObject(%brick.getDownBrick(15)) && %brick.getDownBrick(15).getDataBlock() == %data)
             %brick.setDataBlock(brickEOTWDeadPlantData);
     }
@@ -63,7 +84,10 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
     {
         %obj.energy--;
         if (%obj.energy < -10)
+        {
+            %obj.dontRefund = true;
             %obj.killBrick();
+        }
     }
 }
 
@@ -113,4 +137,38 @@ datablock fxDTSBrickData (brickEOTWDeadPlantData)
 
     isPlantBrick = true;
 };
-$EOTW::CustomBrickCost["brickEOTWCactiData"] = (1/16) TAB "75502eff" TAB 16 TAB "Wood";
+$EOTW::CustomBrickCost["brickEOTWDeadPlantData"] = (1/16) TAB "75502eff" TAB 16 TAB "Wood";
+
+package EOTW_Plants
+{
+    function fxDtsBrick::onPlant(%obj,%b)
+	{
+		parent::onPlant(%obj,%b);
+
+        if (%obj.getDatablock().isPlantBrick)
+        {
+            if (!isObject(EOTWPlants))
+            {
+                new SimSet(EOTWPlants);
+                PlantLife_TickLoop();
+            }
+            EOTWPlants.add(%obj);
+        }
+	}
+
+	function fxDtsBrick::onLoadPlant(%obj,%b)
+	{
+		parent::onLoadPlant(%obj,%b);
+
+        if (%obj.getDatablock().isPlantBrick)
+        {
+            if (!isObject(EOTWPlants))
+            {
+                new SimSet(EOTWPlants);
+                PlantLife_TickLoop();
+            }
+            EOTWPlants.add(%obj);
+        }
+	}
+};
+activatePackage("EOTW_Plants");

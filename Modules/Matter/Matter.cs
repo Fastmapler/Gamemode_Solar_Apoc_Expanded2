@@ -1,7 +1,7 @@
 exec("./ItemCrafting.cs");
 exec("./Item_MaterialPickup.cs");
 exec("./Brick_OilGeyser.cs");
-exec("./Support_Plants");
+exec("./Support_Plants.cs");
 exec("./MatterData.cs");
 
 $EOTW::MatterDensity = 5000 / (2048 * 2048);
@@ -326,9 +326,10 @@ package EOTW_Matter
 	}
 	function fxDtsBrick::onRemove(%brick)
 	{
+		%data = %brick.getDatablock();
+
 		if(!%brick.dontRefund)
 		{
-			%data = %brick.getDatablock();
 			if ($EOTW::CustomBrickCost[%data.getName()] !$= "" && %brick.material $= "Custom")
 			{
 				%cost = $EOTW::CustomBrickCost[%data.getName()];
@@ -365,9 +366,22 @@ package EOTW_Matter
 
 				$EOTW::Material[%brick.getGroup().bl_id, %brick.material] += %volume;
 			}
-				
-			
 		}
+
+		for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
+			if (%brick.matter["Input", %i] !$= "")
+				EOTW_SpawnOreDrop(getField(%brick.matter["Input", %i], 0), getField(%brick.matter["Input", %i], 1), %brick.getPostion());
+				
+		for (%i = 0; %i < %data.matterSlots["Buffer"]; %i++)
+			if (%brick.matter["Buffer", %i] !$= "")
+				EOTW_SpawnOreDrop(getField(%brick.matter["Buffer", %i], 0), getField(%brick.matter["Buffer", %i], 1), %brick.getPostion());
+
+		for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
+			if (%brick.matter["Output", %i] !$= "")
+				EOTW_SpawnOreDrop(getField(%brick.matter["Output", %i], 0), getField(%brick.matter["Output", %i], 1), %brick.getPostion());
+
+		if (%brick.GetPower() > 0)
+			EOTW_SpawnOreDrop(%brick.GetPower(), "Energy", %brick.getPostion());
 		
 		Parent::onRemove(%brick);
 	}

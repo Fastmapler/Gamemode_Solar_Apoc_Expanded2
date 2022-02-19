@@ -38,9 +38,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Rubber";		color="18161aff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Leather";		color="503623ff";	tier=3;	};
 		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	tier=3;	spawnWeight=50;	spawnVeinSize=4;	spawnValue=96;	collectTime=10000;	fuelCapacity=800/96;	gatherableDB="brickEOTWGatherableBasicData";	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=96;	collectTime=10000;	fuelCapacity=800/96;	gatherableDB="brickEOTWGatherableBasicData";	};
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";	tier=3;	};
-		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=15;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	gatherableDB="brickEOTWGatherableCrystalData";	};
+		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=015;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	gatherableDB="brickEOTWGatherableCrystalData";	};
 		//Chemicals
 		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=1600/96;	};
 		new ScriptObject(MatterType) { name="Sulfur";		color="93690eff";	tier=4;	};
@@ -85,6 +85,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Infinity";		color="3d5472ff";	tier=7;	cableTransfer=999999;	pipeTransfer=999999;	};
 		new ScriptObject(MatterType) { name="Singularity";	color="ffffff00";	tier=7;	};
 		new ScriptObject(MatterType) { name="Scrip";		color="507582ff";	tier=7;	};
+		new ScriptObject(MatterType) { name="Energy";		color="00d0ffa8";	tier=1;	};
 	};
 	
 	$EOTW::PlacableList = "";
