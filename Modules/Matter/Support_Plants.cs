@@ -1,21 +1,19 @@
 function PlantLife_TickLoop()
 {
     cancel($EOTW::PlantLifeLoop);
+    if (isObject(EOTWPlants) && EOTWPlants.getCount() >= 1)
+    {
+        %totalTicks = 0;
+        for (%i = EOTWPlants.getCount() / 100; %i > 0; %i--)
+            if (getRandom() < %i)
+                %totalTicks++;
 
-    if (!isObject(EOTWPlants) || EOTWPlants.getCount() < 1)
-        return;
-
-    %totalTicks = 0;
-    for (%i = EOTWPlants.getCount() / 2; %i > 0; %i--)
-        if (getRandom() < %i)
-            %totalTicks++;
-
-    for (%i = 0; %i < %totalTicks; %i++)
-        EOTWPlants.getObject(getRandom(0, EOTWPlants.getCount() - 1)).EOTW_PlantLifeTick();
-
-    $EOTW::PlantLifeLoop = schedule(1000, EOTWPlants, "PlantLife_TickLoop");
+        for (%i = 0; %i < %totalTicks; %i++)
+            EOTWPlants.getObject(getRandom(0, EOTWPlants.getCount() - 1)).EOTW_PlantLifeTick();
+    }
+    $EOTW::PlantLifeLoop = schedule(1000, 0, "PlantLife_TickLoop");
 }
-$EOTW::PlantLifeLoop = schedule(1000, EOTWPlants, "PlantLife_TickLoop");
+$EOTW::PlantLifeLoop = schedule(1000, 0, "PlantLife_TickLoop");
 
 function fxDtsBrick::EOTW_PlantLifeTick(%obj)
 {
@@ -66,19 +64,24 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
     }
     else if (%data.getName() $= "brickEOTWCactiData")
     {
+        if (isObject(%obj.getUpBrick(0)))
+            return;
+
         //WIP
         %angleID = getRandom(0, 3);
 
         %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID);
         %brick = getField(%output, 0);
         %err = getField(%output, 1);
-        if (%err > 0)
+        if (isObject(%brick))
         {
-            %brick.dontRefund = true;
-            %brick.delete();
+            if (%err > 0 || (isObject(%brick.getDownBrick(8)) && %brick.getDownBrick(8).getDataBlock() == %data))
+            {
+                %brick.dontRefund = true;
+                %brick.delete();
+            }
         }
-        if (isObject(%brick) && isObject(%brick.getDownBrick(15)) && %brick.getDownBrick(15).getDataBlock() == %data)
-            %brick.setDataBlock(brickEOTWDeadPlantData);
+        
     }
     else if (%data.getName() $= "brickEOTWDeadPlantData")
     {
