@@ -379,48 +379,5 @@ package EOTW_Fauna
 		}
 		%obj.lavaSchedule = %obj.schedule (300, lavaDamage, %amt);
 	}
-
-	//SWeps Melee: Monster melee attacks will be deflected (then stunned) by blocks
-	function AIPlayer::hMeleeAttack( %obj, %col )
-	{
-		if(%col.getType() & $TypeMasks::VehicleObjectType || %col.getType() & $TypeMasks::PlayerObjectType)
-		{
-			if( %obj.hState $= "Following" && !%obj.isStunned )
-			{
-				if(getSimTime()-%col.lastMeleeBlock < 300 && isObject(%col.meleeHand))
-				{
-					%subTo = vectorNormalize(vectorSub(vectorAdd(%obj.getPosition(),"0 0 1"),vectorAdd(%col.getPosition(),"0 0 1")));
-
-					%dot = vectorDot(%subTo,%col.getEyeVectorHack());
-					if(%dot > 0.2)
-					{
-						%oA = %col.meleeHand.getMountedImage(0).item.smMaterial;
-						serverPlay3D(swolMelee_getSFX(%oA @ "_" @ %oA @ "_Parry"), %obj.getPosition());
-						swolMelee_doParry(%col);
-						%obj.playThread(2,plant);
-						swolMelee_stunPlayer(%obj,1,1700,1);
-						%p = new projectile()
-						{
-							datablock = wrenchProjectile;
-							initialPosition = vectorAdd(vectorAdd(%col.getPosition(),"0 0 1"),%subTo);
-							scale = "1 1 1";
-						};
-						%p.explode();
-						return;
-					}
-				}
-				else
-				{
-					%client = %col.client;
-
-					%name = %col.client.name;
-					%obj.playthread(2,activate2);
-
-					%col.damage(%obj.hFakeProjectile, %col.getposition(), %obj.hAttackDamage, %obj.hDamageType);
-					%obj.lastattacked = getsimtime()+1000;
-				}
-			}
-		}
-	}
 };
 activatePackage("EOTW_Fauna");
