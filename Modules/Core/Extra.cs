@@ -91,6 +91,56 @@ function ServerCmdHexFromPaintColor(%client)
 	talk(%hex);
 }
 
+function HexToRGB(%hex) {
+	if(strLen(%hex) != 6) {
+		return;
+	}
+
+	%chars = "0123456789abcdef";
+
+	for(%i=0;%i<3;%i++) {
+		%value = getSubStr(%hex, 2*%i, 2);
+
+		%first = getSubStr(%value, 0, 1);
+		%last = getSubStr(%value, 1, 1);
+		
+		%first = stripos(%chars, %first)*16;
+		%last = stripos(%chars, %last);
+
+		%sum = %first + %last;
+		%str = trim(%str SPC %sum);
+	}
+
+	return %str;
+}
+
+function RGBToHex(%rgb) {
+	%rgb = getWords(%rgb,0,2);
+	for(%i=0;%i<getWordCount(%rgb);%i++) {
+		%dec = mFloor(getWord(%rgb,%i)*255);
+		%str = "0123456789ABCDEF";
+		%hex = "";
+
+		while(%dec != 0) {
+			%hexn = %dec % 16;
+			%dec = mFloor(%dec / 16);
+			%hex = getSubStr(%str,%hexn,1) @ %hex;    
+		}
+
+		if(strLen(%hex) == 1)
+			%hex = "0" @ %hex;
+		if(!strLen(%hex))
+			%hex = "00";
+
+		%hexstr = %hexstr @ %hex;
+	}
+
+	if(%hexstr $= "") {
+		%hexstr = "FF00FF";
+	}
+	return %hexstr;
+}
+
 function SimObject::doCall(%this, %method, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9)
 {
 	for (%i = 0; %arg[%i] !$= ""; %i++)
