@@ -1,14 +1,34 @@
 function PlayerLoop()
 {
-	cancel($Loops:Test);
+	cancel($EOTW:PlayerLoop);
 	
 	for (%i = 0; %i < ClientGroup.GetCount(); %i++)
 	{
 		%client = ClientGroup.getObject(%i);
 		%client.PrintEOTWInfo();
+
+		if (isObject(%player = %client.player))
+		{
+			%energy = %player.GetMatterCount("Energy");
+			if (%energy > 0)
+			{
+				%change = getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), 10);
+				%change = getMin(%change, %energy);
+				if (%change > 0)
+				{
+					%player.ChangeMatterCount("Energy", %change * -1);
+					%player.ChangeBatteryEnergy(%change);
+					%player.lastBatteryRequest = getSimTime();
+				}
+				else
+				{
+					%player.ChangeMatterCount("Energy", -2);
+				}
+			}
+		}
 	}
 	
-	$Loops:Test = schedule(100,ClientGroup,"PlayerLoop");
+	$EOTW:PlayerLoop = schedule(100,ClientGroup,"PlayerLoop");
 }
 schedule(100, 0, "PlayerLoop");
 
@@ -105,6 +125,8 @@ function GameConnection::PrintEOTWInfo(%client)
 		else if (%image.printPlayerBattery)
 			%brickText = "<br>" @ %player.GetBatteryText();
 	}
+	else if (getSimTime() - %player.lastBatteryRequest < 1000)
+		%brickText = "<br>" @ %player.GetBatteryText();
 	
 	if (%centerText !$= "")
 		%client.centerPrint(%centerText, 1);
