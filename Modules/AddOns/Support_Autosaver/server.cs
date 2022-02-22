@@ -169,8 +169,10 @@ function Autosaver_BootUp()
 
 function Server_AutoloadSave(%bypass)
 {
-	if(!$Pref::Server::AS_["BootLoad"] && !%bypass)
-		return;
+	//if(!$Pref::Server::AS_["BootLoad"] && !%bypass) //Completely skipping bootload check pref so we know that we try to load up ou rsave file.
+		//return;
+
+	EOTW_LoadData_BrickData();
 
 	if($Autosaver::Pref["LastAutoSave"] $= "")
 	{
