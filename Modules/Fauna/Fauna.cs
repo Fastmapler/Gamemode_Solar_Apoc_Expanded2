@@ -39,7 +39,6 @@ function SetupFaunaSpawnData()
 		}
 	}
 	$EOTW::FaunaSpawnList = trim($EOTW::FaunaSpawnList);
-	$EOTW::FaunaSpawnWeight *= 1.05; //Multiplied weight for chance of no spawn
 
 	if (!isObject(EOTWEnemies)) new SimGroup(EOTWEnemies);
 }
