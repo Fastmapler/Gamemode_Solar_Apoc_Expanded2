@@ -318,6 +318,16 @@ function SimGroup::RemoveCableData(%this)
 			%target.ropeGroups = %newGroupList;
 		}
 
+		if (%cable.buffer !$= "" && isObject(%this.getObject(0)))
+		{
+			%pos = vectorAdd(%this.getObject(0).getPosition(), "0 0 2");
+
+			if (%cable.transferType $= "Power")
+				EOTW_SpawnOreDrop(getField(%cable.buffer, 0), "Energy", %pos);
+			else if (%cable.transferType $= "Matter")
+				EOTW_SpawnOreDrop(getField(%cable.buffer, 1), getField(%cable.buffer, 0), %pos);
+		}
+
 		%cable.delete();
 	}
 		
