@@ -2,24 +2,28 @@ exec("./Lava.cs");
 
 $EOTW::LoadMap = true;
 
-function EnvMasterSetup()
+function EnvMasterInitSetup()
 {
-	if ($EOTW::Initilized)
-		return;
-		
 	if(!isObject(EnvMaster))
-			new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
+		new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 	
 	if ($EOTW::LoadMap) //serverDirectSaveFileLoad("Saves/SAEX2/Autosave - 02-18-22 at 005324.bls", 3, "", 1);
 	{
-		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
 		$EOTW::WorldBounds = "-1024 -1024 1024 1024";
+		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
 		schedule(1000, 0, "setLavaHeight", 35);
 	}
 	else
 	{
 		setLavaHeight(-1);
 	}
+}
+schedule(100, 0, "EnvMasterInitSetup");
+
+function EnvMasterSetup()
+{
+	if ($EOTW::Initilized)
+		return;
 
 	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
 	
@@ -39,7 +43,6 @@ function EnvMasterSetup()
 	
 	$EOTW::Initilized = true;
 }
-schedule(200,0,"EnvMasterSetup");
 
 function SetWorldColor(%day)
 {
@@ -305,3 +308,19 @@ function EnvMasterSunDamageBrick()
 		}
 	}
 }
+
+package EOTW_Environment
+{
+	function ServerLoadSaveFile_End()
+	{
+		parent::ServerLoadSaveFile_End();
+
+		$EOTW::MapLoadStage++;
+
+		if ($EOTW::MapLoadStage == 1)
+			schedule(5000, 0, "Server_AutoloadSave");
+		else if ($EOTW::MapLoadStage == 2)
+			schedule(200,0,"EnvMasterSetup");
+	}
+};
+activatePackage("EOTW_Environment");

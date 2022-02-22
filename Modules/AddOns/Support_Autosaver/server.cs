@@ -186,11 +186,12 @@ function Server_AutoloadSave(%bypass)
 	loadAutoSave($Autosaver::Pref["LastAutoSave"]);
 }
 
-if(!$Server::AS::HasAutoLoaded)
-{
-	$Server::AS::HasAutoLoaded = 1;
-	schedule(5000, 0, "Server_AutoloadSave");
-}
+//We need to wait for Solar Apoc EX2's main map generates first
+//if(!$Server::AS::HasAutoLoaded)
+//{
+//	$Server::AS::HasAutoLoaded = 1;
+//	schedule(5000, 0, "Server_AutoloadSave");
+//}
 
 /////////////////////////////////////////////////////////////
 //              Support_AutoSaver - Commands               //

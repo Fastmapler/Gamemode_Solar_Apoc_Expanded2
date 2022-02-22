@@ -80,5 +80,85 @@ package Server_Autosaver
 		$Server::AS["BrickChanged"] = 1;
 		return Parent::setVehicle(%this, %vehicle, %c);
 	}
+
+
+	function serverDirectSaveFileLoad (%filename, %colorMethod, %dirName, %ownership, %silent)
+	{
+		echo ("Direct load " @ %filename @ ", " @ %colorMethod @ ", " @ %dirName @ ", " @ %ownership @ ", " @ %silent);
+		if (!isFile (%filename))
+		{
+			MessageAll ('', "ERROR: File \"" @ %filename @ "\" not found.  If you are seeing this, you broke something.");
+			return;
+		}
+		$LoadingBricks_ColorMethod = %colorMethod;
+		$LoadingBricks_DirName = %dirName;
+		$LoadingBricks_Ownership = %ownership;
+		if ($LoadingBricks_Ownership $= "")
+		{
+			$LoadingBricks_Ownership = 1;
+		}
+		calcSaveOffset ();
+		if ($LoadingBricks_Client && $LoadingBricks_Client != 1)
+		{
+			MessageAll ('', "Load interrupted by host.");
+			if (isObject ($LoadBrick_FileObj))
+			{
+				$LoadBrick_FileObj.close ();
+				$LoadBrick_FileObj.delete ();
+			}
+		}
+		$LoadingBricks_Client = findLocalClient ();
+		if ($LoadingBricks_Client)
+		{
+			if ($LoadingBricks_Ownership == 2)
+			{
+				$LoadingBricks_BrickGroup = "BrickGroup_888888";
+			}
+			else 
+			{
+				$LoadingBricks_BrickGroup = $LoadingBricks_Client.brickGroup;
+			}
+		}
+		else 
+		{
+			if ($Server::LAN)
+			{
+				if ($LoadingBricks_Ownership == 2)
+				{
+					$LoadingBricks_BrickGroup = "BrickGroup_888888";
+				}
+				else 
+				{
+					$LoadingBricks_BrickGroup = "BrickGroup_999999";
+				}
+			}
+			else if ($LoadingBricks_Ownership == 2)
+			{
+				$LoadingBricks_BrickGroup = "BrickGroup_888888";
+			}
+			else 
+			{
+				$LoadingBricks_BrickGroup = "BrickGroup_" @ getMyBLID ();
+			}
+			$LoadingBricks_BrickGroup.isAdmin = 1;
+			$LoadingBricks_BrickGroup.brickGroup = $LoadingBricks_BrickGroup;
+			$LoadingBricks_Client = $LoadingBricks_BrickGroup;
+		}
+		$LoadingBricks_Silent = %silent;
+		if (!$LoadingBricks_Silent)
+		{
+			MessageAll ('MsgUploadStart', "Loading bricks. Please wait.");
+		}
+		$LoadingBricks_StartTime = getSimTime ();
+
+		//Fallback check if we don't have a brick group.
+		if (!isObject($LoadingBricks_BrickGroup))
+			$LoadingBricks_BrickGroup = "BrickGroup_888888";
+		if (!isObject($LoadingBricks_Client))
+			$LoadingBricks_Client = "BrickGroup_888888";
+
+		ServerLoadSaveFile_Start (%filename);
+	}
+
 };
 activatePackage("Server_Autosaver");
