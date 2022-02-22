@@ -119,15 +119,16 @@ function EOTW_SaveData_BrickData()
 
 function EOTW_SaveData_RopeData()
 {
+    deleteVariables("$EOTW::RopeData*");
     if (isObject(PowerGroupCablePower))
     {
         for (%i = 0; %i < PowerGroupCablePower.getCount(); %i++)
         {
             %obj = PowerGroupCablePower.getObject(%i);
             //Rope source pos, Rope Source Pos, Rope target pos, Rope target pos, transferrate, material type + amount, transfer type, energy/matter buffer
-            %source = %obj.powerSource.getPosition();
+            %source = %obj.powerSource.getPosition() TAB %obj.powerSource.getDatablock().getName();
             %sourcePort = %obj.powerSourcePort;
-            %target = %obj.powerTarget.getPosition();
+            %target = %obj.powerTarget.getPosition() TAB %obj.powerTarget.getDatablock().getName();
             %targetPort = %obj.powerTargetPort;
             %rate = %obj.powerTransfer;
             %material = %obj.parent.material;
@@ -160,6 +161,55 @@ function EOTW_SaveData_RopeData()
     }
 
     export("$EOTW::RopeData*", $EOTW::SaveLocation @ "RopeData.cs");
+}
+
+function EOTW_LoadData_RopeData()
+{
+    %file = new FileObject();
+    %file.openForRead($EOTW::SaveLocation @ "RopeData.cs");
+    while(!%file.isEOF())
+        eval(%file.readLine());
+    %file.close();
+    %file.delete();
+
+    %ropeList = "Power Matter";
+    for (%j = 0; %j < getWordCount(%ropeList); %j++)
+    {
+        %ropeType = getWord(%ropeList, %j);
+
+        for (%i = 0; $EOTW::RopeData[%ropeType, %i] !$= ""; %i++)
+        {
+            %data = $EOTW::RopeData[%ropeType, %i];
+
+            //Get object ID of brick in %source (position)
+            initContainerRadiusSearch(getField(getRecord(%data, 0), 0), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
+            while(isObject(%hit = containerSearchNext()))
+            {
+                if(%hit.getDataBlock().getName() $= getField(getRecord(%data, 0), 1))
+                {
+                    %source = %hit;
+                    break;
+                }
+            }
+
+            //Get object ID of brick in %target (position)
+            initContainerRadiusSearch(getField(getRecord(%data, 2), 0), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
+            while(isObject(%hit = containerSearchNext()))
+            {
+                if(%hit.getDataBlock().getName() $= getField(getRecord(%data, 2), 1))
+                {
+                    %target = %hit;
+                    break;
+                }
+            }
+
+            if (isObject(%source) & isObject(%target))
+            {
+                %rope = CreateTransferRope(%source, getRecord(%data, 1), %target, getRecord(%data, 3), getRecord(%data, 4), getField(getRecord(%data, 5), 0), getField(getRecord(%data, 5), 1), getRecord(%data, 6));
+                %rope.buffer = getRecord(%data, 7);
+            }
+        }
+    }
 }
 
 function EOTW_LoadData_BrickData()
