@@ -45,3 +45,18 @@ function setLavaHeight(%height)
 		servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0.5 0 0.05");
 	}
 }
+
+function SetupVehicleLavaImmunity()
+{
+	if (isObject(StandupJetskiArmor))
+		StandupJetskiArmor.lavaImmune = true;
+	if (isObject(JetskiArmor))
+		JetskiArmor.lavaImmune = true;
+	if (isObject(LifeBoatArmor))
+		LifeBoatArmor.lavaImmune = true;
+	if (isObject(MiniSpeedBoatArmor))
+		MiniSpeedBoatArmor.lavaImmune = true;
+	if (isObject(Wave_RacerArmor))
+		Wave_RacerArmor.lavaImmune = true;
+}
+schedule(100, 0, "SetupVehicleLavaImmunity");

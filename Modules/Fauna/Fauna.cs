@@ -379,5 +379,19 @@ package EOTW_Fauna
 		}
 		%obj.lavaSchedule = %obj.schedule (300, lavaDamage, %amt);
 	}
+	function Vehicle::lavaDamage (%obj, %amt)
+	{
+		if (%obj.getDataBlock().lavaImmune)
+			return;
+			
+		%obj.Damage (0, %obj.getPosition (), %amt, $DamageType::Lava);
+		if (isEventPending (%obj.lavaSchedule))
+		{
+			cancel (%obj.lavaSchedule);
+			%obj.lavaSchedule = 0;
+		}
+		%obj.lavaSchedule = %obj.schedule (300, lavaDamage, %amt);
+	}
+
 };
 activatePackage("EOTW_Fauna");
