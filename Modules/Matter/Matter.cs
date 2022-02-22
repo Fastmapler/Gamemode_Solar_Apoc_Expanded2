@@ -381,7 +381,7 @@ package EOTW_Matter
 				EOTW_SpawnOreDrop(getField(%brick.matter["Output", %i], 1), getField(%brick.matter["Output", %i], 0), %brick.getPosition());
 
 		if (%brick.GetPower() > 0)
-			EOTW_SpawnOreDrop(%brick.GetPower(), "Energy", %brick.getPostion());
+			EOTW_SpawnOreDrop(%brick.GetPower(), "Energy", %brick.getPosition());
 		
 		Parent::onRemove(%brick);
 	}
