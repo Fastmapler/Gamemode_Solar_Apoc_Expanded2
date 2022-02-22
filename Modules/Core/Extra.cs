@@ -196,6 +196,21 @@ function ServerCmdReloadCode(%client)
 	}
 }
 
+function ServerCmdDumpMatSpawnRates(%client)
+{
+	if (%client.isSuperAdmin)
+	{
+		for (%i = 0; %i < MatterData.getCount(); %i++)
+		{
+			%matter = MatterData.getObject(%i);
+			if (%matter.spawnWeight > 0)
+			{
+				talk(%matter.name @ ": " @ ((%matter.spawnWeight / $EOTW::MatSpawnWeight) * 100) @ "%");
+			}
+		}
+	}
+}
+
 function setNewSkyBox(%dml)
 {
 	for (%i = 0; %i < $EnvGUIServer::SkyCount; %i++)
