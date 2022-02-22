@@ -34,7 +34,7 @@ function GameConnection::PrintEOTWInfo(%client)
 		return;
 	}
 
-	%blacklist = "CardsOutImage ChipImage";
+	%blacklist = "CardsOutImage ChipImage DeckOutImage";
 	if (isObject(%image = %player.getMountedImage(0)) && hasWord(%blacklist, %image.getName()))
 		return;
 			

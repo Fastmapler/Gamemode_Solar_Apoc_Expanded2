@@ -120,6 +120,12 @@ function EOTW_SaveData_BrickData()
 function EOTW_SaveData_RopeData()
 {
     deleteVariables("$EOTW::RopeData*");
+
+    if (!isObject(PowerGroupCablePower))
+        new SimSet(PowerGroupCablePower);
+    if (!isObject(PowerGroupPipeMatter))
+        new SimSet(PowerGroupPipeMatter);
+
     if (isObject(PowerGroupCablePower))
     {
         for (%i = 0; %i < PowerGroupCablePower.getCount(); %i++)
@@ -146,9 +152,9 @@ function EOTW_SaveData_RopeData()
         {
             %obj = PowerGroupPipeMatter.getObject(%i);
             //Rope source pos, Rope Source Pos, Rope target pos, Rope target pos, transferrate, material type + amount, transfer type, energy/matter buffer
-            %source = %obj.powerSource.getPosition();
+            %source = %obj.powerSource.getPosition() TAB %obj.powerSource.getDatablock().getName();
             %sourcePort = %obj.powerSourcePort;
-            %target = %obj.powerTarget.getPosition();
+            %target = %obj.powerTarget.getPosition() TAB %obj.powerTarget.getDatablock().getName();
             %targetPort = %obj.powerTargetPort;
             %rate = %obj.powerTransfer;
             %material = %obj.parent.material;
@@ -185,7 +191,7 @@ function EOTW_LoadData_RopeData()
             initContainerRadiusSearch(getField(getRecord(%data, 0), 0), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
             while(isObject(%hit = containerSearchNext()))
             {
-                if(%hit.getDataBlock().getName() $= getField(getRecord(%data, 0), 1))
+                if(%hit.getPosition() $= getField(getRecord(%data, 0), 0) && %hit.getDataBlock().getName() $= getField(getRecord(%data, 0), 1))
                 {
                     %source = %hit;
                     break;
@@ -196,7 +202,7 @@ function EOTW_LoadData_RopeData()
             initContainerRadiusSearch(getField(getRecord(%data, 2), 0), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
             while(isObject(%hit = containerSearchNext()))
             {
-                if(%hit.getDataBlock().getName() $= getField(getRecord(%data, 2), 1))
+                if(%hit.getPosition() $= getField(getRecord(%data, 2), 0) && %hit.getDataBlock().getName() $= getField(getRecord(%data, 2), 1))
                 {
                     %target = %hit;
                     break;
@@ -205,7 +211,7 @@ function EOTW_LoadData_RopeData()
 
             if (isObject(%source) & isObject(%target))
             {
-                %rope = CreateTransferRope(%source, getRecord(%data, 1), %target, getRecord(%data, 3), getRecord(%data, 4), getField(getRecord(%data, 5), 0), getField(getRecord(%data, 5), 1), getRecord(%data, 6));
+                %rope = CreateTransferRope(%source, getRecord(%data, 1), %target, getRecord(%data, 3), getRecord(%data, 4), getField(getRecord(%data, 5), 0), getField(getRecord(%data, 5), 1), getRecord(%data, 6), (%j * 11) + (%i * 100));
                 %rope.buffer = getRecord(%data, 7);
             }
         }

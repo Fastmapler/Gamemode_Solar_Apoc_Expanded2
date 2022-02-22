@@ -1,22 +1,12 @@
 exec("./Lava.cs");
 
-$EOTW::LoadMap = true;
-
 function EnvMasterInitSetup()
 {
 	if(!isObject(EnvMaster))
 		new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
-	
-	if ($EOTW::LoadMap) //serverDirectSaveFileLoad("Saves/SAEX2/Autosave - 02-18-22 at 005324.bls", 3, "", 1);
-	{
-		$EOTW::WorldBounds = "-1024 -1024 1024 1024";
-		serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
-		schedule(1000, 0, "setLavaHeight", 35);
-	}
-	else
-	{
-		setLavaHeight(-1);
-	}
+
+	$EOTW::WorldBounds = "-1024 -1024 1024 1024";
+	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap3.bls", 3, "", 2);
 }
 schedule(100, 0, "EnvMasterInitSetup");
 
@@ -24,6 +14,8 @@ function EnvMasterSetup()
 {
 	if ($EOTW::Initilized)
 		return;
+
+	EOTW_LoadData_RopeData();
 
 	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
 	
@@ -38,6 +30,9 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "SunAzimuth", 75);
 	servercmdEnvGui_SetVar(EnvMaster, "GroundColor", "0.4 0.4 0.4 1.0");
 	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
+	schedule(1000, 0, "setLavaHeight", 35);
+
+	echo("Starting Environment Master Loop.");
 	
 	EnvMasterLoop();
 	

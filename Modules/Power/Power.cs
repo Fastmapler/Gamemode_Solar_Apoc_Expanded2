@@ -115,7 +115,11 @@ function SimObject::doPowerTransferFull(%obj)
 {
 	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
 	{
-		%obj.parent.RemoveCableData();
+		if (isObject(%obj.parent))
+			%obj.parent.RemoveCableData();
+		else
+			%obj.delete();
+			
 		return;
 	}
 	%obj.powerTransfer = mCeil(%obj.powerTransfer);
@@ -289,12 +293,14 @@ package EOTWPower
 		}
 	}
 	
-	function CreateTransferRope(%source, %sourcePortPos, %target, %targetPortPos, %rate, %material, %amt, %type)
+	function CreateTransferRope(%source, %sourcePortPos, %target, %targetPortPos, %rate, %material, %amt, %type, %simTimeOffset)
 	{
 		if (!isObject(PowerGroupCablePower))
 			new SimSet(PowerGroupCablePower);
 		if (!isObject(PowerGroupPipeMatter))
 			new SimSet(PowerGroupPipeMatter);
+
+		%simTimeOffset = %simTimeOffset + 0;
 
 		%cable = new SimObject();
 		
@@ -326,7 +332,7 @@ package EOTWPower
 
 		_removeRopeGroup(%creationData);
 
-		%group = _getRopeGroup(getSimTime(), %source.getGroup().bl_id, %creationData);
+		%group = _getRopeGroup(getSimTime() + %simTimeOffset, %source.getGroup().bl_id, %creationData);
 		createRope(%sourcePortPos, %targetPortPos, %color, %diameter, %slack, %group);
 
 		%group.material = %material TAB %amt;
