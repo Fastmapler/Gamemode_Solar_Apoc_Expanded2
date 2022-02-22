@@ -7,9 +7,9 @@ function EOTW_SaveData()
     for (%i = 0; %i < ClientGroup.getCount(); %i++)
         EOTW_SaveData_PlayerData(ClientGroup.getObject(%i));
 
-    //Save Brick and Cable Data
+    //Save Brick and Rope Data
     EOTW_SaveData_BrickData();
-    EOTW_SaveData_CableData();
+    EOTW_SaveData_RopeData();
 }
 
 function EOTW_SaveData_PlayerData(%client)
@@ -117,9 +117,49 @@ function EOTW_SaveData_BrickData()
     export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
 }
 
-function EOTW_SaveData_CableData()
+function EOTW_SaveData_RopeData()
 {
+    if (isObject(PowerGroupCablePower))
+    {
+        for (%i = 0; %i < PowerGroupCablePower.getCount(); %i++)
+        {
+            %obj = PowerGroupCablePower.getObject(%i);
+            //Rope source pos, Rope Source Pos, Rope target pos, Rope target pos, transferrate, material type + amount, transfer type, energy/matter buffer
+            %source = %obj.powerSource.getPosition();
+            %sourcePort = %obj.powerSourcePort;
+            %target = %obj.powerTarget.getPosition();
+            %targetPort = %obj.powerTargetPort;
+            %rate = %obj.powerTransfer;
+            %material = %obj.parent.material;
+            %type = %obj.transferType;
+            %buffer = %obj.buffer;
 
+            //Using newline instead of field since some of the data uses tabs to seperate subdata fields.
+            $EOTW::RopeData[%type, %i] = %source NL %sourcePort NL %target NL %targetPort NL %rate NL %material NL %type NL %buffer;
+        }
+    }
+    
+    if (isObject(PowerGroupPipeMatter))
+    {
+        for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i++)
+        {
+            %obj = PowerGroupPipeMatter.getObject(%i);
+            //Rope source pos, Rope Source Pos, Rope target pos, Rope target pos, transferrate, material type + amount, transfer type, energy/matter buffer
+            %source = %obj.powerSource.getPosition();
+            %sourcePort = %obj.powerSourcePort;
+            %target = %obj.powerTarget.getPosition();
+            %targetPort = %obj.powerTargetPort;
+            %rate = %obj.powerTransfer;
+            %material = %obj.parent.material;
+            %type = %obj.transferType;
+            %buffer = %obj.buffer;
+
+            //Using newline instead of field since some of the data uses tabs to seperate subdata fields.
+            $EOTW::RopeData[%type, %i] = %source NL %sourcePort NL %target NL %targetPort NL %rate NL %material NL %type NL %buffer;
+        }
+    }
+
+    export("$EOTW::RopeData*", $EOTW::SaveLocation @ "RopeData.cs");
 }
 
 function EOTW_LoadData_BrickData()

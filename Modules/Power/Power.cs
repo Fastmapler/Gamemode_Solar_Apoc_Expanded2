@@ -120,18 +120,18 @@ function SimObject::doPowerTransferFull(%obj)
 	}
 	%obj.powerTransfer = mCeil(%obj.powerTransfer);
 	
-	if (%obj.energy > 0)
+	if (%obj.buffer > 0)
 	{
-		%transferAmount = getMin(%obj.energy, %obj.powerTarget.getDatablock().energyMaxBuffer - %obj.powerTarget.energy);
+		%transferAmount = getMin(%obj.buffer, %obj.powerTarget.getDatablock().energyMaxBuffer - %obj.powerTarget.energy);
 		%obj.powerTarget.changePower(%transferAmount);
-		%obj.energy += (%transferAmount * -1);
+		%obj.buffer += (%transferAmount * -1);
 	}
 	
-	if (%obj.energy <= 0)
+	if (%obj.buffer <= 0)
 	{
 		%transferAmount = getMin(%obj.powerSource.energy, %obj.powerTransfer);
 		%obj.powerSource.changePower(%transferAmount * -1);
-		%obj.energy += (%transferAmount);
+		%obj.buffer += (%transferAmount);
 	}
 }
 
@@ -301,6 +301,10 @@ package EOTWPower
 		%cable.powerSource = %source;
 		%cable.powerTarget = %target;
 		%cable.powerTransfer = %rate;
+
+		%cable.powerSourcePort = %sourcePortPos;
+		%cable.powerTargetPort = %targetPortPos;
+		%cable.transferType = %type;
 
 		%color = getColorFromHex(getMatterType(%material).color);
 
