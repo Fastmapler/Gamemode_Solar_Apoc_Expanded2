@@ -16,6 +16,29 @@ function dumpTest(%amt, %reset)
 	
 }
 
+function doTipLoop(%num)
+{
+	cancel($EOTW::TipLoop);
+	%num++;
+	switch (%num)
+	{
+		case 1: %text = "\c5Tip\c6: Crouch while scrolling through your materials to scroll backwards.";
+		case 2: %text = "\c5Tip\c6: If you have build trust with another player, your machines can interact with eachother.";
+		case 3: %text = "\c5Tip\c6: The hilly terrain can be used as a ramp boost.";
+		case 4: %text = "\c5Tip\c6: I LOVE LEAN!!!";
+		case 5: %text = "\c5Tip\c6: This world can be exploited for maximal capitalistic gain.";
+		case 6: %text = "\c5Tip\c6: Having multiple of the same machine can allow further automation.";
+		case 7: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";
+		case 8: %text = "\c5Tip\c6: Energy pickups will fill up your player battery. However, if your battery is full it will instead decay!";
+		default: %text = "\c5Tip\c6: If you have too many plant studs, your plants will stop growing."; %num = 0;
+	}
+	
+	messageAll('',%text);
+	
+	$EOTW::TipLoop = schedule(60000 * 3, 0, "doTipLoop",%num);
+}
+schedule(60000 * 3, 0, "doTipLoop",%num);
+
 function getGatherableDensity()
 {
 	deleteVariables("$EOTW::MatTest*");
