@@ -1,0 +1,9 @@
+$EOTW::ItemCrafting["advAmmoHMGItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoMachineRifleItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoMachinePistolItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoPistolItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoRifleNadeItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoRevolverItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoRifleItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoShotgunItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");
+$EOTW::ItemCrafting["advAmmoSniperRifleItem"] = (32 TAB "Iron") TAB (16 TAB "Copper");

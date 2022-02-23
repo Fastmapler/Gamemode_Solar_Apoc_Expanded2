@@ -31,7 +31,7 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Alloy Forge";		energycost=200;	input[0]=("Sturdium" TAB 40);		input[1]=("Diamond" TAB 8);		output[0]=("Addy Base" TAB 48);	};
 		new ScriptObject(MatterCraftType) { type="Alloy Forge";		energycost=800;	input[0]=("Addy Base" TAB 48);		input[1]=("Steel" TAB 96);		output[0]=("Adamantine" TAB 128);	};
 		//Refinery
-		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Wood" TAB 128);			output[0]=("Rubber" TAB 4);		};
+		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Wood" TAB 512);			output[0]=("Rubber" TAB 16);		};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Water" TAB 96);			output[0]=("Brine" TAB 64);			};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Brine" TAB 64);			output[0]=("Lithium" TAB 32);		};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Lithium" TAB 32);		output[0]=("Tritium" TAB 8);		};

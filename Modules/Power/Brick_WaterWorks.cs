@@ -16,7 +16,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
     matterMaxBuffer = 128;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Steel" TAB 32 TAB "Silver" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Rubber" TAB 96 TAB "Steel" TAB 96 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWWaterPumpData"] = "Uses energy to pump water from deep underground.";
 
 function Player::EOTW_WaterPumpInspectLoop(%player, %brick)
@@ -84,8 +84,8 @@ datablock fxDTSBrickData(brickEOTWSteamEngineData)
     inspectFunc = "EOTW_SteamEngineInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
-$EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "[[(WIP)]] A more advanced stirling engine that takes inputted water and fuel and creates steam.";
+$EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Electrum" TAB 128 TAB "Rosium";
+$EOTW::BrickDescription["brickEOTWSteamEngineData"] = "A more advanced and efficent stirling engine that takes inputted water and fuel and creates steam. Use the steam turbine with this.";
 
 function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
 {

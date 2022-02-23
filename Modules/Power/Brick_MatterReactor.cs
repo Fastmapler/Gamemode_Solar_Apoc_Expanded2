@@ -1,25 +1,3 @@
-datablock fxDTSBrickData(brickEOTWMatterReactorData)
-{
-	brickFile = "./Bricks/MatterReactor.blb";
-	category = "Solar Apoc";
-	subCategory = "Processors";
-	uiName = "Matter Reactor";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
-	
-	energyGroup = "Machine";
-	energyMaxBuffer = 200;
-	loopFunc = "EOTW_MatterReactorLoop";
-	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 20;
-	inspectFunc = "EOTW_MatterReactorInspectLoop";
-	
-	matterMaxBuffer = 2048;
-	matterSlots["Input"] = 3;
-	matterSlots["Output"] = 1;
-};
-$EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 240 TAB "Lead" TAB 64 TAB "Silver";
-$EOTW::BrickDescription["brickEOTWMatterReactorData"] = "Takes in various materials to produce chemicals.";
-
 datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 {
 	brickFile = "./Bricks/AlloyForge.blb";
@@ -45,8 +23,30 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	portHeight["PowerIn"] = "0.5";
 	portHeight["MatterIn"] = "0.2";
 };
-$EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 96 TAB "Glass";
+$EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Glass" TAB 64 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWAlloyForgeData"] = "Uses different metals and materials to create alloys.";
+
+datablock fxDTSBrickData(brickEOTWMatterReactorData)
+{
+	brickFile = "./Bricks/MatterReactor.blb";
+	category = "Solar Apoc";
+	subCategory = "Processors";
+	uiName = "Matter Reactor";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
+	
+	energyGroup = "Machine";
+	energyMaxBuffer = 200;
+	loopFunc = "EOTW_MatterReactorLoop";
+	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
+	energyWattage = 20;
+	inspectFunc = "EOTW_MatterReactorInspectLoop";
+	
+	matterMaxBuffer = 2048;
+	matterSlots["Input"] = 3;
+	matterSlots["Output"] = 1;
+};
+$EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 144 TAB "Lead" TAB 128 TAB "Electrum";
+$EOTW::BrickDescription["brickEOTWMatterReactorData"] = "Takes in various materials to produce chemicals.";
 
 datablock fxDTSBrickData(brickEOTWRefineryData)
 {
@@ -67,7 +67,7 @@ datablock fxDTSBrickData(brickEOTWRefineryData)
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWRefineryData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 128 TAB "Copper" TAB 64 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWRefineryData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 144 TAB "Lead" TAB 128 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWRefineryData"] = "Refines inputted materials into a potentially more useful material.";
 
 datablock fxDTSBrickData(brickEOTWSeperatorData)
@@ -269,5 +269,5 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 	matterSlots["Input"] = 4;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 240 TAB "Lead" TAB 64 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
 $EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";

@@ -3,131 +3,28 @@
 //////////////////////
 //sap menu specifics//
 //////////////////////
-$BCM::DefaultMenu = "SAP";
+$BCM::DefaultMenu = "SolarApoc";
 
 //initial menu
-$BCM::Menu["SAP", 1] = "static" SPC "Inventory\nMaterial Recipes\nHelp";
-$BCM::Transitions["SAP", 1] = "2 3 4";
-$BCM::PrevState["SAP", 1] = "0";
+$BCM::Menu["SolarApoc", 1] = "static" SPC "Inventory\nMaterial Recipes\nHelp";
+$BCM::Transitions["SolarApoc", 1] = "2 3 4";
+$BCM::PrevState["SolarApoc", 1] = "0";
 
-//helper functions
-function GameConnection::getItemList(%client,%type)
-{
-	if (%type $= "Material")
-	{
-		%list = "Glass";
-		%list = %list NL "Grass";
-		%list = %list NL "Metal";
-		if ($EOTW::Day >= 12) %list = %list NL "Copper";
-		if ($EOTW::Day >= 17) %list = %list NL "Lead";
-		%list = %list NL "Stone";
-		if ($EOTW::Day >= 40) %list = %list NL getSturdiumName();
-		%list = %list NL "Vine";
-		%list = %list NL "Wood";
-		%list = %list NL "Wolfram";
-		return %list;
-	}
-	if (%type $= "Item")
-	{
-		%inv = ("InventoryHandler_" @ %client.bl_id).getID();
-		
-		for (%i = 0; %i < %inv.getCount(); %i++)
-		{
-			%list = %list NL %inv.getObject(%i).getName();
-		}
-		return removeRecord(%list, 0);
-	}
-	if (%type $= "Ammo")
-	{
-		return "Small Round\nMedium Rounds\nShotgun Shells\n.357 Rounds\n.308 Rounds\nHeavy Rounds\n40mm Grenades";
-	}
-	if (%type $= "Runes")
-	{
-		return "Air Rune\nWater Rune\nEarth Rune\nFire Rune\nLight Rune\nDark Rune\nArcane Rune\nCosmic Rune\nShatter Rune";
-	}
-	if (%type $= "Spellbook")
-	{
-		return "Work In Progress";
-	}
-	
-}
+//initial menu
+$BCM::Menu["SolarApoc", 2] = "static" SPC "Work in Progress...";
+$BCM::Transitions["SolarApoc", 2] = "1";
+$BCM::PrevState["SolarApoc", 2] = "1";
 
-function Menu_SetQuantity(%client, %selection, %type)
-{
-	if (%type $= "Material")
-	{
-		%client.BCM_MenuQuantity = $EOTW::Material[%client.bl_id, %selection] + 0;
-	}
-	if (%type $= "Item")
-	{
-		%inv = ("InventoryHandler_" @ %client.bl_id).getID();
-		%client.BCM_MenuQuantity = %inv.EOTWInv_GetItem(%selection);
-	}
-	if (%type $= "Ammo")
-	{
-		if (!isObject(%client.player))
-		{
-			%client.BCM_MenuQuantity = 0;
-			return;
-		}
-		
-		switch$(%selection)
-		{
-		case "Small Rounds":
-				%client.BCM_MenuQuantity = %client.player.sReserve["9mm"];
-		case "Medium Rounds":
-				%client.BCM_MenuQuantity = %client.player.sReserve["556"];
-		case "Shotgun Shells":
-				%client.BCM_MenuQuantity = %client.player.sReserve["shotgun_shells"];
-		case ".357 Rounds":
-				%client.BCM_MenuQuantity = %client.player.sReserve["357"];
-		case ".308 Rounds":
-				%client.BCM_MenuQuantity = %client.player.sReserve["308"];
-		case "Heavy Rounds":
-				%client.BCM_MenuQuantity = %client.player.sReserve["heavy"];
-		case "40mm Grenades":
-				%client.BCM_MenuQuantity = %client.player.sReserve["40mmGrenades"];
-		default:
-				%client.BCM_MenuQuantity = "1337";
-		}
-	}
-	if (%type $= "Runes")
-	{
-		%client.BCM_MenuQuantity = %client.runes[getWord(%selection,0)] + 0;
-	}
-}
+//initial menu
+$BCM::Menu["SolarApoc", 3] = "static" SPC "Work in Progress...";
+$BCM::Transitions["SolarApoc", 3] = "1";
+$BCM::PrevState["SolarApoc", 3] = "1";
 
-function Menu_VerifyQuantity(%client, %quantity)
-{
-	%selection = getRecord(%client.BCM_MenuCache, %client.BCM_MenuPosition);
-	%amt = ("InventoryHandler_" @ %client.bl_id).EOTWInv_GetItem(%selection);
-	if(%amt < %quantity)
-	{
-		messageClient(%client, 'MsgError');
-		%client.BCM_MenuQuantity = %amt;
-	}
-}
 
-function Menu_DisplayCrafting(%client, %menu, %position)
-{
-	%quantity = %client.BCM_MenuQuantity;
-	%init = mClamp(%position - 2, 0, getRecordCount(%menu) - 5);
-	%position-= %init;
-	%rec = getRecord(%menu, %init);
-	%color = %client.hasRequiredItems(%rec) ? "\c2" : "\c0";
-	%print = %color @ %rec;
-	for(%i = %init + 1; %i < %init + 5; %i++)
-	{
-		%rec = getRecord(%menu, %i);
-		%color = %client.hasRequiredItems(%rec) ? "\c2" : "\c0";
-		if(%client.canCraftAnything)
-			%color = "\c2";
-		
-		%print = %print NL %color @ %rec;
-	}
-	%print = setRecord(%print, %position, "\c3>>" @ getRecord(%print, %position) @ " \c3x" @ %quantity);
-	return %print;
-}
+//initial menu
+$BCM::Menu["SolarApoc", 4] = "static" SPC "Work in Progress...";
+$BCM::Transitions["SolarApoc", 4] = "1";
+$BCM::PrevState["SolarApoc", 4] = "1";
 
 ////////////////////////
 //BrickControlsMenu.cs//

@@ -230,3 +230,4 @@ activatePackage("EOTW_Player");
 exec("./Player_SolarApoc.cs");
 exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
+exec("./BrickControlsMenu.cs");

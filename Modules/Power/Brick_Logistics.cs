@@ -14,7 +14,7 @@ datablock fxDTSBrickData(brickEOTWSplitterData)
 
     isSplitter = true;
 };
-$EOTW::CustomBrickCost["brickEOTWSplitterData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Wood";
+$EOTW::CustomBrickCost["brickEOTWSplitterData"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Electrum" TAB 32 TAB "Rosium" TAB 32 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWSplitterData"] = "Equally splits its energy and buffered material into splitters above and below.";
 
 datablock fxDTSBrickData(brickEOTWInertSplitterData : brickEOTWSplitterData)
@@ -22,7 +22,7 @@ datablock fxDTSBrickData(brickEOTWInertSplitterData : brickEOTWSplitterData)
 	uiName = "Inert Splitter";
 	loopFunc = "";
 };
-$EOTW::CustomBrickCost["brickEOTWInertSplitterData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Wood";
+$EOTW::CustomBrickCost["brickEOTWInertSplitterData"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Electrum" TAB 32 TAB "Rosium" TAB 256 TAB "Stone";
 $EOTW::BrickDescription["brickEOTWInertSplitterData"] = "Can take in energy and materials from splitters, but won't split them again.";
 
 function Player::EOTW_SplitterInspectLoop(%player, %brick)
@@ -109,7 +109,7 @@ datablock fxDTSBrickData(brickEOTWTrashBinData)
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron";
-$EOTW::BrickDescription["brickEOTWTrashBinData"] = "Permanently destroys any inputted energy or materials.";
+$EOTW::BrickDescription["brickEOTWTrashBinData"] = "_Permanently_ destroys any inputted energy or materials.";
 
 function fxDtsBrick::EOTW_TrashBinLoop(%obj)
 {

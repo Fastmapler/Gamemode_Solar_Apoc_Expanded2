@@ -2,22 +2,37 @@ datablock fxDTSBrickData(brickEOTWMicroCapacitorData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Storage Device";
+	subCategory = "Power Storage";
 	uiName = "Micro Capacitor";
+	energyGroup = "Storage";
+	energyMaxBuffer = 320;
+	loopFunc = "";
+    inspectFunc = "EOTW_DefaultInspectLoop";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWMicroCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Iron" TAB 4 TAB "Silver" TAB 8 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWMicroCapacitorData"] = "A compact, cheap, low capacity capacitor useful for connecting long distance wires.";
+
+datablock fxDTSBrickData(brickEOTWMicroCapacitor2xData)
+{
+	brickFile = "./Bricks/MicroCapacitor2x.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Storage";
+	uiName = "2x2 Micro Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 1280;
 	loopFunc = "";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
-$EOTW::CustomBrickCost["brickEOTWMicroCapacitorData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 16 TAB "Silver" TAB 32 TAB "Copper";
-$EOTW::BrickDescription["brickEOTWMicroCapacitorData"] = "A compact low capacity capacitor that is only 1x1 big.";
+$EOTW::CustomBrickCost["brickEOTWMicroCapacitor2xData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 16 TAB "Silver" TAB 32 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWMicroCapacitor2xData"] = "A bigger micro capacitor to help fit symmetry.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor1Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Storage Device";
+	subCategory = "Power Storage";
 	uiName = "Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 62500;
@@ -25,14 +40,14 @@ datablock fxDTSBrickData(brickEOTWCapacitor1Data)
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor1";
 };
-$EOTW::CustomBrickCost["brickEOTWCapacitor1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWCapacitor1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 96 TAB "Lead" TAB 64 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWCapacitor1Data"] = "Buffers large amounts of power. This one is set at 62,500 EU.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor2Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Storage Device";
+	subCategory = "Power Storage";
 	uiName = "Quad Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 250000;
@@ -40,14 +55,14 @@ datablock fxDTSBrickData(brickEOTWCapacitor2Data)
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor2";
 };
-$EOTW::CustomBrickCost["brickEOTWCapacitor2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 64 TAB "Electrum";
+$EOTW::CustomBrickCost["brickEOTWCapacitor2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Iron" TAB 144 TAB "Lead" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWCapacitor2Data"] = "Buffers huge amounts of power. This one is set at 250,000 EU.";
 
 datablock fxDTSBrickData(brickEOTWCapacitor3Data)
 {
 	brickFile = "./Bricks/Capacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Storage Device";
+	subCategory = "Power Storage";
 	uiName = "Quad-Quad Capacitor";
 	energyGroup = "Storage";
 	energyMaxBuffer = 999999;
@@ -55,7 +70,7 @@ datablock fxDTSBrickData(brickEOTWCapacitor3Data)
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Capacitor3";
 };
-$EOTW::CustomBrickCost["brickEOTWCapacitor3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Iron" TAB 128 TAB "Plastic" TAB 64 TAB "Energium";
+$EOTW::CustomBrickCost["brickEOTWCapacitor3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Steel" TAB 128 TAB "Plastic" TAB 64 TAB "Energium";
 $EOTW::BrickDescription["brickEOTWCapacitor3Data"] = "Buffers insane amounts of power. This one is set at 999,999 EU.";
 
 function Player::EOTW_DefaultInspectLoop(%player, %brick)
@@ -85,29 +100,57 @@ datablock fxDTSBrickData(brickEOTWMicroMatterTankData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Storage Device";
+	subCategory = "Material Storage";
 	uiName = "Micro Matter Tank";
-    matterMaxBuffer = 256;
+    matterMaxBuffer = 80;
 	matterSlots["Buffer"] = 1;
     inspectFunc = "EOTW_MatterTankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
-$EOTW::CustomBrickCost["brickEOTWMicroMatterTankData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickEOTWMicroMatterTankData"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Iron" TAB 16 TAB "Glass" TAB 12 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMicroMatterTankData"] = "A tiny and compact matter tank.";
+
+datablock fxDTSBrickData(brickEOTWMicroMatterTank2xData)
+{
+	brickFile = "./Bricks/MicroCapacitor2x.blb";
+	category = "Solar Apoc";
+	subCategory = "Material Storage";
+	uiName = "2x2 Micro Matter Tank";
+    matterMaxBuffer = 320;
+	matterSlots["Buffer"] = 1;
+    inspectFunc = "EOTW_MatterTankInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWMicroMatterTank2xData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 64 TAB "Glass" TAB 48 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMicroMatterTank2xData"] = "A bigger micro matter tank for better symmetry.";
 
 datablock fxDTSBrickData(brickEOTWMatterTank1Data)
 {
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
-	subCategory = "Storage Device";
+	subCategory = "Material Storage";
 	uiName = "Matter Tank";
     matterMaxBuffer = 50000;
 	matterSlots["Buffer"] = 1;
     inspectFunc = "EOTW_MatterTankInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterTank1Data"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickEOTWMatterTank1Data"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Steel" TAB 128 TAB "Glass" TAB 128 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWMatterTank1Data"] = "Buffers up to 50,000u of one type of material";
+
+datablock fxDTSBrickData(brickEOTWMatterTank2Data)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Material Storage";
+	uiName = "Matter Tank";
+    matterMaxBuffer = 50000;
+	matterSlots["Buffer"] = 4;
+    inspectFunc = "EOTW_MatterTankInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWMatterTank2Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Teflon" TAB 128 TAB "Naturum";
+$EOTW::BrickDescription["brickEOTWMatterTank2Data"] = "Buffers up to 50,000u of four unique materials. Note that pipes only buffer one unique material at a time!";
 
 function Player::EOTW_MatterTankInspectLoop(%player, %brick)
 {

@@ -10,7 +10,7 @@ datablock fxDTSBrickData(brickEOTWChargePadData)
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 };
-$EOTW::CustomBrickCost["brickEOTWChargePadData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Wood";
+$EOTW::CustomBrickCost["brickEOTWChargePadData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Wood" TAB 128 TAB "Iron" TAB 32 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWChargePadData"] = "Charges the player's internal battery.";
 
 function fxDtsBrick::EOTW_ChargePadLoop(%obj)
