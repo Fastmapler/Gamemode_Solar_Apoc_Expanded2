@@ -143,7 +143,7 @@ datablock fxDTSBrickData(brickEOTWMatterTank2Data)
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
 	subCategory = "Material Storage";
-	uiName = "Matter Tank";
+	uiName = "Multi-Celled Matter Tank";
     matterMaxBuffer = 50000;
 	matterSlots["Buffer"] = 4;
     inspectFunc = "EOTW_MatterTankInspectLoop";
