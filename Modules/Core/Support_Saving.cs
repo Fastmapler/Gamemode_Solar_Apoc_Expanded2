@@ -78,7 +78,7 @@ function EOTW_SaveData_PlayerData(%client)
 function EOTW_SaveData_BrickData()
 {
     %blacklist = "888888 999999 1337";
-    %saveList = "Material\tEnergy\tProcessTime\tCondensatorBuffer\tstoredFuel";
+    %saveList = "Material\tEnergy\tProcessTime\tCondensatorBuffer\tstoredFuel\tdecayAmount";
     %saveList = %saveList @ "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
     %saveList = %saveList @ "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
     %saveList = %saveList @ "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";

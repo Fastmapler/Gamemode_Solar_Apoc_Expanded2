@@ -210,11 +210,42 @@ datablock fxDTSBrickData(brickEOTWSoulReactorData)
 	//iconName = "./Bricks/Icon_Generator";
 };
 $EOTW::CustomBrickCost["brickEOTWSoulReactorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWSoulReactorData"] = "[[(WIP)]] Dusts nearby monster corpses for power.";
+$EOTW::BrickDescription["brickEOTWSoulReactorData"] = "Dusts nearby monster corpses for power.";
 
 function fxDtsBrick::EOTW_SoulReactorLoop(%obj)
 {
+	initContainerRadiusSearch(%obj.getPosition(), 16, $TypeMasks::CorpseObjectType);
 
+	if (getSimTime() - %obj.lastTickTime > 2000)
+	{
+		%obj.lastTickTime = getSimTime();
+		while(isObject(%hit = containerSearchNext()))
+		{
+			spawnBeam(%hit.getPosition(), %obj.getPosition(), 1);
+			%obj.changePower(mCeil(%hit.getDatablock().maxDamage / 2));
+			%hit.delete();
+		}
+	}
+}
+
+datablock StaticShapeData(EOTWBeamStatic) { shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Shapes/Beam.dts"; };
+function spawnBeam(%startpos,%endpos,%size)
+{
+	%p = new StaticShape() { dataBlock = EOTWBeamStatic; };
+	MissionCleanup.add(%p);
+	
+	%vel = vectorNormalize(vectorSub(%startpos,%endpos));
+	%x = getWord(%vel,0)/2;
+	%y = (getWord(%vel,1) + 1)/2;
+	%z = getWord(%vel,2)/2;
+	%p.setTransform(%endpos SPC VectorNormalize(%x SPC %y SPC %z) SPC mDegToRad(180));
+	%p.setScale(%size SPC vectorDist(%startpos,%endpos) SPC %size);
+}
+
+function EOTWBeamStatic::onAdd(%this,%obj)
+{
+	%obj.playThread(0,root);
+	%obj.schedule(1000,delete);
 }
 
 //Radioisotope
@@ -230,12 +261,13 @@ datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
 	inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 };
-$EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 128 TAB "Plutonium" TAB 480 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produces power.";
+$EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 0.85 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 128 TAB "Plutonium" TAB 480 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produces power. Decays slowly overtime.";
 
 function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
-	%wattage = 5;
+	%baseWattage = 5;
+	%wattage = getMax( 0.5, 5 - (%obj.decayAmount / 84600));
 	%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
 	if (%obj.ProcessTime >= 1)
@@ -243,6 +275,7 @@ function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 		%ProcessTimeChange = mFloor(%obj.ProcessTime);
 		%obj.ChangePower(%ProcessTimeChange);
 		%obj.ProcessTime -= %ProcessTimeChange;
+		%obj.decayAmount++;
 	}
 }
 
