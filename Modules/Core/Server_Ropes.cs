@@ -47,7 +47,7 @@ $Pref::Ropes::Iterations = 1;
 
 datablock StaticShapeData(RopeCylinder)
 {
-	shapeFile = "./Shapes/rope2.dts";
+	shapeFile = "./Shapes/rope.dts";
 };
 
 function eulerToAxis(%euler)
