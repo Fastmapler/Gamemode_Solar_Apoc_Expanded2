@@ -9,11 +9,11 @@ function SetupMatterData()
 	new SimSet(MatterData)
 	{
 		//Buildable Material
-		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	tier=1;	spawnWeight=300;	spawnVeinSize=6;	spawnValue=512;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	gatherableDB="brickEOTWGatherableBasicData";	fuelCapacity=50/512; };
-		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	tier=1;	spawnWeight=400;	spawnVeinSize=4;	spawnValue=256;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=45;	gatherableDB="brickEOTWGatherableBasicData"; };
-		new ScriptObject(MatterType) { name="Glass";		color="181d26a8";	tier=2;	spawnWeight=150;	spawnVeinSize=4;	spawnValue=64;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=45;	gatherableDB="brickEOTWGatherableCrystalData"; };
-		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	tier=2;	spawnWeight=200;	spawnVeinSize=5;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=50;	gatherableDB="brickEOTWGatherableMetalData";	};
-		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	tier=4;	spawnWeight=005;	spawnVeinSize=2;	spawnValue=40;	collectTime=24000;	placable=true;	health=999;	heatCapacity=75;	gatherableDB="brickEOTWGatherableMetalData";	};
+		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	tier=1;	spawnWeight=300;	spawnVeinSize=6;	spawnValue=512;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelCapacity=50/512; };
+		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	tier=1;	spawnWeight=400;	spawnVeinSize=4;	spawnValue=256;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=50;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; };
+		new ScriptObject(MatterType) { name="Glass";		color="181d26a8";	tier=2;	spawnWeight=150;	spawnVeinSize=4;	spawnValue=64;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=50;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; };
+		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	tier=2;	spawnWeight=200;	spawnVeinSize=5;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";	};
+		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	tier=4;	spawnWeight=005;	spawnVeinSize=2;	spawnValue=40;	collectTime=24000;	placable=true;	health=999;	heatCapacity=90;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";	};
 		//Growable Organics
 		new ScriptObject(MatterType) { name="Moss";			color="75ba6dff";	tier=1;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=4;	collectTime=1000;	gatherableDB="brickEOTWGatherableBasicData";	 };
 		new ScriptObject(MatterType) { name="Vines";		color="226027ff";	tier=2;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=16;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";	 };
@@ -50,7 +50,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Rocket Fuel";	color="f8cfaaff";	tier=5;	fuelCapacity=3200/64;	};
 		new ScriptObject(MatterType) { name="Dielectrics";	color="264b38ff";	tier=5;	};
-		new ScriptObject(MatterType) { name="Plasteel";		color="ddb389ff";	tier=5;	placable=true;	health=4.0;	heatCapacity=50;	};
+		new ScriptObject(MatterType) { name="Plasteel";		color="ddb389ff";	tier=5;	placable=true;	health=4.0;	heatCapacity=50;	meteorImmune=true;	};
 		//Water Based
 		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";	tier=1;	boilCapacity=1;	};
 		new ScriptObject(MatterType) { name="Oxygen";		color="bcc1c88e";	tier=2;	};
