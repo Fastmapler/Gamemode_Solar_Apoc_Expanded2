@@ -1,8 +1,8 @@
 datablock fxDTSBrickData(brickEOTWOilGeyserData)
 {
 	brickFile = "./Shapes/OilGeyser.blb";
-	category = "Special";
-	subCategory = "Custom";
+	category = "";
+	subCategory = "";
 	uiName = "Oil Geyser";
 	//iconName = "";
 };

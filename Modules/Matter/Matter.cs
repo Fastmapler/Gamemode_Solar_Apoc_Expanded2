@@ -9,22 +9,22 @@ $EOTW::MatterDensity = 5000 / (2048 * 2048);
 datablock fxDTSBrickData(brickEOTWGatherableBasicData)
 {
 	brickFile = "./Bricks/GatherableBasic.blb";
-	category = "Special";
-	subCategory = " Custom";
+	category = "";
+	subCategory = "";
 	uiName = "Gatherable Basic";
 };
 datablock fxDTSBrickData(brickEOTWGatherableMetalData)
 {
 	brickFile = "./Bricks/GatherableMetal.blb";
-	category = "Special";
-	subCategory = " Custom";
+	category = "";
+	subCategory = "";
 	uiName = "Gatherable Metal";
 };
 datablock fxDTSBrickData(brickEOTWGatherableCrystalData)
 {
 	brickFile = "./Bricks/GatherableCrystal.blb";
 	category = "Special";
-	subCategory = " Custom";
+	subCategory = "";
 	uiName = "Gatherable Crystal";
 };
 
