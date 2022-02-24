@@ -4,7 +4,7 @@ $EOTW::CableCostMulti = 1;
 
 datablock itemData(CableLayerItem)
 {
-	uiName = "Cable Layer";
+	uiName = "TLS - Cable Layer";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.25 0.25 0.70 1.00";

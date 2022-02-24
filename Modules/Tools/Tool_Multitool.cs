@@ -1,6 +1,6 @@
 datablock itemData(MultitoolItem)
 {
-	uiName = "Multitool";
+	uiName = "TLS - Multitool";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.25 0.70 0.25 1.00";

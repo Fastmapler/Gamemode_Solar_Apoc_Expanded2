@@ -1,6 +1,6 @@
 datablock itemData(MiningScannerItem)
 {
-	uiName = "Mining Scanner";
+	uiName = "TLS - Mining Scanner";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.25 0.70 0.70 1.00";

@@ -1,6 +1,6 @@
 datablock itemData(OilPumpItem)
 {
-	uiName = "Oil Pump";
+	uiName = "TLS - Oil Pump";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.70 0.70 0.25 1.00";

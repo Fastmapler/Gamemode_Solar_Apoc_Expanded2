@@ -3,7 +3,7 @@ $EOTW::PipeCostMulti = 1;
 
 datablock itemData(PipeLayerItem)
 {
-	uiName = "Pipe Layer";
+	uiName = "TLS - Pipe Layer";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.70 0.25 0.25 1.00";
