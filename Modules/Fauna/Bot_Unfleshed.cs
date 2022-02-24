@@ -13,7 +13,7 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 	maxSideSpeed		= 3;
 	rideable			= false;
 	canRide				= false;
-	maxDamage			= 75;
+	maxDamage			= 80;
 	jumpSound			= "";
 	lavaImmune			= false;
 	
