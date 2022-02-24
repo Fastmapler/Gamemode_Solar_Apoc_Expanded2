@@ -58,10 +58,6 @@ function SetupMatterCraftingData()
 }
 SetupMatterCraftingData();
 
-$EOTW::CustomBrickCost["brick4x1x5windowData"] = 1.00 TAB "7a7a7aff" TAB 48 TAB "Iron" TAB 16 TAB "Glass";
-$EOTW::CustomBrickCost["brickVehicleSpawnData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 64 TAB "Glass";
-$EOTW::CustomBrickCost["brickTeledoorData"] = 0.85 TAB "7a7a7aff" TAB 40 TAB "Sturdium" TAB 8 TAB "Diamond" TAB 256 TAB "Iron";
-
 function ServerCmdInput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD)
 {
