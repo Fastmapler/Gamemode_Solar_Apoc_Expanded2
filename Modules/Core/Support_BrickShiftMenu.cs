@@ -189,8 +189,8 @@ function BSMObject::printToClient(%obj, %cl)
 	if(%act $= "")
 		%act = -1;
 
-	%cut = 1;
-
+	%cut = 2;
+	%msgid = 0;
 	for(%i = 0; %i < %obj.entryCount; %i++)
 	{
 		%entry = trim(getField(%obj.entry[%i], 0));
@@ -215,11 +215,15 @@ function BSMObject::printToClient(%obj, %cl)
 		}
 
 		%form = getField(%obj.format, (%act == %i || %obj.highlight[%entid] ? (%idx == %i ? 3 : 1) : (%idx == %i ? 2 : 4)));
-		%str = %str @ "<br>" @ %form;
-		%str = %str @ %entry;
+		//%str = %str @ "<br>" @ %form;
+		//%str = %str @ %entry;
+
+		%message[%msgid] = "<br>" @ %form @ %entry;
+		%msgid++;
 	}
 
-	%cl.centerprint(%str, 1);
+	commandToClient(%cl, 'centerprint', '%3%4%5%6%7%8%9', 10, 1, %str, %message[0], %message[1], %message[2], %message[3], %message[4], %message[5], %message[6], %message[7]);
+	//%cl.centerprint(%str, 1);
 }
 
 function BSMObject::onUserMove(%obj, %cl, %id, %move, %val)
@@ -432,7 +436,7 @@ new ScriptObject(EOTWbsmMenu)
 	entryCount = 3;
 
 	submenu["MatRecipes"] = EOTWbsmMaterialRecipesMenu;
-	submenu["MatDict"] = bsmTestBigSubmenu;
+	submenu["MatDict"] = EOTWbsmMaterialDictonaryMenu;
 
 	disableSelect = true;
 };
@@ -447,6 +451,24 @@ new ScriptObject(EOTWbsmMaterialRecipesMenu)
 	format = EOTWbsmMenu.format;
 
 	entry[0] = "[Close]" TAB "closeMenu";
+
+	entryCount = 1;
+
+	submenu["closeMenu"] = EOTWbsmMenu;
+
+	disableSelect = true;
+};
+
+new ScriptObject(EOTWbsmMaterialDictonaryMenu)
+{
+	superClass = "BSMObject";
+
+	parent = EOTWbsmMenu;
+
+	title = "<font:arial:24>\c2Material Recipes";
+	format = EOTWbsmMenu.format;
+
+	entry[0] = "Work in Progress... [Close]" TAB "closeMenu";
 
 	entryCount = 1;
 
