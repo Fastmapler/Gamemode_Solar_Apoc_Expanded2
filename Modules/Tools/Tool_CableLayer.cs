@@ -1,5 +1,5 @@
 $EOTW::CableSizeLimit = 18;
-$EOTW::MaxRopeCount = 4;
+$EOTW::MaxRopeCount = 5;
 $EOTW::CableCostMulti = 1;
 
 $EOTW::ItemCrafting["CableLayerItem"] = (64 TAB "Iron") TAB (16 TAB "Copper");
