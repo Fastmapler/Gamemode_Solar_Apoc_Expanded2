@@ -77,7 +77,7 @@ datablock ItemData(huntingShotgunItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Hunting Shotgun";
+   uiName = "AP3 - Hunting Shotgun";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

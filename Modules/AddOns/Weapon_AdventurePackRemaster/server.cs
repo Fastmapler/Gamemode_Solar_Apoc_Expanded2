@@ -54,7 +54,7 @@
 		exec("./weapon_assaultRifle.cs");
 		
 		 //////// tier 6 (extra)
-		exec("./Weapon_HMachineGun.cs");
+		//exec("./Weapon_HMachineGun.cs");
 		//exec("./weapon_modernRifle.cs");
 		//exec("./weapon_modernPistol.cs");
 		//exec("./weapon_patriotRifle.cs");

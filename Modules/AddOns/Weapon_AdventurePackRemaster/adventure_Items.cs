@@ -5,7 +5,7 @@
 datablock ItemData(advAmmoItem : hammerItem)
 {
 	shapeFile = "./shapes/items/AMMO_GROUP.dts";
-	uiName = "Ammo [ALL]";
+	uiName = ""; //Ammo [ALL]
 	iconName = "";
 	image = "";
 	doColorShift = true;
@@ -25,15 +25,15 @@ datablock ItemData(advAmmoPistolItem : advAmmoItem)
 	ammoType = "Pistol";
 };
 
-datablock ItemData(advAmmoMachinePistolItem : advAmmoItem)
-{
-	shapeFile = "./shapes/items/AMMO_9MM.dts";
-	uiName = "Ammo [Machine Pistol]";
-	iconName = "";
-	image = "";
-	ammoBox = true;
-	ammoType = "Machine Pistol";
-};
+//datablock ItemData(advAmmoMachinePistolItem : advAmmoItem)
+//{
+//	shapeFile = "./shapes/items/AMMO_9MM.dts";
+//	uiName = "Ammo [Machine Pistol]";
+//	iconName = "";
+//	image = "";
+//	ammoBox = true;
+//	ammoType = "Machine Pistol";
+//};
 
 datablock ItemData(advAmmoRevolverItem : advAmmoItem)
 {
@@ -46,7 +46,7 @@ datablock ItemData(advAmmoRevolverItem : advAmmoItem)
 };
 datablock ItemData(advAmmoRifleItem : advAmmoItem)
 {
-	shapeFile = "./shapes/items/AMMO_9MM.dts";
+	shapeFile = "./shapes/items/AMMO_RIFLE.dts";
 	uiName = "Ammo [Rifle]";
 	iconName = "";
 	image = "";
@@ -66,15 +66,15 @@ datablock ItemData(advAmmoRifleItem : advAmmoItem)
 //	altAmmoAdd = 1;
 //};
 
-datablock ItemData(advAmmoSniperRifleItem : advAmmoItem)
-{
-	shapeFile = "./shapes/items/AMMO_BOLT.dts";
-	uiName = "Ammo [Sniper Rifle]";
-	iconName = "";
-	image = "";
-	ammoBox = true;
-	ammoType = "Sniper Rifle";
-};
+//datablock ItemData(advAmmoSniperRifleItem : advAmmoItem)
+//{
+//	shapeFile = "./shapes/items/AMMO_BOLT.dts";
+//	uiName = "Ammo [Sniper Rifle]";
+//	iconName = "";
+//	image = "";
+//	ammoBox = true;
+//	ammoType = "Sniper Rifle";
+//};
 
 datablock ItemData(advAmmoMachineRifleItem : advAmmoItem)
 {
@@ -96,12 +96,12 @@ datablock ItemData(advAmmoShotgunItem : advAmmoItem)
 	ammoType = "Shotgun";
 };
 
-datablock ItemData(advAmmoHMGItem : advAmmoItem)
-{
-	shapeFile = "./shapes/items/AMMO_708.dts";
-	uiName = "Ammo [Heavy Machine Gun]";
-	iconName = "";
-	image = "";
-	ammoBox = true;
-	ammoType = "Heavy Machine Gun";
-};
+//datablock ItemData(advAmmoHMGItem : advAmmoItem)
+//{
+//	shapeFile = "./shapes/items/AMMO_708.dts";
+//	uiName = "Ammo [Heavy Machine Gun]";
+//	iconName = "";
+//	image = "";
+//	ammoBox = true;
+//	ammoType = "Heavy Machine Gun";
+//};

@@ -8,8 +8,8 @@ $hl2Weapons::AddAmmo["Pistol"] = 24;
 $hl2Weapons::MaxAmmo["Revolver"] = 600;
 $hl2Weapons::AddAmmo["Revolver"] = 12;
 
-$hl2Weapons::MaxAmmo["Machine Pistol"] = 2400;
-$hl2Weapons::AddAmmo["Machine Pistol"] = 24;
+//$hl2Weapons::MaxAmmo["Machine Pistol"] = 2400;
+//$hl2Weapons::AddAmmo["Machine Pistol"] = 24;
 
 $hl2Weapons::MaxAmmo["Shotgun"] = 300;
 $hl2Weapons::AddAmmo["Shotgun"] = 6;

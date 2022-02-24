@@ -94,7 +94,7 @@ datablock ItemData(sniperRepeaterItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Sniper Repeater";
+   uiName = "AP5 - Sniper Repeater";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

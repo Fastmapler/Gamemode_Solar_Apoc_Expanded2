@@ -107,7 +107,7 @@ datablock ItemData(assaultRifleItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Assault Rifle";
+   uiName = "AP5 - Assault Rifle";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

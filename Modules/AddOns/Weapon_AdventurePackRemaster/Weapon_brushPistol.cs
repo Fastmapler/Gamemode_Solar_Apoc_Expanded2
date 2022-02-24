@@ -111,7 +111,7 @@ datablock ItemData(brushPistolItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Brush Pistol";
+   uiName = "AP2 - Brush Pistol";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

@@ -94,7 +94,7 @@ datablock ItemData(huntingRifleItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Hunting Rifle";
+   uiName = "AP4 - Hunting Rifle";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

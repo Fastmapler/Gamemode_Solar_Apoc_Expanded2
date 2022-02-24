@@ -94,7 +94,7 @@ datablock ItemData(automaticPistolItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Automatic Pistol";
+   uiName = "AP1 - Automatic Pistol";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

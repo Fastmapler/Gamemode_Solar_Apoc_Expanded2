@@ -61,7 +61,7 @@ datablock ItemData(leverRifleItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Lever Rifle";
+   uiName = "AP3 - Lever Rifle";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

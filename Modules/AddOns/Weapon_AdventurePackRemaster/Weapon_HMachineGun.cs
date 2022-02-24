@@ -107,7 +107,7 @@ datablock ItemData(HMachineGunItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - H. Machine Gun";
+   uiName = "AP6 - H. Machine Gun";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

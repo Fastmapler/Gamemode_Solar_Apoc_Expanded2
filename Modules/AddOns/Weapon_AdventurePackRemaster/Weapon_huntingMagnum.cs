@@ -111,7 +111,7 @@ datablock ItemData(huntingMagnumItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Hunting Magnum";
+   uiName = "AP3 - Hunting Magnum";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

@@ -94,7 +94,7 @@ datablock ItemData(fieldRifleItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Field Rifle";
+   uiName = "AP4 - Field Rifle";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

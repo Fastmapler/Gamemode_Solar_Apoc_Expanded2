@@ -111,7 +111,7 @@ datablock ItemData(revolverItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Revolver";
+   uiName = "AP1 - Revolver";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";

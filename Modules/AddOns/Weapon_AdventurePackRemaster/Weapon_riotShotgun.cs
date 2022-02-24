@@ -105,7 +105,7 @@ datablock ItemData(riotShotgunItem)
    emap = true;
 
    //gui stuff
-   uiName = "AP - Riot Shotgun";
+   uiName = "AP4 - Riot Shotgun";
    //iconName = "./icons/icon_Pistol";
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";
