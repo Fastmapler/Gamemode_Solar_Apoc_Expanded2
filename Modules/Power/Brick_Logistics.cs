@@ -108,7 +108,7 @@ datablock fxDTSBrickData(brickEOTWTrashBinData)
     inspectFunc = "";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
-$EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 256 TAB "Stone";
+$EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 256 TAB "Granite";
 $EOTW::BrickDescription["brickEOTWTrashBinData"] = "_Permanently_ destroys any inputted energy or materials.";
 
 function fxDtsBrick::EOTW_TrashBinLoop(%obj)
