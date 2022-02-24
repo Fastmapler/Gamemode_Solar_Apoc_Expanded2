@@ -160,7 +160,7 @@ function spawnNewFauna(%trans,%hBotType)
 		//Apply attributes to Bot
 		Name = %hBotType.hName;
 		hType = %hBotType.hType;
-		hDamageType = (strLen(%hBotType.hDamageType) !$= "" ? $DamageType["::" @ %damageType] : $DamageType::HoleMelee);
+		hDamageType = (strLen(%hBotType.hDamageType) > 0 ? %hBotType.hDamageType : $DamageType::HoleMelee);
 		hSearchRadius = %hBotType.hSearchRadius;
 		hSearch = %hBotType.hSearch;
 		hSight = %hBotType.hSight;

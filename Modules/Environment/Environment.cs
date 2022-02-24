@@ -213,16 +213,18 @@ function EnvMasterRollWeather(%day)
 	%sunSize += 3;
 	%sunSizeRoll += %sunSize + getRandom(-2, 2);
 
-	if (%day < 25)
-		%meteorIntensity = 0;
-	else if (%day < 30)
+	if (%dayLoop < 25)
+		%meteorIntensity = 0.0;
+	else if (%dayLoop < 30)
 		%meteorIntensity = 0.2;
-	else if (%day < 35)
+	else if (%dayLoop < 35)
 		%meteorIntensity = 0.5;
-	else if (%day < 40)
+	else if (%dayLoop < 40)
 		%meteorIntensity = 0.8;
+	else if (%dayLoop < 50)
+		%meteorIntensity = 1.0;
 	else
-		%meteorIntensity = 1;
+		%meteorIntensity = 0.5;
 
 	return %sunSizeRoll TAB %sunSize TAB %meteorIntensity;
 }
