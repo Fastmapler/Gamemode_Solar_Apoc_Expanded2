@@ -10,7 +10,6 @@ function updateItemNames()
 {
 	$EOTW::BacklistedItems = 0;
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BowItem";
-    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "fistItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "GunItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "AkimboGunItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "horseRayItem";
@@ -22,7 +21,7 @@ function updateItemNames()
 
 	for(%i = 0; $EOTW::BacklistedItem[%i] !$= ""; %i++)
 	{
-		%data = getDatablock($EOTW::BacklistedItem[%i]);
+		%data = ($EOTW::BacklistedItem[%i]).getID();
 
         if (isObject(%data))
             %data.uiName = "";

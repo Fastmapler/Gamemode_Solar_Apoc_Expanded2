@@ -22,21 +22,16 @@
 		exec("./weapon_automaticPistol.cs");
 		exec("./weapon_revolver.cs");
 		exec("./weapon_singleShotgun.cs");
-		//exec("./weapon_taser.cs");
 
 		  //////// tier 2
 		exec("./weapon_servicePistol.cs");
-
 		exec("./weapon_huntingShotgun.cs");
-			////////// special weapons
 		exec("./weapon_brushPistol.cs");
 		exec("./weapon_doubleShotgun.cs");
 
 		  //////// tier 3
 		exec("./weapon_leverShotgun.cs");
 		exec("./weapon_automaticRifle.cs");
-
-			////////// special weapons
 		exec("./weapon_huntingMagnum.cs");
 		exec("./weapon_leverRifle.cs");
 
@@ -46,14 +41,15 @@
 		exec("./weapon_combatRifle.cs");
 		exec("./weapon_huntingRifle.cs");
 		exec("./weapon_fieldRifle.cs");	
-			////////// special weapons
 		exec("./weapon_machinePistol.cs");
+
 		  //////// tier 5
 		exec("./weapon_sniperRepeater.cs");
 		exec("./weapon_pairedShotgun.cs");
 		exec("./weapon_assaultRifle.cs");
 		
 		 //////// tier 6 (extra)
+		//exec("./weapon_taser.cs");
 		//exec("./Weapon_HMachineGun.cs");
 		//exec("./weapon_modernRifle.cs");
 		//exec("./weapon_modernPistol.cs");
