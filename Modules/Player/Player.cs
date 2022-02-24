@@ -131,7 +131,8 @@ function GameConnection::PrintEOTWInfo(%client)
 	if (%centerText !$= "")
 		%client.centerPrint(%centerText, 1);
 
-	%client.bottomPrint("<just:center>\c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
+	%dayText = $EOTW::Time >= 12 ? "Night\c6:" SPC $EOTW::Day : "Day\c6:" SPC $EOTW::Day;
+	%client.bottomPrint("<just:center>\c3" @ %dayText @ " | \c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
 }
 
 function GetRandomSpawnLocation(%initPos, %failCount)
