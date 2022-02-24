@@ -1,3 +1,5 @@
+$EOTW::ItemCrafting["MiningScannerItem"] = (56 TAB "Gold") TAB (16 TAB "Silver");
+
 datablock itemData(MiningScannerItem)
 {
 	uiName = "TLS - Mining Scanner";

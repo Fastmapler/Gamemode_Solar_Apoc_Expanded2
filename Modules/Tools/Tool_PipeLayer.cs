@@ -1,6 +1,8 @@
 $EOTW::PipeSizeLimit = 16;
 $EOTW::PipeCostMulti = 1;
 
+$EOTW::ItemCrafting["PipeLayerItem"] = (64 TAB "Iron") TAB (24 TAB "Lead");
+
 datablock itemData(PipeLayerItem)
 {
 	uiName = "TLS - Pipe Layer";

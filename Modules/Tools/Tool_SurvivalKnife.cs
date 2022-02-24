@@ -85,7 +85,7 @@ AddDamageType("Knifestab",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded22/Mod
 datablock ProjectileData(SurvivalKnifeStabProjectile)
 {
     shapeFile = "base/data/shapes/empty.dts";
-    directDamage        = 10;
+    directDamage        = 9;
     directDamageType  = $DamageType::knifestab;
     radiusDamageType  = $DamageType::knifestab;
 
@@ -113,6 +113,8 @@ datablock ProjectileData(SurvivalKnifeStabProjectile)
 
     uiName = "Survival Knife Stab";
 };
+
+$EOTW::ItemCrafting["SurvivalKnifeItem"] = (256 TAB "Granite");
 
 datablock ItemData(SurvivalKnifeItem)
 {

@@ -1,3 +1,5 @@
+$EOTW::ItemCrafting["MultitoolItem"] = (64 TAB "Iron") TAB (28 TAB "Gold");
+
 datablock itemData(MultitoolItem)
 {
 	uiName = "TLS - Multitool";

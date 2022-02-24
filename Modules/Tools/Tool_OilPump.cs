@@ -1,3 +1,5 @@
+$EOTW::ItemCrafting["OilPumpItem"] = (48 TAB "Steel") TAB (16 TAB "Rubber");
+
 datablock itemData(OilPumpItem)
 {
 	uiName = "TLS - Oil Pump";
