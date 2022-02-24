@@ -295,7 +295,7 @@ swolMelee_createMeleeItem("spikeBat",
 );
 
 swolMelee_createMeleeItem("kurgan",
-	"SM - Kurgan Great Sword" TAB "0.85 0.85 0.85 1",
+	"SM5 - Kurgan Great Sword" TAB "0.85 0.85 0.85 1",
 	SwingSound SPC		"largeBlade_Swing",
 	HitPlSound SPC		"machete_HitPl",
 	HitEnvSound SPC		"machete_HitEnv",
