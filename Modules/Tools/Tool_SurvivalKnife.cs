@@ -128,7 +128,7 @@ datablock ItemData(SurvivalKnifeItem)
     emap = true;
 
     //gui stuff
-    uiName = "Survival Knife";
+    uiName = "TLS - Survival Knife";
     iconName = "./Shapes/icon_SurvivalKnife";
     doColorShift = false;
     colorShiftColor = "0.471 0.471 0.471 1.000";
