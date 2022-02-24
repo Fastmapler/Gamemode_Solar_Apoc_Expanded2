@@ -43,6 +43,11 @@ function EOTW_OreDrop::OnPickup(%this, %obj, %player, %amt)
 
 function EOTW_SpawnOreDrop(%amt, %type, %loc)
 {
+	%amt = mFloor(%amt);
+
+	if (%amt < 1)
+		return;
+
 	%item = new Item()
 	{
 		datablock = EOTW_OreDrop;

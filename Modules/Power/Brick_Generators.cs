@@ -267,7 +267,7 @@ $EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produ
 function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
 	%baseWattage = 5;
-	%wattage = getMax( 0.5, 5 - (%obj.decayAmount / 84600));
+	%wattage = getMax( 0.5, %baseWattage - (%obj.decayAmount / 84600));
 	%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
 	if (%obj.ProcessTime >= 1)
