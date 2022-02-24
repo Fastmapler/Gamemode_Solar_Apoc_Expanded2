@@ -104,7 +104,7 @@ datablock fxDTSBrickData(brickEOTWTrashBinData)
 	energyMaxBuffer = 999999;
     matterMaxBuffer = 999999;
 	matterSlots["Input"] = 1;
-	loopFunc = "EOTW_TrashBinUpdate";
+	loopFunc = "EOTW_TrashBinLoop";
     inspectFunc = "";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
