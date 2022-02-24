@@ -1,4 +1,5 @@
 exec("./Lava.cs");
+exec("./Projectile_Fireball.cs");
 
 function EnvMasterInitSetup()
 {
@@ -203,6 +204,21 @@ function EnvMasterRollWeather(%day)
 	%sunSize += 3;
 	%sunSizeRoll += %sunSize + getRandom(-2, 2);
 	return %sunSizeRoll TAB %sunSize;
+}
+
+function EnvMasterSummonFireball()
+{
+	%val = ($EOTW::Time / 12) * $pi;
+	%ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
+	%dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 512);
+	%hit = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 0;
+	%proj = new Projectile()
+	{
+		datablock = EOTWFireballProjectile;
+		initialPosition = vectorAdd(%hit, vectorScale(%dir, 1));
+		initialVelocity = vectorScale(%dir, -100);
+	};
+	MissionCleanup.add(%proj);
 }
 
 function EnvMasterSunDamageEntity()
