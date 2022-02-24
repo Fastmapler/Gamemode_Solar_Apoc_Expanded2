@@ -4,6 +4,7 @@ $EOTW::ItemCrafting["advAmmoShotgunItem"] = (48 TAB "Lead") TAB (28 TAB "Gold");
 $EOTW::ItemCrafting["advAmmoMachineRifleItem"] = (16 TAB "Silver") TAB (32 TAB "Copper"); //BaseWep Cost: 2x Iron, 1x Copper, 1x Silver
 $EOTW::ItemCrafting["advAmmoRifleItem"] = (32 TAB "Silver") TAB (16 TAB "Copper"); //BaseWep Cost: 4x Wood, 2x Iron, 2x Lead
 
+//Firearms
 //T1 //Weapons use base cost
 $EOTW::ItemCrafting["automaticPistolItem"] = (128 TAB "Iron") TAB (32 TAB "Copper") TAB (48 TAB "Lead");
 $EOTW::ItemCrafting["revolverItem"] = (256 TAB "Iron") TAB (48 TAB "Lead") TAB (16 TAB "Silver");
@@ -33,13 +34,18 @@ $EOTW::ItemCrafting["pairedShotgunItem"] = (128 TAB "Leather") TAB (128 TAB "Ada
 $EOTW::ItemCrafting["assaultRifleItem"] = (256 TAB "Adamantine") TAB (128 TAB "Naturum") TAB (128 TAB "Energium");
 
 //Melee
-$EOTW::ItemCrafting["baseballBatItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["spikeBatItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["fryingpanItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["meatcleaverItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["macheteItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["pipeWrenchItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["shovelItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["pitchforkItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["sledgeHammerItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
-$EOTW::ItemCrafting["kurganItem"] = (32 TAB "Iron") TAB (16 TAB "Copper") TAB (16 TAB "Copper");
+//T1
+$EOTW::ItemCrafting["baseballBatItem"] = (2048 TAB "Wood");
+$EOTW::ItemCrafting["spikeBatItem"] = (2048 TAB "Wood") TAB (128 TAB "Iron");
+//T2
+$EOTW::ItemCrafting["meatcleaverItem"] = (256 TAB "Iron");
+$EOTW::ItemCrafting["fryingpanItem"] = (256 TAB "Iron") TAB (32 TAB "Copper");
+//T3
+$EOTW::ItemCrafting["pipeWrenchItem"] = (192 TAB "Steel");
+$EOTW::ItemCrafting["macheteItem"] = (192 TAB "Steel") TAB (16 TAB "Silver");
+//T4
+$EOTW::ItemCrafting["shovelItem"] = (256 TAB "Rosium");
+$EOTW::ItemCrafting["pitchforkItem"] = (256 TAB "Rosium") TAB (48 TAB "Lead");
+//T5
+$EOTW::ItemCrafting["sledgeHammerItem"] = (128 TAB "Adamantine");
+$EOTW::ItemCrafting["kurganItem"] = (128 TAB "Adamantine") TAB (128 TAB "Electrum");
