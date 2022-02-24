@@ -30,11 +30,12 @@ package brickShiftMenuSupport
 {
 	function serverCmdPlantBrick(%cl, %idx)
 	{
-		if(%cl.brickShiftMenu !$= "")
-		{
-			%cl.brickShiftMenuPlant();
-			return;
-		}
+		//Moved this to the plant brick function in Matter.cs
+		//if(%cl.brickShiftMenu !$= "")
+		//{
+		//	%cl.brickShiftMenuPlant();
+		//	return;
+		//}
 		
 		Parent::serverCmdPlantBrick(%cl, %idx);
 	}
@@ -188,7 +189,7 @@ function BSMObject::printToClient(%obj, %cl)
 	if(%act $= "")
 		%act = -1;
 
-	%cut = 3;
+	%cut = 1;
 
 	for(%i = 0; %i < %obj.entryCount; %i++)
 	{
@@ -413,4 +414,127 @@ function bsmTestSubmenu::onUserMove(%obj, %cl, %id, %move, %val)
 		%cl.bottomprint("gamer", 1, 1);
 	else
 		Parent::onUserMove(%obj, %cl, %id, %move, %val);
+}
+
+//Solar Apoc
+
+new ScriptObject(EOTWbsmMenu)
+{
+	superClass = "BSMObject";
+
+	title = "<font:arial:24>\c2Solar Apoc Expanded 2";
+	format = "tahoma:20" TAB "\c2" TAB "<div:1>\c6" TAB "<div:1>\c2" TAB "\c7";
+
+	entry[0] = "Material Recipes" TAB "MatRecipes";
+	entry[1] = "Material Dictionary" TAB "MatDict";
+	entry[2] = "[Close]" TAB "closeMenu";
+
+	entryCount = 3;
+
+	submenu["MatRecipes"] = EOTWbsmMaterialRecipesMenu;
+	submenu["MatDict"] = bsmTestBigSubmenu;
+
+	disableSelect = true;
+};
+
+new ScriptObject(EOTWbsmMaterialRecipesMenu)
+{
+	superClass = "BSMObject";
+
+	parent = EOTWbsmMenu;
+
+	title = "<font:arial:24>\c2Material Recipes";
+	format = EOTWbsmMenu.format;
+
+	entry[0] = "[Close]" TAB "closeMenu";
+
+	entryCount = 1;
+
+	submenu["closeMenu"] = EOTWbsmMenu;
+
+	disableSelect = true;
+};
+
+function EOTWbsm_PopulateRecipesMenu()
+{
+	if (!isObject(%menu = EOTWbsmMaterialRecipesMenu))
+		return;
+
+	for (%i = 1; %i < %menu.entryCount; %i++)
+	{
+		%menu.entry[%i] = "";
+		%menu.submenu[%i] = "";
+	}
+	%menu.entryCount = 1;
+
+	for (%i = 0; %i < MatterCraftingData.getCount(); %i++)
+	{
+		%data = MatterCraftingData.getObject(%i);
+
+		%fail = false;
+		for (%j = 1; %j < %menu.entryCount; %j++)
+		{
+			if (getField(%menu.entry[%j], 0) $= %data.type)
+			{
+				%menuName = "EOTWbsm_" @ getSafeVariableName(%data.type) @ "_recipes";
+
+				%recipe = "";
+				for (%k = 0; %data.input[%k] !$= ""; %k++)
+				{
+					%recipe = %recipe @ " + " @ getField(%data.input[%k], 1) SPC getField(%data.input[%k], 0);
+				}
+				%recipe = %recipe @ " =(" @ %data.energycost @ " EU)=> ";
+				for (%k = 0; %data.output[%k] !$= ""; %k++)
+				{
+					%recipe = %recipe @ getField(%data.output[%k], 1) SPC getField(%data.output[%k], 0) @ " + ";
+				}
+				%recipe = getSubStr(%recipe, 3, strLen(%recipe) - 6);
+
+				%menuName.entry[%menuName.entryCount] = %recipe;
+				%menuName.entryCount++;
+				
+				%fail = true;
+				break;
+			}
+		}
+
+		if (%fail)
+			continue;
+
+		%menuName = "EOTWbsm_" @ getSafeVariableName(%data.type) @ "_recipes";
+		%menu.entry[%menu.entryCount] = %data.type TAB %menu.entryCount;
+		%menu.submenu[%menu.entryCount] = %menuName;
+		%menu.entryCount++;
+
+		%recipe = "";
+		for (%k = 0; %data.input[%k] !$= ""; %k++)
+		{
+			%recipe = %recipe @ " + " @ getField(%data.input[%k], 1) SPC getField(%data.input[%k], 0);
+		}
+		%recipe = %recipe @ " =(" @ %data.energycost @ " EU)=> ";
+		for (%k = 0; %data.output[%k] !$= ""; %k++)
+		{
+			%recipe = %recipe @ getField(%data.output[%k], 1) SPC getField(%data.output[%k], 0) @ " + ";
+		}
+		%recipe = getSubStr(%recipe, 3, strLen(%recipe) - 6);
+
+		new ScriptObject(%menuName)
+		{
+			superClass = "BSMObject";
+
+			parent = EOTWbsmMaterialRecipesMenu;
+
+			title = "<font:arial:24>\c2Recipes: " @ %data.type;
+			format = EOTWbsmMenu.format;
+
+			entry[0] = "[Close]" TAB "closeMenu";
+			entry[1] = %recipe;
+
+			entryCount = 2;
+
+			submenu["closeMenu"] = EOTWbsmMaterialRecipesMenu;
+
+			disableSelect = true;
+		};
+	}
 }

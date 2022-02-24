@@ -269,6 +269,16 @@ package EOTW_Matter
 	}
 	function servercmdPlantBrick(%cl)
 	{
+		if(%cl.brickShiftMenu !$= "")
+		{
+			%cl.brickShiftMenuPlant();
+			return;
+		}
+		else if(!isObject(%cl.player.tempBrick))
+		{
+			%cl.brickShiftMenuStart(EOTWbsmMenu);
+		}
+
 		if(!%cl.builderMode && !$EOTW::Freebuild)
 		{
 			if(isObject(%pl = %cl.player) && isObject(%temp = %pl.tempbrick))

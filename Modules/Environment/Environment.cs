@@ -22,6 +22,7 @@ function EnvMasterSetup()
 	
 	$EOTW::TimeScale = 1;
 	$EOTW::TimeDialation = 0.003;
+	$EOTW::TimeBoost = 1;
 	$EOTW::IsDay = false;
 	$EOTW::Day = 0;
 	$EOTW::Time = 23;
@@ -109,12 +110,15 @@ function EnvMasterLoop()
 			$EOTW::Day++;
 			
 			%stats = EnvMasterRollWeather($EOTW::Day);
+
 			setWorldColor(getField(%stats, 0));
-			
 			servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", $EOTW::WorldColor);
+
+			$EOTW::MeteorIntensity = getField(%stats, 2);
 			
 			talk("The sun rises on day " @ $EOTW::Day @ ".");
-			talk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [MOBS: Peaceful] [STORM: None]");
+			talk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
+			$EOTW::TimeBoost = 2;
 		}
 	}
 	else if ($EOTW::Time >= 12)
@@ -126,7 +130,9 @@ function EnvMasterLoop()
 			talk("The sun sets on day " @ $EOTW::Day @ ".");
 			
 			%stats = EnvMasterRollWeather($EOTW::Day + 1);
-			talk("Tommorow's Weather: " @ "[HEAT: " @ ((getField(%stats, 1) * 0.1) - 0.2) @ "-" @ ((getField(%stats, 1) * 0.1) + 0.2) @ "] [MOBS: Peaceful] [STORM: None]");
+			%heatRange = ((getField(%stats, 1) * 0.1) - 0.2) @ "-" @ ((getField(%stats, 1) * 0.1) + 0.2);
+			talk("Tommorow's Weather: " @ "[HEAT: " @ %heatRange @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ (getField(%stats, 2) * 100) @ "\%]");
+			$EOTW::TimeBoost = 1;
 			
 			$EOTW::IsDay = false;
 		}
@@ -135,6 +141,9 @@ function EnvMasterLoop()
 	{
 		EnvMasterSunDamageEntity();
 		EnvMasterSunDamageBrick();
+
+		if (getRandom() < $EOTW::MeteorIntensity)
+			EnvMasterSummonFireball();
 	}
 	
 	//Time Calculations
@@ -189,7 +198,7 @@ function EnvMasterLoop()
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareSize", (%val = (mSqrt(%flare) * $EOTW::SunSize)) < 0.1 ? 0.1 : %val);
 	servercmdEnvGui_SetVar(EnvMaster, "SunElevation", ($EOTW::Time / 24) * 360);
 	
-	$EOTW::Time += ($EOTW::TimeScale * $EOTW::TimeDialation);
+	$EOTW::Time += ($EOTW::TimeScale * $EOTW::TimeDialation * $EOTW::TimeBoost);
 	$EOTW::EnvMasterLoop = schedule(100, 0, "EnvMasterLoop");
 }
 
@@ -203,7 +212,19 @@ function EnvMasterRollWeather(%day)
 	
 	%sunSize += 3;
 	%sunSizeRoll += %sunSize + getRandom(-2, 2);
-	return %sunSizeRoll TAB %sunSize;
+
+	if (%day < 25)
+		%meteorIntensity = 0;
+	else if (%day < 30)
+		%meteorIntensity = 0.2;
+	else if (%day < 35)
+		%meteorIntensity = 0.5;
+	else if (%day < 40)
+		%meteorIntensity = 0.8;
+	else
+		%meteorIntensity = 1;
+
+	return %sunSizeRoll TAB %sunSize TAB %meteorIntensity;
 }
 
 function EnvMasterSummonFireball()
@@ -238,7 +259,7 @@ function EnvMasterSunDamageEntity()
 		while(isObject(%obj = containerSearchNext()))
 		{
 			%isVehicle = striPos(%obj.getClassName(),"Vehicle") > -1;
-			if(!%hasHarmed[%obj] && (%isVehicle || %obj.getState() !$= "DEAD"))
+			if(!%hasHarmed[%obj] && !%isVehicle && %obj.getState() !$= "DEAD")
 			{
 				%hasHarmed[%obj] = 1;
 				

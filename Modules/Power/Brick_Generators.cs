@@ -235,7 +235,7 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 		%hit = firstWord(%ray);
 		if((!isObject(%hit) || (%hit == %obj)) && !%obj.getUpBrick(0))
 		{
-			%wattage = 10;
+			%wattage = 10 * $EOTW::TimeBoost;
 			%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
 			if (%obj.ProcessTime >= 1)
@@ -258,7 +258,7 @@ datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
 	energyGroup = "Source";
 	energyMaxBuffer = 64;
 	loopFunc = "EOTW_RadioIsotopeGeneratorLoop";
-	inspectFunc = "EOTW_DefaultInspectLoop";
+	inspectFunc = "EOTW_RTGInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 };
 $EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 0.85 TAB "7a7a7aff" TAB 128 TAB "Adamantine" TAB 64 TAB "Plutonium" TAB 480 TAB "Lead";
@@ -267,7 +267,7 @@ $EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produ
 function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
 	%baseWattage = 5;
-	%wattage = getMax( 0.5, %baseWattage - (%obj.decayAmount / 84600));
+	%wattage = getMax( 0.5, %baseWattage - (%obj.decayAmount / (2 * 84600)));
 	%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
 	if (%obj.ProcessTime >= 1)
@@ -278,5 +278,33 @@ function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
 		%obj.decayAmount++;
 	}
 }
+
+function Player::EOTW_RTGInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+
+	%baseWattage = 5;
+	%wattage = getMax( 0.5, %baseWattage - (%brick.decayAmount / (2 * 84600)));
+
+    %printText = %printText @ (%brick.getPower()) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+	%printText = %printText @ "Producing " @ %wattage @ " EU/s.";
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_RTGInspectLoop", %brick);
+}
+
 
 exec("./Brick_MFR.cs");

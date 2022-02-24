@@ -105,5 +105,7 @@ function SetupMatterData()
 		}
 	}
 	$EOTW::MatSpawnList = trim($EOTW::MatSpawnList);
+
+	schedule(10, 0, "EOTWbsm_PopulateRecipesMenu");
 }
 SetupMatterData();
