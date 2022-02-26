@@ -292,3 +292,5 @@ exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
 //exec("./BrickControlsMenu.cs");
+
+//SetMutualBrickGroupTrust

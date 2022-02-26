@@ -252,7 +252,7 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 
 datablock fxDTSBrickData(brickEOTWBreweryData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "./Bricks/Brewery.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Brewery";
@@ -269,5 +269,5 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 	matterSlots["Input"] = 4;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 128 TAB "Rosium" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";
