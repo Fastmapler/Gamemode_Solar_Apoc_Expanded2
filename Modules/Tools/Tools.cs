@@ -3,6 +3,8 @@ exec("./Tool_CableLayer.cs");
 exec("./Tool_PipeLayer.cs");
 exec("./Tool_Scanner.cs");
 exec("./Tool_OilPump.cs");
+exec("./Tool_Pickaxes.cs");
+exec("./Support_DropInventoryOnDeath.cs");
 //exec("./Tool_Multitool.cs");
 
 //Blacklist specific items
@@ -32,3 +34,5 @@ function updateItemNames()
 	commandtoall('missionstartphase3');
 }
 schedule(0, 0, "updateItemNames");
+
+$Game::Item::PopTime = 1000 * 60;

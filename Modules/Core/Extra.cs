@@ -30,6 +30,7 @@ function doTipLoop(%num)
 		case 6: %text = "\c5Tip\c6: Having multiple of the same machine can allow further automation.";
 		case 7: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";
 		case 8: %text = "\c5Tip\c6: Energy pickups will fill up your player battery. However, if your battery is full it will instead decay!";
+		case 9: %text = "\c5Tip\c6: A man without a checkpoint is better off homeless.";
 		default: %text = "\c5Tip\c6: If you have too many plant studs, your plants will stop growing."; %num = 0;
 	}
 	
@@ -43,8 +44,8 @@ function getGatherableDensity()
 {
 	deleteVariables("$EOTW::MatTest*");
 	
-	for (%i = 0; %i < Gatherables.getCount(); %i++)
-		$EOTW::MatTest[Gatherables.getObject(%i).material]++;
+	for (%i = 0; %i < Brickgroup_1337.getCount(); %i++)
+		$EOTW::MatTest[Brickgroup_1337.getObject(%i).material]++;
 		
 	for (%i = 0; %i < getFieldCount($EOTW::MatSpawnList); %i++)
 	{
@@ -197,7 +198,7 @@ function SimSet::Shuffle(%set)
 
 function ServerCmdGetAllMats(%client)
 {
-	if (true || %client.isSuperAdmin)
+	if (%client.isSuperAdmin)
 	{
 		for (%i = 0; %i < MatterData.getCount(); %i++)
 			$EOTW::Material[%client.bl_id, MatterData.getObject(%i).name] += 500000;
@@ -234,6 +235,54 @@ function ServerCmdDumpMatSpawnRates(%client)
 	}
 }
 
+function serverCmdDonate(%client,%receiver,%amt,%mat1,%mat2,%mat3,%mat4)
+{
+	%mat = trim(%mat1 SPC %mat2 SPC %mat3 SPC %mat4);
+	%amt = mFloor(%amt);
+	if (%receiver $= "" || %amt $= "" || %mat $= "")
+	{
+		messageClient(%client, '', "Usage: /donate <receiver> <amount> <material>");
+		return;
+	}
+	%rc = findClientByName(%receiver);
+	if (%rc == 0)
+	{
+		messageClient(%client, '', "Could not find user:" SPC %receiver @ ".");
+		return;
+	}
+	
+	if (%rc == %client)
+	{
+		messageClient(%client, '', "You can't donate to yourself.");
+		return;
+	}
+	
+	if (%amt < 1)
+	{
+		messageClient(%client, '', "You need to donate atleast one material.");
+		return;
+	}
+	
+	if (!isObject(%matter = getMatterType(%mat)))
+	{
+		messageClient(%client, '', %mat SPC "is not a material.");
+		return;
+	}
+	
+	if ($EOTW::Material[%client.bl_id, %mat] < %amt)
+	{
+		messageClient(%client, '', "You can't donate than more of what you have. (You have " @ $EOTW::Material[%client.bl_id, %mat] @ " of the material you selected.)");
+		return;
+	}
+	
+	$EOTW::Material[%client.bl_id, %matter.name] -= %amt;
+	$EOTW::Material[%rc.bl_id, %matter.name] += %amt;
+
+	messageClient(%client, '', "\c6You donated\c4 " @ %amt @ " \c2" @ %matter.name @ " \c6to\c5 " @ %rc.netName @ "\c6.");
+	messageClient(%rc, '', "\c5" @ %client.netName @ "\c6 gave you \c4" @ %amt @ " \c2" @ %matter.name @ "\c6.");
+}
+
+
 function setNewSkyBox(%dml)
 {
 	for (%i = 0; %i < $EnvGUIServer::SkyCount; %i++)
@@ -260,7 +309,7 @@ function setNewWater(%water)
 
 function purgeAllGatherables()
 {
-	%dataNames = "brickEOTWGatherableBasicData brickEOTWGatherableMetalData brickEOTWGatherableCrystalData";
+	%dataNames = "brickEOTWOilGeyserData";
 	for (%i = 0; %i < MainBrickGroup.getCount(); %i++)
 	{
 		%group = MainBrickGroup.getObject(%i);

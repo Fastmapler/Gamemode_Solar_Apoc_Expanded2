@@ -122,7 +122,6 @@ function spawnFaunaLoop()
 
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
-schedule(100, 0, "spawnFaunaLoop");
 
 //spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), UnfleshedHoleBot);
 function spawnNewFauna(%trans,%hBotType)
@@ -330,7 +329,7 @@ function ApplyBotSkin(%obj)
 	GameConnection::ApplyBodyParts(%obj);
 	GameConnection::ApplyBodyColors(%obj);
 }
-
+AddDamageType("EOTWLava", '%1 went for a swim.', '%1 went for a swim.', 1, 1);
 package EOTW_Fauna
 {
 	function Player::RemoveBody(%player, %forceRemove)
@@ -370,7 +369,7 @@ package EOTW_Fauna
 		if (%obj.getDataBlock().lavaImmune)
 			return;
 
-		%obj.Damage (0, %obj.getPosition(), %amt, $DamageType::Lava);
+		%obj.Damage (0, %obj.getPosition(), %amt, $DamageType::EOTWLava);
 		if (isEventPending(%obj.lavaSchedule))
 		{
 			cancel(%obj.lavaSchedule);
@@ -383,7 +382,7 @@ package EOTW_Fauna
 		if (%obj.getDataBlock().lavaImmune)
 			return;
 			
-		%obj.Damage (0, %obj.getPosition (), %amt, $DamageType::Lava);
+		%obj.Damage (0, %obj.getPosition (), %amt, $DamageType::EOTWLava);
 		if (isEventPending (%obj.lavaSchedule))
 		{
 			cancel (%obj.lavaSchedule);

@@ -58,6 +58,7 @@ function SetupMatterCraftingData()
 }
 SetupMatterCraftingData();
 
+function ServerCmdI(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdInput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD)
 {
@@ -70,6 +71,13 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 	{
 		%client.chatMessage("Usage: /Insert <input/output/buffer> <amount> <material>");
 		return;
+	}
+
+	switch$ (%slot)
+	{
+		case "i": %slot = "Input";
+		case "b": %slot = "Buffer";
+		case "o": %slot = "Output";
 	}
 
 	%amount = Round(%amount);
@@ -109,7 +117,7 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 			%client.chatMessage("This block has no compatible \"" @ %slot @ "\" slot.");
 	}
 }
-
+function ServerCmdE(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdOutput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD)
 {
@@ -122,6 +130,13 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 	{
 		%client.chatMessage("Usage: /Extract <input/output/buffer> <amount> <material>");
 		return;
+	}
+
+	switch$ (%slot)
+	{
+		case "i": %slot = "Input";
+		case "b": %slot = "Buffer";
+		case "o": %slot = "Output";
 	}
 
 	%amount = Round(%amount);

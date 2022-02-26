@@ -91,6 +91,36 @@ function Player::EOTW_DefaultInspectLoop(%player, %brick)
 
     %printText = %printText @ (%brick.getPower()) @ "/" @ %data.energyMaxBuffer @ " EU\n";
 
+	for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
+	{
+		%matter = %brick.Matter["Input", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Input " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Input " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	for (%i = 0; %i < %data.matterSlots["Buffer"]; %i++)
+	{
+		%matter = %brick.Matter["Buffer", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Buffer " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Buffer " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
+	{
+		%matter = %brick.Matter["Output", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Output " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Output " @ (%i + 1) @ ": --" @ "\n";
+	}
+
 	%client.centerPrint(%printText, 1);
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_DefaultInspectLoop", %brick);

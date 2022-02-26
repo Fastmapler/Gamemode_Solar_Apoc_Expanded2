@@ -30,12 +30,14 @@ function Player::EOTW_HandCrankInspectLoop(%player, %brick)
 	%data = %brick.getDatablock();
 	%printText = "<color:ffffff>";
 
-    %printText = %printText @ "Cranking power...<br>"@ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+	%wattage = 20;
+	%brick.ProcessTime += %wattage / $EOTW::PowerTickRate;
+
+    %printText = %printText @ "Cranking power ACTIVE...<br>"@ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\nYou are producing " @ %wattage @ " EU/s";
 
 	%client.centerPrint(%printText, 1);
 
-	%wattage = 20;
-	%brick.ProcessTime += %wattage / $EOTW::PowerTickRate;
+	
 
 	if (%brick.ProcessTime >= 1)
 	{
@@ -174,7 +176,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	energyGroup = "Source";
 	energyMaxBuffer = 250;
 	loopFunc = "EOTW_SteamTurbineLoop";
-	inspectFunc = "EOTW_SplitterInspectLoop";
+	inspectFunc = "EOTW_DefaultInspectLoop";
 	matterMaxBuffer = 256;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;

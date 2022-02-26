@@ -74,7 +74,7 @@ datablock fxDTSBrickData(brickEOTWSteamEngineData)
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
 	subCategory = "Water Works";
-	uiName = "Steam Engine";
+	uiName = "Water Boiler";
 	energyGroup = "Source";
 	energyMaxBuffer = 0;
 	matterMaxBuffer = 250;
@@ -159,7 +159,7 @@ datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
 	subCategory = "Water Works";
-	uiName = "Thermoelectric Boiler";
+	uiName = "Heat Exchanger";
 	energyGroup = "Source";
 	energyMaxBuffer = 400;
 	loopFunc = "EOTW_ThermoelectricBoilerLoop";

@@ -90,7 +90,6 @@ function GatherableSpawnLoop(%despawnValue)
 	
 	$EOTW::GatherableLoop = schedule(50, 0, "GatherableSpawnLoop", %despawnValue);
 }
-schedule(10, 0, "GatherableSpawnLoop");
 
 function spawnGatherableRandom(%eye)
 {
@@ -207,11 +206,43 @@ function ServerCmdInv(%client, %cata)
 	for (%i = 0; %i < MatterData.getCount(); %i++)
 	{
 		%matter = MatterData.getObject(%i);
+		if ($EOTW::Material[%client.bl_id, %matter.name] > 0)
+			%client.chatMessage("<color:" @ getSubStr(%matter.color, 0, 6) @ ">" @ %matter.name @ "<color:ffffff>: " @ ($EOTW::Material[%client.bl_id, %matter.name] + 0));
+	}
+}
+
+function ServerCmdInvFull(%client, %cata)
+{
+	for (%i = 0; %i < MatterData.getCount(); %i++)
+	{
+		%matter = MatterData.getObject(%i);
 		%client.chatMessage("<color:" @ getSubStr(%matter.color, 0, 6) @ ">" @ %matter.name @ "<color:ffffff>: " @ ($EOTW::Material[%client.bl_id, %matter.name] + 0));
 	}
 }
 
-function Player::CollectLoop(%player, %brick)
+function Player::attemptGather(%player, %hit, %boost)
+{
+	if(!isObject(%client = %player.client) || %player.getState() $= "DEAD") return;
+	if (%hit.isCollectable)
+	{
+		if(%hit.beingCollected > 0 && %hit.beingCollected != %client.bl_id)
+			%client.centerPrint("<color:FFFFFF>Someone is already collecting that material brick!", 3);
+		else
+		{
+			if (%boost $= "")
+				%boost = 1;
+
+			%hit.lastGatherTick = getSimTime();
+
+			//Calculate tool boosts
+			%multiplier = %boost;
+
+			%player.collectLoop(%hit, %multiplier);
+		}
+	}
+}
+
+function Player::CollectLoop(%player, %brick, %multiplier)
 {
 	cancel(%player.collectLoop);
 	if(!isObject(%client = %player.client) || %player.getState() $= "DEAD") return;
@@ -246,10 +277,10 @@ function Player::CollectLoop(%player, %brick)
 		else
 		{
 			%brick.cancelCollecting = %brick.schedule(10000, "cancelCollecting");
-			%player.collectLoop = %player.schedule(16, "collectLoop", %brick);
-			%client.centerPrint("<br><color:FFFFFF>Collecting a gatherable " @ %brick.material @ " brick.<br>" @ mFloor((%brick.gatherProcess / %brick.matterType.collectTime) * 100) @ "% complete.", 3);
+			%player.collectLoop = %player.schedule(16, "collectLoop", %brick, %multiplier);
+			%client.centerPrint("<br><color:FFFFFF>Collecting a gatherable " @ %brick.material @ " brick.<br>" @ mFloor((%brick.gatherProcess / %brick.matterType.collectTime) * 100) @ "% complete." @ "<br>\c1(Gather Speed: " @ (%multiplier * 100) @ "\%)", 3);
 			
-			%brick.gatherProcess += getSimTime() - %brick.lastGatherTick;
+			%brick.gatherProcess += (getSimTime() - %brick.lastGatherTick) * %multiplier;
 			%brick.lastGatherTick = getSimTime();
 		}
 		
@@ -414,20 +445,7 @@ package EOTW_Matter
 				%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
 				%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
 				if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
-				{
-					if (%hit.isCollectable)
-					{
-						if(%hit.beingCollected > 0 && %hit.beingCollected != %client.bl_id)
-							%client.centerPrint("<color:FFFFFF>Someone is already collecting that material brick!", 3);
-						else
-						{
-							%hit.lastGatherTick = getSimTime();
-							%hit.beingCollected = %client.bl_id;
-							%hit.cancelCollecting = %hit.schedule(10000, "cancelCollecting");
-							%obj.collectLoop(%hit);
-						}
-					}
-				}
+					%obj.attemptGather(%hit);
 			}
 			if(%trig == 4 && %tog && isObject(%image = %obj.getMountedImage(0)) && %image.getName() $= "BrickImage")
 			{

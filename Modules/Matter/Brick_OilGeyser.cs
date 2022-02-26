@@ -44,7 +44,7 @@ function SpawnOilGeyser(%eye)
 		
 		%pos = vectorAdd(%pos,"0 0 0.2");
 
-        %output = CreateBrick(EnvMaster, brickEOTWOilGeyserData, %pos, getColorFromHex(getMatterType("Crude Oil").color), getRandom(0, 3));
+        %output = CreateBrick(BrickGroup_1337, brickEOTWOilGeyserData, %pos, getColorFromHex(getMatterType("Crude Oil").color), getRandom(0, 3));
 
         if (getField(%output, 1) == 0)
         {

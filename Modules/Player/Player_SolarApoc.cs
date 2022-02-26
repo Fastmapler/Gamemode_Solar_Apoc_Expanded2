@@ -24,6 +24,8 @@ datablock PlayerData(PlayerSolarApoc : PlayerStandardArmor)
 	showEnergyBar = true;
 };
 
+
+
 package Player_SolarApoc
 {
 	function Armor::onTrigger(%this,%player,%slot,%val,%a,%b,%c)

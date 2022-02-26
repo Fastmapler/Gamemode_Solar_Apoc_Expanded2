@@ -24,7 +24,7 @@ function fxDtsBrick::EOTW_ChargePadLoop(%obj)
 	%dir = "0 0 1";
 	%for = "0 1 0";
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType | $Typemasks::PlayerObjectType;
+	%mask = $Typemasks::PlayerObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 2)), %mask, %obj);
 	
 	if (isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "Player")

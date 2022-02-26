@@ -74,9 +74,9 @@ function ServerCmdCraftItemAccept(%client)
 
     for (%i = 0; %i < getFieldCount(%costData); %i += 2)
     {
-        if (%player.GetMatterCount(getField(%costData, %i)) < getField(%costData, %i + 1))
+        if (%player.GetMatterCount(getField(%costData, %i + 1)) < getField(%costData, %i))
         {
-            %client.chatMessage("You need more " @ getField(%costData, %i) @ "!");
+            %client.chatMessage("You need more " @ getField(%costData, %i + 1) @ "!");
             ServerCmdCraftItemCancel(%client);
             return;
         }

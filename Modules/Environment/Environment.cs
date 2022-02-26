@@ -35,7 +35,9 @@ function EnvMasterSetup()
 	schedule(1000, 0, "setLavaHeight", 35);
 
 	echo("Starting Environment Master Loop.");
-	
+
+	spawnFaunaLoop();
+	GatherableSpawnLoop();
 	EnvMasterLoop();
 	
 	$EOTW::Initilized = true;
@@ -115,6 +117,7 @@ function EnvMasterLoop()
 			servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", $EOTW::WorldColor);
 
 			$EOTW::MeteorIntensity = getField(%stats, 2);
+			$EOTW::WarnSunRise = false;
 			
 			talk("The sun rises on day " @ $EOTW::Day @ ".");
 			talk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
@@ -144,6 +147,15 @@ function EnvMasterLoop()
 
 		if (getRandom() < $EOTW::MeteorIntensity)
 			EnvMasterSummonFireball();
+	}
+
+	if ($EOTW::Time >= 23)
+	{
+		if (!$EOTW::IsDay && !$EOTW::WarnSunRise)
+		{
+			talk("The sun is about to rise. Taking shelter is advised.");
+			$EOTW::WarnSunRise = true;
+		}
 	}
 	
 	//Time Calculations
@@ -244,6 +256,7 @@ function EnvMasterSummonFireball()
 	MissionCleanup.add(%proj);
 }
 
+AddDamageType("BurnedToDeath", '%1 was incinerated.', '%1 was incinerated.', 1, 1);
 function EnvMasterSunDamageEntity()
 {
 	%val = ($EOTW::Time / 12) * $pi;
@@ -272,10 +285,15 @@ function EnvMasterSunDamageEntity()
 				
 				if(!isObject(%hit) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
-					%obj.damage(0, %obj.getPosition(), $EOTW::SunSize, '');
+					%obj.damage(0, %obj.getPosition(), $EOTW::SunSize, $DamageType::BurnedToDeath);
 					
 					if (!%isVehicle)
+					{
 						%obj.setDamageFlash(0.25);
+						if (isObject(%obj.client))
+							%obj.client.centerPrint("\c6The sun is burning you!<br>You should shelter youself, NOW!", 1);
+					}
+						
 				}
 			}
 		}

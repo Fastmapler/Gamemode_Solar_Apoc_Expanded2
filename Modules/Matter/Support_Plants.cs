@@ -30,7 +30,32 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
 
     if (%data.getName() $= "brickEOTWVinesData")
     {
+        %angleID = getRandom(0, 3);
 
+        switch (%angleID)
+        {
+                case 0: %dir = "0.5 0 0";
+                case 1: %dir = "-0.5 0 0";
+                case 2: %dir = "0 0.5 0";
+                case 3: %dir = "0 -0.5 0";
+            default: %dir = "0 0 0.5";
+        }
+
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir), %obj.getColorID(), %angleID);
+        %brick = getField(%output, 0);
+        %err = getField(%output, 1);
+        if (isObject(%brick))
+        {
+            %downBrick = %brick.getDownBrick(0);
+            %upBrick = %brick.getUpBrick(0);
+            %brick.Material = "Custom";
+
+            if (%err > 0 || (!isObject(%downBrick) && !isObject(%upBrick)) || (isObject(%downBrick) && %downBrick.getGroup() != %brick.getGroup()) || isObject(%upBrick) && %upBrick.getGroup() != %brick.getGroup())
+            {
+                %brick.dontRefund = true;
+                %brick.delete();
+            }
+        }
     }
     else if (%data.getName() $= "brickEOTWMossData")
     {

@@ -25,6 +25,9 @@ function PlayerLoop()
 					%player.ChangeMatterCount("Energy", -2);
 				}
 			}
+
+			if (%player.getDamageLevel() > 0)
+				%player.setDamageLevel(%player.getDamageLevel() - 0.01);
 		}
 	}
 	
@@ -198,6 +201,52 @@ function Player::ChangeMatterCount(%obj, %matter, %count)
 	return $EOTW::Material[%client.bl_id, %matter];
 }
 
+function clearIllegalEvents()
+{
+	unregisterOutputEvent("fxDtsBrick", "setItem");				//Bypasses blacklist
+	unregisterOutputEvent("fxDtsBrick", "spawnExplosion");		//Assholes try to lag the server up.
+	unregisterOutputEvent("fxDtsBrick", "spawnItem");			//Allows players to bypass the crafting process + Bypasses Blacklist
+	unregisterOutputEvent("fxDtsBrick", "spawnProjectile");		//People shoot projectiles at others.
+	
+	unregisterOutputEvent("Player", "addHealth");				//This is a survival-based gamemode. No healing.
+	unregisterOutputEvent("Player", "changeDatablock");			//Incredibly abusable; people give themselves jets.
+	unregisterOutputEvent("Player", "clearTools");				//People *will* use this to clear others' tools.
+	unregisterOutputEvent("Player", "instantRespawn");			//Death traps and the like. People are assholes.
+	unregisterOutputEvent("Player", "kill");					//Death traps and the like. People are assholes.
+	unregisterOutputEvent("Player", "setHealth");				//This is a survival-based gamemode. No healing.
+	unregisterOutputEvent("Player", "spawnExplosion");			//Assholes try to lag the server up + Landmines/Turrets
+	unregisterOutputEvent("Player", "spawnProjectile");			//People shoot projectiles at others + Turrets
+	unregisterOutputEvent("Player", "setPlayerScale");			//Trap players by increasing their size.
+	unregisterOutputEvent("Player", "setMaxHealth");			//Allows to give players inf. health
+	unregisterOutputEvent("Player", "addMaxHealth");			//Allows to give players inf. health
+	unregisterOutputEvent("Player", "setInvulnerbilityTime");	//No godmode allowed
+	unregisterOutputEvent("Player", "setFInvulnerbilityTime");	//No godmode allowed
+	unregisterOutputEvent("Player", "setInvulnerbility");		//No godmode allowed
+	unregisterOutputEvent("Player", "saveHealth");				//We have our own health system
+	unregisterOutputEvent("Player", "loadHealth");				//We have our own health system
+	unregisterOutputEvent("Player", "addVelocity");				//So players don't nuke other players into orbit
+	unregisterOutputEvent("Player", "setVelocity");				//So players don't nuke other players into orbit
+	
+	unregisterOutputEvent("MiniGame", "CenterPrintAll");		//Spammable.
+	unregisterOutputEvent("MiniGame", "BottomPrintAll");		//Spammable.
+	unregisterOutputEvent("MiniGame", "ChatMsgAll");			//Spammable.
+	unregisterOutputEvent("MiniGame", "Reset");					//NOOO
+	unregisterOutputEvent("MiniGame", "RespawnAll");			//NOOO
+	
+	unregisterOutputEvent("bot", "setMaxHealth");
+	unregisterOutputEvent("bot", "addMaxHealth");
+	unregisterOutputEvent("bot", "setInvulnerbilityTime");
+	unregisterOutputEvent("bot", "setFInvulnerbilityTime");
+	unregisterOutputEvent("bot", "setInvulnerbility");
+	
+	unregisterOutputEvent("vehicle", "setMaxHealth");
+	unregisterOutputEvent("vehicle", "addMaxHealth");
+	unregisterOutputEvent("vehicle", "setInvulnerbilityTime");
+	unregisterOutputEvent("vehicle", "setFInvulnerbilityTime");
+	unregisterOutputEvent("vehicle", "setInvulnerbility");
+}
+schedule(10, 0, "clearIllegalEvents");
+
 package EOTW_Player
 {
 	function Armor::onTrigger(%data, %obj, %trig, %tog)
@@ -225,10 +274,21 @@ package EOTW_Player
 		}
 		Parent::onTrigger(%data, %obj, %trig, %tog);
 	}
+	function serverCmdClearCheckpoint(%client)
+	{
+		if(isObject(%client.checkPointBrick))
+		{
+			%client.checkPointBrick = "";
+			%client.checkPointBrickPos = "";
+
+			messageClient(%client, '', '\c3Checkpoint reset');
+		}
+	}
 };
 activatePackage("EOTW_Player");
 
 exec("./Player_SolarApoc.cs");
 exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
+exec("./Item_Armors.cs");
 //exec("./BrickControlsMenu.cs");
