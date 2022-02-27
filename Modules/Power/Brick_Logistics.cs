@@ -59,6 +59,8 @@ function Player::EOTW_SplitterInspectLoop(%player, %brick)
 
 function fxDtsBrick::EOTW_SplitterUpdate(%obj)
 {
+    return;
+    
     if (isObject(%downBrick = %obj.getDownBrick(0)))
         if(!%downBrick.getDatablock().isSplitter)
             %downBrick = "";
@@ -73,25 +75,25 @@ function fxDtsBrick::EOTW_SplitterUpdate(%obj)
         %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 3);
         %totalEnergyChange += %downBrick.ChangePower(%energyChange);
         %totalEnergyChange += %upBrick.ChangePower(%energyChange);
-        %totalMatterChange += %downBrick.ChangeMatter(getField(%buffer, 0), %matterChange, "Buffer");
-        %totalMatterChange += %upBrick.ChangeMatter(getField(%buffer, 0), %matterChange, "Buffer");
+        %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
+        %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
     }
     else if (isObject(%downBrick))
     {
         %energyChange = mCeil(%obj.getPower() / 2);
         %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 2);
         %totalEnergyChange += %downBrick.ChangePower(%energyChange);
-        %totalMatterChange += %downBrick.ChangeMatter(getField(%buffer, 0), %matterChange, "Buffer");
+        %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
     }
     else if (isObject(%upBrick))
     {
         %energyChange = mCeil(%obj.getPower() / 2);
         %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 2);
         %totalEnergyChange += %upBrick.ChangePower(%energyChange);
-        %totalMatterChange += %upBrick.ChangeMatter(getField(%buffer, 0), %matterChange, "Buffer");
+        %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
     }
     %obj.ChangePower(%totalEnergyChange * -1);
-    %obj.ChangeMatter(getField(%buffer, 0), %totalEnergyChange * -1, "Buffer");
+    %obj.ChangeMatter(getField(%matterChange, 0), %totalMatterChange * -1, "Buffer");
 }
 
 datablock fxDTSBrickData(brickEOTWTrashBinData)

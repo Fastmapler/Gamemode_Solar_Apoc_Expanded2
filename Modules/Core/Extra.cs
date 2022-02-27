@@ -31,7 +31,7 @@ function doTipLoop(%num)
 		case 7: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";
 		case 8: %text = "\c5Tip\c6: Energy pickups will fill up your player battery. However, if your battery is full it will instead decay!";
 		case 9: %text = "\c5Tip\c6: A man without a checkpoint is better off homeless.";
-		default: %text = "\c5Tip\c6: If you have too many plant studs, your plants will stop growing."; %num = 0;
+		default: %text = "\c5Tip\c6: Dying is bad, don't do it."; %num = 0;
 	}
 	
 	messageAll('',%text);
@@ -320,6 +320,15 @@ function purgeAllGatherables()
 				%brick.delete();
 		}
 	}
+}
+
+function periodicConsoleLogReset()
+{
+	cancel($EOTW::LogReset);
+	setLogMode(0);
+	setLogMode(2);
+
+	$EOTW::LogReset = schedule(1000 * 120, 0, "periodicConsoleLogReset");
 }
 
 function mMin(%a, %b)
