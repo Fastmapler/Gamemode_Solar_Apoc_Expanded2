@@ -123,7 +123,7 @@ function Player::collectOilLoop(%obj, %target)
 			{
 				%oilPerCycle = getMin(8, %target.OilCapacity);
 				%obj.ChangeMatterCount("Crude Oil", %oilPerCycle);
-				%client.chatMessage("\c6Sapped " @ %oilPerCycle @ " crude oil.");
+				//%client.chatMessage("\c6Sapped " @ %oilPerCycle @ " crude oil.");
 
 				%target.gatherProcess = 0;
 
