@@ -48,8 +48,11 @@ package BotHolePackage
 	function Armor::onReachDestination( %this, %obj )
 	{
 		// should package this
-		parent::onReachDestination( %this, %obj );
-		
+		return parent::onReachDestination( %this, %obj );
+		//Solar Apoc: We are returning this early as we don't really need the later code and this function seems to be the source(?)
+		//Of the strange crashes.
+
+
 		// if not a holebot return
 		if( !%obj.isHoleBot || %obj.hState $= "Following" )
 			return;
