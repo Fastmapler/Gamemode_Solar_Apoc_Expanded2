@@ -30,7 +30,7 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
 
     if (%data.getName() $= "brickEOTWVinesData")
     {
-        %angleID = getRandom(0, 3);
+        %angleID = getRandom(0, 5);
 
         switch (%angleID)
         {
@@ -38,6 +38,8 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
                 case 1: %dir = "-0.5 0 0";
                 case 2: %dir = "0 0.5 0";
                 case 3: %dir = "0 -0.5 0";
+                case 4: %dir = "0 0 0.2";
+                case 5: %dir = "0 0 -0.2";
             default: %dir = "0 0 0.5";
         }
 
@@ -46,11 +48,22 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
         %err = getField(%output, 1);
         if (isObject(%brick))
         {
-            %downBrick = %brick.getDownBrick(0);
-            %upBrick = %brick.getUpBrick(0);
             %brick.Material = "Custom";
 
-            if (%err > 0 || (!isObject(%downBrick) && !isObject(%upBrick)) || (isObject(%downBrick) && %downBrick.getGroup() != %brick.getGroup()) || isObject(%upBrick) && %upBrick.getGroup() != %brick.getGroup())
+            //check to see if there is a non vine brick of the same brick group around
+            %supportingBrick = false;
+            %next = containerFindFirst( $TypeMasks::fxBrickObjectType, %brick.getPosition(), 0.75, 0.75, 0.4);
+            while(%next !$= "")
+            {
+                if(%next.getGroup() == %brick.getGroup())
+                {
+                    %supportingBrick = true;
+                    break;
+                }
+                %next = containerFindNext();
+            }
+
+            if (%err > 0 || !%supportingBrick)
             {
                 %brick.dontRefund = true;
                 %brick.delete();
