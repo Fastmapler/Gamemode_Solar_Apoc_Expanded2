@@ -45,11 +45,8 @@ function SpawnOilGeyser(%eye)
 		%pos = vectorAdd(%pos,"0 0 0.2");
 
         %output = CreateBrick(BrickGroup_1337, brickEOTWOilGeyserData, %pos, getColorFromHex(getMatterType("Crude Oil").color), getRandom(0, 3));
-
-        if (getField(%output, 1) == 0)
-        {
-            %brick = getField(%output, 0);
-        }
+		%brick = getField(%output, 0);
+		if(getField(%output, 1)) { %brick.delete(); return; }
 	}
 	else if (getWord(%eye, 2) == 1000)
 		SpawnOilGeyser(getWord(%eye, 0) SPC getWord(%eye, 1) SPC 500);

@@ -278,6 +278,7 @@ function Player::GibFaunaLoop(%obj, %target)
 
     cancel(%target.cancelFaunaCollecting);
     cancel(%target.RemoveBodySchedule);
+    cancel(%obj.faunaCollectLoop);
 
     %eye = %obj.getEyePoint();
     %dir = %obj.getEyeVector();

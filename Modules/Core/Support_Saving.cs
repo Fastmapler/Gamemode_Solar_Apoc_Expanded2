@@ -14,6 +14,9 @@ function EOTW_SaveData()
 
 function EOTW_SaveData_PlayerData(%client)
 {
+    if (!%client.hasSpawnedOnce)
+        return;
+        
     %player = %client.player;
     %saveDir = $EOTW::SaveLocation @ "/PlayerData/" @ %client.bl_id @ "/";
     
@@ -323,10 +326,16 @@ package EOTW_SavingLoading
     function GameConnection::createPlayer(%client, %trans)
 	{
         if (!%client.hasSpawnedOnce)
+        {
+            echo("Loading player data...");
             EOTW_LoadData_PlayerData(%client);
+            echo("Loading player data... done");
+        }
+            
 
         if (%client.savedSpawnTransform !$= "")
         {
+            echo("Found saved spawn");
             %trans = %client.savedSpawnTransform;
             %client.savedSpawnTransform = "";
         }
@@ -337,9 +346,11 @@ package EOTW_SavingLoading
 
         if (isObject(%player = %client.player))
         {
+            echo("Attempting to load player data ontop character");
             %clearedTools = false;
             for (%i = 0; %client.saved[%i] !$= ""; %i++)
             {
+                echo("saved" SPC %i SPC %client.saved[%i]);
                 %saveData = %client.saved[%i];
                 %type = getField(%saveData, 0);
                 switch$ (%type)

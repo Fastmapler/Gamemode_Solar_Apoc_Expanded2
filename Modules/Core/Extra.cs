@@ -25,7 +25,7 @@ function doTipLoop(%num)
 		case 1: %text = "\c5Tip\c6: Crouch while scrolling through your materials to scroll backwards.";
 		case 2: %text = "\c5Tip\c6: If you have build trust with another player, your machines can interact with eachother.";
 		case 3: %text = "\c5Tip\c6: The hilly terrain can be used as a ramp boost.";
-		case 4: %text = "\c5Tip\c6: I LOVE LEAN!!!";
+		case 4: %text = "\c5Tip\c6: \cp<color:ff00ff>I LOVE LEAN!!!\co";
 		case 5: %text = "\c5Tip\c6: This world can be exploited for maximal capitalistic gain.";
 		case 6: %text = "\c5Tip\c6: Having multiple of the same machine can allow further automation.";
 		case 7: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";

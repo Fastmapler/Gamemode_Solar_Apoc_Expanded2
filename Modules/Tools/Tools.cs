@@ -37,3 +37,17 @@ function updateItemNames()
 schedule(0, 0, "updateItemNames");
 
 $Game::Item::PopTime = 1000 * 60;
+
+function ServerCmdGrantItem(%client, %data, %target)
+{
+    if (!%client.isSuperAdmin || !isObject(%targetPlayer = findClientByName(%target).player) || !isObject(%data))
+        return;
+
+    %item = new Item()
+    {
+        dataBlock = %data;
+        position = %targetPlayer.getPosition();
+    };
+
+    %client.chatMessage("Granted");
+}

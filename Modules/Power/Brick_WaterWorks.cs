@@ -95,7 +95,7 @@ function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
 		%fuelConsumption = getMin(%obj.storedFuel, %wattage / $EOTW::PowerTickRate);
 		%waterChange -= %obj.changeMatter("Water", (%fuelConsumption * -1) / $EOTW::SteamToWaterRatio, "Input");
 		%steamCreated = %obj.changeMatter("Steam", %waterChange * $EOTW::SteamToWaterRatio, "Output");
-		%obj.storedFuel -= getMax(mFloor(%steamCreated * 0.85), 1); //The steam engine has a +15% efficency to power. Get on steam power.
+		%obj.storedFuel -= %steamCreated; //The steam engine has a +15% efficency to power. Get on steam power.
 		//Also compesates for the small loss of water when using the steam turbine.
 	}	
 
@@ -106,7 +106,7 @@ function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
 			%matterType = getMatterType(getField(%obj.matter["Input", %i], 0));
 			if (isObject(%matterType) && %matterType.fuelCapacity > 0)
 			{
-				%obj.storedFuel += mFloor(%obj.changeMatter(%matterType.name, -32, "Input") * %matterType.fuelCapacity * -1);
+				%obj.storedFuel += mFloor(%obj.changeMatter(%matterType.name, -32, "Input") * %matterType.fuelCapacity * -1.5);
 				break;
 			}
 		}

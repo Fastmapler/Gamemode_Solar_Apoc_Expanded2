@@ -126,7 +126,6 @@ function spawnFaunaLoop()
 //spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), UnfleshedHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
-	echo("SpawnFauna");
 	if(!isObject(FakeBotSpawnBrick))
 	{
 		new FxDtsBrick(FakeBotSpawnBrick)
@@ -216,7 +215,6 @@ function spawnNewFauna(%trans,%hBotType)
 	
 	%player.hGridPosition = getWords(%trans, 0, 2);
 	%player.scheduleNoQuota(10,spawnProjectile,"audio2d","spawnProjectile","0 0 0", 1);
-	echo("DidSpawnFauna " @ %player);
 	return %player;
 }
 

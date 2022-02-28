@@ -165,7 +165,7 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 {
 	%data = %obj.getDatablock();
 	//Check to see if we can still process a running process, otherwise check to see if we can craft something.
-	if (isObject(%obj.craftingProcess))
+	if (isObject(%craftData = %obj.craftingProcess))
 	{
 		for (%i = 0; %craftData.input[%i] !$= ""; %i++)
 		{
