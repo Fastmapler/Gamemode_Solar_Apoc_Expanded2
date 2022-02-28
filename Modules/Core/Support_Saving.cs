@@ -41,6 +41,8 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("POSITION" TAB %player.getTransform());
         if (isObject(%client.checkpointBrick))
             %file.writeLine("CHECKPOINT" TAB %client.checkpointBrick.getPosition());
+        if (isObject(%client.savedPlayerType))
+            %file.writeLine("SAVEDPLAYERTYPE" TAB %client.savedPlayerType);
     }
     %file.close();
     %file.delete();
@@ -52,7 +54,6 @@ function EOTW_SaveData_PlayerData(%client)
         %file.writeLine("DAMAGELEVEL" TAB %player.getDamageLevel());
         %file.writeLine("ENERGYLEVEL" TAB %player.getEnergyLevel());
         %file.writeLine("VELOCITY" TAB %player.getVelocity());
-        %file.writeLine("PLAYERTYPE" TAB %player.getDataBlock().getName());
         for (%i = 0; %i < %player.getDataBlock().maxTools; %i++)
         {
             if (isObject(%tool = %player.tool[%i]))
@@ -296,6 +297,8 @@ function EOTW_LoadData_PlayerData(%client)
                         break;
                     }
                 }
+            case "SAVEDPLAYERTYPE":
+                %client.savedPlayerType = getField(%line, 1);
         }
     }
     %file.close();
@@ -326,16 +329,10 @@ package EOTW_SavingLoading
     function GameConnection::createPlayer(%client, %trans)
 	{
         if (!%client.hasSpawnedOnce)
-        {
-            echo("Loading player data...");
             EOTW_LoadData_PlayerData(%client);
-            echo("Loading player data... done");
-        }
-            
 
         if (%client.savedSpawnTransform !$= "")
         {
-            echo("Found saved spawn");
             %trans = %client.savedSpawnTransform;
             %client.savedSpawnTransform = "";
         }
@@ -346,11 +343,9 @@ package EOTW_SavingLoading
 
         if (isObject(%player = %client.player))
         {
-            echo("Attempting to load player data ontop character");
             %clearedTools = false;
             for (%i = 0; %client.saved[%i] !$= ""; %i++)
             {
-                echo("saved" SPC %i SPC %client.saved[%i]);
                 %saveData = %client.saved[%i];
                 %type = getField(%saveData, 0);
                 switch$ (%type)
@@ -361,8 +356,6 @@ package EOTW_SavingLoading
                         %player.setEnergylevel(getField(%saveData, 1));
                     case "VELOCITY":
                         %player.setEnergylevel(getField(%saveData, 1));
-                    case "PLAYERTYPE":
-                        %player.changeDatablock(getField(%saveData, 1));
                     case "TOOL":
                         if (!%clearedTools)
                         {
@@ -381,6 +374,9 @@ package EOTW_SavingLoading
 
                 %client.saved[%i] = "";
             }
+
+            if (isObject(%client.savedPlayerType))
+                %player.changeDatablock(%client.savedPlayerType);
         }
     }
     function fxDtsBrick::onLoadPlant(%obj, %b)
@@ -403,6 +399,13 @@ package EOTW_SavingLoading
             }
                 
         }
+    }
+    function Player::ChangeDataBlock(%player, %data, %client)
+    {
+        if (isObject(%client = %player.client))
+            %client.savedPlayerType = %data.getName();
+
+        return Parent::ChangeDataBlock(%player, %data, %client);
     }
 };
 activatePackage("EOTW_SavingLoading");
