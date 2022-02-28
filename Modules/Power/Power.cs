@@ -20,7 +20,7 @@ function PowerMasterLoop()
 		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
 		{
 			%brick.lastEnergyUpdate = getSimTime();
-			if(%brick.getDatablock().loopFunc !$= "")
+			if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
 				%brick.doCall(%brick.getDatablock().loopFunc);
 		}
 	}
@@ -83,7 +83,7 @@ function PowerMasterLoop()
 		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
 		{
 			%brick.lastEnergyUpdate = getSimTime();
-			if(%brick.getDatablock().loopFunc !$= "")
+			if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
 				%brick.doCall(%brick.getDatablock().loopFunc);
 		}
 	}
@@ -99,7 +99,7 @@ function PowerMasterLoop()
 		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
 		{
 			%brick.lastEnergyUpdate = getSimTime();
-			if(%brick.getDatablock().loopFunc !$= "")
+			if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
 				%brick.doCall(%brick.getDatablock().loopFunc);
 		}
 	}
@@ -375,6 +375,18 @@ function fxDtsBrick::GetMatter(%obj, %matter, %type)
 	
 	return 0;
 }
+
+function fxDTSbrick::SetMachinePowered(%brick,%mode)
+{
+	switch (%mode)
+	{
+		case 0: %brick.machineDisabled = true;
+		case 1: %brick.machineDisabled = false;
+		case 2: %brick.machineDisabled = !%brick.machineDisabled;
+	}
+}
+registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Off 0 On 1 Toggle 2", 0);
+
 
 function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type, %ignoreUpdate)
 {
