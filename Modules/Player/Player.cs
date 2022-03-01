@@ -143,9 +143,9 @@ function GetRandomSpawnLocation(%initPos, %failCount)
 	
 	if (%initPos !$= "")
 	{
-		%xOffset = (getRandom() < 0.5 ? getRandom(32, 64) : getRandom(-64, -32));
-		%yOffset = (getRandom() < 0.5 ? getRandom(32, 64) : getRandom(-64, -32));
-		%eye = (getField(%initPos,0) + %xOffset) SPC (getField(%initPos,1) + %yOffset) SPC 495; //getRandom(0, 1664)
+		%xOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16));
+		%yOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16));
+		%eye = (getWord(%initPos, 0) + %xOffset) SPC (getWord(%initPos, 1) + %yOffset) SPC 495; //getRandom(0, 1664)
 	}
 	else
 		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 1) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 1) SPC 495;

@@ -27,7 +27,7 @@ datablock ExplosionData(EOTWPickaxeExplosion)
 //Tier 1
 datablock ProjectileData(EOTWPickaxeProjectile)
 {
-   directDamage        = 15;
+   directDamage        = 10;
    directDamageType  = $DamageType::EOTWPickaxe;
    radiusDamageType  = $DamageType::EOTWPickaxe;
    explosion           = EOTWPickaxeExplosion;
@@ -152,7 +152,7 @@ function EOTWPickaxeProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 //Tier 2
 datablock ProjectileData(EOTWPickaxe2Projectile : EOTWPickaxeProjectile)
 {
-   directDamage        = 20;
+   directDamage        = 12;
    muzzleVelocity      = 60;
 };
 
@@ -195,7 +195,7 @@ function EOTWPickaxe2Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 //Tier3
 datablock ProjectileData(EOTWPickaxe3Projectile : EOTWPickaxeProjectile)
 {
-   directDamage        = 30;
+   directDamage        = 14;
    muzzleVelocity      = 70;
 };
 

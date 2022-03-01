@@ -13,8 +13,8 @@ function SetupFaunaSpawnData()
 	new SimSet(FaunaSpawnData)
 	{
 		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=1.0;	spawnCost=10;	maxSpawnGroup=5;	timeRange=(12 TAB 24);	}; //Basic Grunt
-		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=0.8;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(00 TAB 12);	}; //Offensive Grunt
-		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=0.8;	spawnCost=5;	maxSpawnGroup=15;	timeRange=(12 TAB 24);	}; //Horde Grunt
+		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=1.0;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(00 TAB 12);	}; //Offensive Grunt
+		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=1.0;	spawnCost=5;	maxSpawnGroup=15;	timeRange=(12 TAB 24);	}; //Horde Grunt
 		//new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 24);	}; //Tank Grunt
 		//new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";	spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
@@ -60,16 +60,17 @@ function spawnFaunaLoop()
 		{
 			//Figure out what monster we should spawn
 			%rand = getRandom() * $EOTW::FaunaSpawnWeight;
-			for (%i = 0; %i < FaunaSpawnData.getCount() && %rand > 0; %i++)
+			for (%i = 0; %i < FaunaSpawnData.getCount() && %rand >= 0; %i++)
 			{
 				%spawnData = FaunaSpawnData.getObject(%i);
 				%spawnWeight = %spawnData.spawnWeight;
+				//echo(%spawnData.data SPC %rand SPC (%rand <= %spawnWeight) SPC ($EOTW::MonsterSpawnCredits >= %spawnData.spawnCost) SPC ($EOTW::Time >= getField(%spawnData.timeRange, 0)) SPC ($EOTW::Time <= getField(%spawnData.timeRange, 1)));
 				//%spawnWeight = ($EOTW::MonsterSpawnCredits > (%spawnData.spawnWeight * %spawnData.maxSpawnGroup * 3) ? %spawnData.spawnWeight / 2 : %spawnData.spawnWeight); //Prioritize higher cost fauna if we got lots of points
 				if (%rand < %spawnWeight && $EOTW::MonsterSpawnCredits >= %spawnData.spawnCost && $EOTW::Time >= getField(%spawnData.timeRange, 0) && $EOTW::Time <= getField(%spawnData.timeRange, 1))
 					break;
 
-				%spawnData = "";
 				%rand -= %spawnData.spawnWeight;
+				%spawnData = "";
 			}
 
 			if (isObject(%spawnData))
@@ -84,7 +85,8 @@ function spawnFaunaLoop()
 				{
 					for (%i = 0; %i < %totalSpawn; %i++)
 					{
-						spawnNewFauna(GetRandomSpawnLocation(%target.getPosition()), %spawnData.data);
+						%mob = spawnNewFauna(GetRandomSpawnLocation(%target.getPosition()), %spawnData.data);
+						echo(%mob.getPosition());
 					}
 				}	
 				$EOTW::MonsterSpawnDelay = getRandom(15, 25);

@@ -168,6 +168,20 @@ datablock fxDTSBrickData(brickEOTWMatterTank1Data)
 $EOTW::CustomBrickCost["brickEOTWMatterTank1Data"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Steel" TAB 128 TAB "Glass" TAB 128 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWMatterTank1Data"] = "Buffers up to 50,000u of one type of material";
 
+datablock fxDTSBrickData(brickEOTWMatterTank12Data)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Material Storage";
+	uiName = "Quad Matter Tank";
+    matterMaxBuffer = 200000;
+	matterSlots["Buffer"] = 1;
+    inspectFunc = "EOTW_MatterTankInspectLoop";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWMatterTank12Data"] = 1.00 TAB "7a7a7aff" TAB 768 TAB "Steel" TAB 512 TAB "Glass" TAB 512 TAB "Rosium";
+$EOTW::BrickDescription["brickEOTWMatterTank12Data"] = "Buffers up to 200,000u of one type of material";
+
 datablock fxDTSBrickData(brickEOTWMatterTank2Data)
 {
 	brickFile = "./Bricks/Generator.blb";
