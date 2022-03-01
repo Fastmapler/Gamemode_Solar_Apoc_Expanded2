@@ -149,6 +149,8 @@ datablock PlayerData(PlayerSolarApocKnight : PlayerStandardArmor)
 	maxTools = 6;
 	maxWeapons = 6;
 
+	lavaImmune = true;
+
 	uiName = "Solar Apoc Player Knight";
 	showEnergyBar = true;
 
@@ -191,6 +193,8 @@ datablock PlayerData(PlayerSolarApocKing : PlayerStandardArmor)
 	
 	maxTools = 7;
 	maxWeapons = 7;
+
+	lavaImmune = true;
 
 	uiName = "Solar Apoc Player King";
 	showEnergyBar = true;
@@ -280,6 +284,9 @@ datablock PlayerData(PlayerSolarApocNinja : PlayerStandardArmor)
 	maxTools = 5;
 	maxWeapons = 5;
 
+	minImpactSpeed = 30;
+	speedDamageScale = 1.0;
+
 	uiName = "Solar Apoc Player Ninja";
 	showEnergyBar = true;
 
@@ -323,6 +330,9 @@ datablock PlayerData(PlayerSolarApocEthereal : PlayerStandardArmor)
 	
 	maxTools = 6;
 	maxWeapons = 6;
+
+	minImpactSpeed = 999;
+	speedDamageScale = 1.0;
 
 	uiName = "Solar Apoc Player Ethereal";
 	showEnergyBar = true;
