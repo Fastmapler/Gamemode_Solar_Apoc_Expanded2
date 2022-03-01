@@ -52,7 +52,7 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
 
             //check to see if there is a non vine brick of the same brick group around
             %supportingBrick = false;
-            %next = containerFindFirst($TypeMasks::fxBrickObjectType, %brick.getPosition(), 0.5, 0.5, 0.2);
+            %next = containerFindFirst($TypeMasks::FxBrickAlwaysObjectType, %brick.getPosition(), 0.5, 0.5, 0.2);
             while(%next !$= "")
             {
                 
