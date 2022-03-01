@@ -115,6 +115,14 @@ function ServerCmdHexFromPaintColor(%client)
 	talk(%hex);
 }
 
+function getFieldIndex(%text, %field)
+{
+	for (%i = 0; %i < getFieldCount(%text); %i++)
+		if (%field $= getField(%text, %i))
+			return %i;
+	return -1;
+}
+
 function HexToRGB(%hex) {
 	if(strLen(%hex) != 6) {
 		return;

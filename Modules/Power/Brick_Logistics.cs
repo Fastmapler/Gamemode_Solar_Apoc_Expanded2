@@ -1,3 +1,26 @@
+datablock fxDTSBrickData(brickEOTWTrashBinData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Logistics";
+	uiName = "Trash Bin";
+	energyGroup = "Storage";
+	energyMaxBuffer = 999999;
+    matterMaxBuffer = 999999;
+	matterSlots["Input"] = 1;
+	loopFunc = "EOTW_TrashBinLoop";
+    inspectFunc = "";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 256 TAB "Granite";
+$EOTW::BrickDescription["brickEOTWTrashBinData"] = "_Permanently_ destroys any inputted energy or materials.";
+
+function fxDtsBrick::EOTW_TrashBinLoop(%obj)
+{
+    %obj.energy = 0;
+    %obj.matter["Input", 0] = "";
+}
+
 datablock fxDTSBrickData(brickEOTWSplitterData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
@@ -59,8 +82,6 @@ function Player::EOTW_SplitterInspectLoop(%player, %brick)
 
 function fxDtsBrick::EOTW_SplitterUpdate(%obj)
 {
-    return;
-    
     if (isObject(%downBrick = %obj.getDownBrick(0)))
         if(!%downBrick.getDatablock().isSplitter)
             %downBrick = "";
@@ -71,50 +92,61 @@ function fxDtsBrick::EOTW_SplitterUpdate(%obj)
     %buffer = %obj.matter["Buffer", 0];
     if (isObject(%downBrick) && isObject(%upBrick))
     {
-        %energyChange = mCeil(%obj.getPower() / 3);
-        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 3);
-        %totalEnergyChange += %downBrick.ChangePower(%energyChange);
-        %totalEnergyChange += %upBrick.ChangePower(%energyChange);
-        %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
-        %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
+        %energyChange = mCeil(%obj.getPower() / 2);
+        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 2);
+
+        //%dir == 1 means upBrick
+        %dir = getRandom(0, 1);
+
+        if (%dir == 1)
+        {
+            if (%obj.splitterFilter[%dir] $= "" || getFieldIndex(%obj.splitterFilter[%dir], getField(%matterChange, 0)) > -1)
+                %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
+            %totalEnergyChange += %upBrick.ChangePower(%energyChange);
+        }
+        else
+        {
+            if (%obj.splitterFilter[%dir] $= "" || getFieldIndex(%obj.splitterFilter[%dir], getField(%matterChange, 0)) > -1)
+                %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
+            %totalEnergyChange += %downBrick.ChangePower(%energyChange);
+        }
+       
+        %obj.ChangePower(%totalEnergyChange * -1);
+        %obj.ChangeMatter(getField(%matterChange, 0), %totalMatterChange * -1, "Buffer");
+        %totalEnergyChange = 0;
+        %totalMatterChange = 0;
+
+        %buffer = %obj.matter["Buffer", 0];
+        %energyChange = mCeil(%obj.getPower() / 1);
+        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 1);
+
+        if (%dir == 1)
+        {
+            if (%obj.splitterFilter[%dir] $= "" || getFieldIndex(%obj.splitterFilter[%dir], getField(%matterChange, 0)) > -1)
+                %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
+            %totalEnergyChange += %downBrick.ChangePower(%energyChange);
+        }
+        else
+        {
+            if (%obj.splitterFilter[%dir] $= "" || getFieldIndex(%obj.splitterFilter[%dir], getField(%matterChange, 0)) > -1)
+                %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
+            %totalEnergyChange += %upBrick.ChangePower(%energyChange);
+        }
     }
     else if (isObject(%downBrick))
     {
-        %energyChange = mCeil(%obj.getPower() / 2);
-        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 2);
+        %energyChange = mCeil(%obj.getPower() / 1);
+        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 1);
         %totalEnergyChange += %downBrick.ChangePower(%energyChange);
         %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
     }
     else if (isObject(%upBrick))
     {
-        %energyChange = mCeil(%obj.getPower() / 2);
-        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 2);
+        %energyChange = mCeil(%obj.getPower() / 1);
+        %matterChange = getField(%buffer, 0) TAB mCeil(getField(%buffer, 1) / 1);
         %totalEnergyChange += %upBrick.ChangePower(%energyChange);
         %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
     }
     %obj.ChangePower(%totalEnergyChange * -1);
     %obj.ChangeMatter(getField(%matterChange, 0), %totalMatterChange * -1, "Buffer");
-}
-
-datablock fxDTSBrickData(brickEOTWTrashBinData)
-{
-	brickFile = "./Bricks/Generator.blb";
-	category = "Solar Apoc";
-	subCategory = "Logistics";
-	uiName = "Trash Bin";
-	energyGroup = "Storage";
-	energyMaxBuffer = 999999;
-    matterMaxBuffer = 999999;
-	matterSlots["Input"] = 1;
-	loopFunc = "EOTW_TrashBinLoop";
-    inspectFunc = "";
-	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
-};
-$EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 256 TAB "Granite";
-$EOTW::BrickDescription["brickEOTWTrashBinData"] = "_Permanently_ destroys any inputted energy or materials.";
-
-function fxDtsBrick::EOTW_TrashBinLoop(%obj)
-{
-    %obj.energy = 0;
-    %obj.matter["Input", 0] = "";
 }
