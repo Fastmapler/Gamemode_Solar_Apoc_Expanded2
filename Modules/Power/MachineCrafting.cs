@@ -69,7 +69,7 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 
 	if (%amount <= 0 || %material $= "" || %slot $= "")
 	{
-		%client.chatMessage("Usage: /Insert <input/output/buffer> <amount> <material>");
+		%client.chatMessage("Usage: /Insert <input (i)/output (o)/buffer (b)> <amount> <material>");
 		return;
 	}
 
@@ -128,7 +128,7 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 
 	if (%amount <= 0 || %material $= "" || %slot $= "")
 	{
-		%client.chatMessage("Usage: /Extract <input/output/buffer> <amount> <material>");
+		%client.chatMessage("Usage: /Extract <input (i)/output (o)/buffer (b)> <amount> <material>");
 		return;
 	}
 
