@@ -13,8 +13,8 @@ function fractionRayCast(%a, %b, %mask, %ignore, %step) {
 	}
 
 	%distance = vectorDist(%a, %b);
-	echo(%distance);
-	echo(%b);
+	//echo(%distance);
+	//echo(%b);
 	%vector = vectorSub(%b, %a);
 
 	if (%distance <= %step) {
