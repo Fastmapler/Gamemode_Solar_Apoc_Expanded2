@@ -363,7 +363,7 @@ function swolMelee_doKick(%pl,%stage)
 				}
 				if(minigameCanDamage(%pl.client,%obj) == 1)
 				{
-					%obj.damage(%pl.client,%obj.getPosition(),%dmg,%item.smDamageType);
+					%obj.damage(%pl.client,%obj.getPosition(),%dmg*(1+%pl.steroidlevel),%item.smDamageType);
 					%obj.addVelocity(vectorAdd(vectorScale(%eye,%force),"0 0 4"));
 				}
 			}
@@ -685,7 +685,7 @@ function swolMelee_hitObj(%pl,%hit,%hitPos,%firstHit,%hitFrom)
 				if($Pref::Swol_Melee_DamageMod !$= "")
 					%scale = $Pref::Swol_Melee_DamageMod;
 				//%hit.damage((isObject(%pl.client) ? %pl.client : %pl),%hit.getPosition(),%item.smDamage*%scale,%item.smDamageType);
-				%hit.damage(%pl,%hit.getPosition(),%item.smDamage*%scale,%item.smDamageType);
+				%hit.damage(%pl,%hit.getPosition(),%item.smDamage*%scale*(1+%pl.steroidlevel),%item.smDamageType);
 				if(%hit.getState() !$= "Dead")
 				{
 					if(%item.smStun > 0)

@@ -235,7 +235,7 @@ function Player::attemptGather(%player, %hit, %boost)
 			%hit.lastGatherTick = getSimTime();
 
 			//Calculate tool boosts
-			%multiplier = %boost;
+			%multiplier = %boost + %player.Gathererlevel;
 
 			%player.collectLoop(%hit, %multiplier);
 		}

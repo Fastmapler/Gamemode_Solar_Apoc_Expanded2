@@ -187,8 +187,8 @@ function Player::PotionTick_FlaskAdrenline(%obj, %tick)
 $EOTW::ItemCrafting["mixFlaskGathererItem"] = (32 TAB "Gatherer Mix") TAB (16 TAB "Glass");
 datablock ItemData(mixFlaskGathererItem : mixFlaskHealingItem)
 {
-    uiName = "MIX - Flask Gatherers";
-    colorShiftColor = "0.25 0.00 0.00 1.00";
+    uiName = "MIX - Flask Gatherer";
+    colorShiftColor = "0.40 0.40 0.85 1.00";
     image = mixFlaskGathererImage;
 };
 
@@ -231,4 +231,106 @@ function Player::PotionTick_FlaskGatherer(%obj, %tick)
     }
 
     %obj.PotionSchedule["PotionTick_FlaskGatherer"] = %obj.schedule(1000, "PotionTick_FlaskGatherer", %tick + 1);
+}
+
+//Overload
+$EOTW::ItemCrafting["mixFlaskOverloadItem"] = (32 TAB "Overload Mix") TAB (16 TAB "Glass");
+datablock ItemData(mixFlaskOverloadItem : mixFlaskHealingItem)
+{
+    uiName = "MIX - Flask Overload";
+    colorShiftColor = "0.25 0.25 0.25 1.00";
+    image = mixFlaskOverloadImage;
+};
+
+datablock ShapeBaseImageData(mixFlaskOverloadImage : mixFlaskHealingImage)
+{
+    item = mixFlaskOverloadItem;
+    doColorShift = mixFlaskOverloadItem.doColorShift;
+    colorShiftColor = mixFlaskOverloadItem.colorShiftColor;
+};
+
+function mixFlaskOverloadImage::onFire(%this,%obj,%slot)
+{
+	%currSlot = %obj.currTool;
+
+	%obj.PotionTick_FlaskOverload();
+	%obj.setWhiteOut(0.7);
+	
+	%obj.tool[%currSlot] = 0;
+	%obj.weaponCount--;
+	
+	if(isObject(%obj.client))
+	{
+		messageClient(%obj.client,'MsgItemPickup','',%currSlot,0);
+		serverCmdUnUseTool(%obj.client);
+	}
+	else
+		%obj.unMountImage(%slot);
+}
+
+function Player::PotionTick_FlaskOverload(%obj, %tick)
+{
+    if (%tick >= 30)
+    {
+        %obj.steroidlevel -= 3;
+        return;
+    }
+    else if (%tick == 0)
+    {
+        %obj.steroidlevel += 3;
+    }
+    %obj.addHealth(-1);
+
+    %obj.PotionSchedule["PotionTick_FlaskOverload"] = %obj.schedule(1000, "PotionTick_FlaskOverload", %tick + 1);
+}
+
+//Leatherskin
+$EOTW::ItemCrafting["mixFlaskLeatherskinItem"] = (32 TAB "Leatherskin Mix") TAB (16 TAB "Glass");
+datablock ItemData(mixFlaskLeatherskinItem : mixFlaskHealingItem)
+{
+    uiName = "MIX - Flask Leatherskin";
+    colorShiftColor = "0.25 0.25 0.25 1.00";
+    image = mixFlaskLeatherskinImage;
+};
+
+datablock ShapeBaseImageData(mixFlaskLeatherskinImage : mixFlaskHealingImage)
+{
+    item = mixFlaskLeatherskinItem;
+    doColorShift = mixFlaskLeatherskinItem.doColorShift;
+    colorShiftColor = mixFlaskLeatherskinItem.colorShiftColor;
+};
+
+function mixFlaskLeatherskinImage::onFire(%this,%obj,%slot)
+{
+    return;
+	%currSlot = %obj.currTool;
+
+	%obj.PotionTick_FlaskLeatherskin();
+	%obj.setWhiteOut(0.7);
+	
+	%obj.tool[%currSlot] = 0;
+	%obj.weaponCount--;
+	
+	if(isObject(%obj.client))
+	{
+		messageClient(%obj.client,'MsgItemPickup','',%currSlot,0);
+		serverCmdUnUseTool(%obj.client);
+	}
+	else
+		%obj.unMountImage(%slot);
+}
+
+function Player::PotionTick_FlaskLeatherskin(%obj, %tick)
+{
+    if (%tick >= 60)
+    {
+
+        return;
+    }
+    else if (%tick == 0)
+    {
+
+    }
+
+    %obj.PotionSchedule["PotionTick_FlaskLeatherskin"] = %obj.schedule(1000, "PotionTick_FlaskLeatherskin", %tick + 1);
 }
