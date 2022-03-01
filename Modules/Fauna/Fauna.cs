@@ -86,13 +86,12 @@ function spawnFaunaLoop()
 					for (%i = 0; %i < %totalSpawn; %i++)
 					{
 						%mob = spawnNewFauna(GetRandomSpawnLocation(%target.getPosition()), %spawnData.data);
-						echo(%mob.getPosition());
 					}
 				}	
-				$EOTW::MonsterSpawnDelay = getRandom(15, 25);
+				$EOTW::MonsterSpawnDelay = getRandom(15, 25) * 2;
 			}
 			else
-				$EOTW::MonsterSpawnDelay = getRandom(5, 15);
+				$EOTW::MonsterSpawnDelay = getRandom(5, 15) * 2;
 		}
 	}
 
