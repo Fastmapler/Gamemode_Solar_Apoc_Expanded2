@@ -39,6 +39,7 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Bio Fuel" TAB 40);		output[0]=("Ethanol" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Gibs" TAB 40);			output[0]=("Ethanol" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=200;	input[0]=("Uranium" TAB 64);		output[0]=("Yellow Cake" TAB 64);	};
+		new ScriptObject(MatterCraftType) { type="Refinery";		energycost=100;	input[0]=("Cacti" TAB 16);			output[0]=("Ethanol" TAB 16);		};
 		//Seperator
 		new ScriptObject(MatterCraftType) { type="Seperator";		energycost=200;	input[0]=("Water" TAB 96);			output[0]=("Hydrogen" TAB 64);		output[1]=("Oxygen" TAB 32);	};
 		new ScriptObject(MatterCraftType) { type="Seperator";		energycost=400;	input[0]=("Brine" TAB 64);			output[0]=("Sodium" TAB 32);		output[1]=("Deuterium" TAB 16);	};
