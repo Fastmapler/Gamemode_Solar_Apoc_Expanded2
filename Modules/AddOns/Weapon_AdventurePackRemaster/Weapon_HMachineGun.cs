@@ -394,7 +394,7 @@ function HMachineGunImage::onFire( %this, %obj, %slot )
    if(%obj.getDamagePercent() >= 1)
    return;
 
-   %obj.toolMag[%obj.currTool] -= 1;
+   %obj.toolMag[%obj.currTool] -= 1 - mRound(getRandom() * %obj.ammoReturnLevel);
 
    if(%obj.toolMag[%obj.currTool] < 1)
    {

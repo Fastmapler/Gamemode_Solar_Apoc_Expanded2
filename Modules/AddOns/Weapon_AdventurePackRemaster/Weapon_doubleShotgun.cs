@@ -330,7 +330,7 @@ function doubleShotgunImage::onFire( %this, %obj, %slot )
    if(%obj.getDamagePercent() >= 1)
    return;
 
-   %obj.toolMag[%obj.currTool] -= 2;
+   %obj.toolMag[%obj.currTool] -= 2 - mRound(getRandom() * %obj.ammoReturnLevel);
 
    if(%obj.toolMag[%obj.currTool] < 2)
    {

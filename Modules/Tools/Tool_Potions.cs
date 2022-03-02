@@ -272,14 +272,16 @@ function Player::PotionTick_FlaskOverload(%obj, %tick)
 {
     if (%tick >= 30)
     {
-        %obj.steroidlevel -= 3;
+        %obj.steroidlevel -= 2;
+        %obj.ammoReturnLevel--;
         return;
     }
     else if (%tick == 0)
     {
-        %obj.steroidlevel += 3;
+        %obj.steroidlevel += 2;
+        %obj.ammoReturnLevel++;
     }
-    %obj.addHealth(-1);
+    %obj.addHealth(-3);
 
     %obj.PotionSchedule["PotionTick_FlaskOverload"] = %obj.schedule(1000, "PotionTick_FlaskOverload", %tick + 1);
 }

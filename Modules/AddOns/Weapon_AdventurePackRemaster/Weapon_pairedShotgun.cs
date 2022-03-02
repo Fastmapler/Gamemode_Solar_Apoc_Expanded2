@@ -462,7 +462,7 @@ function pairedShotgunImage::onFire( %this, %obj, %slot )
 
    if(%obj.toolMag[%obj.currTool] > 1)
    {
-   	%obj.toolMag[%obj.currTool] -= 2;
+   	%obj.toolMag[%obj.currTool] -= 2 - mRound(getRandom() * %obj.ammoReturnLevel);
 
 	%projectile = %this.projectile;
 	%spread = 0.0043;
