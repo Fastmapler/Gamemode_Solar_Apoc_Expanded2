@@ -285,15 +285,18 @@ function EnvMasterSunDamageEntity()
 				
 				if(!isObject(%hit) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
-					%obj.damage(0, %obj.getPosition(), $EOTW::SunSize, $DamageType::BurnedToDeath);
-					
-					if (!%isVehicle)
+					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0);
+					if (%damage > 0)
 					{
-						%obj.setDamageFlash(0.25);
-						if (isObject(%obj.client))
-							%obj.client.centerPrint("\c6The sun is burning you!<br>You should shelter youself, NOW!", 1);
-					}
-						
+						%obj.damage(0, %obj.getPosition(), %damage, $DamageType::BurnedToDeath);
+					
+						if (!%isVehicle)
+						{
+							%obj.setDamageFlash(0.25);
+							if (isObject(%obj.client))
+								%obj.client.centerPrint("\c6The sun is burning you!<br>You should shelter youself, NOW!", 1);
+						}
+					}	
 				}
 			}
 		}
