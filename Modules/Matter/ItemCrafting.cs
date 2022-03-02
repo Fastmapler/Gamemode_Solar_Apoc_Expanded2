@@ -62,7 +62,7 @@ function Player::CraftItemPrompt(%obj, %item)
     for (%i = 0; %i < getFieldCount(%costData); %i += 2)
         %text = %text @ %obj.GetMatterCount(getField(%costData, %i + 1)) @ "/" @ getField(%costData, %i) SPC getField(%costData, %i + 1) @ "<br>";
 
-    commandToClient(%obj.client,'messageBoxYesNo',"Crafting", "[" @ %item.uiName @ "] crafting cost:<br>---<br>" @ %text @ "---<br>Craft this item?", 'CraftItemAccept','CraftItemCancel');
+    commandToClient(%obj.client,'messageBoxYesNo',"Crafting", "[" @ %item.uiName @ "] " @ $EOTW::ItemDescription[%item.getName()] @ "<br>crafting cost:<br>---<br>" @ %text @ "---<br>Craft this item?", 'CraftItemAccept','CraftItemCancel');
 }
 
 function ServerCmdCraftItemAccept(%client)

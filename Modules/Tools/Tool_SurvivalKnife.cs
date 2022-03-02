@@ -115,7 +115,7 @@ datablock ProjectileData(SurvivalKnifeStabProjectile)
 };
 
 $EOTW::ItemCrafting["SurvivalKnifeItem"] = (256 TAB "Granite");
-
+$EOTW::ItemDescription["SurvivalKnifeItem"] = "Deals meager damage and allows corpses that don't despawn to be gibbed for flesh on crouch hit.";
 datablock ItemData(SurvivalKnifeItem)
 {
     category = "Weapon";  // Mission editor category

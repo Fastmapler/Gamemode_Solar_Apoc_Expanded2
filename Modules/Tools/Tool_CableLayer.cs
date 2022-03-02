@@ -3,7 +3,7 @@ $EOTW::MaxRopeCount = 5;
 $EOTW::CableCostMulti = 1;
 
 $EOTW::ItemCrafting["CableLayerItem"] = (64 TAB "Iron") TAB (16 TAB "Copper");
-
+$EOTW::ItemDescription["CableLayerItem"] = "Allows the placement of power transfer cables.";
 datablock itemData(CableLayerItem)
 {
 	uiName = "TLS - Cable Layer";

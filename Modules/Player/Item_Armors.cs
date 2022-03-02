@@ -25,6 +25,7 @@ function Player::SwapKitDatablock(%obj, %this)
 //Defense
 //Squire
 $EOTW::ItemCrafting["SquirePlayerKitItem"] = (512 TAB "Iron") TAB (48 TAB "Lead");
+$EOTW::ItemDescription["SquirePlayerKitItem"] = "Max HP+, Mobility-.";
 datablock ItemData(SquirePlayerKitItem)
 {
 	category = "Weapon";
@@ -97,9 +98,9 @@ datablock PlayerData(PlayerSolarApocSquire : PlayerStandardArmor)
 	canJet = 0;
 	
 	maxDamage = 125;
-	maxEnergy = 90;
+	maxEnergy = 100;
 	rechargeRate = 0.5;
-	runForce = 48 * 90 * 2;
+	runForce = 48 * 90 * 1.5;
 	
 	airControl = 0.25;
 	
@@ -114,6 +115,7 @@ datablock PlayerData(PlayerSolarApocSquire : PlayerStandardArmor)
 
 //Knight
 $EOTW::ItemCrafting["KnightPlayerKitItem"] = (384 TAB "Steel") TAB (96 TAB "Lead");
+$EOTW::ItemDescription["KnightPlayerKitItem"] = "Max HP++, Mobility--, Lava Immunity.";
 datablock ItemData(KnightPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Plating Knight";
@@ -140,9 +142,9 @@ datablock PlayerData(PlayerSolarApocKnight : PlayerStandardArmor)
 	canJet = 0;
 	
 	maxDamage = 175;
-	maxEnergy = 85;
-	rechargeRate = 0.45;
-	runForce = 48 * 90 * 1.5;
+	maxEnergy = 100;
+	rechargeRate = 0.5;
+	runForce = 48 * 90 * 1;
 	
 	airControl = 0.15;
 	
@@ -159,6 +161,7 @@ datablock PlayerData(PlayerSolarApocKnight : PlayerStandardArmor)
 
 //King
 $EOTW::ItemCrafting["KingPlayerKitItem"] = (512 TAB "Adamantine") TAB (192 TAB "Lead");
+$EOTW::ItemDescription["KingPlayerKitItem"] = "Max HP+++, Mobility---, Lava Immunity.";
 datablock ItemData(KingPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Plating King";
@@ -185,11 +188,11 @@ datablock PlayerData(PlayerSolarApocKing : PlayerStandardArmor)
 	canJet = 0;
 	
 	maxDamage = 250;
-	maxEnergy = 80;
-	rechargeRate = 0.40;
-	runForce = 48 * 90;
+	maxEnergy = 100;
+	rechargeRate = 0.5;
+	runForce = 48 * 90 * 0.5;
 	
-	airControl = 0.0;
+	airControl = 0.05;
 	
 	maxTools = 7;
 	maxWeapons = 7;
@@ -205,6 +208,7 @@ datablock PlayerData(PlayerSolarApocKing : PlayerStandardArmor)
 //Mobility
 //Mobile
 $EOTW::ItemCrafting["MobilePlayerKitItem"] = (64 TAB "Silver") TAB (16 TAB "Rubber");
+$EOTW::ItemDescription["MobilePlayerKitItem"] = "Max HP-, Mobility+.";
 datablock ItemData(MobilePlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Light Mobile";
@@ -248,6 +252,7 @@ datablock PlayerData(PlayerSolarApocMobile : PlayerStandardArmor)
 
 //Ninja
 $EOTW::ItemCrafting["NinjaPlayerKitItem"] = (512 TAB "Electrum") TAB (32 TAB "Rubber");
+$EOTW::ItemDescription["NinjaPlayerKitItem"] = "Max HP--, Mobility++, Fall Damage Resist.";
 datablock ItemData(NinjaPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Light Ninja";
@@ -295,6 +300,7 @@ datablock PlayerData(PlayerSolarApocNinja : PlayerStandardArmor)
 
 //Ethereal
 $EOTW::ItemCrafting["EtherealPlayerKitItem"] = (512 TAB "Energium") TAB (64 TAB "Rubber");
+$EOTW::ItemDescription["EtherealPlayerKitItem"] = "Max HP---, Mobility+++, Fall Damage Immunity.";
 datablock ItemData(EtherealPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Light Ethereal";
@@ -343,6 +349,7 @@ datablock PlayerData(PlayerSolarApocEthereal : PlayerStandardArmor)
 //Inventory
 //Satchel
 $EOTW::ItemCrafting["SatchelPlayerKitItem"] = (128 TAB "Copper") TAB (64 TAB "Leather");
+$EOTW::ItemDescription["SatchelPlayerKitItem"] = "Inventory+, Stamina Recovery-.";
 datablock ItemData(SatchelPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Backpack Satchel";
@@ -386,6 +393,7 @@ datablock PlayerData(PlayerSolarApocSatchel : PlayerStandardArmor)
 
 //Cargo
 $EOTW::ItemCrafting["CargoPlayerKitItem"] = (512 TAB "Rosium") TAB (128 TAB "Leather");
+$EOTW::ItemDescription["CargoPlayerKitItem"] = "Inventory++, Stamina Recovery--.";
 datablock ItemData(CargoPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Backpack Cargo";
@@ -429,6 +437,7 @@ datablock PlayerData(PlayerSolarApocCargo : PlayerStandardArmor)
 
 //Wormhole
 $EOTW::ItemCrafting["WormholePlayerKitItem"] = (512 TAB "Naturum") TAB (256 TAB "Leather");
+$EOTW::ItemDescription["WormholePlayerKitItem"] = "Inventory+++, Stamina Recovery---.";
 datablock ItemData(WormholePlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "ARMOR - Backpack Wormhole";

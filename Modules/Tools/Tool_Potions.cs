@@ -1,5 +1,6 @@
 //Healing
 $EOTW::ItemCrafting["mixFlaskHealingItem"] = (32 TAB "Healing Mix") TAB (16 TAB "Glass");
+$EOTW::ItemDescription["mixFlaskHealingItem"] = "Upon consumption heals 2 hp/s over 2 minutes.";
 datablock ItemData(mixFlaskHealingItem)
 {
     category = "Weapon";
@@ -85,6 +86,7 @@ function Player::PotionTick_FlaskHealing(%obj, %tick)
 
 //Steroids
 $EOTW::ItemCrafting["mixFlaskSteroidItem"] = (32 TAB "Steroid Mix") TAB (16 TAB "Glass");
+$EOTW::ItemDescription["mixFlaskSteroidItem"] = "Upon consumption increases melee damge by 100% for 1 minute.";
 datablock ItemData(mixFlaskSteroidItem : mixFlaskHealingItem)
 {
     uiName = "MIX - Flask Steroids";
@@ -135,6 +137,7 @@ function Player::PotionTick_FlaskSteroid(%obj, %tick)
 
 //Adrenline
 $EOTW::ItemCrafting["mixFlaskAdrenlineItem"] = (32 TAB "Adrenline Mix") TAB (16 TAB "Glass");
+$EOTW::ItemDescription["mixFlaskAdrenlineItem"] = "Upon consumption increases max movement speed by 100% for 30 seconds.";
 datablock ItemData(mixFlaskAdrenlineItem : mixFlaskHealingItem)
 {
     uiName = "MIX - Flask Adrenline";
@@ -185,6 +188,7 @@ function Player::PotionTick_FlaskAdrenline(%obj, %tick)
 
 //Gatherer
 $EOTW::ItemCrafting["mixFlaskGathererItem"] = (32 TAB "Gatherer Mix") TAB (16 TAB "Glass");
+$EOTW::ItemDescription["mixFlaskGathererItem"] = "Upon consumption increases gathering speed by 50% for 2 minutes.";
 datablock ItemData(mixFlaskGathererItem : mixFlaskHealingItem)
 {
     uiName = "MIX - Flask Gatherer";
@@ -235,6 +239,7 @@ function Player::PotionTick_FlaskGatherer(%obj, %tick)
 
 //Overload
 $EOTW::ItemCrafting["mixFlaskOverloadItem"] = (32 TAB "Overload Mix") TAB (16 TAB "Glass");
+$EOTW::ItemDescription["mixFlaskOverloadItem"] = "Upon consumption gives chance to subatract firearm ammo used, but inficts 2hp/s of self-harm all over 30 seconds.";
 datablock ItemData(mixFlaskOverloadItem : mixFlaskHealingItem)
 {
     uiName = "MIX - Flask Overload";
@@ -281,17 +286,18 @@ function Player::PotionTick_FlaskOverload(%obj, %tick)
         %obj.steroidlevel += 2;
         %obj.ammoReturnLevel++;
     }
-    %obj.addHealth(-3);
+    %obj.addHealth(-2);
 
     %obj.PotionSchedule["PotionTick_FlaskOverload"] = %obj.schedule(1000, "PotionTick_FlaskOverload", %tick + 1);
 }
 
 //Leatherskin
 $EOTW::ItemCrafting["mixFlaskLeatherskinItem"] = (32 TAB "Leatherskin Mix") TAB (16 TAB "Glass");
+$EOTW::ItemDescription["mixFlaskLeatherskinItem"] = "Upon consumption reduces sun damage by 1.5 points for 1 minute.";
 datablock ItemData(mixFlaskLeatherskinItem : mixFlaskHealingItem)
 {
     uiName = "MIX - Flask Leatherskin";
-    colorShiftColor = "0.25 0.25 0.25 1.00";
+    colorShiftColor = "0.45 0.45 0.85 1.00";
     image = mixFlaskLeatherskinImage;
 };
 
@@ -326,12 +332,12 @@ function Player::PotionTick_FlaskLeatherskin(%obj, %tick)
 {
     if (%tick >= 60)
     {
-
+        %obj.sunResistance -= 1.5;
         return;
     }
     else if (%tick == 0)
     {
-
+        %obj.sunResistance += 1.5;
     }
 
     %obj.PotionSchedule["PotionTick_FlaskLeatherskin"] = %obj.schedule(1000, "PotionTick_FlaskLeatherskin", %tick + 1);
