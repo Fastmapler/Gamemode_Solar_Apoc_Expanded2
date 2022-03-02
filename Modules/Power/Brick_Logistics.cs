@@ -103,14 +103,14 @@ function fxDtsBrick::EOTW_SplitterUpdate(%obj)
         if (%dir == 1)
         {
             if (%obj.splitterFilter["Up"] $= "" || getFieldIndex(%obj.splitterFilter["Up"], getField(%matterChange, 0)) > -1)
-                if (getFieldIndex(%obj.splitterFilter["Down"], getField(%matterChange, 0)) == -1)
+                if (getFieldIndex(%obj.splitterFilter["Down"], getField(%matterChange, 0)) == -1 || %downBrick.GetMatter(getField(%matterChange, 0), "Buffer") >= %downBrick.getDataBlock().matterMaxBuffer)
                     %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
             %totalEnergyChange += %upBrick.ChangePower(%energyChange);
         }
         else
         {
             if (%obj.splitterFilter["Down"] $= "" || getFieldIndex(%obj.splitterFilter["Down"], getField(%matterChange, 0)) > -1)
-                if (getFieldIndex(%obj.splitterFilter["Up"], getField(%matterChange, 0)) == -1)
+                if (getFieldIndex(%obj.splitterFilter["Up"], getField(%matterChange, 0)) == -1 || %upBrick.GetMatter(getField(%matterChange, 0), "Buffer") >= %upBrick.getDataBlock().matterMaxBuffer)
                     %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
             %totalEnergyChange += %downBrick.ChangePower(%energyChange);
         }
@@ -127,14 +127,14 @@ function fxDtsBrick::EOTW_SplitterUpdate(%obj)
         if (%dir == 1)
         {
             if (%obj.splitterFilter["Down"] $= "" || getFieldIndex(%obj.splitterFilter["Down"], getField(%matterChange, 0)) > -1)
-                if (getFieldIndex(%obj.splitterFilter["Up"], getField(%matterChange, 0)) == -1)
+                if (getFieldIndex(%obj.splitterFilter["Up"], getField(%matterChange, 0)) == -1 || %upBrick.GetMatter(getField(%matterChange, 0), "Buffer") >= %upBrick.getDataBlock().matterMaxBuffer)
                     %totalMatterChange += %downBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
             %totalEnergyChange += %downBrick.ChangePower(%energyChange);
         }
         else
         {
             if (%obj.splitterFilter["Up"] $= "" || getFieldIndex(%obj.splitterFilter["Up"], getField(%matterChange, 0)) > -1)
-                if (getFieldIndex(%obj.splitterFilter["Down"], getField(%matterChange, 0)) == -1)
+                if (getFieldIndex(%obj.splitterFilter["Down"], getField(%matterChange, 0)) == -1 || %downBrick.GetMatter(getField(%matterChange, 0), "Buffer") >= %downBrick.getDataBlock().matterMaxBuffer)
                     %totalMatterChange += %upBrick.ChangeMatter(getField(%matterChange, 0), getField(%matterChange, 1), "Buffer");
             %totalEnergyChange += %upBrick.ChangePower(%energyChange);
         }
@@ -205,7 +205,7 @@ function ServerCmdAddFilter(%client, %filterDir, %mat1, %mat2, %mat3, %mat4)
                 %hit.splitterFilter["Up"] = trim(%hit.splitterFilter["Up"] TAB %matter.name);
                 %client.chatMessage("\c6Added " @ %matter.name @ " to Push Up direction whitelist.");
             case "down":
-            case "u":
+            case "d":
                 %hit.splitterFilter["Down"] = trim(%hit.splitterFilter["Down"] TAB %matter.name);
                 %client.chatMessage("\c6Added " @ %matter.name @ " to Push Down direction whitelist.");
             default:
@@ -270,7 +270,7 @@ function ServerCmdRemoveFilter(%client, %filterDir, %mat1, %mat2, %mat3, %mat4)
                     %client.chatMessage("Did not find " @ %matter.name @ " in Push Up direction whitelist.");
                 }
             case "down":
-            case "u":
+            case "d":
                 %idx = getFieldIndex(%hit.splitterFilter["Down"], %matter.name);
                 if (%idx > -1)
                 {
