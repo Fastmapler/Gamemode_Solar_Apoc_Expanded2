@@ -114,6 +114,11 @@ function eulerToAxis(%euler)
 	return getWords(MatrixCreateFromEuler(%euler), 3, 6);
 }
 
+function mRound(%value)
+{
+	return round(%value);
+}
+
 package ComplexBulletPackage
 {
 	function ItemData::onAdd(%this, %item)
