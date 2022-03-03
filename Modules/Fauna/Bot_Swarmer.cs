@@ -5,7 +5,7 @@ datablock PlayerData(SwarmerHoleBot : UnfleshedHoleBot)
 	maxBackwardSpeed	= 4;
 	maxSideSpeed		= 7;
 	maxDamage			= 21;
-	lavaImmune			= true;
+	lavaImmune			= false;
 
 	//can have unique types, nazis will attack zombies but nazis will not attack other bots labeled nazi
 	hName = "Swarmer";				//cannot contain spaces
