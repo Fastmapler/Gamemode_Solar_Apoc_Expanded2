@@ -39,7 +39,7 @@ function fxDtsData::toolStorageAdd(%brick, %player, %slot)
             %itemsList = %itemsList@"|\c6"@%brick.eventOutputParameter[%i,1]@"\c3|";
         }
     }
-    if (%numItems >= %data.maxStoredTools)
+    if (%numItems >= %data.maxStoredTools || !isObject(%tool = %player.tool[%slot]))
         return;
     
     %numEvents = mAbs(%brick.numEvents);
@@ -51,7 +51,8 @@ function fxDtsData::toolStorageAdd(%brick, %player, %slot)
     %brick.eventTargetIdx[%numEvents] = 0;
     %brick.eventOutput[%numEvents] = "storeItem";
     %brick.eventOutputIdx[%numEvents] = outputEvent_GetOutputEventIdx("StorageBrick","storeItem");
-    %brick.eventOutputParameter[%numEvents,1] = %tool.uiName;
+    %brick.eventOutputParameter[%numEvents, 1] = %tool.getName();
+	%brick.eventOutputParameter[%numEvents, 2] = %player.toolMag[%slot];
 }
 
 //Dummy events
