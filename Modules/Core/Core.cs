@@ -47,7 +47,7 @@ function createDefaultMinigame()
         StartEquip0 = hammerItem.getID();
         StartEquip1 = WrenchItem.getID();
         StartEquip2 = SurvivalKnifeItem.getID();
-        StartEquip3 = 0;
+        StartEquip3 = RecurveBowItem.getID();
         StartEquip4 = 0;
         TimeLimit = -1;
     };

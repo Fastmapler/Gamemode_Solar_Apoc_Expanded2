@@ -5,6 +5,7 @@ exec("./Tool_Scanner.cs");
 exec("./Tool_OilPump.cs");
 exec("./Tool_Pickaxes.cs");
 exec("./Tool_Potions.cs");
+exec("./Tool_Sickle.cs");
 exec("./Support_DropInventoryOnDeath.cs");
 //exec("./Tool_Multitool.cs");
 
@@ -21,6 +22,8 @@ function updateItemNames()
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "spearItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "swordItem";
     
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "acidItem";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BioRifleItem";
 
 	for(%i = 0; $EOTW::BacklistedItem[%i] !$= ""; %i++)
 	{

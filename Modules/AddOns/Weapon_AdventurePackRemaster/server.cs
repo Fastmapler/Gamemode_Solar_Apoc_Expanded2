@@ -116,7 +116,19 @@ function eulerToAxis(%euler)
 
 function mRound(%value)
 {
-	return round(%value);
+	if (%value - mFloor(%value) < 0.5)
+		return mFloor(%value);
+	else
+		return mCeil(%value);
+}
+
+function getWordIndex(%text, %str)
+{
+	for (%i = 0; %i < getWordCount(%text); %i++)
+		if (getWord(%text, %i) $= %str)
+			return %i;
+
+	return -1;
 }
 
 package ComplexBulletPackage

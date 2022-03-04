@@ -5,6 +5,8 @@ $EOTW::ItemCrafting["advAmmoMachineRifleItem"] = (16 TAB "Silver") TAB (32 TAB "
 $EOTW::ItemCrafting["advAmmoRifleItem"] = (32 TAB "Silver") TAB (16 TAB "Copper"); //BaseWep Cost: 4x Wood, 2x Iron, 2x Lead
 
 //Firearms
+//T0
+$EOTW::ItemCrafting["RecurveBowItem"] = (512 TAB "Wood");
 //T1 //Weapons use base cost
 $EOTW::ItemCrafting["automaticPistolItem"] = (128 TAB "Iron") TAB (32 TAB "Copper") TAB (48 TAB "Lead");
 $EOTW::ItemCrafting["revolverItem"] = (256 TAB "Iron") TAB (48 TAB "Lead") TAB (16 TAB "Silver");

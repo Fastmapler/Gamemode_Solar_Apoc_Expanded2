@@ -356,7 +356,7 @@ function AIPlayer::hFollowPlayer( %obj, %targ, %inHoleLoop, %skipAlert )
 		}
 		%imageName = %obj.getMountedImage(0).getName();
 		//Special case for spear
-		if( %obj.getMountedImage(0).isChargeWeapon || %imageName $= "spearImage" || %imageName $= "hTurretImage")
+		if( %obj.getMountedImage(0).isChargeWeapon || %obj.getDataBlock().isChargeWeapon || %imageName $= "spearImage" || %imageName $= "hTurretImage")
 		{
 			%obj.hShootTimes = 1;
 		}
@@ -2082,7 +2082,7 @@ function AIPlayer::hShootPrediction( %obj, %targ, %tick, %shoot, %noAim )
 		//%shoot = %obj.hshootTimes;
 		%imageName = %obj.getMountedImage(0).getName();
 		//Special case for spear
-		if(%obj.getMountedImage(0).isChargeWeapon || %obj.getDataBlock.isChargeWeapon )//|| %imageName $= "spearImage" || %obj.getDataBlock().getName() $= "CannonTurret")
+		if(%obj.getMountedImage(0).isChargeWeapon || %obj.getDataBlock().isChargeWeapon )//|| %imageName $= "spearImage" || %obj.getDataBlock().getName() $= "CannonTurret")
 		{
 			%obj.scheduleNoQuota( %tick/%shoot/1.5-150, hShootAim, %targ );
 		}

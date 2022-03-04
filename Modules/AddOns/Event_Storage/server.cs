@@ -67,7 +67,7 @@ package StorageEvents
 					if (!isObject(%item))
 						continue;
 					%error = %brick.removeStoredItem(%item);
-					if (%error)
+					if (%error == -1)
 						continue;
 
 					%brick.updateStorageMenu();
@@ -110,10 +110,16 @@ package StorageEvents
 					}
 					return parent::serverCmdDropTool(%cl, %slot);
 				}
-				%error = %hit.storeItem(%item);
+
+				if (%pl.toolMag[%slot] !$= "")
+					%toolData = trim(%toolData TAB "mag" TAB %pl.toolMag[%slot]); //Note the data goes into the dropped item when spawned, so we need to use the respective vars.
+
+				%error = %hit.storeItem(%item, %toolData);
 				if (!%error)
 				{
 					%pl.tool[%slot] = 0;
+					$hl2weaponMag = "";
+					%pl.toolMag[%slot] = "";
 					messageClient(%cl, 'MsgItemPickup', "", %slot, 0);
 					if (%pl.currTool == %slot)
 					{
@@ -155,7 +161,7 @@ schedule(1000, 0, activatePackage, StorageEvents);
 // attempts to store %item (datablock) into %brick, looking for an available event slot to occupy
 // returns error code
 // 0 if no error, 1 if no space, 2 if space but failed to insert due to string lengths
-function fxDTSBrick::storeItem(%brick, %item)
+function fxDTSBrick::storeItem(%brick, %item, %toolData)
 {
 	%item = %item.getName();
 	for (%i = 0; %i < %brick.numEvents; %i++)
@@ -188,7 +194,7 @@ function fxDTSBrick::storeItem(%brick, %item)
 		for (%i = 0; %i < %validEventSlotCount; %i++)
 		{
 			%slot = getWord(%validEventSlots, %i);
-			%error = %brick.insertIntoEventStorage(%item, %slot);
+			%error = %brick.insertIntoEventStorage(%item, %slot, %toolData);
 			if (%error == 0)
 			{
 				%brick.updateStorageMenu();
@@ -207,7 +213,7 @@ function fxDTSBrick::storeItem(%brick, %item)
 // %slot corresponds to event line #
 // returns error code
 // 0 if no error, 1 if failed to insert due to string lengths
-function fxDTSBrick::insertIntoEventStorage(%brick, %item, %slot)
+function fxDTSBrick::insertIntoEventStorage(%brick, %item, %slot, %toolData)
 {
 	%str1 = %brick.eventOutputParameter[%slot, 2];
 	%str2 = %brick.eventOutputParameter[%slot, 3];
@@ -220,6 +226,10 @@ function fxDTSBrick::insertIntoEventStorage(%brick, %item, %slot)
 	else
 	{
 		%count = getWord(%result, 0);
+
+		if (%toolData !$= "")
+			%brick.storedToolData[%count - 1] = %toolData;
+
 		for (%i = 0; %i < 3; %i++)
 		{
 			if (%i < %count)
@@ -257,6 +267,12 @@ function fxDTSBrick::removeStoredItem(%brick, %item)
 			%str = " " @ trim(%str1 SPC %str2 SPC %str3) @ " ";
 			if (strPos(strLwr(%str), " " @ %item @ " ") >= 0)
 			{
+				%index = getWordIndex(%str, %item);
+				if (%brick.storedToolData[%index - 1] !$= "")
+				{
+					%toolData = %brick.storedToolData[%index - 1];
+					%brick.storedToolData[%index - 1] = "";
+				}
 				//item found, remove and return
 				%items = trim(strReplace(strLwr(%str), " " @ %item @ " ", " "));
 				%items = parseItemList(%items, 200);
@@ -265,11 +281,11 @@ function fxDTSBrick::removeStoredItem(%brick, %item)
 				%brick.eventOutputParameter[%i, 4] = getField(%items, 3);
 				
 				%brick.updateStorageMenu();
-				return 0;
+				return %toolData;
 			}
 		}
 	}
-	return 1;
+	return -1;
 }
 
 // returns space-delimited word list of all items stored
@@ -556,8 +572,8 @@ function removeItem(%cl, %menu, %option)
 		messageClient(%cl, '', "INVALID ITEM \"" @ %item @ "\"! Please notify the host!");
 		return;
 	}
-	%error = %brick.removeStoredItem(%item);
-	if (%error)
+	%toolData = %brick.removeStoredItem(%item);
+	if (%toolData == -1)
 	{
 		%cl.centerprint("Failed to remove item \"" @ %item @ "\"! Please notify the host!", 3);
 		messageClient(%cl, '', "Failed to remove item \"" @ %item @ "\"! Please notify the host!");
@@ -571,6 +587,10 @@ function removeItem(%cl, %menu, %option)
 		dataBlock = %item;
 	};
 	MissionCleanup.add(%i);
+
+	for (%i = 0; %i < getFieldCount(%toolData); %i += 2)
+		set_var_obj(%i, getField(%toolData, %i), getField(%toolData, %i + 1));
+
 	%i.setTransform(%cl.player.getTransform());
 	%i.schedule(60000, schedulePop); // add 60 seconds of extra lifetime to ensure they can pick up the item
 

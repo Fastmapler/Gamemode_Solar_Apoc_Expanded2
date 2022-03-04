@@ -29,6 +29,7 @@ datablock PlayerData(SwarmerHoleBot : UnfleshedHoleBot)
 		hMaxShootRange = 30;			//The range in which the bot will shoot the player
 		hAvoidCloseRange = 1;
 			hTooCloseRange = 7;			//in brick units
+		isChargeWeapon = 0;				//If weapons should be charged to fire (ie spears)
 
 	//Misc options
 	hAvoidObstacles = 0;

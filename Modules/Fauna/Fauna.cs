@@ -1,6 +1,8 @@
 exec("./Bot_Unfleshed.cs");
 exec("./Bot_Husk.cs");
 exec("./Bot_Swarmer.cs");
+exec("./Bot_Intoxicated.cs");
+exec("./Bot_Revenant.cs");
 
 function SetupFaunaSpawnData()
 {
@@ -12,20 +14,20 @@ function SetupFaunaSpawnData()
 
 	new SimSet(FaunaSpawnData)
 	{
-		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=1.0;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(12 TAB 24);	}; //Basic Grunt
-		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=1.0;	spawnCost=40;	maxSpawnGroup=4;	timeRange=(00 TAB 12);	}; //Offensive Grunt
-		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=1.0;	spawnCost=10;	maxSpawnGroup=10;	timeRange=(12 TAB 24);	}; //Horde Grunt
-		//new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 24);	}; //Tank Grunt
-		//new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";	spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
+		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=1.0;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(00 TAB 24);	}; //Basic Grunt
+		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=0.8;	spawnCost=40;	maxSpawnGroup=4;	timeRange=(00 TAB 12);	}; //Offensive Grunt
+		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=0.8;	spawnCost=10;	maxSpawnGroup=10;	timeRange=(12 TAB 24);	}; //Horde Grunt
+		new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Tank Grunt
+		new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";		spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
 		//new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";	spawnWeight=0.4;	spawnCost=45;	maxSpawnGroup=4; 	timeRange=(16 TAB 24);	}; //Basic Elemental
 		//new ScriptObject(FaunaSpawnType) { data="ElementalHoleBot";	spawnWeight=0.4;	spawnCost=100;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Upgraded Elemental
 
-		//new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";		spawnWeight=0.2;	spawnCost=60;	maxSpawnGroup=2; 	timeRange=(12 TAB 24);	}; //Blob Infernal
-		//new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(20 TAB 24);	}; //Hunter Infernal
-		//new ScriptObject(FaunaSpawnType) { data="GolemHoleBot";		spawnWeight=0.2;	spawnCost=200;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Golem Infernal
+		//new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";		spawnWeight=0.2;	spawnCost=60;	maxSpawnGroup=2; 	timeRange=(12 TAB 24);	}; //Splitting Blob Infernal
+		//new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(20 TAB 24);	}; //Sleath Hunter Infernal
+		//new ScriptObject(FaunaSpawnType) { data="GolemHoleBot";		spawnWeight=0.2;	spawnCost=200;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
 
-		//new ScriptObject(FaunaSpawnType) { data="DeathSquadHoleBot";	spawnWeight=1.0;	spawnCost=500;	maxSpawnGroup=3; 	timeRange=(00 TAB 24);	}; //Death Squad, we got too many points.
+		//new ScriptObject(FaunaSpawnType) { data="DeathSquadHoleBot";	spawnWeight=0.1;	spawnCost=500;	maxSpawnGroup=3; 	timeRange=(00 TAB 24);	}; //Death Squad, we got too many points.
 	};
 
 	$EOTW::FaunaSpawnWeight = 0;
@@ -124,7 +126,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), UnfleshedHoleBot);
+//spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), RevenantHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))
@@ -216,6 +218,7 @@ function spawnNewFauna(%trans,%hBotType)
 	
 	%player.hGridPosition = getWords(%trans, 0, 2);
 	%player.scheduleNoQuota(10,spawnProjectile,"audio2d","spawnProjectile","0 0 0", 1);
+	%player.playThread(1, armReadyBoth);
 	return %player;
 }
 

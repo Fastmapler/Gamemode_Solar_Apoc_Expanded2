@@ -78,7 +78,11 @@ function mixFlaskHealingImage::onFire(%this,%obj,%slot)
 function Player::PotionTick_FlaskHealing(%obj, %tick)
 {
     if (%tick >= 120)
+    {
+        if(isObject(%client = %obj.client))
+            %client.chatMessage("\c6The effect of the Healing dose wears off.");
         return;
+    }
 
     %obj.addHealth(2);
     %obj.PotionSchedule["PotionTick_FlaskHealing"] = %obj.schedule(1000, "PotionTick_FlaskHealing", %tick + 1);
@@ -124,6 +128,8 @@ function Player::PotionTick_FlaskSteroid(%obj, %tick)
 {
     if (%tick >= 60)
     {
+        if(isObject(%client = %obj.client))
+            %client.chatMessage("\c6The effect of the Steroids dose wears off.");
         %obj.steroidlevel--;
         return;
     }
@@ -175,6 +181,8 @@ function Player::PotionTick_FlaskAdrenline(%obj, %tick)
 {
     if (%tick >= 30)
     {
+        if(isObject(%client = %obj.client))
+            %client.chatMessage("\c6The effect of the Adrenline dose wears off.");
         %obj.ChangeSpeedMulti(-1);
         return;
     }
@@ -226,6 +234,8 @@ function Player::PotionTick_FlaskGatherer(%obj, %tick)
 {
     if (%tick >= 120)
     {
+        if(isObject(%client = %obj.client))
+            %client.chatMessage("\c6The effect of the Gatherer dose wears off.");
         %obj.Gathererlevel -= 0.5;
         return;
     }
@@ -277,6 +287,8 @@ function Player::PotionTick_FlaskOverload(%obj, %tick)
 {
     if (%tick >= 30)
     {
+        if(isObject(%client = %obj.client))
+            %client.chatMessage("\c6The effect of the Overload dose wears off.");
         %obj.steroidlevel -= 2;
         %obj.ammoReturnLevel--;
         return;
@@ -332,6 +344,8 @@ function Player::PotionTick_FlaskLeatherskin(%obj, %tick)
 {
     if (%tick >= 60)
     {
+        if(isObject(%client = %obj.client))
+            %client.chatMessage("\c6The effect of the Leathersin dose wears off.");
         %obj.sunResistance -= 1.5;
         return;
     }

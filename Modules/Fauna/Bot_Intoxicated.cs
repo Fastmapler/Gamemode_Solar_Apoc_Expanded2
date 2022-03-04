@@ -1,4 +1,4 @@
-datablock PlayerData(HuskHoleBot : UnfleshedHoleBot)
+datablock PlayerData(IntoxicatedHoleBot : UnfleshedHoleBot)
 {
 	runforce			= 40 * 90 * 0.5;
 	maxForwardSpeed		= 3;
@@ -26,9 +26,11 @@ datablock PlayerData(HuskHoleBot : UnfleshedHoleBot)
 	hShoot = 1;
 		hWep = "acidImage";
 		hShootTimes = 2;				//Number of times the bot will shoot between each tick
-		hMaxShootRange = 8;			//The range in which the bot will shoot the player
+		hMaxShootRange = 16;			//The range in which the bot will shoot the player
 		hAvoidCloseRange = 0;
 			hTooCloseRange = 0;			//in brick units
+		isChargeWeapon = 1;				//If weapons should be charged to fire (ie spears)
+			
 
 	//Misc options
 	hAvoidObstacles = 0;
