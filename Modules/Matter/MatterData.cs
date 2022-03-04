@@ -19,10 +19,10 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Vines";		color="226027ff";	tier=2;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=16;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";	 };
 		new ScriptObject(MatterType) { name="Cacti";		color="226027ff";	tier=2;	spawnWeight=025;	spawnVeinSize=2;	spawnValue=8;	collectTime=2000;	gatherableDB="brickEOTWGatherableBasicData";	 };
 		//Basic Gatherable Materials
-		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	tier=3;	spawnWeight=100;	spawnVeinSize=4;	spawnValue=32;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";	cableTransfer=400;	 };
-		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	 };
-		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=48;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";	pipeTransfer=64; };
-		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	tier=4;	spawnWeight=030;	spawnVeinSize=3;	spawnValue=56;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";	 };
+		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	tier=3;	spawnWeight=100;	spawnVeinSize=4;	spawnValue=32;	collectTime=13000;	placable=true;	health=3.0;	heatCapacity=65;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";	cableTransfer=400;	 };
+		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	tier=3;	spawnWeight=075;	spawnVeinSize=4;	spawnValue=16;	collectTime=14000;	placable=true;	health=5.0;	heatCapacity=70;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";	 };
+		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=48;	collectTime=15000;	placable=true;	health=7.0;	heatCapacity=55;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";	pipeTransfer=64; };
+		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	tier=4;	spawnWeight=030;	spawnVeinSize=3;	spawnValue=56;	collectTime=20000;	placable=true;	health=9.0;	heatCapacity=55;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";	 };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	tier=4;	spawnWeight=010;	spawnVeinSize=2;	spawnValue=8;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 };
 		//Alloys
 		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff";	tier=5;	cableTransfer=1600;	};
@@ -57,6 +57,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Hydrogen";		color="bcc1c88e";	tier=2;	};
 		new ScriptObject(MatterType) { name="Brine";		color="bcc1c88e";	tier=3;	};
 		new ScriptObject(MatterType) { name="Lithium";		color="706e6eff";	tier=4;	};
+		new ScriptObject(MatterType) { name="Sodium";		color="ffffffff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Tritium";		color="ffffffff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Deuterium";	color="ffffffff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Coolant";		color="9ab6b5ff";	tier=3;	boilCapacity=10;		};
