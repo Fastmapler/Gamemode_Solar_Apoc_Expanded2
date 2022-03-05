@@ -371,6 +371,10 @@ package EOTW_Matter
 
 		if(!%brick.dontRefund)
 		{
+			if (%brick.refundbl_id !$= "")
+				%bl_id = %brick.refundbl_id;
+			else
+				%bl_id = %brick.getGroup().bl_id;
 			if ($EOTW::CustomBrickCost[%data.getName()] !$= "" && %brick.material $= "Custom")
 			{
 				%cost = $EOTW::CustomBrickCost[%data.getName()];
@@ -384,7 +388,7 @@ package EOTW_Matter
 					if (getField(%cost, 0) < 1.0)
 						%volume = mCeil(%volume * getField(%cost, 0));
 						
-					$EOTW::Material[%brick.getGroup().bl_id, %name] += %volume;
+					$EOTW::Material[%bl_id, %name] += %volume;
 				}
 			}
 			else if (%brick.material !$= "Custom" && %brick.material !$= "")
@@ -405,7 +409,7 @@ package EOTW_Matter
 					%volume = %data.brickSizeX * %data.brickSizeY * %data.brickSizeZ;
 				}
 
-				$EOTW::Material[%brick.getGroup().bl_id, %brick.material] += %volume;
+				$EOTW::Material[%bl_id, %brick.material] += %volume;
 			}
 		}
 

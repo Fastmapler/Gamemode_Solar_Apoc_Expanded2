@@ -13,7 +13,7 @@ datablock ProjectileData(SickleProjectile)
     brickExplosionMaxVolumeFloating = 2;
     explosion           = KnifethrownExplosion;
 
-    muzzleVelocity      = 60;
+    muzzleVelocity      = 80;
     velInheritFactor    = 1;
 
     armingDelay         = 0;
@@ -49,8 +49,8 @@ datablock ItemData(SickleItem)
     //gui stuff
     uiName = "TLS - Sickle";
     iconName = "./Shapes/icon_Sickle";
-    doColorShift = false;
-    colorShiftColor = "0.471 0.471 0.471 1.000";
+    doColorShift = true;
+    colorShiftColor = "0.25 0.70 0.25 1.00";
 
     // Dynamic properties defined by the scripts
     image = SickleImage;
@@ -93,8 +93,8 @@ datablock ShapeBaseImageData(SickleImage)
     armReady = true;
 
     //casing = " ";
-    doColorShift = false;
-    colorShiftColor = "0.471 0.471 0.471 1.000";
+    doColorShift = true;
+    colorShiftColor = "0.25 0.70 0.25 1.00";
 
     // Images have a state system which controls how the animations
     // are run, which sounds are played, script callbacks, etc. This
@@ -164,14 +164,20 @@ function SickleProjectile::onCollision(%data, %proj, %col, %fade, %pos, %norm)
 
     if (!isObject(%client = %proj.client) || !isObject(%player = %client.player)) return;
 
-    initContainerRadiusSearch(%pos, 0.3, $TypeMasks::CorpseObjectType);
+    initContainerRadiusSearch(%pos, 0.5, $Typemasks::fxBrickAlwaysObjectType);
 
     while(isObject(%hit = containerSearchNext()))
     {
-        if(%hit.getClassName() $= "AIPlayer")
+        if(%hit.getClassName() $= "fxDtsBrick")
         {
-            
+            %data = %hit.getDataBlock();
+            if (!%data.isPlantBrick || getTrustLevel(getBrickGroupFromObject(%client),%hit.getGroup()) < $TrustLevel::Hammer)
+                continue;
+
+            %hit.refundbl_id = %client.bl_id;
+            ServerPlay3D(brickBreakSound,%hit.getPosition());
+            %hit.fakeKillBrick(getRandom(-10,10) SPC getRandom(-10,10) SPC getRandom(0,10),3);
+            %hit.scheduleNoQuota(500,delete);
         }
     }
-    
 }
