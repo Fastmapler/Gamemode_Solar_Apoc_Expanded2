@@ -53,6 +53,6 @@ datablock PlayerData(IntoxicatedHoleBot : UnfleshedHoleBot)
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1 TAB 4 TAB 8 TAB "Copper";
 	EOTWLootTable[1] = 1 TAB 2 TAB 4 TAB "Silver";
-	EOTWLootTable[1] = 1 TAB 6 TAB 12 TAB "Lead";
-	EOTWLootTable[2] = 1 TAB 3 TAB 9 TAB "Gold";
+	EOTWLootTable[2] = 1 TAB 6 TAB 12 TAB "Lead";
+	EOTWLootTable[3] = 1 TAB 3 TAB 9 TAB "Gold";
 };

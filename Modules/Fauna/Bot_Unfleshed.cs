@@ -88,6 +88,6 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1 TAB 32 TAB 64 TAB "Wood";
 	EOTWLootTable[1] = 0.5 TAB 16 TAB 32 TAB "Granite";
-	EOTWLootTable[1] = 0.3 TAB 16 TAB 32 TAB "Leather";
-	EOTWLootTable[2] = 0.1 TAB 8 TAB 16 TAB "Iron";
+	EOTWLootTable[2] = 0.3 TAB 16 TAB 32 TAB "Leather";
+	EOTWLootTable[3] = 0.1 TAB 8 TAB 16 TAB "Iron";
 };

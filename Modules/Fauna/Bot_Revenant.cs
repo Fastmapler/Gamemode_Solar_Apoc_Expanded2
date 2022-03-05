@@ -48,9 +48,9 @@ datablock PlayerData(RevenantHoleBot : UnfleshedHoleBot)
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
-	EOTWLootTableData = 0.9 TAB 0.1;
+	EOTWLootTableData = 2.0 TAB 0.1;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 0.1 TAB 1 TAB 2 TAB "Vines";
-	EOTWLootTable[1] = 0.1 TAB 1 TAB 2 TAB "Moss";
-	EOTWLootTable[1] = 0.1 TAB 16 TAB 32 TAB "Leather";
+	EOTWLootTable[0] = 0.2 TAB 4 TAB 8 TAB "Raw Thorium";
+	EOTWLootTable[1] = 0.1 TAB 4 TAB 8 TAB "Raw Uranium";
+	EOTWLootTable[2] = 0.1 TAB 16 TAB 32 TAB "Leather";
 };
