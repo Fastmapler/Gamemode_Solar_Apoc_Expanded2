@@ -4,12 +4,13 @@ Other names include: My Fantastic Reactor, Mega Flippin' Reactor, etc.
 The setup is very similar to fission reactors in the Minecraft IndustrialCraft 2 mod.
 
 Brick parts
-MFR Hull: Baseplate for the MFR. Build using "Construction" themed materials (ie Adamantine, Steel, Lead)
-MFR Reaction Plate: A 4x4f plate which control rods, heat sinks, etc.
+MFR Hull: Baseplate for the MFR. All the components are placed on this baseplate.
+MFR Reaction Plate: A 4x4f plate which control rods, heat sinks, etc. are placed on.
 MFR Fission Components: A set of various pole shaped bricks that define the functionality of the reactor.
     Neutron Control
       --Reflector - "Relects" neutrons, increasing a fuel rod's level. No heat capacity.
       --Control Rod - Connects non-adjacent reflectors and fuel rods. Can be toggled on/off via the control panel. No heat capacity.
+      --Component Extender - Special part that allows another reaction plate ontop of it to connect. Does nothing otherwise.
     Fuel Rods
       --Fuel Rod - The source of heat. Each one consumes one unit of fuel per second. Produces bonus heat for adjacent fuel rods and reflectors, but needs atleast one of them to run.
       --Dual Fuel Rod - Consumes twice the fuel and produces twice the heat as one lone fuel rod.
