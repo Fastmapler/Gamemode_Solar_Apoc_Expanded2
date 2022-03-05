@@ -588,8 +588,8 @@ function removeItem(%cl, %menu, %option)
 	};
 	MissionCleanup.add(%i);
 
-	for (%i = 0; %i < getFieldCount(%toolData); %i += 2)
-		set_var_obj(%i, getField(%toolData, %i), getField(%toolData, %i + 1));
+	for (%k = 0; %k < getFieldCount(%toolData); %k += 2)
+		set_var_obj(%i, getField(%toolData, %k), getField(%toolData, %k + 1));
 
 	%i.setTransform(%cl.player.getTransform());
 	%i.schedule(60000, schedulePop); // add 60 seconds of extra lifetime to ensure they can pick up the item

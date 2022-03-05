@@ -7,9 +7,10 @@ function EOTW_SaveData()
     for (%i = 0; %i < ClientGroup.getCount(); %i++)
         EOTW_SaveData_PlayerData(ClientGroup.getObject(%i));
 
-    //Save Brick and Rope Data
+    //Save Brick, Rope, and Brickgroup Data
     EOTW_SaveData_BrickData();
     EOTW_SaveData_RopeData();
+    EOTW_SaveData_BrickgroupTrustData();
 }
 
 function EOTW_SaveData_PlayerData(%client)
@@ -86,6 +87,7 @@ function EOTW_SaveData_BrickData()
     %saveList = %saveList @ "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
     %saveList = %saveList @ "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
     %saveList = %saveList @ "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";
+    %saveList = %saveList @ "\tstoredToolData0\tstoredToolData1\tstoredToolData2\tstoredToolData3\tstoredToolData4";
 
     deleteVariables("$EOTW::BrickData*");
     for (%j = 0; %j < MainBrickGroup.getCount(); %j++)
@@ -172,6 +174,81 @@ function EOTW_SaveData_RopeData()
 
     export("$EOTW::RopeData*", $EOTW::SaveLocation @ "RopeData.cs");
 }
+
+//Thanks to Buddy for the brickgroup trust saving/loading :)
+function EOTW_SaveData_BrickgroupTrustData()
+{
+	%file = new FileObject();
+	%file.openForWrite($EOTW::SaveLocation @ "Brickgroups.txt");
+
+	//vars to save: (TRUST[] is set automatically in serverCmdTrustListUpload_Done)
+	//	potentialTrust[]
+	//	potentialTrustEntry[]
+	//	potentialTrustCount
+
+	%mBG = mainBrickGroup;
+	for(%i = 0; %i < %mBG.getCount(); %i++)
+	{
+		%BG = %mBG.getObject(%i);
+		
+		%file.writeLine("BrickGroup_" @ %BG.BL_ID);
+		%trustCount = mFloor(%BG.potentialTrustCount);
+		%file.writeLine(%trustCount);
+
+		%saveLine = "";
+		for(%k = 0; %k < %trustCount; %k++)
+		{
+			%pBLID = %BG.potentialTrustEntry[%k];
+			%pLevel = %BG.potentialTrust[%pBLID];
+
+			if(%k == 0)
+				%saveLine = %pBLID SPC %pLevel;
+			else
+				%saveLine = %saveLine TAB %pBLID SPC %pLevel;
+		}
+
+		%file.writeLine(%saveLine);
+	}
+
+	%file.close();
+	%file.delete();
+}
+
+function EOTW_LoadData_BrickgroupTrustData()
+{
+	%file = new FileObject();
+	%file.openForRead($EOTW::SaveLocation @ "Brickgroups.txt");
+
+	while(!%file.isEOF())
+	{
+		%brickGroup = %file.readLine();
+		%trustCount = %file.readLine();
+		%trustData  = %file.readLine();
+		
+		if(!isObject(%brickGroup))
+			continue;
+
+		if(isObject(%brickGroup.client))
+			continue;
+
+		//%brickGroup.potentialTrustCount = mFloor(%trustCount);
+		%fieldCount = getFieldCount(%trustData);
+		for(%i = 0; %i < %fieldCount; %i++)
+		{
+			%field = getField(%trustData, %i);
+			%bl_id = mFloor(firstWord(%field));
+			%level = mFloor(restWords(%field));
+
+			%brickGroup.addPotentialTrust(%bl_id, %level);
+			//%brickGroup.potentialTrustEntry[%i] = %bl_id;
+			//%brickGroup.potentialTrust[%bl_id] = %level;
+		}
+	}
+
+	%file.close();
+	%file.delete();
+}
+
 
 function EOTW_LoadData_RopeData()
 {
