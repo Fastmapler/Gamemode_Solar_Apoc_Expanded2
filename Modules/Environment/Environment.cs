@@ -375,7 +375,10 @@ package EOTW_Environment
 		if ($EOTW::MapLoadStage == 1)
 			schedule(5000, 0, "Server_AutoloadSave");
 		else if ($EOTW::MapLoadStage == 2)
+		{
+			EOTW_LoadData_BrickgroupTrustData();
 			schedule(200,0,"EnvMasterSetup");
+		}
 	}
 };
 activatePackage("EOTW_Environment");
