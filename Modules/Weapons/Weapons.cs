@@ -34,6 +34,9 @@ $EOTW::ItemCrafting["machinePistolItem"] = (144 TAB "Steel") TAB (192 TAB "Rosiu
 $EOTW::ItemCrafting["sniperRepeaterItem"] = (128 TAB "Leather") TAB (256 TAB "Adamantine") TAB (112 TAB "Lead");
 $EOTW::ItemCrafting["pairedShotgunItem"] = (128 TAB "Leather") TAB (128 TAB "Adamantine") TAB (112 TAB "Gold");
 $EOTW::ItemCrafting["assaultRifleItem"] = (256 TAB "Adamantine") TAB (128 TAB "Naturum") TAB (128 TAB "Energium");
+//bruh
+$EOTW::ItemCrafting["ACNItem"] = (999999 TAB "Adamantine");
+$EOTW::ItemDescription["ACNItem"] = "If you are able to obtain this then I probably messed up somewhere.";
 
 //Melee
 //T1
