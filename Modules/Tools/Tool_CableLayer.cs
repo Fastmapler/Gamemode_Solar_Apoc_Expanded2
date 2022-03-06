@@ -2,6 +2,27 @@ $EOTW::CableSizeLimit = 18;
 $EOTW::MaxRopeCount = 5;
 $EOTW::CableCostMulti = 1;
 
+datablock AudioProfile(LayerEquipSound)
+{
+    filename    = "./Sounds/LayerEquip.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(LayerUseSound)
+{
+    filename    = "./Sounds/LayerUse.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(LayerRemoveSound)
+{
+    filename    = "./Sounds/LayerRemove.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
 $EOTW::ItemCrafting["CableLayerItem"] = (64 TAB "Iron") TAB (16 TAB "Copper");
 $EOTW::ItemDescription["CableLayerItem"] = "Allows the placement of power transfer cables.";
 datablock itemData(CableLayerItem)
@@ -49,7 +70,7 @@ datablock shapeBaseImageData(CableLayerImage)
 	stateName[0]					= "Start";
 	stateTimeoutValue[0]			= 0.0;
 	stateTransitionOnTimeout[0]	 	= "Ready";
-	stateSound[0]					= weaponSwitchSound;
+	stateSound[0]					= LayerEquipSound;
 	
 	stateName[1]					= "Ready";
 	stateTransitionOnTriggerDown[1] = "Fire";
@@ -144,6 +165,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 							%client.chatMessage("\c6Cable target set to " @ %col.getDatablock().uiName @ ". Cable created!", 3);
 							CreateTransferRope(%obj.cableLayerBuffer, %obj.cableLayerBufferPort, %col,%col.getPortPosition("PowerIn",%hitpos), %transferRate, %cableType.name, %cost, "Power");
 							%obj.cableLayerBuffer = "";
+							ServerPlay3D(LayerUseSound,%col.getPosition());
 						}
 						else
 							%client.chatMessage("\c6Not enough material to build cable!", 3);
@@ -165,6 +187,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 						%obj.cableLayerBuffer = %col;
 						%obj.cableLayerBufferPort = %col.getPortPosition("PowerOut",%hitpos);
 						%client.chatMessage("\c6Cable source set to " @ %col.getDatablock().uiName, 3);
+						ServerPlay3D(LayerUseSound,%col.getPosition());
 					}
 					
 				}
@@ -178,6 +201,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 			{
 				%col.getGroup().RemoveCableData();
 				%client.chatMessage("\c6Rope sucessfully removed.", 1);
+				ServerPlay3D(LayerRemoveSound,%col.getPosition());
 			}
 		}
 	}

@@ -1,3 +1,10 @@
+datablock AudioProfile(MiningScannerUseSound)
+{
+    filename    = "./Sounds/ScannerUse.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
 $EOTW::ItemCrafting["MiningScannerItem"] = (56 TAB "Gold") TAB (16 TAB "Silver");
 $EOTW::ItemDescription["MiningScannerItem"] = "Gives nearby materials a glow effect for a short time. Requires 100 EU per use. Charge at a charge pad.";
 datablock itemData(MiningScannerItem)
@@ -71,6 +78,7 @@ function MiningScannerImage::onFire(%this, %obj, %slot)
 	%energyCost = 100;
 	if (%obj.GetBatteryEnergy() >= %energyCost)
 	{
+		ServerPlay3D(MiningScannerUseSound,%obj.getPosition());
 		%obj.ChangeBatteryEnergy(%energyCost * -1);
 		%obj.MiningScannerPing(64, 5000);
 	}

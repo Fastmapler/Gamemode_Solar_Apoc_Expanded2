@@ -1,3 +1,17 @@
+datablock AudioProfile(OilPumpEquipSound)
+{
+    filename    = "./Sounds/PumpEquip.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(OilPumpTickSound)
+{
+    filename    = "./Sounds/PumpTick.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
 $EOTW::ItemCrafting["OilPumpItem"] = (48 TAB "Steel") TAB (16 TAB "Rubber");
 $EOTW::ItemDescription["OilPumpItem"] = "Can be used on oil wells to suck oil. Requires 50 EU/s. Charge at a charge pad.";
 datablock itemData(OilPumpItem)
@@ -47,7 +61,7 @@ datablock shapeBaseImageData(OilPumpImage)
 	stateName[0]					= "Start";
 	stateTimeoutValue[0]			= 0.5;
 	stateTransitionOnTimeout[0]	 	= "Ready";
-	stateSound[0]					= weaponSwitchSound;
+	stateSound[0]					= OilPumpEquipSound;
 	
 	stateName[1]					= "Ready";
 	stateTransitionOnTriggerDown[1] = "Fire";
@@ -124,6 +138,7 @@ function Player::collectOilLoop(%obj, %target)
 				%oilPerCycle = getMin(8, %target.OilCapacity);
 				%obj.ChangeMatterCount("Crude Oil", %oilPerCycle);
 				//%client.chatMessage("\c6Sapped " @ %oilPerCycle @ " crude oil.");
+				ServerPlay3D(OilPumpTickSound,%target.getPosition());
 
 				%target.gatherProcess = 0;
 

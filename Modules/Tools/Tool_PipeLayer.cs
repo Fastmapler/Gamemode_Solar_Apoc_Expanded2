@@ -48,7 +48,7 @@ datablock shapeBaseImageData(PipeLayerImage)
 	stateName[0]					= "Start";
 	stateTimeoutValue[0]			= 0.0;
 	stateTransitionOnTimeout[0]	 	= "Ready";
-	stateSound[0]					= weaponSwitchSound;
+	stateSound[0]					= LayerEquipSound;
 	
 	stateName[1]					= "Ready";
 	stateTransitionOnTriggerDown[1] = "Fire";
@@ -141,6 +141,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 						%client.chatMessage("\c6Pipe target set to " @ %col.getDatablock().uiName @ ". Pipe created!", 3);
 						CreateTransferRope(%obj.PipeLayerBuffer, %obj.PipeLayerBufferPort, %col, %col.getPortPosition("MatterIn",%hitpos), %transferRate, %PipeType.name, %cost, "Matter");
 						%obj.PipeLayerBuffer = "";
+						ServerPlay3D(LayerUseSound,%col.getPosition());
 					}
 					else
 						%client.chatMessage("\c6Not enough material to build Pipe!", 3);
@@ -162,6 +163,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 					%obj.PipeLayerBuffer = %col;
 					%obj.PipeLayerBufferPort = %col.getPortPosition("MatterOut",%hitpos);
 					%client.chatMessage("\c6Pipe source set to " @ %col.getDatablock().uiName, 3);
+					ServerPlay3D(LayerUseSound,%col.getPosition());
 				}
 				
 			}
@@ -172,6 +174,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 			{
 				%col.getGroup().RemoveCableData();
 				%client.chatMessage("\c6Rope sucessfully removed.", 1);
+				ServerPlay3D(LayerRemoveSound,%col.getPosition());
 			}
 		}
 	}
