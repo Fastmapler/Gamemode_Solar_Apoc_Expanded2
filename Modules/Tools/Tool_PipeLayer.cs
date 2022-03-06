@@ -172,9 +172,9 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 		{
 			if (isObject(%col.getGroup()) && %obj.PipeLayerBuffer $= "" && %col.getGroup().material !$= "")
 			{
+				ServerPlay3D(LayerRemoveSound,%col.getPosition());
 				%col.getGroup().RemoveCableData();
 				%client.chatMessage("\c6Rope sucessfully removed.", 1);
-				ServerPlay3D(LayerRemoveSound,%col.getPosition());
 			}
 		}
 	}
