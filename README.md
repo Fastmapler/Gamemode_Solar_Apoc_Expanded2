@@ -15,8 +15,6 @@ Tutorial/Safehouse spawn (medium)
 
 Make tools and more have fun sounds (easy)
 
-Syringes (easy)
-
 VCE Logistics (medium)
 
 Decrease cost of matter tanks (easy)
