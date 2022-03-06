@@ -141,6 +141,9 @@ schedule(1000, 0, activatePackage, StorageEvents);
 // 0 if no error, 1 if no space, 2 if space but failed to insert due to string lengths
 function fxDTSBrick::storeItem(%brick, %item, %toolData)
 {
+	if (%brick.getDatablock().maxStoredTools < 1)
+		return 1;
+
 	%item = %item.getName();
 	for (%i = 0; %i < %brick.numEvents; %i++)
 	{
@@ -397,6 +400,9 @@ function parseItemList(%items, %strLenMax)
 
 function fxDTSBrick::openStorage(%brick, %max, %str1, %str2, %str3, %cl)
 {
+	if (%brick.getDatablock().maxStoredTools < 1)
+		return;
+
 	if ($Pref::Server::StorageEvents::RequireTrustAccess && getTrustLevel(%cl, %brick) < 2 && getBrickgroupFromObject(%brick).bl_id != 888888)
 	{
 		%cl.centerprint(%brick.getGroup().name @ " does not trust you enough to do that!", 1);
@@ -411,6 +417,9 @@ function fxDTSBrick::openStorage(%brick, %max, %str1, %str2, %str3, %cl)
 
 function fxDTSBrick::setStorageName(%brick, %name, %cl)
 {
+	if (%brick.getDatablock().maxStoredTools < 1)
+		return;
+		
 	%brick.updateStorageMenu();
 	%brick.centerprintMenu.menuName = %name;
 }
@@ -522,6 +531,9 @@ function removeItem(%cl, %menu, %option)
 		return;
 	}
 	%brick = %menu.brick;
+
+	if (%brick.getDatablock().maxStoredTools < 1)
+		return 1;
 
 	if (vectorDist(%brick.getPosition(), %cl.player.getHackPosition()) > 7)
 	{
