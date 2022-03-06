@@ -309,7 +309,7 @@ $EOTW::ItemDescription["mixSyringeLeatherskinItem"] = "Upon consumption reduces 
 datablock ItemData(mixSyringeLeatherskinItem : mixSyringeHealingItem)
 {
     uiName = "MIX - Syringe Leatherskin";
-    colorShiftColor = "0.45 0.45 0.85 1.00";
+    colorShiftColor = "1.00 0.50 0.00 1.00";
     image = mixSyringeLeatherskinImage;
 };
 

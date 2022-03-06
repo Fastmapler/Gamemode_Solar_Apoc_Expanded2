@@ -309,7 +309,7 @@ $EOTW::ItemDescription["mixFlaskLeatherskinItem"] = "Upon consumption reduces su
 datablock ItemData(mixFlaskLeatherskinItem : mixFlaskHealingItem)
 {
     uiName = "MIX - Flask Leatherskin";
-    colorShiftColor = "0.45 0.45 0.85 1.00";
+    colorShiftColor = "1.00 0.50 0.00 1.00";
     image = mixFlaskLeatherskinImage;
 };
 
