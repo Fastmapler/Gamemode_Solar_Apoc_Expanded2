@@ -168,7 +168,7 @@ function SickleProjectile::onCollision(%data, %proj, %col, %fade, %pos, %norm)
 
     while(isObject(%hit = containerSearchNext()))
     {
-        if(%hit.getClassName() $= "fxDtsBrick")
+        if(%hit.getClassName() $= "fxDtsBrick" && %hit.refundbl_id $= "")
         {
             %data = %hit.getDataBlock();
             if (!%data.isPlantBrick || getTrustLevel(getBrickGroupFromObject(%client),%hit.getGroup()) < $TrustLevel::Hammer)
