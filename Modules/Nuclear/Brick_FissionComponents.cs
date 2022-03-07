@@ -3,7 +3,7 @@ datablock fxDTSBrickData(brickMFRCellReflectorData)
 {
 	brickFile = "./Bricks/MFRCell.blb";
 	category = "Nuclear";
-	subCategory = "Control Cell";
+	subCategory = "Control Cells";
 	uiName = "Reflector";
 };
 
@@ -15,20 +15,11 @@ datablock fxDTSBrickData(brickMFRCellControlRodData)
 	uiName = "Control Rod";
 };
 
-datablock fxDTSBrickData(brickMFRCellExtenderData)
-{
-	brickFile = "./Bricks/MFRCell.blb";
-	category = "Nuclear";
-	subCategory = "Control Cells";
-	uiName = "Component Extender";
-};
-
-//Fuel Cells
 datablock fxDTSBrickData(brickMFRCellFuelRodData)
 {
 	brickFile = "./Bricks/MFRCell.blb";
 	category = "Nuclear";
-	subCategory = "Fuel Cells";
+	subCategory = "Control Cells";
 	uiName = "Fuel Rod";
 };
 
@@ -36,7 +27,7 @@ datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 {
 	brickFile = "./Bricks/MFRCell.blb";
 	category = "Nuclear";
-	subCategory = "Fuel Cells";
+	subCategory = "Control Cells";
 	uiName = "Dual Fuel Rod";
 };
 
@@ -44,7 +35,7 @@ datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 {
 	brickFile = "./Bricks/MFRCell.blb";
 	category = "Nuclear";
-	subCategory = "Fuel Cells";
+	subCategory = "Control Cells";
 	uiName = "Quad Fuel Rod";
 };
 
