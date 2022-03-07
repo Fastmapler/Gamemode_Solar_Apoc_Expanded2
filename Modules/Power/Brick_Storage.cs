@@ -130,7 +130,7 @@ datablock fxDTSBrickData(brickEOTWMicroMatterTankData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Storage";
+	subCategory = "Physical Storage";
 	uiName = "Micro Matter Tank";
     matterMaxBuffer = 80;
 	matterSlots["Buffer"] = 1;
@@ -144,7 +144,7 @@ datablock fxDTSBrickData(brickEOTWMicroMatterTank2xData)
 {
 	brickFile = "./Bricks/MicroCapacitor2x.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Storage";
+	subCategory = "Physical Storage";
 	uiName = "2x2 Micro Matter Tank";
     matterMaxBuffer = 320;
 	matterSlots["Buffer"] = 1;
@@ -158,7 +158,7 @@ datablock fxDTSBrickData(brickEOTWMatterTank1Data)
 {
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Storage";
+	subCategory = "Physical Storage";
 	uiName = "Matter Tank";
     matterMaxBuffer = 50000;
 	matterSlots["Buffer"] = 1;
@@ -172,7 +172,7 @@ datablock fxDTSBrickData(brickEOTWMatterTank12Data)
 {
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Storage";
+	subCategory = "Physical Storage";
 	uiName = "Quad Matter Tank";
     matterMaxBuffer = 200000;
 	matterSlots["Buffer"] = 1;
@@ -186,7 +186,7 @@ datablock fxDTSBrickData(brickEOTWMatterTank2Data)
 {
 	brickFile = "./Bricks/Generator.blb";
 	category = "Solar Apoc";
-	subCategory = "Material Storage";
+	subCategory = "Physical Storage";
 	uiName = "Multi-Celled Matter Tank";
     matterMaxBuffer = 50000;
 	matterSlots["Buffer"] = 4;
@@ -233,7 +233,7 @@ datablock fxDTSBrickData(brickToolStorageData)
 {
 	brickFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Bricks/Box.blb";
 	category = "Solar Apoc";
-	subCategory = "Support";
+	subCategory = "Physical Storage";
 	uiName = "Tool Storage";
 	//iconName = "./Bricks/Icon_Generator";
 

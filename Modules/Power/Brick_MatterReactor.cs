@@ -135,6 +135,30 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 $EOTW::CustomBrickCost["brickEOTWSeperatorData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Adamantine" TAB 256 TAB "Electrum" TAB 256 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWSeperatorData"] = "Electrically seperates specific materials into core elements.";
 
+datablock fxDTSBrickData(brickEOTWBreweryData)
+{
+	brickFile = "./Bricks/Brewery.blb";
+	category = "Solar Apoc";
+	subCategory = "Processors";
+	uiName = "Brewery";
+	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
+	
+	energyGroup = "Machine";
+	energyMaxBuffer = 200;
+	loopFunc = "EOTW_MatterReactorLoop";
+	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
+	energyWattage = 10;
+	inspectFunc = "EOTW_MatterReactorInspectLoop";
+	
+	matterMaxBuffer = 2048;
+	matterSlots["Input"] = 4;
+	matterSlots["Output"] = 1;
+
+	loopNoise = BreweryLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 128 TAB "Rosium" TAB 128 TAB "Electrum";
+$EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";
+
 function Player::EOTW_MatterReactorInspectLoop(%player, %brick)
 {
 	cancel(%player.PoweredBlockInspectLoop);
@@ -299,26 +323,24 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 	}
 }
 
-datablock fxDTSBrickData(brickEOTWBreweryData)
+datablock fxDTSBrickData(brickEOTWVoidDrillData)
 {
-	brickFile = "./Bricks/Brewery.blb";
+	brickFile = "./Bricks/Refinery.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
-	uiName = "Brewery";
-	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MatterReactor";
+	uiName = "Void Drill";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/Refinery";
 	
 	energyGroup = "Machine";
-	energyMaxBuffer = 200;
-	loopFunc = "EOTW_MatterReactorLoop";
-	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 10;
-	inspectFunc = "EOTW_MatterReactorInspectLoop";
+	energyMaxBuffer = 1200;
+	energyWattage = 400;
+	inspectFunc = "EOTW_DefaultInspectLoop";
 	
 	matterMaxBuffer = 2048;
-	matterSlots["Input"] = 4;
+	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
-	loopNoise = BreweryLoopSound;
+	loopNoise = RefineryLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 128 TAB "Rosium" TAB 128 TAB "Electrum";
-$EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";
+$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Processes Boss Essense and *tons* of power to synthesize materials of your choice!";
