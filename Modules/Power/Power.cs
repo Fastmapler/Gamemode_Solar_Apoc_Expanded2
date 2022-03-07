@@ -6,6 +6,7 @@ exec("./Brick_Storage.cs");
 exec("./Brick_Logistics.cs");
 exec("./Brick_MatterReactor.cs");
 exec("./Brick_WaterWorks.cs");
+exec("./Brick_Military.cs");
 exec("./Brick_Support.cs");
 
 function PowerMasterLoop()
