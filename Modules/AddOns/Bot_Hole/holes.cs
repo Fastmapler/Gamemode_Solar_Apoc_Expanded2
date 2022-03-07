@@ -2046,7 +2046,7 @@ function AIPlayer::hShootAim(%obj,%targ)
 function AIPlayer::hShoot( %obj, %slot, %trigger )
 {
 	// if we're out of sight or out of range return, but only if we're trying to activate our image
-	if( ( !%obj.hIsEngaged || !%obj.hIsInLOS ) && %trigger == 1 )
+	if( ( !%obj.hIsEngaged || !%obj.hIsInLOS || %obj.getDamagePercent() >= 1 ) && %trigger == 1 )
 		return;
 		
 	// actually do the trigger call

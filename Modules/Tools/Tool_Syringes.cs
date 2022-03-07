@@ -322,7 +322,6 @@ datablock ShapeBaseImageData(mixSyringeLeatherskinImage : mixSyringeHealingImage
 
 function mixSyringeLeatherskinImage::onFire(%this,%obj,%slot)
 {
-    return;
 	%currSlot = %obj.currTool;
 
 	%obj.PotionTick_SyringeLeatherskin();

@@ -200,12 +200,10 @@ function ServerCmdAddFilter(%client, %filterDir, %mat1, %mat2, %mat3, %mat4)
 
         switch$ (%filterDir)
         {
-            case "up":
-            case "u":
+            case "up" or "u":
                 %hit.splitterFilter["Up"] = trim(%hit.splitterFilter["Up"] TAB %matter.name);
                 %client.chatMessage("\c6Added " @ %matter.name @ " to Push Up direction whitelist.");
-            case "down":
-            case "d":
+            case "down" or "d":
                 %hit.splitterFilter["Down"] = trim(%hit.splitterFilter["Down"] TAB %matter.name);
                 %client.chatMessage("\c6Added " @ %matter.name @ " to Push Down direction whitelist.");
             default:
@@ -257,8 +255,7 @@ function ServerCmdRemoveFilter(%client, %filterDir, %mat1, %mat2, %mat3, %mat4)
 
         switch$ (%filterDir)
         {
-            case "up":
-            case "u":
+            case "up" or "u":
                 %idx = getFieldIndex(%hit.splitterFilter["Up"], %matter.name);
                 if (%idx > -1)
                 {
@@ -269,8 +266,7 @@ function ServerCmdRemoveFilter(%client, %filterDir, %mat1, %mat2, %mat3, %mat4)
                 {
                     %client.chatMessage("Did not find " @ %matter.name @ " in Push Up direction whitelist.");
                 }
-            case "down":
-            case "d":
+            case "down" or "d":
                 %idx = getFieldIndex(%hit.splitterFilter["Down"], %matter.name);
                 if (%idx > -1)
                 {

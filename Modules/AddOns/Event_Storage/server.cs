@@ -78,7 +78,7 @@ package StorageEvents
 			%start = %pl.getEyePoint();
 			%end = vectorAdd(vectorScale(%pl.getEyeVector(), 6), %start);
 			%hit = getWord(containerRaycast(%start, %end, $Typemasks::fxBrickObjectType), 0);
-			if (isObject(%hit) && %hit.getStoredItemSpace() > 0)
+			if (isObject(%hit) && %hit.getStoredItemSpace() > 0 && %hit.getDataBlock().maxStoredTools > 0)
 			{
 				if (getTrustLevel(%cl, %hit) < $Pref::Server::StorageEvents::RequireTrustDeposit)
 				{

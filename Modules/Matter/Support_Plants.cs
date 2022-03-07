@@ -9,7 +9,16 @@ function PlantLife_TickLoop()
                 %totalTicks++;
 
         for (%i = 0; %i < %totalTicks; %i++)
-            EOTWPlants.getObject(getRandom(0, EOTWPlants.getCount() - 1)).EOTW_PlantLifeTick();
+        {
+            %plant = EOTWPlants.getObject(getRandom(0, EOTWPlants.getCount() - 1));
+
+            if (%groupTicked[%plant.getGroup().bl_id] < 5)
+            {
+                %groupTicked[%plant.getGroup().bl_id]++;
+                %plant.EOTW_PlantLifeTick();
+            }
+        }
+            
     }
     $EOTW::PlantLifeLoop = schedule(1000, 0, "PlantLife_TickLoop");
 }

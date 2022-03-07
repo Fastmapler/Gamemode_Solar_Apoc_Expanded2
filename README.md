@@ -11,6 +11,8 @@ Welcome to the Apocalypse of Blockland, but this time it is cooler(er) B)
 
 Fix plant growth (im in your modter walls) (???)
 
+Machine energy I/O statistic monitoring
+
 Tutorial/Safehouse spawn (medium)
 
 Make tools and more have fun sounds (easy)

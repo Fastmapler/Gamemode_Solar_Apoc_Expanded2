@@ -59,5 +59,7 @@ function updateWeaponDamage()
 {
     if (isObject(BioRifleProjectile))
         BioRifleProjectile.directDamage = 1;
+    if (isObject(acidProjectile))
+        acidProjectile.directDamage = 4;
 }
 schedule(100, 0, "updateWeaponDamage");

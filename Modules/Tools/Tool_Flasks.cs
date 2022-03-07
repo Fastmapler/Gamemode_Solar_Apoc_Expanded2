@@ -322,7 +322,6 @@ datablock ShapeBaseImageData(mixFlaskLeatherskinImage : mixFlaskHealingImage)
 
 function mixFlaskLeatherskinImage::onFire(%this,%obj,%slot)
 {
-    return;
 	%currSlot = %obj.currTool;
 
 	%obj.PotionTick_FlaskLeatherskin();
