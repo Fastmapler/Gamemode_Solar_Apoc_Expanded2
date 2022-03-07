@@ -1,35 +1,35 @@
 datablock AudioProfile(AlloyForgeLoopSound)
 {
     filename    = "./Sounds/AlloyForgeLoop.wav";
-    description = AudioClosest3d;
+    description = audioclosestlooping3d;
     preload = true;
 };
 
 datablock AudioProfile(MatterReactorLoopSound)
 {
     filename    = "./Sounds/MatterReactorLoop.wav";
-    description = AudioClosest3d;
+    description = audioclosestlooping3d;
     preload = true;
 };
 
 datablock AudioProfile(RefineryLoopSound)
 {
     filename    = "./Sounds/RefineryLoop.wav";
-    description = AudioClosest3d;
+    description = audioclosestlooping3d;
     preload = true;
 };
 
 datablock AudioProfile(SeperatorLoopSound)
 {
     filename    = "./Sounds/SeperatorLoop.wav";
-    description = AudioClosest3d;
+    description = audioclosestlooping3d;
     preload = true;
 };
 
 datablock AudioProfile(BreweryLoopSound)
 {
     filename    = "./Sounds/BreweryLoop.wav";
-    description = AudioClosest3d;
+    description = audioclosestlooping3d;
     preload = true;
 };
 
@@ -210,16 +210,19 @@ function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
 		return;
 
 	%data = %obj.getDatablock();
-
-	if (isObject(%data.loopNoise) && getSimTime() - %obj.lastLoopNoise >= 500)
-	{
-		%obj.lastLoopNoise = getSimTime();
-		ServerPlay3D(%data.loopNoise, %obj.getPosition());
-	}
 	
 	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
 	%obj.craftingPower += %change;
 	%obj.changePower(%change * -1);
+
+	if (isObject(%data.loopNoise))
+	{
+		if (isObject(%data.audioEmitter) && %change <= 0)
+			%data.playSoundLooping();
+		else if (!isObject(%data.audioEmitter) && %change > 0)
+			%data.playSoundLooping(%data.loopNoise);
+	}
+	
 	
 	if (%obj.craftingPower >= %obj.craftingProcess.energyCost)
 	{
@@ -269,6 +272,8 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 		{
 			%obj.craftingProcess = "";
 			%obj.craftingPower = 0;
+
+			%data.playSoundLooping();
 		}
 	}
 	else

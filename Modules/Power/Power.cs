@@ -512,3 +512,22 @@ function fxDtsBrick::getPortPosition(%brick,%type,%pos)
 	%newPosition = vectorAdd(%position,"0 0 " @ %datablock.portHeight[%type]);
 	return %newPosition;
 }
+
+function fxDTSBrick::playSoundLooping(%obj, %data)
+{
+	if (isObject(%obj.AudioEmitter))
+		%obj.AudioEmitter.delete();
+
+	%obj.AudioEmitter = 0;
+	if (!isObject(%data) || %data.getClassName () !$= "AudioProfile" || %data.uiName $= "" || !%data.getDescription().isLooping || %data.fileName $= "")
+		return;
+
+	%audioEmitter = new AudioEmitter("")
+	{
+		profile = %data;
+		useProfileDescription = 1;
+	};
+	MissionCleanup.add(%audioEmitter);
+	%obj.AudioEmitter = %audioEmitter;
+	%audioEmitter.setTransform(%obj.getTransform());
+}
