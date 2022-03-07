@@ -104,36 +104,4 @@ $EnvGuiServer::GroundFile Add-Ons/Ground_Plate/plate.ground
 
 
 //minigame rules
-$MiniGame::Enabled 1
-$MiniGame::GameColor 0
-$MiniGame::InviteOnly 0
-$MiniGame::IncludeAllPlayersBricks 1
-$MiniGame::PlayersUseOwnBricks 0
-
-$MiniGame::Points_BreakBrick 0
-$MiniGame::Points_PlantBrick 0
-$MiniGame::Points_KillPlayer 0
-$MiniGame::Points_KillSelf	0
-$MiniGame::Points_Die 0
-   
-$MiniGame::RespawnTime 5
-$MiniGame::VehicleRespawnTime 10
-$MiniGame::BrickRespawnTime 30
-
-$MiniGame::UseSpawnBricks 1
-$MiniGame::FallingDamage 0
-$MiniGame::WeaponDamage 1
-$MiniGame::SelfDamage 1
-$MiniGame::VehicleDamage 1
-$MiniGame::BrickDamage 0
-$MiniGame::EnableWand 1
-$MiniGame::EnableBuilding 1
-$MiniGame::EnablePainting 1
-
-$MiniGame::PlayerDataBlockName Solar Apoc Player
-
-$MiniGame::StartEquipName0 Hammer_
-$MiniGame::StartEquipName1 Wrench
-$MiniGame::StartEquipName2 0
-$MiniGame::StartEquipName3 0
-$MiniGame::StartEquipName4 0
+$MiniGame::Enabled 0 //We already have our own minigame created within the gamemode.

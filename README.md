@@ -9,17 +9,13 @@ Welcome to the Apocalypse of Blockland, but this time it is cooler(er) B)
 
 ## List of stuff to do (And approx. complexity of task):
 
-Fix plant growth (im in your modter walls) (???)
+Fix plant growth (medium)
 
-Machine energy I/O statistic monitoring
+Machine energy I/O statistic monitoring (complex)
 
 Tutorial/Safehouse spawn (medium)
 
-Make tools and more have fun sounds (easy)
-
-VCE Logistics (medium)
-
-Decrease cost of matter tanks (easy)
+Make machines have fun sounds (easy)
 
 Remaining missing machines (complex)
 

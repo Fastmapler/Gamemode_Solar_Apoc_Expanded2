@@ -6,7 +6,7 @@ package Server_DropInventoryOnDeath
 		{
 			if(isObject(%client.player))
 			{
-                %blacklist = "hammerItem WrenchItem PrintGun SurvivalKnifeItem";
+                %blacklist = "hammerItem WrenchItem PrintGun SurvivalKnifeItem RecurveBowItem";
 				for(%i=0;%i<%client.player.getDatablock().maxTools;%i++)
 				{
 					%item = %client.player.tool[%i];

@@ -1,3 +1,38 @@
+datablock AudioProfile(AlloyForgeLoopSound)
+{
+    filename    = "./Sounds/AlloyForgeLoop.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(MatterReactorLoopSound)
+{
+    filename    = "./Sounds/MatterReactorLoop.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(RefineryLoopSound)
+{
+    filename    = "./Sounds/RefineryLoop.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(SeperatorLoopSound)
+{
+    filename    = "./Sounds/SeperatorLoop.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(BreweryLoopSound)
+{
+    filename    = "./Sounds/BreweryLoop.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 {
 	brickFile = "./Bricks/AlloyForge.blb";
@@ -16,6 +51,8 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
+
+	loopNoise = AlloyForgeLoopSound;
 
 	//port info
 	portGoToEdge["PowerIn"] = true;
@@ -44,6 +81,8 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 3;
 	matterSlots["Output"] = 1;
+
+	loopNoise = MatterReactorLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 144 TAB "Lead" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWMatterReactorData"] = "Takes in various materials to produce chemicals.";
@@ -66,6 +105,8 @@ datablock fxDTSBrickData(brickEOTWRefineryData)
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
+
+	loopNoise = RefineryLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWRefineryData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 144 TAB "Lead" TAB 128 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWRefineryData"] = "Refines inputted materials into a potentially more useful material.";
@@ -88,6 +129,8 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 2;
+
+	loopNoise = SeperatorLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSeperatorData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Adamantine" TAB 256 TAB "Electrum" TAB 256 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWSeperatorData"] = "Electrically seperates specific materials into core elements.";
@@ -141,8 +184,14 @@ function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
 {
 	if (!isObject(%craft = %obj.craftingProcess))
 		return;
-	
+
 	%data = %obj.getDatablock();
+
+	if (isObject(%data.loopNoise) && getSimTime() - %obj.lastLoopNoise >= 500)
+	{
+		%obj.lastLoopNoise = getSimTime();
+		ServerPlay3D(%data.loopNoise, %obj.getPosition());
+	}
 	
 	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
 	%obj.craftingPower += %change;
@@ -268,6 +317,8 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 	matterMaxBuffer = 2048;
 	matterSlots["Input"] = 4;
 	matterSlots["Output"] = 1;
+
+	loopNoise = BreweryLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 128 TAB "Rosium" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";

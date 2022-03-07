@@ -1,4 +1,10 @@
 //exec("Add-Ons/Support_ShapelinesV2/server.cs");
+datablock AudioProfile(TurretRepeaterFireSound)
+{
+    filename    = "./Sounds/TurretRepeaterFire.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
 
 $EOTW::CustomBrickCost["brickEOTWTurretRepeaterData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 128 TAB "Energium" TAB 128 TAB "Dielectrics";
 $EOTW::BrickDescription["brickEOTWTurretRepeaterData"] = "Quickly zaps beams at nearby enemies within sight.";
@@ -54,9 +60,10 @@ function fxDtsBrick::EOTW_TurretLoop(%obj)
         }
     }
 
-    %costPerShot = 10;
+    %costPerShot = 18;
     if (isObject(%obj.turretTarget) && %obj.getPower() >= %costPerShot)
     {
+        ServerPlay3D(TurretRepeaterFireSound,%obj.getPosition());
         %obj.changePower(%costPerShot * -1);
         %obj.turretTarget.addHealth(mCeil((%costPerShot * -1) / 2));
         spawnBeam(%obj.getPosition(), %obj.turretTarget.getPosition(), 1);

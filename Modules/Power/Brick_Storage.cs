@@ -194,7 +194,7 @@ datablock fxDTSBrickData(brickEOTWMatterTank2Data)
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWMatterTank2Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Teflon" TAB 128 TAB "Naturum";
-$EOTW::BrickDescription["brickEOTWMatterTank2Data"] = "Buffers up to 50,000u of four unique materials. Note that pipes only buffer one unique material at a time!";
+$EOTW::BrickDescription["brickEOTWMatterTank2Data"] = "Buffers up to 50,000u of four unique materials. Note that pipes only internally buffer one unique material at a time!";
 
 function Player::EOTW_MatterTankInspectLoop(%player, %brick)
 {
