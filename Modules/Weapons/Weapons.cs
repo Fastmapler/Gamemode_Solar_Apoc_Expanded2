@@ -54,3 +54,10 @@ $EOTW::ItemCrafting["pitchforkItem"] = (256 TAB "Rosium") TAB (48 TAB "Lead");
 //T5
 $EOTW::ItemCrafting["sledgeHammerItem"] = (128 TAB "Adamantine");
 $EOTW::ItemCrafting["kurganItem"] = (128 TAB "Adamantine") TAB (128 TAB "Electrum");
+
+function updateWeaponDamage()
+{
+    if (isObject(BioRifleProjectile))
+        BioRifleProjectile.directDamage = 1;
+}
+schedule(100, 0, "updateWeaponDamage");
