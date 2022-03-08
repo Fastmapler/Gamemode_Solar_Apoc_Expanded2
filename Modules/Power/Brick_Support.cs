@@ -141,15 +141,125 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	uiName = "Chem Diffuser";
 	energyGroup = "Machine";
 	energyMaxBuffer = 640;
+	matterMaxBuffer = 128;
+	energyWattage = 20;
+	matterSlots["Input"] = 1;
 	loopFunc = "EOTW_ChemDiffuserLoop";
-    inspectFunc = "EOTW_DefaultInspectLoop";
+    inspectFunc = "EOTW_ChemDiffuserInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
 };
-$EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity"; //1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 128 TAB "Silver" TAB 128 TAB "Lithium";
-$EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Efficiently applies potion mixes to nearby players. Does not accept Overload Mix.";
+$EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 128 TAB "Silver" TAB 128 TAB "Lithium";
+$EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Efficiently applies potion mixes to nearby players.";
+
+function fxDtsBrick::EOTW_ChemDiffuserLoop(%obj)
+{
+	%data = %obj.getDatablock();
+	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
+	%obj.changePower(%change * -1);
+
+	if (getSimTime() - %obj.lastChemTick < 1000)
+		return;
+
+	%obj.lastChemTick = getSimTime();
+
+	if (%obj.getPower() / %data.energyMaxBuffer < 0.5)
+		return;
+
+	if (%obj.storedFuel > 0)
+	{
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%client = ClientGroup.getObject(%i);
+			if (!isObject(%player = %client.player))
+				continue;
+
+			switch$ (%obj.fuelType)
+			{
+				case "Healing Mix":
+					%player.addHealth(1);
+				case "Steroid Mix":
+					%player.steroidlevel += 0.5;
+					%player.schedule(1000, "ChemDiffuserEndEffect", %obj.fuelType);
+				case "Adrenline Mix":
+					%player.ChangeSpeedMulti(0.5);
+					%player.schedule(1000, "ChemDiffuserEndEffect", %obj.fuelType);
+				case "Gatherer Mix":
+					%player.Gathererlevel += 0.25;
+					%player.schedule(1000, "ChemDiffuserEndEffect", %obj.fuelType);
+				case "Overload Mix":
+					%player.ammoReturnLevel += 0.5;
+					%player.schedule(1000, "ChemDiffuserEndEffect", %obj.fuelType);
+				case "Leatherskin Mix":
+					%player.sunResistance += 1.0;
+					%player.schedule(1000, "ChemDiffuserEndEffect", %obj.fuelType);
+			}
+		}
+
+		%obj.storedFuel--;
+	}
+	else
+	{
+		if (isObject(%matter = getMatterType(getField(%obj.matter["Input", 0], 0))) && %matter.isMix && %obj.GetMatter(%matter.name, "Input") > 0)
+		{
+			%obj.storedFuel += 16;
+			%obj.fuelType = %matter.name;
+			%obj.changeMatter(%matter.name, -1, "Input");
+		}
+	}
+}
+
+function Player::EOTW_ChemDiffuserInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+
+    %printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+    for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
+	{
+		%matter = %brick.Matter["Input", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Input " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Input " @ (%i + 1) @ ": --" @ "\n";
+	}
+	%printText = %printText @ (%brick.storedFuel + 0) @ " seconds left of " @ (%brick.fuelType $= "" ? "---" : %brick.fuelType) @ ".";
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_ChemDiffuserInspectLoop", %brick);
+}
+
+function Player::ChemDiffuserEndEffect(%obj, %effect)
+{
+	switch$ (%effect)
+	{
+		case "Steroid Mix":
+			%obj.steroidlevel -= 0.5;
+		case "Adrenline Mix":
+			%obj.ChangeSpeedMulti(-0.5);
+		case "Gatherer Mix":
+			%obj.Gathererlevel -= 0.25;
+		case "Overload Mix":
+			%obj.ammoReturnLevel -= 0.5;
+		case "Leatherskin Mix":
+			%obj.sunResistance -= 1.0;
+	}
+}
 
 datablock fxDTSBrickData(brickEOTWDroneServerData)
 {

@@ -76,12 +76,12 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Nuclear Waste";color="605042ff";	tier=3;	};
 		new ScriptObject(MatterType) { name="Plutonium";	color="d8d1ccff";	tier=6;	};
 		//Potions
-		new ScriptObject(MatterType) { name="Healing Mix";	color="bcc1c88e";	tier=4;	};
-		new ScriptObject(MatterType) { name="Steroid Mix";	color="bcc1c88e";	tier=4;	};
-		new ScriptObject(MatterType) { name="Adrenline Mix";color="bcc1c88e";	tier=4;	};
-		new ScriptObject(MatterType) { name="Gatherer Mix";	color="bcc1c88e";	tier=5;	};
-		new ScriptObject(MatterType) { name="Overload Mix";	color="bcc1c88e";	tier=5;	};
-		new ScriptObject(MatterType) { name="Leatherskin Mix";		color="bcc1c88e";	tier=5;	};
+		new ScriptObject(MatterType) { name="Healing Mix";	color="bcc1c88e";	tier=4;	isMix=true;	};
+		new ScriptObject(MatterType) { name="Steroid Mix";	color="bcc1c88e";	tier=4;	isMix=true;	};
+		new ScriptObject(MatterType) { name="Adrenline Mix";color="bcc1c88e";	tier=4;	isMix=true;	};
+		new ScriptObject(MatterType) { name="Gatherer Mix";	color="bcc1c88e";	tier=5;	isMix=true;	};
+		new ScriptObject(MatterType) { name="Overload Mix";	color="bcc1c88e";	tier=5;	isMix=true;	};
+		new ScriptObject(MatterType) { name="Leatherskin Mix";		color="bcc1c88e";	tier=5;	isMix=true;	};
 		//Exotic
 		new ScriptObject(MatterType) { name="Infinity";		color="3d5472ff";	tier=7;	cableTransfer=999999;	pipeTransfer=999999;	};
 		new ScriptObject(MatterType) { name="Singularity";	color="ffffff00";	tier=7;	};
