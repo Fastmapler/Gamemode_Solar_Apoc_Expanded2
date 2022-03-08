@@ -53,8 +53,31 @@ datablock fxDTSBrickData(brickEOTWEnergyRecoveryPadData)
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyRecoveryPadData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity"; //1.00 TAB "7a7a7aff" TAB 2048 TAB "Wood" TAB 96 TAB "Steel" TAB 16 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWEnergyRecoveryPadData"] = 1.00 TAB "ff0000ff" TAB 2048 TAB "Wood" TAB 96 TAB "Steel" TAB 16 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWEnergyRecoveryPadData"] = "Drain's the player's battery into its own energy storage.";
+
+function fxDtsBrick::EOTW_EnergyRecoveryPadLoop(%obj)
+{
+	if (getSimTime() - %obj.LastChargeLoop < 100)
+		return;
+
+	%obj.LastChargeLoop = getSimTime();
+
+	%eye = %obj.GetPosition();
+	%dir = "0 0 1";
+	%for = "0 1 0";
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::PlayerObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 2)), %mask, %obj);
+	
+	if (isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "Player")
+	{
+		%change = %obj.changePower(%hit.getBatteryEnergy());
+		%hit.ChangeBatteryEnergy(%change * -1);
+		if (isObject(%client = %hit.client))
+			%client.centerPrint(%hit.GetBatteryText(), 1);
+	}
+}
 
 datablock fxDTSBrickData(brickEOTWThumperData)
 {
@@ -64,15 +87,51 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 	uiName = "Mining Thumper";
 	energyGroup = "Machine";
 	energyMaxBuffer = 640;
+	energyWattage = 40;
 	loopFunc = "EOTW_ThumperLoop";
-    inspectFunc = "EOTW_DefaultInspectLoop";
+    inspectFunc = "EOTW_ThumperInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
 };
-$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity"; //1.00 TAB "7a7a7aff" TAB 480 TAB "Lead" TAB 288 TAB "Steel" TAB 128 TAB "Dielectics";
-$EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a speed boost to gathering resources.";
+$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 240 TAB "Lead" TAB 288 TAB "Steel" TAB 128 TAB "Dielectrics";
+$EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost to gathering nearby resources.";
+
+function Player::EOTW_ThumperInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+	%printText = %printText @ (%brick.getPower() + 0) @ " EU (" @ %data.energyWattage @ " EU/s when active)\n";
+
+	if (getSimTime() - %brick.lastThump < 1000)
+		%printText = %printText @ "Now boosting by +100% in a 64 stud radius.";
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_ThumperInspectLoop", %brick);
+}
+
+function fxDtsBrick::EOTW_ThumperLoop(%obj)
+{
+	%data = %obj.getDatablock();
+	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
+	%obj.changePower(%change * -1);
+    
+	if (%obj.getPower() / %data.energyMaxBuffer > 0.5)
+		%obj.lastThump = getSimTime();
+}
 
 datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 {
@@ -117,7 +176,8 @@ datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 	subCategory = "Support";
 	uiName = "Solar Shield Projector";
 	energyGroup = "Machine";
-	energyMaxBuffer = 640;
+	energyMaxBuffer = 1280;
+	energyWattage = 120;
 	loopFunc = "EOTW_SolarShieldProjectorLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
@@ -125,5 +185,79 @@ datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
 };
-$EOTW::CustomBrickCost["brickEOTWSolarShieldProjectorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickEOTWSolarShieldProjectorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Energium" TAB 256 TAB "Teflon" TAB 128 TAB "Dielectrics";
 $EOTW::BrickDescription["brickEOTWSolarShieldProjectorData"] = "When powered for long enough produces a large bubble shield that grants all living entities immunity to the sun.";
+
+function fxDtsBrick::EOTW_SolarShieldProjectorLoop(%obj)
+{
+	%data = %obj.getDatablock();
+	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
+	%obj.changePower(%change * -1);
+    
+	if (%obj.getPower() / %data.energyMaxBuffer > 0.5)
+	{
+		if (!isObject(%obj.shieldShape))
+		{
+			%obj.shieldShape = new StaticShape()
+			{
+				datablock = SolarShieldProjectorShieldShape;
+				position = %obj.getPosition();
+				scale = "1 1 1";
+			};
+			%obj.shieldShape.setTransform(%obj.getPosition());
+			%obj.shieldShape.EOTW_SetShieldLevel(18);
+			
+			//serverplay3D(shieldPowerUpSound, %obj.getPosition());
+			minigameCleanup.add(%obj.shieldShape);
+		}
+
+		//Using schedules to make sure we stop the projector if we get shutoff via events
+		//Or if the bricks get hammered.
+		cancel(%obj.shieldShape.shieldSchedule);
+		%obj.shieldShape.shieldSchedule = %obj.shieldShape.schedule(1000, "EOTW_SolarShieldProjectorEnd");
+	}
+}
+
+function brickEOTWSolarShieldProjectorData::onPlant(%this,%brick)
+{
+	Parent::onPlant(%this,%brick);
+
+	if (!isObject(SolarShieldGroup))
+		new SimSet(SolarShieldGroup);
+		
+	SolarShieldGroup.add(%brick);
+}
+
+function brickEOTWSolarShieldProjectorData::onLoadPlant(%this,%brick)
+{
+	Parent::onLoadPlant(%this,%brick);
+	
+	if (!isObject(SolarShieldGroup))
+		new SimSet(SolarShieldGroup);
+
+	SolarShieldGroup.add(%brick);
+}
+
+datablock StaticShapeData(SolarShieldProjectorShieldShape)
+{
+	category = "Shapes";
+	shapeFile = "./Shapes/shield.dts";
+};
+
+function StaticShape::EOTW_SolarShieldProjectorEnd(%obj)
+{
+	%obj.delete();
+}
+
+function StaticShape::EOTW_SetShieldLevel(%obj, %Level)
+{
+	%obj.level = %level;
+	%obj.setScale(vectorScale("1 1 1", 1.5 + %obj.level / 5));
+}
+
+function StaticShape::EOTW_GetShieldRadius(%obj)
+{
+	%obj.level = %obj.level + 0;
+
+	return (4 * (2.4 + %obj.level / 4));
+}

@@ -22,7 +22,7 @@ datablock fxDTSBrickData(brickEOTWTurretRepeaterData)
 	subCategory = "Military";
 	uiName = "Turret - Repeater";
 	energyGroup = "Machine";
-	energyMaxBuffer = 100;
+	energyMaxBuffer = 180;
 	loopFunc = "EOTW_TurretLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Icons/TurretRepeater";
@@ -32,7 +32,7 @@ datablock fxDTSBrickData(brickEOTWTurretRepeaterData)
 
     projectile = "";
     attackCost = 18;
-    attackCooldown = 150;
+    attackCooldown = 100;
 };
 
 $EOTW::CustomBrickCost["brickEOTWTurretHeavyData"] = 1.00 TAB "ff0000ff" TAB 288 TAB "Steel" TAB 128 TAB "Naturum" TAB 128 TAB "Dielectrics";
@@ -44,7 +44,7 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
 	subCategory = "Military";
 	uiName = "Turret - Heavy";
 	energyGroup = "Machine";
-	energyMaxBuffer = 200;
+	energyMaxBuffer = 250;
 	loopFunc = "EOTW_TurretLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	iconName = "./Icons/TurretHeavy";
@@ -53,8 +53,8 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
 	portHeight["PowerOut"] = "0.0";
 
     projectile = rocketLauncherProjectile;
-    attackCost = 55;
-    attackCooldown = 500;
+    attackCost = 200;
+    attackCooldown = 1000;
 };
 
 function fxDtsBrick::EOTW_TurretLoop(%obj)
@@ -132,6 +132,26 @@ function fxDtsBrick::EOTW_TurretLoop(%obj)
             ServerPlay3D(TurretRepeaterFireSound,%obj.getPosition());
             %obj.turretTarget.addHealth(mCeil((%costPerShot * -1) / 2));
             spawnBeam(%obj.getPosition(), %obj.turretTarget.getPosition(), 1);
+
+            //Chain Hit
+            %pos = %obj.turretTarget.getPosition();
+            initContainerRadiusSearch(%pos, %range / 2, $TypeMasks::PlayerObjectType);
+            while(isObject(%newHit = containerSearchNext()))
+            {
+                if (%newHit.getID() == %obj.turretTarget.getID())
+                    continue;
+                    
+                if(%newHit.getClassName() $= "AIPlayer" && %newHit.getState() !$= "DEAD")
+                {
+                    %ray = firstWord(containerRaycast(%pos, %newHit.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType, %obj.turretTarget));
+                    if (!isObject(%ray))
+                    {
+                        %newHit.addHealth(mCeil((%costPerShot * -1) / 2));
+                        spawnBeam(%obj.turretTarget.getPosition(), %pos, 1);
+                        break;
+                    }
+                }
+            }
         }
         %obj.changePower(%costPerShot * -1);
     }

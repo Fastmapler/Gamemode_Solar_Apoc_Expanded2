@@ -282,8 +282,21 @@ function EnvMasterSunDamageEntity()
 				else %hit = containerRaycast(vectorAdd(%pos = %obj.getHackPosition(), %dir), %pos, $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType);
 				
 				//drawArrow(%pos, %dir, "1 0 0", 2, 1, 0).schedule(1000,"delete");
+
+				if (!isObject(SolarShieldGroup))
+					new SimSet(SolarShieldGroup);
+
+				for (%k = 0; %k < SolarShieldGroup.getCount(); %k++)
+				{
+					%shieldBrick = SolarShieldGroup.getObject(%k);
+					
+					if (isObject(%shield = %shieldBrick.shieldShape) && vectorDist(%shieldBrick.GetPosition(), %obj.getPosition()) < %shield.EOTW_GetShieldRadius())
+						break;
+
+					%shieldBrick = "";
+				}
 				
-				if(!isObject(%hit) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
+				if(!isObject(%hit) && !isObject(%shieldBrick) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
 					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0);
 					if (%damage > 0)
