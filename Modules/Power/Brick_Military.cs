@@ -13,6 +13,13 @@ datablock AudioProfile(TurretHeavyFireSound)
     preload = true;
 };
 
+datablock AudioProfile(TeslaCoilFireSound)
+{
+    filename    = "./Sounds/TeslaCoilFire.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
 $EOTW::CustomBrickCost["brickEOTWTurretRepeaterData"] = 1.00 TAB "ff7700ff" TAB 288 TAB "Steel" TAB 128 TAB "Energium" TAB 128 TAB "Dielectrics";
 $EOTW::BrickDescription["brickEOTWTurretRepeaterData"] = "Quickly zaps beams at nearby enemies within sight.";
 datablock fxDTSBrickData(brickEOTWTurretRepeaterData)
@@ -60,7 +67,6 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
 function fxDtsBrick::EOTW_TurretLoop(%obj)
 {
     %range = 8;
-
     %data = %obj.getDataBlock();
 
 	if (getSimTime() - %obj.LastChargeLoop < %data.attackCooldown)
@@ -175,8 +181,8 @@ function Player::EOTW_TurretInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_TurretInspectLoop", %brick);
 }
 
-$EOTW::CustomBrickCost["brickEOTWTeslaCoilData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWTeslaCoilData"] = "Stunlocks nearby enemies and deals minor damage.";
+$EOTW::CustomBrickCost["brickEOTWTeslaCoilData"] = 1.00 TAB "00ffffff" TAB 256 TAB "Electrum" TAB 256 TAB "Rosium" TAB 128 TAB "Dielectrics";
+$EOTW::BrickDescription["brickEOTWTeslaCoilData"] = "Stuns nearby enemies and deals minor damage.";
 datablock fxDTSBrickData(brickEOTWTeslaCoilData)
 {
 	brickFile = "./Bricks/TurretRepeater.blb";
@@ -185,13 +191,46 @@ datablock fxDTSBrickData(brickEOTWTeslaCoilData)
 	uiName = "Tesla Coil";
 	energyGroup = "Machine";
 	energyMaxBuffer = 200;
-	loopFunc = "EOTW_TurretLoop";
+	loopFunc = "EOTW_TeslaCoilLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
+
+    attackCost = 100;
+    attackCooldown = 2000;
 };
+
+function fxDtsBrick::EOTW_TeslaCoilLoop(%obj)
+{
+    %range = 7;
+    %data = %obj.getDataBlock();
+
+	if (getSimTime() - %obj.LastChargeLoop < %data.attackCooldown || %obj.getPower() < %data.attackCost)
+		return;
+
+	%obj.LastChargeLoop = getSimTime();
+
+    initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::PlayerObjectType);
+    while(isObject(%hit = containerSearchNext()))
+    {
+        if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD")
+        {
+            swolMelee_stunPlayer(%hit,1,1900,1);
+            %hit.addHealth(-15);
+            spawnBeam(%obj.getPosition(), %hit.getPosition(), 1);
+
+            if (%hitCount < 1)
+            {
+                ServerPlay3D(TeslaCoilFireSound,%obj.getPosition());
+                %obj.changePower(%data.attackCost * -1);
+            }
+
+            %hitCount++;
+        }
+    }
+}
 
 $EOTW::CustomBrickCost["brickEOTWLandmineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
 $EOTW::BrickDescription["brickEOTWLandmineData"] = "A landmine that regenerates overtime. Requires 8 Rocket Fuel per use.";
