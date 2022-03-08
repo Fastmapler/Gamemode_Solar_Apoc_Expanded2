@@ -217,10 +217,10 @@ function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
 
 	if (isObject(%data.loopNoise))
 	{
-		if (isObject(%data.audioEmitter) && %change <= 0)
-			%data.playSoundLooping();
-		else if (!isObject(%data.audioEmitter) && %change > 0)
-			%data.playSoundLooping(%data.loopNoise);
+		if (isObject(%obj.audioEmitter) && %change <= 0)
+			%obj.playSoundLooping();
+		else if (!isObject(%obj.audioEmitter) && %change > 0)
+			%obj.playSoundLooping(%data.loopNoise);
 	}
 	
 	
@@ -228,6 +228,8 @@ function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
 	{
 		%obj.craftingProcess = "";
 		%obj.craftingPower = 0;
+
+		%obj.playSoundLooping();
 		
 		for (%i = 0; %craft.input[%i] !$= ""; %i++)
 			%obj.changeMatter(getField(%craft.input[%i], 0), getField(%craft.input[%i], 1) * -1, "Input", true);
@@ -273,7 +275,7 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 			%obj.craftingProcess = "";
 			%obj.craftingPower = 0;
 
-			%data.playSoundLooping();
+			%obj.playSoundLooping();
 		}
 	}
 	else

@@ -385,6 +385,9 @@ function fxDTSbrick::SetMachinePowered(%brick,%mode)
 		case 1: %brick.machineDisabled = false;
 		case 2: %brick.machineDisabled = !%brick.machineDisabled;
 	}
+
+	if (%brick.machineDisabled && isObject(%brick.getDatablock().loopNoise))
+		%brick.playSoundLooping();
 }
 registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Off 0 On 1 Toggle 2", 0);
 
@@ -519,7 +522,7 @@ function fxDTSBrick::playSoundLooping(%obj, %data)
 		%obj.AudioEmitter.delete();
 
 	%obj.AudioEmitter = 0;
-	if (!isObject(%data) || %data.getClassName () !$= "AudioProfile" || %data.uiName $= "" || !%data.getDescription().isLooping || %data.fileName $= "")
+	if (!isObject(%data) || %data.getClassName () !$= "AudioProfile" || !%data.getDescription().isLooping || %data.fileName $= "")
 		return;
 
 	%audioEmitter = new AudioEmitter("")

@@ -1,4 +1,4 @@
-datablock fxDTSBrickData(brickMFRDisplay PanelData)
+datablock fxDTSBrickData(brickMFRDisplayPanelData)
 {
 	brickFile = "./Bricks/MFRHull.blb";
 	category = "Nuclear";
