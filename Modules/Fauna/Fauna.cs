@@ -81,7 +81,15 @@ function spawnFaunaLoop()
 				$EOTW::MonsterSpawnCredits -= %totalSpawn * %spawnData.spawnCost;
 
 				for (%fail = 0; !isObject(%target) && %fail < 100; %fail++)
-					%target = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
+				{
+					%player = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
+					if (vectorLen(%player.getPosition()) < 9000)
+					{
+						%target = %player;
+						break;
+					}
+				}
+					
 
 				if (isObject(%target))
 				{

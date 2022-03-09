@@ -26,7 +26,7 @@ function createDefaultMinigame()
         InviteOnly = false;
         UseAllPlayersBricks = true;
         PlayersUseOwnBricks = false;
-        UseSpawnBricks = false;
+        UseSpawnBricks = true;
         Points_BreakBrick = 0;
         Points_PlantBrick = 0;
         Points_KillPlayer = 0;

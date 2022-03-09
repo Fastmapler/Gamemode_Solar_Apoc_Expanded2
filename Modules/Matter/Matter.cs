@@ -6,6 +6,11 @@ exec("./MatterData.cs");
 
 $EOTW::MatterDensity = 5000 / (2048 * 2048);
 
+$EOTW::BrickBlacklist["brickSpawnPointData"] = true;
+$EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;
+$EOTW::BrickBlacklist["brickEOTWGatherableMetalData"] = true;
+$EOTW::BrickBlacklist["brickEOTWGatherableCrystalData"] = true;
+
 datablock fxDTSBrickData(brickEOTWGatherableBasicData)
 {
 	brickFile = "./Bricks/GatherableBasic.blb";
@@ -320,7 +325,18 @@ package EOTW_Matter
 			if(isObject(%pl = %cl.player) && isObject(%temp = %pl.tempbrick))
 			{
 				%data = %temp.getDatablock();
-					
+				
+				if ($EOTW::BrickBlacklist[%data.getName()])
+				{
+					%cl.chatMessage("\c0Sorry! \c6This brick is blacklisted from being placed.");
+					return;
+				}
+				if (vectorLen(%temp.getPosition()) > 9000)
+				{
+					%cl.chatMessage("\c0Sorry! \c6You can only build within the main map.");
+					return;
+				}
+
 				if ($EOTW::CustomBrickCost[%data.getName()] !$= "")
 				{
 					%cost = $EOTW::CustomBrickCost[%data.getName()];
@@ -335,7 +351,7 @@ package EOTW_Matter
 				
 						if(%inv < %volume)
 						{
-							%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %name @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %name]) SPC "more.");
+							%cl.chatMessage("\c0Whoops! \c6You don't have enough " @ %name @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %name]) SPC "more.");
 							return;
 						}
 					}
@@ -357,7 +373,7 @@ package EOTW_Matter
 					%mat = %cl.buildMaterial;
 
 					if($EOTW::Material[%cl.bl_id, %mat] < %volume)
-						%cl.chatMessage("\c0Whoops!<br>\c6You don't have enough " @ %cl.buildMaterial @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.");
+						%cl.chatMessage("\c0Whoops! \c6You don't have enough " @ %cl.buildMaterial @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.");
 					else
 					{
 						%brick = Parent::servercmdPlantBrick(%cl); if(!isObject(%brick)) return %brick;

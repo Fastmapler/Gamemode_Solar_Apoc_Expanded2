@@ -201,6 +201,33 @@ function Player::ChangeMatterCount(%obj, %matter, %count)
 	return $EOTW::Material[%client.bl_id, %matter];
 }
 
+registerOutputEvent("fxDTSBrick", "WarpPlayer", "", 1);
+function fxDTSBrick::WarpPlayer(%brick, %client)
+{
+	if (!isObject(%group = %brick.getGroup()) || %group.bl_id != 888888 || !isObject(%player = %client.player))
+		return;
+
+	%client.WarpingPlayer = true;
+
+	if ($EOTW::Time < 12 && $EOTW::SunSize >= 1.0)
+		commandToClient(%client,'messageBoxYesNo',"Warning", "Warning!\n\nThe sun is currently out and lethally hot! Teleport anyways?", 'WarpPlayerAccept','WarpPlayerCancel');
+	else
+		ServerCmdWarpPlayerAccept(%client);
+}
+
+function ServerCmdWarpPlayerAccept(%client)
+{
+	if (%client.WarpingPlayer && isObject(%player = %client.player))
+		%player.setTransform(GetRandomSpawnLocation());
+
+	ServerCmdWarpPlayerCancel(%client);
+}
+
+function ServerCmdWarpPlayerCancel(%client)
+{
+	%client.WarpingPlayer = false;
+}
+
 function clearIllegalEvents()
 {
 	unregisterOutputEvent("fxDtsBrick", "setItem");				//Bypasses blacklist
