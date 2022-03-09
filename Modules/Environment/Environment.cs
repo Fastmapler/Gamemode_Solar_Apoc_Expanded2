@@ -119,8 +119,8 @@ function EnvMasterLoop()
 			$EOTW::MeteorIntensity = getField(%stats, 2);
 			$EOTW::WarnSunRise = false;
 			
-			talk("The sun rises on day " @ $EOTW::Day @ ".");
-			talk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
+			EnvMasterTalk("The sun rises on day " @ $EOTW::Day @ ".");
+			EnvMasterTalk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
 			$EOTW::TimeBoost = 2;
 		}
 	}
@@ -130,11 +130,11 @@ function EnvMasterLoop()
 		{
 			servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 			
-			talk("The sun sets on day " @ $EOTW::Day @ ".");
+			EnvMasterTalk("The sun sets on day " @ $EOTW::Day @ ".");
 			
 			%stats = EnvMasterRollWeather($EOTW::Day + 1);
 			%heatRange = ((getField(%stats, 1) * 0.1) - 0.2) @ "-" @ ((getField(%stats, 1) * 0.1) + 0.2);
-			talk("Tommorow's Weather: " @ "[HEAT: " @ %heatRange @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ (getField(%stats, 2) * 100) @ "\%]");
+			EnvMasterTalk("Tommorow's Weather: " @ "[HEAT: " @ %heatRange @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ (getField(%stats, 2) * 100) @ "\%]");
 			$EOTW::TimeBoost = 1;
 			
 			$EOTW::IsDay = false;
@@ -153,7 +153,7 @@ function EnvMasterLoop()
 	{
 		if (!$EOTW::IsDay && !$EOTW::WarnSunRise)
 		{
-			talk("The sun is about to rise. Taking shelter is advised.");
+			EnvMasterTalk("The sun is about to rise. Taking shelter is advised.");
 			$EOTW::WarnSunRise = true;
 		}
 	}
@@ -375,6 +375,17 @@ function EnvMasterSunDamageBrick()
 			
 		}
 	}
+}
+
+function EnvMasterTalk(%msg)
+{
+	if (getSimTime() - $EOTW::LastEnvMasterMessage > 2000)
+		%msgType = 'MsgAdminForce';
+	else
+		%msgType = '';
+
+	$EOTW::LastEnvMasterMessage = getSimTime();
+	messageAll(%msgType, "\c3Environment Master\c6: " @ %msg);
 }
 
 package EOTW_Environment
