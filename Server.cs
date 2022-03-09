@@ -1,5 +1,5 @@
 //Can we just find the folder names automatically?
-$EOTW::Modules = "Core Environment Fauna Matter Player Power Tools Weapons AddOns Nuclear";
+$EOTW::Modules = "Core Environment Fauna Matter Player Power Tools Weapons AddOns";
 
 //"-2048 -2048 2048 2048"
 function getMapArea()

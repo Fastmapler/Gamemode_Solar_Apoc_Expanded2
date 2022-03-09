@@ -476,7 +476,6 @@ package EOTW_SavingLoading
 
                 %varData = trim(%varData);
 
-                talk(%data SPC %varData);
                 set_var_obj(%obj, getField(%data, 0), %varData);
             }
                 
