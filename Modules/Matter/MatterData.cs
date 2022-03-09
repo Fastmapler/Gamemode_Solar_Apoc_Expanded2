@@ -86,6 +86,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Infinity";		color="3d5472ff";	tier=7;	cableTransfer=999999;	pipeTransfer=999999;	};
 		new ScriptObject(MatterType) { name="Singularity";	color="ffffff00";	tier=7;	};
 		new ScriptObject(MatterType) { name="Scrip";		color="507582ff";	tier=7;	};
+		new ScriptObject(MatterType) { name="Boss Essence";	color="000000ff";	tier=7;	};
 		new ScriptObject(MatterType) { name="Energy";		color="00d0ffa8";	tier=1;	};
 	};
 	

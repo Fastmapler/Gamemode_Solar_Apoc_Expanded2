@@ -4,4 +4,6 @@ datablock fxDTSBrickData(brickMFRDisplayPanelData)
 	category = "Nuclear";
 	subCategory = "Base Parts";
 	uiName = "Display Panel";
+
+	reqFissionPart = brickMFRHullData;
 };

@@ -4,4 +4,6 @@ datablock fxDTSBrickData(brickMFRHeatPlatingData)
 	category = "Nuclear";
 	subCategory = "Base Parts";
 	uiName = "MFR Heat Plating";
+
+	reqFissionPart = brickMFRHullData;
 };

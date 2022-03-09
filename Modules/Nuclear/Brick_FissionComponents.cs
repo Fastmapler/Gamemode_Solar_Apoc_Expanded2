@@ -5,6 +5,8 @@ datablock fxDTSBrickData(brickMFRCellReflectorData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Reflector";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellControlRodData)
@@ -13,6 +15,8 @@ datablock fxDTSBrickData(brickMFRCellControlRodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Control Rod";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellFuelRodData)
@@ -21,6 +25,9 @@ datablock fxDTSBrickData(brickMFRCellFuelRodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Fuel Rod";
+
+	reqFissionPart = brickMFRReactionPlateData;
+	fuelBurn = 1;
 };
 
 datablock fxDTSBrickData(brickMFRCellFuel2RodData)
@@ -29,6 +36,9 @@ datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Dual Fuel Rod";
+
+	reqFissionPart = brickMFRReactionPlateData;
+	fuelBurn = 2;
 };
 
 datablock fxDTSBrickData(brickMFRCellFuel4RodData)
@@ -37,6 +47,9 @@ datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Quad Fuel Rod";
+
+	reqFissionPart = brickMFRReactionPlateData;
+	fuelBurn = 4;
 };
 
 //Heat Sinks
@@ -46,6 +59,8 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkBasicData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Basic Heat Sink";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatSinkSuperData)
@@ -54,6 +69,8 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkSuperData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Super Heat Sink";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatSinkComponentData)
@@ -62,6 +79,8 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkComponentData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Component Heat Sink";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatSinkReactorData)
@@ -70,6 +89,8 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkReactorData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Reactor Heat Sink";
+	reqFissionPart = brickMFRReactionPlateData;
+
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatSinkOverclockedData)
@@ -78,6 +99,8 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkOverclockedData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Overclocked Heat Sink";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 //Heat Exchangers
@@ -87,6 +110,8 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerBasicData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Basic Heat Exchanger";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
@@ -95,6 +120,8 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Super Heat Exchanger";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
@@ -103,6 +130,8 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Component Heat Exchanger";
+	
+	reqFissionPart = brickMFRReactionPlateData;
 };
 
 datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
@@ -111,4 +140,6 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Reactor Heat Exchanger";
+
+	reqFissionPart = brickMFRReactionPlateData;
 };

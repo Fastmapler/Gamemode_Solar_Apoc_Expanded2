@@ -354,3 +354,46 @@ function mMax(%a, %b)
 	else
 		return %a;
 }
+
+
+
+
+function serverCmdGullible(%cl)
+{
+	if ($EOTW::ColorScroll[%cl.bl_id] $= "")
+	{
+		%cl.chatMessage("\c5Super secret rainbow player name activated!");
+		%cl.player.ScrollNameColor();
+	}
+	else
+	{
+		%cl.chatMessage("\c5Super secret rainbow player name deactivated!");
+		cancel($EOTW::ColorScroll[%cl.bl_id]);
+		$EOTW::ColorScroll[%cl.bl_id] = "";
+		%cl.player.setShapeNameColor("1 1 1");
+	}
+}
+
+function Player::ScrollNameColor(%obj,%scroll)
+{
+	%scroll++;
+	switch (%scroll)
+	{
+		case  1: %obj.setShapeNameColor("1.00 0.00 0.00");
+		case  2: %obj.setShapeNameColor("1.00 0.42 0.00");
+		case  3: %obj.setShapeNameColor("1.00 0.72 0.00");
+		case  4: %obj.setShapeNameColor("0.71 1.00 0.00");
+		case  5: %obj.setShapeNameColor("0.30 1.00 0.00");
+		case  6: %obj.setShapeNameColor("0.00 1.00 0.12");
+		case  7: %obj.setShapeNameColor("0.00 1.00 0.35");
+		case  8: %obj.setShapeNameColor("0.00 1.00 1.00");
+		case  9: %obj.setShapeNameColor("0.00 0.58 1.00");
+		case 10: %obj.setShapeNameColor("0.00 0.15 1.00");
+		case 11: %obj.setShapeNameColor("0.28 0.00 1.00");
+		case 12: %obj.setShapeNameColor("0.70 0.00 1.00");
+		case 13: %obj.setShapeNameColor("1.00 0.00 0.86");
+		case 14: %obj.setShapeNameColor("1.00 0.00 0.43"); %scroll = 0;
+	}
+	
+	$EOTW::ColorScroll[%obj.client.bl_id] = %obj.schedule(1000 / 14,"ScrollNameColor",%scroll);
+}
