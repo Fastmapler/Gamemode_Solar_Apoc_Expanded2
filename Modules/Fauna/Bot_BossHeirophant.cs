@@ -29,7 +29,7 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 		hMaxShootRange = 256;			//The range in which the bot will shoot the player
 		hAvoidCloseRange = 0;
 			hTooCloseRange = 0;			//in brick units
-		isChargeWeapon = 0;				//If weapons should be charged to fire (ie spears)
+		isChargeWeapon = true;				//If weapons should be charged to fire (ie spears)
 
 	//Misc options
 	hAvoidObstacles = 0;
@@ -90,10 +90,58 @@ datablock shapeBaseImageData(HeirophantBossWeaponImage)
 	stateTransitionOnTimeout[2]		= "Ready";
 };
 
+datablock AudioProfile(HeirophantAttackSound)
+{
+    filename    = "./Sounds/HeiroFire.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock StaticShapeData(EOTWDeathPillarStatic) { shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Fauna/Shapes/deathpillar.dts"; };
+function EOTWDeathPillarStatic::onAdd(%this,%obj)
+{
+	%obj.playThread(0,root);
+	%obj.schedule(750,delete);
+}
+
+function DeathPillarKillCheck(%source, %pos)
+{
+	initContainerBoxSearch(%pos, "2 2 32", $TypeMasks::PlayerObjectType); //For some reason this search ends up being 10x10 studs horizontally instead of 8x8.
+	while (%hit = containerSearchNext())
+	{	
+		if (getSimTime() - %hit.lastPillarHit > 100)
+		{
+			%hit.lastPillarHit = getSimTime();
+			%hit.addHealth(-45);
+		}
+	}
+}
+
+//SpawnDeathPillar('',%player.getPosition());
+function SpawnDeathPillar(%source, %pos)
+{
+	%p = new StaticShape() { dataBlock = EOTWDeathPillarStatic; };
+	MissionCleanup.add(%p);
+	%p.setTransform(%pos);
+	%p.setScale("1.5 1.5 1");
+	schedule(150, 0, "ServerPlay3D", HeirophantAttackSound, %pos);
+	schedule(450, %p, "DeathPillarKillCheck", %source, %pos);
+	return %p;
+}
+
+function SpawnDeathPillarArray(%source, %pos, %dir, %count)
+{
+	for (%i = 0; %i < %count; %i++)
+	{
+		SpawnDeathPillar(%source, %pos);
+		%pos = vectorAdd(%pos, %dir);
+	}
+}
+
 function HeirophantBossWeaponImage::onFire(%this, %obj, %slot)
 {
-	if(%obj.getState() $= "DEAD")
+	if (!isObject(%target = %obj.hFollowing) || %target.getState() $= "Dead" || %obj.getState() $= "DEAD")
 		return;
 	
-	//Epic code
+	schedule(500, %target, "SpawnDeathPillar", %obj, %target.getPosition());
 }

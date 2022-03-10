@@ -4,6 +4,8 @@ exec("./Bot_Swarmer.cs");
 exec("./Bot_Intoxicated.cs");
 exec("./Bot_Revenant.cs");
 
+exec("./Bot_BossHeirophant.cs");
+
 function SetupFaunaSpawnData()
 {
 	if (isObject(FaunaSpawnData))
@@ -134,7 +136,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), UnfleshedHoleBot);
+//spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), HeirophantHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))
