@@ -91,7 +91,7 @@ function fxDtsBrick::EOTW_TurretLoop(%obj)
         initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::PlayerObjectType);
         while(isObject(%hit = containerSearchNext()))
         {
-            if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD")
+            if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD" && %hit.getDatablock().hType $= "enemy")
             {
                 %ray = firstWord(containerRaycast(%obj.getPosition(), %hit.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType));
                 if (!isObject(%ray))
@@ -147,7 +147,7 @@ function fxDtsBrick::EOTW_TurretLoop(%obj)
                 if (%newHit.getID() == %obj.turretTarget.getID())
                     continue;
                     
-                if(%newHit.getClassName() $= "AIPlayer" && %newHit.getState() !$= "DEAD")
+                if(%newHit.getClassName() $= "AIPlayer" && %newHit.getState() !$= "DEAD" && %newHit.getDatablock().hType $= "enemy")
                 {
                     %ray = firstWord(containerRaycast(%pos, %newHit.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType, %obj.turretTarget));
                     if (!isObject(%ray))
@@ -215,7 +215,7 @@ function fxDtsBrick::EOTW_TeslaCoilLoop(%obj)
     initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::PlayerObjectType);
     while(isObject(%hit = containerSearchNext()))
     {
-        if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD")
+        if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD" && %hit.getDatablock().hType $= "enemy")
         {
             swolMelee_stunPlayer(%hit,1,1900,1);
             %hit.addHealth(-15);
