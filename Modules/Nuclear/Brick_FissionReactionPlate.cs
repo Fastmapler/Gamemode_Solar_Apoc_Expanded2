@@ -6,4 +6,5 @@ datablock fxDTSBrickData(brickMFRReactionPlateData)
 	uiName = "MFR Reaction Plate";
 
 	reqFissionPart = brickMFRHullData;
+	blacklistFromAdjacentScan = true;
 };

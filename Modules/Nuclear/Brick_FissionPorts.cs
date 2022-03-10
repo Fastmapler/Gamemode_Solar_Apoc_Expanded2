@@ -5,11 +5,13 @@ datablock fxDTSBrickData(brickMFRFuelPortBrick)
 	subCategory = "Material Ports";
 	uiName = "MFR Fuel/Waste I/O";
 
-	matterMaxBuffer = 50000;
+	matterMaxBuffer = 128;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
+	ComponentType = "Port";
 	reqFissionPart = brickMFRHullData;
+	blacklistFromAdjacentScan = true;
 };
 
 datablock fxDTSBrickData(brickMFRCoolantPortBrick)
@@ -23,7 +25,9 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
+	ComponentType = "Port";
 	reqFissionPart = brickMFRHullData;
+	blacklistFromAdjacentScan = true;
 };
 
 datablock fxDTSBrickData(brickMFRBreederPortBrick)
@@ -33,9 +37,11 @@ datablock fxDTSBrickData(brickMFRBreederPortBrick)
 	subCategory = "Material Ports";
 	uiName = "MFR Isotope/Breeded I/O";
 
-	matterMaxBuffer = 50000;
+	matterMaxBuffer = 4;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
+	ComponentType = "Port";
 	reqFissionPart = brickMFRHullData;
+	blacklistFromAdjacentScan = true;
 };

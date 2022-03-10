@@ -5,6 +5,21 @@ exec("./Brick_FissionReactionPlate.cs");
 exec("./Brick_FissionComponents.cs");
 exec("./Brick_FissionDisplayPanel.cs");
 
+function fxDtsBrick::ChangeHeat(%obj, %change)
+{
+    %data = %obj.getDatablock();
+
+    %initalheat = %obj.fissionHeat;
+    %obj.fissionHeat += %change;
+
+    if (%data.maxHeatCapacity > 0 && %obj.fissionHeat > %data.maxHeatCapacity)
+        %obj.killBrick();
+    else if (%obj.fissionHeat < 0)
+        %obj.fissionHeat = 0;
+
+    return %obj.fissionHeat - %initalheat;
+}
+
 package EOTW_Fission
 {
     function fxDtsBrick::onPlant(%brick)
@@ -32,5 +47,14 @@ package EOTW_Fission
             
         }
     }
+    function fxDtsBrick::onRemove(%brick)
+	{
+		%data = %brick.getDatablock();
+
+        if (isObject(%fission = %brick.fissionParent))
+            %fission.RemoveFissionPart(%brick);
+        
+		Parent::onRemove(%brick);
+	}
 };
 activatePackage("EOTW_Fission");

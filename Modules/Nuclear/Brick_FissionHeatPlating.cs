@@ -6,4 +6,5 @@ datablock fxDTSBrickData(brickMFRHeatPlatingData)
 	uiName = "MFR Heat Plating";
 
 	reqFissionPart = brickMFRHullData;
+	blacklistFromAdjacentScan = true;
 };
