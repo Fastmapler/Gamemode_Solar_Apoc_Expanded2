@@ -403,6 +403,16 @@ package EOTW_Fauna
 		}
 		%obj.lavaSchedule = %obj.schedule (300, lavaDamage, %amt);
 	}
+	function Armor::damage(%this, %obj, %sourceObj, %position, %damage, %damageType)
+	{
+		Parent::damage(%this, %obj, %sourceObj, %position, %damage, %damageType);
 
+		if (%obj.getClassName() $= "AIPlayer" && %obj.getDatablock().isBoss)
+		{
+			%obj.setShapeNameDistance(128);
+			%obj.setShapeNameColor("1 0 0");
+			%obj.setShapeName(mCeil((1 - %obj.getDamagePercent) * 100) @ "\% HP", 8564862);
+		}
+	}
 };
 activatePackage("EOTW_Fauna");

@@ -20,7 +20,7 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 		hFOVRadius = 64;				//max 10
 
 	//Attack Options
-	hMelee = 1;							//Melee
+	hMelee = 0;							//Melee
 		hAttackDamage = 35;				//Melee Damage
 		hDamageType = "";
 	hShoot = 1;
@@ -33,7 +33,7 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 
 	//Misc options
 	hAvoidObstacles = 0;
-	hSuperStacker = 1;
+	hSuperStacker = 0;
 	hSpazJump = 0;						//Makes bot jump when the user their following is higher than them
 
 	hAFKOmeter = 0.0;					//Determines how often the bot will wander or do other idle actions, higher it is the less often he does things
@@ -50,7 +50,9 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
 	EOTWLootTableData = 0.9 TAB 0.0;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 1.0 TAB 100 TAB 125 TAB "Boss Essence";
+	EOTWLootTable[0] = 1.0 TAB 100 TAB 100 TAB "Boss Essence";
+
+	isBoss = true;
 };
 
 datablock shapeBaseImageData(HeirophantBossWeaponImage)
@@ -90,9 +92,28 @@ datablock shapeBaseImageData(HeirophantBossWeaponImage)
 	stateTransitionOnTimeout[2]		= "Ready";
 };
 
+function AIPlayer::CalculateBossAnger(%obj)
+{
+	return getMax(%obj.getDamagePrecent(), 0.01);
+}
+
 datablock AudioProfile(HeirophantAttackSound)
 {
     filename    = "./Sounds/HeiroFire.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(HeirophantCrossSound)
+{
+    filename    = "./Sounds/HeiroCross.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock AudioProfile(HeirophantWarpSound)
+{
+    filename    = "./Sounds/HeiroWarp.wav";
     description = AudioClosest3d;
     preload = true;
 };
@@ -104,15 +125,16 @@ function EOTWDeathPillarStatic::onAdd(%this,%obj)
 	%obj.schedule(750,delete);
 }
 
+AddDamageType("Heirophant", '[Smited] %1', '%2 [Smited] %1', 1, 1);
 function DeathPillarKillCheck(%source, %pos)
 {
 	initContainerBoxSearch(%pos, "2 2 32", $TypeMasks::PlayerObjectType); //For some reason this search ends up being 10x10 studs horizontally instead of 8x8.
 	while (%hit = containerSearchNext())
 	{	
-		if (getSimTime() - %hit.lastPillarHit > 100)
+		if (getSimTime() - %hit.lastPillarHit > 100 && %hit != %source)
 		{
 			%hit.lastPillarHit = getSimTime();
-			%hit.addHealth(-45);
+			%hit.Damage(%source, %player.getPosition(), 10 + mCeil(%source.CalculateBossAnger() * 30), $DamageType::Heirophant);
 		}
 	}
 }
@@ -124,24 +146,86 @@ function SpawnDeathPillar(%source, %pos)
 	MissionCleanup.add(%p);
 	%p.setTransform(%pos);
 	%p.setScale("1.5 1.5 1");
-	schedule(150, 0, "ServerPlay3D", HeirophantAttackSound, %pos);
+	ServerPlay3D(HeirophantAttackSound, %pos);
 	schedule(450, %p, "DeathPillarKillCheck", %source, %pos);
 	return %p;
 }
 
 function SpawnDeathPillarArray(%source, %pos, %dir, %count)
 {
+	ServerPlay3D(HeirophantCrossSound, %pos);
+	%spawnPos = vectorAdd(%pos, vectorScale(%dir, -1 * ((%count - 1) / 2)));
 	for (%i = 0; %i < %count; %i++)
 	{
-		SpawnDeathPillar(%source, %pos);
-		%pos = vectorAdd(%pos, %dir);
+		SpawnDeathPillar(%source, %spawnPos);
+		%spawnPos = vectorAdd(%spawnPos, %dir);
 	}
+}
+
+function SpawnDeathPillarChaser(%source, %pos, %target, %life, %delay)
+{
+	if (!isObject(%target) || getSimTime() > %life)
+		return;
+
+	%dir = vectorNormalize(getWords(vectorSub(%pos, %target.getPosition()), 0, 1) SPC "0");
+	%dir = mRound(getWord(%dir, 0)) SPC mRound(getWord(%dir, 1)) SPC "0";
+	%dir = vectorScale(%dir, -5);
+	schedule(%delay, %target, "SpawnDeathPillar", %source, vectorAdd(%pos, %dir)); %pos = vectorAdd(%pos, %dir);
+	schedule(%delay * 2, %target, "SpawnDeathPillar", %source, vectorAdd(%pos, %dir)); %pos = vectorAdd(%pos, %dir);
+	schedule(%delay * 3, %target, "SpawnDeathPillar", %source, vectorAdd(%pos, %dir)); %pos = vectorAdd(%pos, %dir);
+	schedule(%delay * 3, %target, "SpawnDeathPillarChaser", %source, %pos, %target, %life);
+}
+
+function DeathPillarWarp(%source, %target)
+{
+	SpawnDeathPillar(%source, %source.getPosition());
+	SpawnDeathPillar(%source, %target.getPosition());
+	%source.schedule(450, "setTransform", %target.getTransform());
+	schedule(540, %source, "spawnBeam", %source.getPosition(), %target.getPosition(), 8);
+
+	ServerPlay3D(HeirophantWarpSound, %source.getPosition());
+	ServerPlay3D(HeirophantWarpSound, %target.getPosition());
 }
 
 function HeirophantBossWeaponImage::onFire(%this, %obj, %slot)
 {
-	if (!isObject(%target = %obj.hFollowing) || %target.getState() $= "Dead" || %obj.getState() $= "DEAD")
+	if (!isObject(%target = %obj.hFollowing) || %target.getState() $= "DEAD" || %obj.getState() $= "DEAD" || getSimTime() - %obj.lastPillarFire < 6000 - (4000 * %obj.CalculateBossAnger()))
 		return;
-	
-	schedule(500, %target, "SpawnDeathPillar", %obj, %target.getPosition());
+
+	%anger = %obj.CalculateBossAnger();
+
+	%obj.lastPillarFire = getSimTime();
+
+	%obj.attackCycle++;
+	switch (%obj.attackCycle - 1)
+	{
+		case 0: //Swarmer shots
+			for (%i = 0; %i < mCeil(%anger * 4); %i++)
+				schedule(500 * %i, 0, "SpawnDeathPillarChaser", %obj, %obj.getPosition(), %target, getSimTime() + (4000 * (%i + 1)), 500 - (%anger * 400));
+		case 1: //Cross Attacks
+			if (getRandom() < %anger)
+			{
+				%ignore = getRandom(0, 3);
+				if (%ignore != 0) SpawnDeathPillarArray(%obj, %target.getPosition(), "5 0 0", mCeil(%anger * 9));
+				if (%ignore != 1) SpawnDeathPillarArray(%obj, %target.getPosition(), "0 5 0", mCeil(%anger * 9));
+				if (%ignore != 2) SpawnDeathPillarArray(%obj, %target.getPosition(), "5 5 0", mCeil(%anger * 9));
+				if (%ignore != 3) SpawnDeathPillarArray(%obj, %target.getPosition(), "5 -5 0", mCeil(%anger * 9));
+			}
+			else if (getRandom() < 0.5)
+			{
+				SpawnDeathPillarArray(%obj, %target.getPosition(), "5 0 0", mCeil(%anger * 9));
+				SpawnDeathPillarArray(%obj, %target.getPosition(), "0 5 0", mCeil(%anger * 9));
+			}
+			else
+			{
+				SpawnDeathPillarArray(%obj, %target.getPosition(), "5 5 0", mCeil(%anger * 9));
+				SpawnDeathPillarArray(%obj, %target.getPosition(), "5 -5 0", mCeil(%anger * 9));
+			}
+		case 2: //Warp Attack
+			for (%i = 0; %i < mCeil(%anger * 3); %i++)
+				schedule(1000 * %i, 0, "DeathPillarWarp", %obj, %target);
+		default: //Rest
+			%obj.attackCycle = 0;
+
+	}
 }

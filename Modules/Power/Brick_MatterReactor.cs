@@ -341,13 +341,114 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 	energyGroup = "Machine";
 	energyMaxBuffer = 1200;
 	energyWattage = 400;
-	inspectFunc = "EOTW_DefaultInspectLoop";
+	inspectFunc = "EOTW_VoidDrillInspectLoop";
+	loopFunc = "EOTW_VoidDrillLoop";
+	matterUpdateFunc = "";
 	
 	matterMaxBuffer = 2048;
-	matterSlots["Input"] = 1;
+	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 
 	loopNoise = RefineryLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Processes Boss Essense and *tons* of power to synthesize materials of your choice!";
+$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 300 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
+$EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Consumes Boss Essense and tons of power to synthesize gatherable materials of your choice! Sulfur required where needed.";
+
+function GetVoidDrillCostData(%name)
+{
+	if (!isObject(%matter = getMatterType(%name)) || %matter.spawnWeight < 1)
+		return -1;
+
+	%essence = mCeil(($EOTW::MatSpawnWeight / %matter.spawnWeight) / %matter.spawnVeinSize);
+	%essence = %essence + (%essence % 3);
+	%power = mCeil(%matter.collectTime * getMax(1, %matter.tier - 1));
+
+	return %matter.name TAB %essence TAB %power;
+}
+
+function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
+{
+	if (%obj.craftingProcess $= "" || %obj.craftingProcess == -1)
+		return;
+
+	%data = %obj.getDatablock();
+	
+	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
+	%obj.craftingPower += %change;
+	%obj.changePower(%change * -1);
+
+	if (isObject(%data.loopNoise))
+	{
+		if (isObject(%obj.audioEmitter) && %change <= 0)
+			%obj.playSoundLooping();
+		else if (!isObject(%obj.audioEmitter) && %change > 0)
+			%obj.playSoundLooping(%data.loopNoise);
+	}
+	
+	
+	if (%obj.craftingPower >= getField(%obj.craftingProcess, 2))
+	{
+		%tempProcess = %obj.craftingProcess;
+		%matter = getMatterType(getField(%tempProcess, 0));
+		%obj.craftingProcess = "";
+		%obj.craftingPower = 0;
+
+		%obj.playSoundLooping();
+		
+		//%obj.changeMatter(getField(%craft.input[%i], 0), getField(%craft.input[%i], 1) * -1, "Input", true);
+		%obj.changeMatter(%matter.name, %matter.spawnValue, "Output");
+	}
+}
+
+function Player::EOTW_VoidDrillInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+	for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
+	{
+		%matter = %brick.Matter["Input", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Input " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Input " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	if (%brick.craftingProcess !$= "" && %brick.craftingProcess != -1)
+	{
+		%matter = getMatterType(%matter = getField(%brick.craftingProcess, 0));
+		%printText = %printText @ (%brick.getPower() + 0) @ " EU (" @ %brick.craftingPower @ "/" @ getField(%brick.craftingProcess, 2) @ ")\n";
+		%printText = %printText @ "Producing " @ getField(%brick.craftingProcess, 0) @ " (" @ getField(%brick.craftingProcess, 1) @ " Boss Essence Required)\n";
+		if (%matter.requiredCollectFuel !$= "")
+		{
+			%printText = %printText @ "(" @ getField(%matter.requiredCollectFuel, 1) SPC getField(%matter.requiredCollectFuel, 0) @ " Required)\n";
+		}
+	}
+	else
+		%printText = %printText @ (%brick.getPower() + 0) @ " EU\n";
+
+	for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
+	{
+		%matter = %brick.Matter["Output", %i];
+
+		if (%matter !$= "")
+			%printText = %printText @ "Output " @ (%i + 1) @ ": " @ getField(%matter, 1) SPC getField(%matter, 0) @ "\n";
+		else
+			%printText = %printText @ "Output " @ (%i + 1) @ ": --" @ "\n";
+	}
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_VoidDrillInspectLoop", %brick);
+}
