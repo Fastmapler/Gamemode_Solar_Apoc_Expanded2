@@ -206,8 +206,15 @@ function GetRandomSpawnMaterial()
 	return %matter;
 }
 
-function ServerCmdInv(%client, %cata)
+function ServerCmdInv(%client, %nameA, %nameB, %nameC, %nameD)
 {
+	%name = trim(%nameA SPC %nameB SPC %nameC SPC %nameD);
+	if (%name !$= "" && isObject(%matter = getMatterType(%name)))
+	{
+		%client.chatMessage("<color:" @ getSubStr(%matter.color, 0, 6) @ ">" @ %matter.name @ "<color:ffffff>: " @ ($EOTW::Material[%client.bl_id, %matter.name] + 0));
+		return;
+	}
+	
 	for (%i = 0; %i < MatterData.getCount(); %i++)
 	{
 		%matter = MatterData.getObject(%i);
@@ -216,8 +223,15 @@ function ServerCmdInv(%client, %cata)
 	}
 }
 
-function ServerCmdInvFull(%client, %cata)
+function ServerCmdInvFull(%client, %nameA, %nameB, %nameC, %nameD)
 {
+	%name = trim(%nameA SPC %nameB SPC %nameC SPC %nameD);
+	if (%name !$= "" && isObject(%matter = getMatterType(%name)))
+	{
+		%client.chatMessage("<color:" @ getSubStr(%matter.color, 0, 6) @ ">" @ %matter.name @ "<color:ffffff>: " @ ($EOTW::Material[%client.bl_id, %matter.name] + 0));
+		return;
+	}
+
 	for (%i = 0; %i < MatterData.getCount(); %i++)
 	{
 		%matter = MatterData.getObject(%i);

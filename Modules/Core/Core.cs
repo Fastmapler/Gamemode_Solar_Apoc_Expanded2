@@ -11,6 +11,11 @@ exec("./Support_TransferNewFiles.cs");
 
 $GameModeDisplayName = "SA EX2";
 
+$GuiAudioType = 1;
+$SimAudioType = 2;
+$MessageAudioType = 3;
+
+
 function createDefaultMinigame()
 {
     if (isObject($DefaultMiniGame))

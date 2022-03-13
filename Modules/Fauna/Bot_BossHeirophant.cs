@@ -94,7 +94,7 @@ datablock shapeBaseImageData(HeirophantBossWeaponImage)
 
 function AIPlayer::CalculateBossAnger(%obj)
 {
-	return getMax(%obj.getDamagePrecent(), 0.01);
+	return getMax(%obj.getDamagePercent(), 0.01);
 }
 
 datablock AudioProfile(HeirophantAttackSound)
@@ -173,7 +173,7 @@ function SpawnDeathPillarChaser(%source, %pos, %target, %life, %delay)
 	schedule(%delay, %target, "SpawnDeathPillar", %source, vectorAdd(%pos, %dir)); %pos = vectorAdd(%pos, %dir);
 	schedule(%delay * 2, %target, "SpawnDeathPillar", %source, vectorAdd(%pos, %dir)); %pos = vectorAdd(%pos, %dir);
 	schedule(%delay * 3, %target, "SpawnDeathPillar", %source, vectorAdd(%pos, %dir)); %pos = vectorAdd(%pos, %dir);
-	schedule(%delay * 3, %target, "SpawnDeathPillarChaser", %source, %pos, %target, %life);
+	schedule(%delay * 3, %target, "SpawnDeathPillarChaser", %source, %pos, %target, %life, %delay);
 }
 
 function DeathPillarWarp(%source, %target)

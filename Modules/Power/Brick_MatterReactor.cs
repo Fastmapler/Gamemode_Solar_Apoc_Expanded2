@@ -360,7 +360,7 @@ function GetVoidDrillCostData(%name)
 		return -1;
 
 	%essence = mCeil(($EOTW::MatSpawnWeight / %matter.spawnWeight) / %matter.spawnVeinSize);
-	%essence = %essence + (%essence % 3);
+	%essence = %essence + (3 - (%essence % 3));
 	%power = mCeil(%matter.collectTime * getMax(1, %matter.tier - 1));
 
 	return %matter.name TAB %essence TAB %power;

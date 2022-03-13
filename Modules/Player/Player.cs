@@ -134,7 +134,8 @@ function GameConnection::PrintEOTWInfo(%client)
 	if (%centerText !$= "")
 		%client.centerPrint(%centerText, 1);
 
-	%dayText = $EOTW::Time >= 12 ? "Night\c6:" SPC $EOTW::Day : "Day\c6:" SPC $EOTW::Day;
+	%dayValue = (mFloor($EOTW::Day / 60) * 60) SPC "+" SPC ($EOTW::Day % 60);
+	%dayText = $EOTW::Time >= 12 ? "Night\c6:" SPC %dayValue : "Day\c6:" SPC %dayValue;
 	%client.bottomPrint("<just:center>\c3" @ %dayText @ " | \c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
 }
 

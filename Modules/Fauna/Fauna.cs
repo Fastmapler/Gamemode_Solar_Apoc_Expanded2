@@ -411,7 +411,7 @@ package EOTW_Fauna
 		{
 			%obj.setShapeNameDistance(128);
 			%obj.setShapeNameColor("1 0 0");
-			%obj.setShapeName(mCeil((1 - %obj.getDamagePercent) * 100) @ "\% HP", 8564862);
+			%obj.setShapeName(mCeil((1 - %obj.getDamagePercent()) * 100) @ "\% HP", 8564862);
 		}
 	}
 };
