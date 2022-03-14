@@ -178,3 +178,30 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 			%client.chatMessage("This brick has no " @ %slot @ " slot.");
 	}
 }
+
+function ServerCmdAR(%client, %name, %num) { ServerCmdAddRecipe(%client, %name, %num); }
+function ServerCmdAddRecipe(%client, %name, %num)
+{
+	//%num is used so players can choose different recipes for an output, if multiple options exist. (ie Bio Fuel)
+	%num = %num + 0;
+	for (%i = 0; %i < MatterCraftingData.getCount(); %i++)
+	{
+		%craftingData = MatterCraftingData.getObject(%i);
+		if (getField(%craftingData.output[0], 0) $= %name)
+		{
+			%num--;
+			if (%num <= 0)
+			{
+				%client.chatMessage("Attempt to add recipe for " @ %craftingData.output[0] @ ".");
+				for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
+				{
+					%input = %craftingData.input[%j];
+					%type = getField(%input, 0);
+					%cost = getField(%input, 1);
+					ServerCmdInsert(%client, "Input", %cost, getWord(%type, 0), getWord(%type, 1), getWord(%type, 2), getWord(%type, 3));
+				}
+				return;
+			}
+		}
+	}
+}
