@@ -119,8 +119,7 @@ function EnvMasterLoop()
 			$EOTW::MeteorIntensity = getField(%stats, 2);
 			$EOTW::WarnSunRise = false;
 			
-			%dayValue = (mFloor($EOTW::Day / 60) * 60) SPC "+" SPC ($EOTW::Day % 60);
-			EnvMasterTalk("The sun rises on day " @ %dayValue @ ".");
+			EnvMasterTalk("The sun rises on day " @ GetDayCycleText() @ ".");
 			EnvMasterTalk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
 			$EOTW::TimeBoost = 2;
 		}
@@ -131,8 +130,7 @@ function EnvMasterLoop()
 		{
 			servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 			
-			%dayValue = (mFloor($EOTW::Day / 60) * 60) SPC "+" SPC ($EOTW::Day % 60);
-			EnvMasterTalk("The sun sets on day " @ %dayValue @ ".");
+			EnvMasterTalk("The sun sets on day " @ GetDayCycleText() @ ".");
 			
 			%stats = EnvMasterRollWeather($EOTW::Day + 1);
 			%heatRange = ((getField(%stats, 1) * 0.1) - 0.2) @ "-" @ ((getField(%stats, 1) * 0.1) + 0.2);
@@ -214,6 +212,13 @@ function EnvMasterLoop()
 	
 	$EOTW::Time += ($EOTW::TimeScale * $EOTW::TimeDialation * $EOTW::TimeBoost);
 	$EOTW::EnvMasterLoop = schedule(100, 0, "EnvMasterLoop");
+}
+
+function GetDayCycleText()
+{
+	%day = ($EOTW::Day % 60);
+	%cycle = mFloor($EOTW::Day / 60) + 1;
+	return %day @ " (Cycle " @ %cycle @ ")";
 }
 
 function EnvMasterRollWeather(%day)

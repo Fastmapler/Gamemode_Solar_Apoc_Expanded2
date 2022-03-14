@@ -1,11 +1,14 @@
 datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 {
 	runforce			= 40 * 90;
-	maxForwardSpeed		= 6;
-	maxBackwardSpeed	= 3;
-	maxSideSpeed		= 6;
+	maxForwardSpeed		= 4;
+	maxBackwardSpeed	= 2;
+	maxSideSpeed		= 1;
 	maxDamage			= 6000;
 	lavaImmune			= true;
+
+	boundingBox = VectorScale ("3.00 3.00 6.50", 4);
+	crouchBoundingBox = VectorScale ("3.00 3.00 6.50", 4);
 
 	//can have unique types, nazis will attack zombies but nazis will not attack other bots labeled nazi
 	hName = "Heirophant";				//cannot contain spaces
@@ -57,10 +60,10 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 
 datablock shapeBaseImageData(HeirophantBossWeaponImage)
 {
-	shapeFile = "base/data/shapes/empty.dts";
+	shapeFile = "./Shapes/Heirophant.dts";
 	item = "";
 	
-	mountPoint = 0;
+	mountPoint = 2;
 	offset = "0 0 0";
 	rotation = 0;
 	
