@@ -223,6 +223,9 @@ function spawnNewFauna(%trans,%hBotType)
 	if (%hBotType.hShoot)
 		%player.mountImage(%hBotType.hWep,0);
 
+	if (%hBotType.hideBody)
+		%player.hideNode("ALL");
+
 	if (%hBotType.hPlayerscale !$= "")
 		%player.setScale(%hBotType.hPlayerscale);
 	
