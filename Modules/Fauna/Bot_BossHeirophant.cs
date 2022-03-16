@@ -20,11 +20,11 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 		hSearchRadius = 256;			//in brick units
 		hSight = 0;						//Require bot to see player before pursuing
 		hStrafe = 1;					//Randomly strafe while following player
-	hSearchFOV = 1;						//if enabled disables normal hSearch
-		hFOVRadius = 64;				//max 10
+	hSearchFOV = 0;						//if enabled disables normal hSearch
+		hFOVRadius = 256;				//max 10
 
 	//Attack Options
-	hMelee = 0;							//Melee
+	hMelee = 1;							//Melee
 		hAttackDamage = 35;				//Melee Damage
 		hDamageType = "";
 	hShoot = 1;
@@ -202,20 +202,20 @@ function DeathPillarCross(%source)
 	if (getRandom() < %anger)
 	{
 		%ignore = getRandom(0, 3);
-		if (%ignore != 0) SpawnDeathPillarArray(%source, %source.getPosition(), "5 0 0", mCeil((%anger + 1) * 9));
-		if (%ignore != 1) SpawnDeathPillarArray(%source, %source.getPosition(), "0 5 0", mCeil((%anger + 1) * 9));
-		if (%ignore != 2) SpawnDeathPillarArray(%source, %source.getPosition(), "5 5 0", mCeil((%anger + 1) * 9));
-		if (%ignore != 3) SpawnDeathPillarArray(%source, %source.getPosition(), "5 -5 0", mCeil((%anger + 1) * 9));
+		if (%ignore != 0) SpawnDeathPillarArray(%source, %source.getPosition(), "5 0 0", mCeil(%anger * 9) + 1);
+		if (%ignore != 1) SpawnDeathPillarArray(%source, %source.getPosition(), "0 5 0", mCeil(%anger * 9) + 1);
+		if (%ignore != 2) SpawnDeathPillarArray(%source, %source.getPosition(), "5 5 0", mCeil(%anger * 9) + 1);
+		if (%ignore != 3) SpawnDeathPillarArray(%source, %source.getPosition(), "5 -5 0", mCeil(%anger * 9) + 1);
 	}
 	else if (getRandom() < 0.5)
 	{
-		SpawnDeathPillarArray(%source, %source.getPosition(), "5 0 0", mCeil((%anger + 1) * 9));
-		SpawnDeathPillarArray(%source, %source.getPosition(), "0 5 0", mCeil((%anger + 1) * 9));
+		SpawnDeathPillarArray(%source, %source.getPosition(), "5 0 0", mCeil(%anger * 9) + 1);
+		SpawnDeathPillarArray(%source, %source.getPosition(), "0 5 0", mCeil(%anger * 9) + 1);
 	}
 	else
 	{
-		SpawnDeathPillarArray(%source, %source.getPosition(), "5 5 0", mCeil((%anger + 1) * 9));
-		SpawnDeathPillarArray(%source, %source.getPosition(), "5 -5 0", mCeil((%anger + 1) * 9));
+		SpawnDeathPillarArray(%source, %source.getPosition(), "5 5 0", mCeil(%anger * 9) + 1);
+		SpawnDeathPillarArray(%source, %source.getPosition(), "5 -5 0", mCeil(%anger * 9) + 1);
 	}
 }
 
@@ -234,12 +234,12 @@ function HeirophantBossWeaponImage::onFire(%this, %obj, %slot)
 		case 0: //Swarmer shots
 			for (%i = 0; %i < mCeil(%anger * 4); %i++)
 				schedule(500 * %i, 0, "SpawnDeathPillarChaser", %obj, %obj.getPosition(), %target, getSimTime() + (4000 * (%i + 1)), 500 - (%anger * 300));
-		case 1: //Cross Attacks
-			for (%i = 0; %i < mCeil(%anger * 3); %i++)
-				schedule(1000 * %i, 0, "DeathPillarCross", %obj);
-		case 2: //Warp Attack
+		case 1: //Warp Attack
 			for (%i = 0; %i < mCeil(%anger * 3); %i++)
 				schedule(1000 * %i, 0, "DeathPillarWarp", %obj, %target);
+		case 2: //Cross Attacks
+			for (%i = 0; %i < mCeil(%anger * 3); %i++)
+				schedule(1000 * %i, 0, "DeathPillarCross", %obj);
 		default: //Rest
 			%obj.attackCycle = 0;
 
