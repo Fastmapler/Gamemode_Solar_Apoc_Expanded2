@@ -1,0 +1,5 @@
+id: 1597
+icon: cutlass_16
+type: Weapons
+title: Recurve Bow
+version: 1

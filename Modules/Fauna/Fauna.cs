@@ -241,86 +241,86 @@ function ApplyBotSkin(%obj)
 	%dataName = %data.getName();
 	if ($EOTW::FaunaSkin[%dataName, "Exists"])
 	{
-		$pref::Avatar::Accent = $EOTW::FaunaSkin[%dataName, "Accent"];
-		$pref::Avatar::AccentColor = $EOTW::FaunaSkin[%dataName, "AccentColor"];
-		$pref::Avatar::Authentic = $EOTW::FaunaSkin[%dataName, "Authentic"];
-		$Pref::Avatar::Chest = $EOTW::FaunaSkin[%dataName, "Chest"];
-		$pref::Avatar::ChestColor = $EOTW::FaunaSkin[%dataName, "ChestColor"];
-		$pref::Avatar::DecalColor = $EOTW::FaunaSkin[%dataName, "DecalColor"];
-		$Pref::Avatar::DecalName = $EOTW::FaunaSkin[%dataName, "DecalName"];
-		$pref::Avatar::FaceColor = $EOTW::FaunaSkin[%dataName, "FaceColor"];
-		$Pref::Avatar::FaceName = $EOTW::FaunaSkin[%dataName, "FaceName"];
-		$pref::Avatar::Hat = $EOTW::FaunaSkin[%dataName, "Hat"];
-		$pref::Avatar::HatColor = $EOTW::FaunaSkin[%dataName, "HatColor"];
-		$Pref::Avatar::HatList = $EOTW::FaunaSkin[%dataName, "HatList"];
-		$pref::Avatar::HeadColor = $EOTW::FaunaSkin[%dataName, "HeadColor"];
-		$Pref::Avatar::Hip = $EOTW::FaunaSkin[%dataName, "Hip"];
-		$pref::Avatar::HipColor = $EOTW::FaunaSkin[%dataName, "HipColor"];
-		$Pref::Avatar::LArm = $EOTW::FaunaSkin[%dataName, "LArm"];
-		$pref::Avatar::LArmColor = $EOTW::FaunaSkin[%dataName, "LArmColor"];
-		$Pref::Avatar::LHand = $EOTW::FaunaSkin[%dataName, "LHand"];
-		$pref::Avatar::LHandColor = $EOTW::FaunaSkin[%dataName, "LHandColor"];
-		$Pref::Avatar::LLeg = $EOTW::FaunaSkin[%dataName, "LLeg"];
-		$pref::Avatar::LLegColor = $EOTW::FaunaSkin[%dataName, "LLegColor"];
-		$pref::Avatar::Pack = $EOTW::FaunaSkin[%dataName, "Pack"];
-		$pref::Avatar::PackColor = $EOTW::FaunaSkin[%dataName, "PackColor"];
-		$Pref::Avatar::RArm = $EOTW::FaunaSkin[%dataName, "RArm"];
-		$pref::Avatar::RArmColor = $EOTW::FaunaSkin[%dataName, "RArmColor"];
-		$Pref::Avatar::RHand = $EOTW::FaunaSkin[%dataName, "RHand"];
-		$pref::Avatar::RHandColor = $EOTW::FaunaSkin[%dataName, "RHandColor"];
-		$Pref::Avatar::RLeg = $EOTW::FaunaSkin[%dataName, "RLeg"];
-		$pref::Avatar::RLegColor = $EOTW::FaunaSkin[%dataName, "RLegColor"];
-		$Pref::Avatar::SecondPack = $EOTW::FaunaSkin[%dataName, "SecondPack"];
-		$pref::Avatar::SecondPackColor = $EOTW::FaunaSkin[%dataName, "SecondPackColor"];
-		$pref::Avatar::Symmetry = $EOTW::FaunaSkin[%dataName, "Symmetry"];
-		$pref::Avatar::TorsoColor = $EOTW::FaunaSkin[%dataName, "TorsoColor"];
+		$EOTW::TempAvatar::Accent = $EOTW::FaunaSkin[%dataName, "Accent"];
+		$EOTW::TempAvatar::AccentColor = $EOTW::FaunaSkin[%dataName, "AccentColor"];
+		$EOTW::TempAvatar::Authentic = $EOTW::FaunaSkin[%dataName, "Authentic"];
+		$EOTW::TempAvatar::Chest = $EOTW::FaunaSkin[%dataName, "Chest"];
+		$EOTW::TempAvatar::ChestColor = $EOTW::FaunaSkin[%dataName, "ChestColor"];
+		$EOTW::TempAvatar::DecalColor = $EOTW::FaunaSkin[%dataName, "DecalColor"];
+		$EOTW::TempAvatar::DecalName = $EOTW::FaunaSkin[%dataName, "DecalName"];
+		$EOTW::TempAvatar::FaceColor = $EOTW::FaunaSkin[%dataName, "FaceColor"];
+		$EOTW::TempAvatar::FaceName = $EOTW::FaunaSkin[%dataName, "FaceName"];
+		$EOTW::TempAvatar::Hat = $EOTW::FaunaSkin[%dataName, "Hat"];
+		$EOTW::TempAvatar::HatColor = $EOTW::FaunaSkin[%dataName, "HatColor"];
+		$EOTW::TempAvatar::HatList = $EOTW::FaunaSkin[%dataName, "HatList"];
+		$EOTW::TempAvatar::HeadColor = $EOTW::FaunaSkin[%dataName, "HeadColor"];
+		$EOTW::TempAvatar::Hip = $EOTW::FaunaSkin[%dataName, "Hip"];
+		$EOTW::TempAvatar::HipColor = $EOTW::FaunaSkin[%dataName, "HipColor"];
+		$EOTW::TempAvatar::LArm = $EOTW::FaunaSkin[%dataName, "LArm"];
+		$EOTW::TempAvatar::LArmColor = $EOTW::FaunaSkin[%dataName, "LArmColor"];
+		$EOTW::TempAvatar::LHand = $EOTW::FaunaSkin[%dataName, "LHand"];
+		$EOTW::TempAvatar::LHandColor = $EOTW::FaunaSkin[%dataName, "LHandColor"];
+		$EOTW::TempAvatar::LLeg = $EOTW::FaunaSkin[%dataName, "LLeg"];
+		$EOTW::TempAvatar::LLegColor = $EOTW::FaunaSkin[%dataName, "LLegColor"];
+		$EOTW::TempAvatar::Pack = $EOTW::FaunaSkin[%dataName, "Pack"];
+		$EOTW::TempAvatar::PackColor = $EOTW::FaunaSkin[%dataName, "PackColor"];
+		$EOTW::TempAvatar::RArm = $EOTW::FaunaSkin[%dataName, "RArm"];
+		$EOTW::TempAvatar::RArmColor = $EOTW::FaunaSkin[%dataName, "RArmColor"];
+		$EOTW::TempAvatar::RHand = $EOTW::FaunaSkin[%dataName, "RHand"];
+		$EOTW::TempAvatar::RHandColor = $EOTW::FaunaSkin[%dataName, "RHandColor"];
+		$EOTW::TempAvatar::RLeg = $EOTW::FaunaSkin[%dataName, "RLeg"];
+		$EOTW::TempAvatar::RLegColor = $EOTW::FaunaSkin[%dataName, "RLegColor"];
+		$EOTW::TempAvatar::SecondPack = $EOTW::FaunaSkin[%dataName, "SecondPack"];
+		$EOTW::TempAvatar::SecondPackColor = $EOTW::FaunaSkin[%dataName, "SecondPackColor"];
+		$EOTW::TempAvatar::Symmetry = $EOTW::FaunaSkin[%dataName, "Symmetry"];
+		$EOTW::TempAvatar::TorsoColor = $EOTW::FaunaSkin[%dataName, "TorsoColor"];
 	}
 	else
 	{
 		exec("./Skin_" @ %obj.getDataBlock().hName @ ".cs");
 
-		$EOTW::FaunaSkin[%dataName, "Accent"] = $pref::Avatar::Accent;
-		$EOTW::FaunaSkin[%dataName, "AccentColor"] = $pref::Avatar::AccentColor;
-		$EOTW::FaunaSkin[%dataName, "Authentic"] = $pref::Avatar::Authentic;
-		$EOTW::FaunaSkin[%dataName, "Chest"] = $Pref::Avatar::Chest;
-		$EOTW::FaunaSkin[%dataName, "ChestColor"] = $pref::Avatar::ChestColor;
-		$EOTW::FaunaSkin[%dataName, "DecalColor"] = $pref::Avatar::DecalColor;
-		$EOTW::FaunaSkin[%dataName, "DecalName"] = $Pref::Avatar::DecalName;
-		$EOTW::FaunaSkin[%dataName, "FaceColor"] = $pref::Avatar::FaceColor;
-		$EOTW::FaunaSkin[%dataName, "FaceName"] = $Pref::Avatar::FaceName;
-		$EOTW::FaunaSkin[%dataName, "Hat"] = $pref::Avatar::Hat;
-		$EOTW::FaunaSkin[%dataName, "HatColor"] = $pref::Avatar::HatColor;
-		$EOTW::FaunaSkin[%dataName, "HatList"] = $Pref::Avatar::HatList;
-		$EOTW::FaunaSkin[%dataName, "HeadColor"] = $pref::Avatar::HeadColor;
-		$EOTW::FaunaSkin[%dataName, "Hip"] = $Pref::Avatar::Hip;
-		$EOTW::FaunaSkin[%dataName, "HipColor"] = $pref::Avatar::HipColor;
-		$EOTW::FaunaSkin[%dataName, "LArm"] = $Pref::Avatar::LArm;
-		$EOTW::FaunaSkin[%dataName, "LArmColor"] = $pref::Avatar::LArmColor;
-		$EOTW::FaunaSkin[%dataName, "LHand"] = $Pref::Avatar::LHand;
-		$EOTW::FaunaSkin[%dataName, "LHandColor"] = $pref::Avatar::LHandColor;
-		$EOTW::FaunaSkin[%dataName, "LLeg"] = $Pref::Avatar::LLeg;
-		$EOTW::FaunaSkin[%dataName, "LLegColor"] = $pref::Avatar::LLegColor;
-		$EOTW::FaunaSkin[%dataName, "Pack"] = $pref::Avatar::Pack;
-		$EOTW::FaunaSkin[%dataName, "PackColor"] = $pref::Avatar::PackColor;
-		$EOTW::FaunaSkin[%dataName, "RArm"] = $Pref::Avatar::RArm;
-		$EOTW::FaunaSkin[%dataName, "RArmColor"] = $pref::Avatar::RArmColor;
-		$EOTW::FaunaSkin[%dataName, "RHand"] = $Pref::Avatar::RHand;
-		$EOTW::FaunaSkin[%dataName, "RHandColor"] = $pref::Avatar::RHandColor;
-		$EOTW::FaunaSkin[%dataName, "RLeg"] = $Pref::Avatar::RLeg;
-		$EOTW::FaunaSkin[%dataName, "RLegColor"] = $pref::Avatar::RLegColor;
-		$EOTW::FaunaSkin[%dataName, "SecondPack"] = $Pref::Avatar::SecondPack;
-		$EOTW::FaunaSkin[%dataName, "SecondPackColor"] = $pref::Avatar::SecondPackColor;
-		$EOTW::FaunaSkin[%dataName, "Symmetry"] = $pref::Avatar::Symmetry;
-		$EOTW::FaunaSkin[%dataName, "TorsoColor"] = $pref::Avatar::TorsoColor;
+		$EOTW::FaunaSkin[%dataName, "Accent"] = $EOTW::TempAvatar::Accent;
+		$EOTW::FaunaSkin[%dataName, "AccentColor"] = $EOTW::TempAvatar::AccentColor;
+		$EOTW::FaunaSkin[%dataName, "Authentic"] = $EOTW::TempAvatar::Authentic;
+		$EOTW::FaunaSkin[%dataName, "Chest"] = $EOTW::TempAvatar::Chest;
+		$EOTW::FaunaSkin[%dataName, "ChestColor"] = $EOTW::TempAvatar::ChestColor;
+		$EOTW::FaunaSkin[%dataName, "DecalColor"] = $EOTW::TempAvatar::DecalColor;
+		$EOTW::FaunaSkin[%dataName, "DecalName"] = $EOTW::TempAvatar::DecalName;
+		$EOTW::FaunaSkin[%dataName, "FaceColor"] = $EOTW::TempAvatar::FaceColor;
+		$EOTW::FaunaSkin[%dataName, "FaceName"] = $EOTW::TempAvatar::FaceName;
+		$EOTW::FaunaSkin[%dataName, "Hat"] = $EOTW::TempAvatar::Hat;
+		$EOTW::FaunaSkin[%dataName, "HatColor"] = $EOTW::TempAvatar::HatColor;
+		$EOTW::FaunaSkin[%dataName, "HatList"] = $EOTW::TempAvatar::HatList;
+		$EOTW::FaunaSkin[%dataName, "HeadColor"] = $EOTW::TempAvatar::HeadColor;
+		$EOTW::FaunaSkin[%dataName, "Hip"] = $EOTW::TempAvatar::Hip;
+		$EOTW::FaunaSkin[%dataName, "HipColor"] = $EOTW::TempAvatar::HipColor;
+		$EOTW::FaunaSkin[%dataName, "LArm"] = $EOTW::TempAvatar::LArm;
+		$EOTW::FaunaSkin[%dataName, "LArmColor"] = $EOTW::TempAvatar::LArmColor;
+		$EOTW::FaunaSkin[%dataName, "LHand"] = $EOTW::TempAvatar::LHand;
+		$EOTW::FaunaSkin[%dataName, "LHandColor"] = $EOTW::TempAvatar::LHandColor;
+		$EOTW::FaunaSkin[%dataName, "LLeg"] = $EOTW::TempAvatar::LLeg;
+		$EOTW::FaunaSkin[%dataName, "LLegColor"] = $EOTW::TempAvatar::LLegColor;
+		$EOTW::FaunaSkin[%dataName, "Pack"] = $EOTW::TempAvatar::Pack;
+		$EOTW::FaunaSkin[%dataName, "PackColor"] = $EOTW::TempAvatar::PackColor;
+		$EOTW::FaunaSkin[%dataName, "RArm"] = $EOTW::TempAvatar::RArm;
+		$EOTW::FaunaSkin[%dataName, "RArmColor"] = $EOTW::TempAvatar::RArmColor;
+		$EOTW::FaunaSkin[%dataName, "RHand"] = $EOTW::TempAvatar::RHand;
+		$EOTW::FaunaSkin[%dataName, "RHandColor"] = $EOTW::TempAvatar::RHandColor;
+		$EOTW::FaunaSkin[%dataName, "RLeg"] = $EOTW::TempAvatar::RLeg;
+		$EOTW::FaunaSkin[%dataName, "RLegColor"] = $EOTW::TempAvatar::RLegColor;
+		$EOTW::FaunaSkin[%dataName, "SecondPack"] = $EOTW::TempAvatar::SecondPack;
+		$EOTW::FaunaSkin[%dataName, "SecondPackColor"] = $EOTW::TempAvatar::SecondPackColor;
+		$EOTW::FaunaSkin[%dataName, "Symmetry"] = $EOTW::TempAvatar::Symmetry;
+		$EOTW::FaunaSkin[%dataName, "TorsoColor"] = $EOTW::TempAvatar::TorsoColor;
 		$EOTW::FaunaSkin[%dataName, "Exists"] = true;
 	}
 	
 	%i = 0;
 	while (%i < $numDecal)
 	{
-		if (fileBase ($decal[%i]) $= fileBase ($Pref::Avatar::DecalName))
+		if (fileBase ($decal[%i]) $= fileBase ($EOTW::TempAvatar::DecalName))
 		{
-			$pref::Avatar::DecalColor = %i;
+			$EOTW::TempAvatar::DecalColor = %i;
 			break;
 		}
 		%i += 1;
@@ -328,19 +328,19 @@ function ApplyBotSkin(%obj)
 	%i = 0;
 	while (%i < $numFace)
 	{
-		if (fileBase ($face[%i]) $= fileBase ($Pref::Avatar::FaceName))
+		if (fileBase ($face[%i]) $= fileBase ($EOTW::TempAvatar::FaceName))
 		{
-			$pref::Avatar::FaceColor = %i;
+			$EOTW::TempAvatar::FaceColor = %i;
 			break;
 		}
 		%i += 1;
 	}
 
-	$Pref::Avatar::DecalName = fileBase($Pref::Avatar::DecalName);
-	$Pref::Avatar::FaceName = fileBase($Pref::Avatar::FaceName);
+	$EOTW::TempAvatar::DecalName = fileBase($EOTW::TempAvatar::DecalName);
+	$EOTW::TempAvatar::FaceName = fileBase($EOTW::TempAvatar::FaceName);
 
-	servercmdupdatebodyparts(%obj, $pref::Avatar::Hat, $pref::Avatar::Accent, $pref::Avatar::Pack, $Pref::Avatar::SecondPack, $Pref::Avatar::Chest, $Pref::Avatar::Hip, $Pref::Avatar::LLeg, $Pref::Avatar::RLeg, $Pref::Avatar::LArm, $Pref::Avatar::RArm, %LHand, $Pref::Avatar::RHand);
-	servercmdupdatebodycolors(%obj, $pref::Avatar::HeadColor, $pref::Avatar::HatColor, $pref::Avatar::AccentColor, $pref::Avatar::PackColor, $pref::Avatar::SecondPackColor, $pref::Avatar::TorsoColor, $pref::Avatar::HipColor, $pref::Avatar::LLegColor, $pref::Avatar::RLegColor, $pref::Avatar::LArmColor, $pref::Avatar::RArmColor, $pref::Avatar::LHandColor, $pref::Avatar::RHandColor, $Pref::Avatar::DecalName, $Pref::Avatar::FaceName);
+	servercmdupdatebodyparts(%obj, $EOTW::TempAvatar::Hat, $EOTW::TempAvatar::Accent, $EOTW::TempAvatar::Pack, $EOTW::TempAvatar::SecondPack, $EOTW::TempAvatar::Chest, $EOTW::TempAvatar::Hip, $EOTW::TempAvatar::LLeg, $EOTW::TempAvatar::RLeg, $EOTW::TempAvatar::LArm, $EOTW::TempAvatar::RArm, %LHand, $EOTW::TempAvatar::RHand);
+	servercmdupdatebodycolors(%obj, $EOTW::TempAvatar::HeadColor, $EOTW::TempAvatar::HatColor, $EOTW::TempAvatar::AccentColor, $EOTW::TempAvatar::PackColor, $EOTW::TempAvatar::SecondPackColor, $EOTW::TempAvatar::TorsoColor, $EOTW::TempAvatar::HipColor, $EOTW::TempAvatar::LLegColor, $EOTW::TempAvatar::RLegColor, $EOTW::TempAvatar::LArmColor, $EOTW::TempAvatar::RArmColor, $EOTW::TempAvatar::LHandColor, $EOTW::TempAvatar::RHandColor, $EOTW::TempAvatar::DecalName, $EOTW::TempAvatar::FaceName);
 	
 	GameConnection::ApplyBodyParts(%obj);
 	GameConnection::ApplyBodyColors(%obj);
