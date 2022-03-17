@@ -124,6 +124,7 @@ package swol_melee_v2
 					{
 						swolMelee_doBlock(%pl);
 					}
+					parent::onTrigger(%db,%pl,%slot,%bool);
 					return;
 				}
 			}

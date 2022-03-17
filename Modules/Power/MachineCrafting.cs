@@ -221,7 +221,7 @@ function ServerCmdExtractAll(%client, %slot)
 
 	if (%slot $= "")
 	{
-		%client.chatMessage("Usage: /ExtractAll <input (i)/output (o)/buffer (b)>");
+		%client.chatMessage("Usage: /ExtractAll <input (i)/output (o)/buffer (b)/all (a)>");
 		return;
 	}
 
@@ -230,6 +230,14 @@ function ServerCmdExtractAll(%client, %slot)
 		case "i": %slot = "Input";
 		case "b": %slot = "Buffer";
 		case "o": %slot = "Output";
+		case "a" or "all":
+			if (%data.matterSlots["Input"] > 0)
+				ServerCmdExtractAll(%client, "Input");
+			if (%data.matterSlots["Output"] > 0)
+				ServerCmdExtractAll(%client, "Output");
+			if (%data.matterSlots["Buffer"] > 0)
+				ServerCmdExtractAll(%client, "Buffer");
+			return;
 	}
 
 	%amount = Round(%amount);
