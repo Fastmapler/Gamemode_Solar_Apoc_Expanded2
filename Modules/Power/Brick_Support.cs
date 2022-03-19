@@ -318,7 +318,8 @@ function fxDtsBrick::EOTW_SolarShieldProjectorLoop(%obj)
 			%obj.shieldShape.EOTW_SetShieldLevel(18);
 			
 			//serverplay3D(shieldPowerUpSound, %obj.getPosition());
-			minigameCleanup.add(%obj.shieldShape);
+			if (isObject(%obj.shieldShape))
+				minigameCleanup.add(%obj.shieldShape);
 		}
 
 		//Using schedules to make sure we stop the projector if we get shutoff via events

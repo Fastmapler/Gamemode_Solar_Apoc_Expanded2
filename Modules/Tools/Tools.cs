@@ -40,7 +40,7 @@ function updateItemNames()
 }
 schedule(0, 0, "updateItemNames");
 
-$Game::Item::PopTime = 1000 * 60;
+$Game::Item::PopTime = 1000 * 60 * 5;
 
 function ServerCmdGrantItem(%client, %data, %target)
 {

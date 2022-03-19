@@ -179,9 +179,10 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 	}
 }
 
-function ServerCmdAR(%client, %name, %num) { ServerCmdAddRecipe(%client, %name, %num); }
-function ServerCmdAddRecipe(%client, %name, %num)
+function ServerCmdAR(%client, %name, %nameB, %nameC, %nameD, %num) { ServerCmdAddRecipe(%client, %name, %nameB, %nameC, %nameD, %num); }
+function ServerCmdAddRecipe(%client, %name, %nameB, %nameC, %nameD, %num)
 {
+	%name = trim(%name SPC %nameB SPC %nameC SPC %nameD);
 	if (%name $= "")
 	{
 		%client.chatMessage("Usage: /AddRecipe <Desired Output (ie Steel)>");
@@ -231,12 +232,9 @@ function ServerCmdExtractAll(%client, %slot)
 		case "b": %slot = "Buffer";
 		case "o": %slot = "Output";
 		case "a" or "all":
-			if (%data.matterSlots["Input"] > 0)
-				ServerCmdExtractAll(%client, "Input");
-			if (%data.matterSlots["Output"] > 0)
-				ServerCmdExtractAll(%client, "Output");
-			if (%data.matterSlots["Buffer"] > 0)
-				ServerCmdExtractAll(%client, "Buffer");
+			ServerCmdExtractAll(%client, "Input");
+			ServerCmdExtractAll(%client, "Output");
+			ServerCmdExtractAll(%client, "Buffer");
 			return;
 	}
 

@@ -230,7 +230,6 @@ function ServerCmdWarpPlayerCancel(%client)
 
 function clearIllegalEvents()
 {
-	unregisterOutputEvent("fxDtsBrick", "setItem");				//Bypasses blacklist
 	unregisterOutputEvent("fxDtsBrick", "spawnExplosion");		//Assholes try to lag the server up.
 	unregisterOutputEvent("fxDtsBrick", "spawnItem");			//Allows players to bypass the crafting process + Bypasses Blacklist
 	unregisterOutputEvent("fxDtsBrick", "spawnProjectile");		//People shoot projectiles at others.
