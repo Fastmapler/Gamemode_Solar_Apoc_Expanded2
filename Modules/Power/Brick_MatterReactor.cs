@@ -373,10 +373,6 @@ function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
 
 	%data = %obj.getDatablock();
 	
-	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
-	%obj.craftingPower += %change;
-	%obj.changePower(%change * -1);
-
 	if (isObject(%data.loopNoise))
 	{
 		if (isObject(%obj.audioEmitter) && %change <= 0)
@@ -385,18 +381,23 @@ function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
 			%obj.playSoundLooping(%data.loopNoise);
 	}
 	
-	
-	if (%obj.craftingPower >= getField(%obj.craftingProcess, 2))
+	%matter = getMatterType(getField(%obj.craftingProcess, 0));
+	if (%obj.craftingPower >= getField(%obj.craftingProcess, 2) && %obj.GetMatter("Boss Essence", "Input") >= getField(%obj.craftingProcess, 1) && (%matter.requiredCollectFuel $= "" || %obj.GetMatter(getField(%matter.requiredCollectFuel, 0), "Input") >= getField(%matter.requiredCollectFuel, 1)))
 	{
-		%tempProcess = %obj.craftingProcess;
-		%matter = getMatterType(getField(%tempProcess, 0));
-		%obj.craftingProcess = "";
 		%obj.craftingPower = 0;
-
 		%obj.playSoundLooping();
 		
-		//%obj.changeMatter(getField(%craft.input[%i], 0), getField(%craft.input[%i], 1) * -1, "Input", true);
-		%obj.changeMatter(%matter.name, %matter.spawnValue, "Output");
+		if (%matter.requiredCollectFuel !$= "")
+			%obj.changeMatter(getField(%matter.requiredCollectFuel, 0), getField(%matter.requiredCollectFuel, 1) * -1, "Input");
+
+		%obj.changeMatter("Boss Essence", getField(%obj.craftingProcess, 1) * -1, "Input");
+		%obj.changeMatter(%matter.name, %matter.spawnValue, "Output", true);
+	}
+	else if (%obj.craftingPower < getField(%obj.craftingProcess, 2))
+	{
+		%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
+		%obj.craftingPower += %change;
+		%obj.changePower(%change * -1);
 	}
 }
 
