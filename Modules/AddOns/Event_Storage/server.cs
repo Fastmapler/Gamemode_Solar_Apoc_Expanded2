@@ -11,8 +11,42 @@ else
 }
 
 
+
 package StorageEvents
 {
+	function serverCmdClearEvents (%client)
+	{
+		%brick = %client.wrenchbrick;
+		if(!isObject(%brick))
+			return parent::serverCmdClearEvents(%client);
+		
+		%data = %brick.getDataBlock();
+		if(%data.maxStoredTools > 0 && !%client.isAdmin)
+		{
+			%client.centerprint("\c6You're not allowed to modify events on a storage brick!", 3);
+			return;
+		}
+
+		return parent::serverCmdClearEvents(%client);
+	}
+
+	function serverCmdAddEvent (%client, %enabled, %inputEventIdx, %delay, %targetIdx, %NTNameIdx, %outputEventIdx, %par1, %par2, %par3, %par4)
+	{
+		%brick = %client.wrenchbrick;
+		if(!isObject(%brick))
+			return parent::serverCmdAddEvent (%client, %enabled, %inputEventIdx, %delay, %targetIdx, %NTNameIdx, %outputEventIdx, %par1, %par2, %par3, %par4);
+		
+		%data = %brick.getDataBlock();
+		if(%data.maxStoredTools > 0 && !%client.isAdmin)
+		{
+			%client.centerprint("\c6You're not allowed to modify events on a storage brick!", 3);
+			return;
+		}
+
+		return parent::serverCmdAddEvent (%client, %enabled, %inputEventIdx, %delay, %targetIdx, %NTNameIdx, %outputEventIdx, %par1, %par2, %par3, %par4);
+	}
+
+
 	function fxDTSBrick::onRemove(%brick)
 	{
 		%data = %brick.getDatablock();

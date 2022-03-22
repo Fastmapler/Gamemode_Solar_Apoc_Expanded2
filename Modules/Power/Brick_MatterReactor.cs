@@ -332,7 +332,7 @@ function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
 
 datablock fxDTSBrickData(brickEOTWVoidDrillData)
 {
-	brickFile = "./Bricks/Refinery.blb";
+	brickFile = "./Bricks/VoidDrill.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Void Drill";
@@ -368,7 +368,7 @@ function GetVoidDrillCostData(%name)
 
 function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
 {
-	if (%obj.craftingProcess $= "" || %obj.craftingProcess == -1)
+	if (%obj.DrillRecipe $= "" || %obj.DrillRecipe == -1)
 		return;
 
 	%data = %obj.getDatablock();
@@ -381,8 +381,8 @@ function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
 			%obj.playSoundLooping(%data.loopNoise);
 	}
 	
-	%matter = getMatterType(getField(%obj.craftingProcess, 0));
-	if (%obj.craftingPower >= getField(%obj.craftingProcess, 2) && %obj.GetMatter("Boss Essence", "Input") >= getField(%obj.craftingProcess, 1) && (%matter.requiredCollectFuel $= "" || %obj.GetMatter(getField(%matter.requiredCollectFuel, 0), "Input") >= getField(%matter.requiredCollectFuel, 1)))
+	%matter = getMatterType(getField(%obj.DrillRecipe, 0));
+	if (%obj.craftingPower >= getField(%obj.DrillRecipe, 2) && %obj.GetMatter("Boss Essence", "Input") >= getField(%obj.DrillRecipe, 1) && (%matter.requiredCollectFuel $= "" || %obj.GetMatter(getField(%matter.requiredCollectFuel, 0), "Input") >= getField(%matter.requiredCollectFuel, 1)))
 	{
 		%obj.craftingPower = 0;
 		%obj.playSoundLooping();
@@ -390,10 +390,10 @@ function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
 		if (%matter.requiredCollectFuel !$= "")
 			%obj.changeMatter(getField(%matter.requiredCollectFuel, 0), getField(%matter.requiredCollectFuel, 1) * -1, "Input");
 
-		%obj.changeMatter("Boss Essence", getField(%obj.craftingProcess, 1) * -1, "Input");
+		%obj.changeMatter("Boss Essence", getField(%obj.DrillRecipe, 1) * -1, "Input");
 		%obj.changeMatter(%matter.name, %matter.spawnValue, "Output", true);
 	}
-	else if (%obj.craftingPower < getField(%obj.craftingProcess, 2))
+	else if (%obj.craftingPower < getField(%obj.DrillRecipe, 2))
 	{
 		%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
 		%obj.craftingPower += %change;
@@ -426,11 +426,11 @@ function Player::EOTW_VoidDrillInspectLoop(%player, %brick)
 			%printText = %printText @ "Input " @ (%i + 1) @ ": --" @ "\n";
 	}
 
-	if (%brick.craftingProcess !$= "" && %brick.craftingProcess != -1)
+	if (%brick.DrillRecipe !$= "" && %brick.DrillRecipe != -1)
 	{
-		%matter = getMatterType(%matter = getField(%brick.craftingProcess, 0));
-		%printText = %printText @ (%brick.getPower() + 0) @ " EU (" @ %brick.craftingPower @ "/" @ getField(%brick.craftingProcess, 2) @ ")\n";
-		%printText = %printText @ "Producing " @ getField(%brick.craftingProcess, 0) @ " (" @ getField(%brick.craftingProcess, 1) @ " Boss Essence Required)\n";
+		%matter = getMatterType(%matter = getField(%brick.DrillRecipe, 0));
+		%printText = %printText @ (%brick.getPower() + 0) @ " EU (" @ %brick.craftingPower @ "/" @ getField(%brick.DrillRecipe, 2) @ ")\n";
+		%printText = %printText @ "Producing " @ getField(%brick.DrillRecipe, 0) @ " (" @ getField(%brick.DrillRecipe, 1) @ " Boss Essence Required)\n";
 		if (%matter.requiredCollectFuel !$= "")
 		{
 			%printText = %printText @ "(" @ getField(%matter.requiredCollectFuel, 1) SPC getField(%matter.requiredCollectFuel, 0) @ " Required)\n";
@@ -452,4 +452,79 @@ function Player::EOTW_VoidDrillInspectLoop(%player, %brick)
 	%client.centerPrint(%printText, 1);
 	
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_VoidDrillInspectLoop", %brick);
+}
+
+function ServerCmdSDR(%client, %name) { ServerCmdSetDrillRecipe(%client, %name); }
+function ServerCmdSetDrillRecipe(%client, %name)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	if (%name $= "")
+	{
+		%client.chatMessage("Usage: /SetDrillRecipe <matter>");
+		return;
+	}
+
+	%eye = %player.getEyePoint();
+	%dir = %player.getEyeVector();
+	%for = %player.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+	{
+		%data = %hit.getDatablock();
+
+		if (%data.getName() !$= "")
+		{
+			%client.chatMessage("This command is used for Void Drills.");
+			return;
+		}
+
+		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
+		{
+			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
+			{
+				%client.chatMessage("The owner of that object does not trust you enough.");
+				return;
+			}
+		}
+
+		%recipe = GetVoidDrillCostData(%name);
+
+		if (%recipe == -1)
+		{
+			%client.chatMessage(%name @ " is not a compatible recipe. Only most raw gatherable materials can be drilled.");
+			return;
+		}
+
+		%hit.DrillRecipe = %recipe;
+		%client.chatMessage("Void Drill set to " @ getField(%recipe, 0) @ ".");
+	}
+}
+
+function ServerCmdGDR(%client, %name) { ServerCmdGetDrillRecipe(%client, %name); }
+function ServerCmdGetDrillRecipe(%client, %name)
+{
+	if (%name $= "")
+	{
+		%client.chatMessage("Usage: /GetDrillRecipe <matter>");
+		return;
+	}
+
+	%recipe = GetVoidDrillCostData(%name);
+
+	if (%recipe == -1)
+	{
+		%client.chatMessage(%name @ " is not a compatible recipe. Only most raw gatherable materials can be drilled.");
+		return;
+	}
+	%matter = GetMatterType(%name);
+
+	%client.chatMessage("EU Required: " @ getField(%recipe, 1));
+	%client.chatMessage("Boss Essence Cost: " @ getField(%recipe, 1));
+	if (%matter.requiredCollectFuel !$= "")
+		%client.chatMessage("Additional Cost: " @ getField(%matter.requiredCollectFuel, 1) SPC getField(%matter.requiredCollectFuel, 0));
+	%client.chatMessage("Output Volume: " @ %matter.spawnValue);
 }

@@ -25,12 +25,12 @@ function SetupFaunaSpawnData()
 		new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Tank Grunt
 		new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";		spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
-		//new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";	spawnWeight=0.4;	spawnCost=45;	maxSpawnGroup=4; 	timeRange=(16 TAB 24);	}; //Basic Elemental
-		//new ScriptObject(FaunaSpawnType) { data="ElementalHoleBot";	spawnWeight=0.4;	spawnCost=100;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Upgraded Elemental
+		//new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";	spawnWeight=0.5;	spawnCost=45;	maxSpawnGroup=4; 	timeRange=(16 TAB 24);	}; //Basic Elemental
+		//new ScriptObject(FaunaSpawnType) { data="ElementalHoleBot";	spawnWeight=0.3;	spawnCost=100;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Upgraded Elemental
 
-		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.2;	spawnCost=60;	maxSpawnGroup=2; 	timeRange=(12 TAB 24);	}; //Splitting Blob Infernal
-		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(20 TAB 24);	}; //Sleath Hunter Infernal
-		//new ScriptObject(FaunaSpawnType) { data="GolemHoleBot";		spawnWeight=0.2;	spawnCost=200;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
+		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.4;	spawnCost=75;	maxSpawnGroup=2; 	timeRange=(12 TAB 21);	}; //Splitting Blob Infernal
+		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.4;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(15 TAB 24);	}; //Sleath Hunter Infernal
+		//new ScriptObject(FaunaSpawnType) { data="GolemHoleBot";		spawnWeight=0.4;	spawnCost=200;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
 	};
 
 	$EOTW::FaunaSpawnWeight = 0;
@@ -137,7 +137,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%pl.getPosition(), "5 5 5"), HeirophantHoleBot);
+//spawnNewFauna(vectorAdd(%player.getPosition(), "5 5 5"), BlobHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))
@@ -345,6 +345,19 @@ function ApplyBotSkin(%obj)
 	
 	GameConnection::ApplyBodyParts(%obj);
 	GameConnection::ApplyBodyColors(%obj);
+
+	//Special cases
+
+	if (striPos(%obj.getDataBlock().getName(),"Blob") != -1)
+	{
+		%obj.hideNode("ALL");
+		%obj.unHideNode("skirtHip");
+		%obj.unHideNode("lShoe");
+		%obj.unHideNode("rshoe");
+			
+		%obj.setNodeColor("lShoe", $EOTW::TempAvatar::LLegColor);
+		%obj.setNodeColor("rShoe", $EOTW::TempAvatar::RLegColor);
+	}
 }
 AddDamageType("EOTWLava", '%1 went for a swim.', '%1 went for a swim.', 1, 1);
 package EOTW_Fauna
@@ -354,6 +367,7 @@ package EOTW_Fauna
 		%data = %player.getDataBlock();
 		if(%player.getClassName() $= "AIPlayer" && getRandom() < getField(%data.EOTWLootTableData, 1) && !%forceRemove)
 		{
+			%player.setShapeName("(Gibbable)", 8564862);
 			%player.isGibbable = true;
 			%player.RemoveBodySchedule = %player.schedule(1000 * 60, "RemoveBody", true);
 		}
@@ -411,10 +425,19 @@ package EOTW_Fauna
 	{
 		Parent::damage(%this, %obj, %sourceObj, %position, %damage, %damageType);
 
-		if (%obj.getClassName() $= "AIPlayer" && %obj.getDatablock().isBoss)
+		if (%obj.getClassName() $= "AIPlayer")
 		{
-			%obj.setShapeNameDistance(128);
-			%obj.setShapeNameColor("1 0 0");
+			if (%obj.getDatablock().isBoss)
+			{
+				%obj.setShapeNameDistance(128);
+				%obj.setShapeNameColor("1 0 0");
+			}
+			else
+			{
+				%obj.setShapeNameDistance(16);
+				%obj.setShapeNameColor("1 0.5 0");
+			}
+			
 			%obj.setShapeName(mCeil((1 - %obj.getDamagePercent()) * 100) @ "\% HP", 8564862);
 		}
 	}

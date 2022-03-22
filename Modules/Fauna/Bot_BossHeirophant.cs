@@ -138,7 +138,8 @@ function DeathPillarKillCheck(%source, %pos)
 		if (getSimTime() - %hit.lastPillarHit > 100 && %hit != %source)
 		{
 			%hit.lastPillarHit = getSimTime();
-			%hit.Damage(%source, %hit.getPosition(), 10 + mCeil(%source.CalculateBossAnger() * 30), $DamageType::Heirophant);
+			//%hit.Damage(%source, %hit.getPosition(), 10 + mCeil(%source.CalculateBossAnger() * 30), $DamageType::Heirophant);
+			%hit.Damage(%source, %hit.getPosition(), 20, $DamageType::Heirophant);
 		}
 	}
 }

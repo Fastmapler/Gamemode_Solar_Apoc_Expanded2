@@ -89,6 +89,7 @@ function EOTW_SaveData_BrickData()
     %saveList[%saveLists++]  = "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";
     %saveList[%saveLists++]  = "\tstoredToolData0\tstoredToolData1\tstoredToolData2\tstoredToolData3\tstoredToolData4";
     %saveList[%saveLists++]  = "\tsplitterFilterDown\tsplitterFilterUp";
+    %saveList[%saveLists++]  = "\tDrillRecipe";
 
     deleteVariables("$EOTW::BrickData*");
     for (%j = 0; %j < MainBrickGroup.getCount(); %j++)

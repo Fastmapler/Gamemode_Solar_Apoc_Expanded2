@@ -1,6 +1,6 @@
 datablock PlayerData(HunterHoleBot : UnfleshedHoleBot)
 {
-	shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Fauna/EnemyShapes/Hunter/hydralisk.dts";
+	shapeFile = "Add-Ons/Gamemode_Inferno/EnemyShapes/hydralisk.dts";
 
 	runforce			= 40 * 90;
 	maxForwardSpeed		= 7;
@@ -61,7 +61,62 @@ datablock PlayerData(HunterHoleBot : UnfleshedHoleBot)
 	EOTWLootTable[2] = 0.1 TAB 3 TAB 5 TAB "Sturdium";
 };
 
+datablock TSShapeConstructor(HunterHoleBotDts)
+{
+	baseShape  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hydralisk.dts";
+	sequence0  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq root";
 
+	sequence1  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_move.dsq run";
+	sequence2  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_move.dsq walk";
+	sequence3  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_back.dsq back";
+	sequence4  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_side.dsq side";
+
+	sequence5  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_crouch.dsq crouch";
+	sequence6  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_crouchMove.dsq crouchRun";
+	sequence7  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_crouch.dsq crouchBack";
+	sequence8  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_crouchSide.dsq crouchSide";
+
+	sequence9  = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq look";
+	sequence10 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq headside";
+	sequence11 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq headUp";
+
+	sequence12 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_fall.dsq jump";
+	sequence13 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq standjump";
+	sequence14 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_fall.dsq fall";
+	sequence15 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq land";
+
+	sequence16 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq armAttack";
+	sequence17 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq armReadyLeft";
+	sequence18 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq armReadyRight";
+	sequence19 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq armReadyBoth";
+	sequence20 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq spearready";  
+	sequence21 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq spearThrow";
+
+	sequence22 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq talk";  
+
+	sequence23 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_death.dsq death1"; 
+
+	sequence24 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq shiftUp";
+	sequence25 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq shiftDown";
+	sequence26 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_acid_attack.dsq shiftAway";
+	sequence27 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq shiftTo";
+	sequence28 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq shiftLeft";
+	sequence29 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq shiftRight";
+	sequence30 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq rotCW";
+	sequence31 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq rotCCW";
+
+	sequence32 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq undo";
+	sequence33 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq plant";
+
+	sequence34 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_sit.dsq sit";
+
+	sequence35 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq wrench";
+
+	sequence36 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_attack.dsq activate";
+	sequence37 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_attack.dsq activate2";
+
+	sequence38 = "Add-Ons/Gamemode_Inferno/EnemyShapes/hyd_root.dsq leftrecoil";
+};
 
 function HunterHoleBot::onAdd(%this,%obj)
 {

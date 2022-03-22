@@ -7,6 +7,10 @@ datablock PlayerData(BlobHoleBot : UnfleshedHoleBot)
 	maxDamage			= 300;
 	lavaImmune			= false;
 
+	boundingBox				= VectorScale("1.25 1.25 1.33", 4);
+    crouchBoundingBox		= VectorScale("1.25 1.25 0.05", 4);
+    proneBoundingBox		= VectorScale("1.25 1.25 0.05", 4);
+
 	//can have unique types, nazis will attack zombies but nazis will not attack other bots labeled nazi
 	hName = "Blob";				//cannot contain spaces
 	hTickRate = 3000;
@@ -44,7 +48,7 @@ datablock PlayerData(BlobHoleBot : UnfleshedHoleBot)
 		hSpasticLook = 1;				//Makes them look around their environment a bit more.
 	hEmote = 1;
 
-	hPlayerscale = "1.0 1.0 1.0";		//The size of the bot
+	hPlayerscale = "2.0 2.0 2.0";		//The size of the bot
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
