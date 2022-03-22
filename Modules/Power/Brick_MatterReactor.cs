@@ -454,11 +454,13 @@ function Player::EOTW_VoidDrillInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_VoidDrillInspectLoop", %brick);
 }
 
-function ServerCmdSDR(%client, %name) { ServerCmdSetDrillRecipe(%client, %name); }
-function ServerCmdSetDrillRecipe(%client, %name)
+function ServerCmdSDR(%client, %name, %name2, %name3, %name4) { ServerCmdSetDrillRecipe(%client, %name, %name2, %name3, %name4); }
+function ServerCmdSetDrillRecipe(%client, %name, %name2, %name3, %name4)
 {
 	if (!isObject(%player = %client.player))
 		return;
+
+	%name = trim(%name SPC %name2 SPC %name3 SPC %name4);
 
 	if (%name $= "")
 	{
@@ -476,7 +478,7 @@ function ServerCmdSetDrillRecipe(%client, %name)
 	{
 		%data = %hit.getDatablock();
 
-		if (%data.getName() !$= "")
+		if (%data.getName() !$= "brickEOTWVoidDrillData")
 		{
 			%client.chatMessage("This command is used for Void Drills.");
 			return;
@@ -504,14 +506,16 @@ function ServerCmdSetDrillRecipe(%client, %name)
 	}
 }
 
-function ServerCmdGDR(%client, %name) { ServerCmdGetDrillRecipe(%client, %name); }
-function ServerCmdGetDrillRecipe(%client, %name)
+function ServerCmdGDR(%client, %name, %name2, %name3, %name4) { ServerCmdGetDrillRecipe(%client, %name, %name2, %name3, %name4); }
+function ServerCmdGetDrillRecipe(%client, %name, %name2, %name3, %name4)
 {
 	if (%name $= "")
 	{
 		%client.chatMessage("Usage: /GetDrillRecipe <matter>");
 		return;
 	}
+
+	%name = trim(%name SPC %name2 SPC %name3 SPC %name4);
 
 	%recipe = GetVoidDrillCostData(%name);
 
@@ -522,7 +526,8 @@ function ServerCmdGetDrillRecipe(%client, %name)
 	}
 	%matter = GetMatterType(%name);
 
-	%client.chatMessage("EU Required: " @ getField(%recipe, 1));
+	%client.chatMessage("[" @ %matter.name @ "]");
+	%client.chatMessage("EU Required: " @ getField(%recipe, 2));
 	%client.chatMessage("Boss Essence Cost: " @ getField(%recipe, 1));
 	if (%matter.requiredCollectFuel !$= "")
 		%client.chatMessage("Additional Cost: " @ getField(%matter.requiredCollectFuel, 1) SPC getField(%matter.requiredCollectFuel, 0));
