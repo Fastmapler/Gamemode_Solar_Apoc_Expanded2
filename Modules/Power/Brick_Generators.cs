@@ -140,7 +140,7 @@ function fxDtsBrick::EOTW_SoulReactorLoop(%obj)
 		while(isObject(%hit = containerSearchNext()))
 		{
 			spawnBeam(%hit.getPosition(), %obj.getPosition(), 1);
-			%obj.changePower(mCeil(%hit.getDatablock().maxDamage / 2));
+			%obj.changePower(mCeil(%hit.getDatablock().maxDamage / 1));
 			%hit.delete();
 		}
 	}

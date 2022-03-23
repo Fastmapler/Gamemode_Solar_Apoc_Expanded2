@@ -245,6 +245,7 @@ function brickToolStorageData::onPlant(%this,%brick)
 	Parent::onPlant(%this,%brick);
 	if (isObject(%brick) && %brick.getDatablock().maxStoredTools > 0)
 	{
+		%brick.ignoreEventRestriction = true;
 		%brick.addEvent(true, 0, "onActivate", "Self", "openStorage", 5, "", "", "");
 	}
 }

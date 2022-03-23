@@ -377,13 +377,31 @@ package EOTW_Fauna
 	
 			for (%i = 0; %data.EOTWLootTable[%i] !$= ""; %i++)
 			{
-				if (%rand >= getField(%data.EOTWLootTable[%i], 0))
+				%loot = %data.EOTWLootTable[%i];
+				if (%rand >= getField(%loot, 0))
 				{
-					%rand -= getField(%data.EOTWLootTable[%i], 0);
+					%rand -= getField(%loot, 0);
 					continue;
 				}
 
-				EOTW_SpawnOreDrop(getRandom(getField(%data.EOTWLootTable[%i], 1), getField(%data.EOTWLootTable[%i], 2)) * 3, getField(%data.EOTWLootTable[%i], 3), %player.getPosition());
+				if (getField(%loot, 1) !$= "ITEM")
+				{
+					EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)) * 3, getField(%loot, 3), %player.getPosition());
+				}
+				else
+				{
+					%item = new Item()
+					{
+						datablock	= getField(%loot, 2);
+						static		= "0";
+						position	= %player.getPosition();
+						rotation	= EulerToAxis(getRandom(0,359) SPC getRandom(0,359) SPC getRandom(0,359)); //Todo: Get this to work.
+						craftedItem = true;
+					};
+					%item.setVelocity(getRandom(-7,7) SPC getRandom(-7,7) SPC 7);
+					%item.schedulePop();
+				}
+				
 				
 				break;
 			}

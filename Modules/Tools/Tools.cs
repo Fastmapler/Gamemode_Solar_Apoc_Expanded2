@@ -7,6 +7,7 @@ exec("./Tool_Pickaxes.cs");
 exec("./Tool_Flasks.cs");
 exec("./Tool_Syringes.cs");
 exec("./Tool_Sickle.cs");
+exec("./Tool_BossKey.cs");
 exec("./Support_DropInventoryOnDeath.cs");
 //exec("./Tool_Multitool.cs");
 

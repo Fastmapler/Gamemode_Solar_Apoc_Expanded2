@@ -164,7 +164,7 @@ function SickleProjectile::onCollision(%data, %proj, %col, %fade, %pos, %norm)
 
     if (!isObject(%client = %proj.client) || !isObject(%player = %client.player)) return;
 
-    initContainerRadiusSearch(%pos, 0.5, $Typemasks::fxBrickAlwaysObjectType);
+    initContainerRadiusSearch(%pos, 1, $Typemasks::fxBrickAlwaysObjectType);
 
     while(isObject(%hit = containerSearchNext()))
     {

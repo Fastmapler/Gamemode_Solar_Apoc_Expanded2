@@ -49,10 +49,11 @@ datablock PlayerData(IntoxicatedHoleBot : UnfleshedHoleBot)
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
-	EOTWLootTableData = 4.0 TAB 0.8;
+	EOTWLootTableData = 4.1 TAB 0.8;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1 TAB 4 TAB 8 TAB "Copper";
 	EOTWLootTable[1] = 1 TAB 2 TAB 4 TAB "Silver";
 	EOTWLootTable[2] = 1 TAB 6 TAB 12 TAB "Lead";
 	EOTWLootTable[3] = 1 TAB 3 TAB 9 TAB "Gold";
+	EOTWLootTable[4] = 0.1 TAB "ITEM" TAB BossKeyItem;
 };

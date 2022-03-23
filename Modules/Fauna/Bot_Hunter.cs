@@ -59,6 +59,7 @@ datablock PlayerData(HunterHoleBot : UnfleshedHoleBot)
 	EOTWLootTable[0] = 1 TAB 50 TAB 100 TAB "Energy";
 	EOTWLootTable[1] = 0.5 TAB 128 TAB 128 TAB "Granite";
 	EOTWLootTable[2] = 0.1 TAB 3 TAB 5 TAB "Sturdium";
+	EOTWLootTable[3] = 0.05 TAB "ITEM" TAB BossKeyItem;
 };
 
 datablock TSShapeConstructor(HunterHoleBotDts)
