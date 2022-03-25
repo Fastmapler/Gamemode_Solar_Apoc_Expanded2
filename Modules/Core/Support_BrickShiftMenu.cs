@@ -429,17 +429,67 @@ new ScriptObject(EOTWbsmMenu)
 	title = "<font:arial:24>\c2Solar Apoc Expanded 2";
 	format = "tahoma:20" TAB "\c2" TAB "<div:1>\c6" TAB "<div:1>\c2" TAB "\c7";
 
-	entry[0] = "Material Recipes" TAB "MatRecipes";
-	entry[1] = "Material Dictionary" TAB "MatDict";
-	entry[2] = "[Close]" TAB "closeMenu";
+	entry[0] = "General Help" TAB "HelpMenu";
+	entry[1] = "Command List" TAB "CommandMenu";
+	entry[2] = "Material Recipes" TAB "MatRecipes";
+	entry[3] = "Material Dictionary" TAB "MatDict";
+	entry[4] = "[Close]" TAB "closeMenu";
 
-	entryCount = 3;
+	entryCount = 5;
 
+	submenu["HelpMenu"] = "";
+	submenu["CommandMenu"] = EOTWbsmCommandMenu;
 	submenu["MatRecipes"] = EOTWbsmMaterialRecipesMenu;
 	submenu["MatDict"] = EOTWbsmMaterialDictonaryMenu;
 
 	disableSelect = true;
 };
+
+new ScriptObject(EOTWbsmCommandMenu)
+{
+	superClass = "BSMObject";
+
+	parent = EOTWbsmMenu;
+
+	title = "<font:arial:24>\c2Command List";
+	format = EOTWbsmMenu.format;
+
+	entry[0] = "[Close]" TAB "closeMenu";
+	entry[1] = "/help" TAB "help";
+	entry[2] = "/inv" TAB "inv";
+	entry[3] = "/invfull" TAB "invfull";
+	entry[4] = "/donate" TAB "donate";
+	entry[5] = "/insert (/i)" TAB "insert";
+	entry[6] = "/extract (/e)" TAB "extract";
+	entry[7] = "/addRecipe (/ar)" TAB "addrecipe";
+	entry[8] = "/extractAll (/ea)" TAB "extractall";
+
+	entryCount = 9;
+
+	submenu["closeMenu"] = EOTWbsmMenu;
+
+	disableSelect = true;
+};
+
+function EOTWbsmCommandMenu::onUserMove(%obj, %cl, %id, %move, %val)
+{
+	if(%move == $BSM::PLT)
+	{
+		switch$(%id)
+		{
+			case "help": %client.chatMessage("\c6/help - Brings up the help menu. Can also be accessed by pressing plant brick without a ghost brick.");
+			case "inv": %client.chatMessage("\c6/inv <material> - Prints all of your held materials, unless a specific material is specified.");
+			case "invfull": %client.chatMessage("\c6/invfull - Prints all materials in the game and how much of each you have.");
+			case "donate": %client.chatMessage("\c6/donate - Donate materials to another player on the server.");
+			case "insert": %client.chatMessage("\c6/insert - Insert a specified amount of a specific held material into a brick's (you are looking at) material inventory.");
+			case "extract": %client.chatMessage("\c6/extract - Remove materials from a brick you are looking at.");
+			case "addrecipe": %client.chatMessage("\c6/addrecipe - Shortcut function for insert that automatically inputs the materials required to craft a material.");
+			case "extractall": %client.chatMessage("\c6/extractall - extract all materials from a specific slot of a brick, or even all materials.");
+		}
+	}
+	else
+		Parent::onUserMove(%obj, %cl, %id, %move, %val);
+}
 
 new ScriptObject(EOTWbsmMaterialRecipesMenu)
 {

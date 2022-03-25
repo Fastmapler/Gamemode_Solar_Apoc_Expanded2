@@ -359,6 +359,26 @@ function ApplyBotSkin(%obj)
 		%obj.setNodeColor("rShoe", $EOTW::TempAvatar::RLegColor);
 	}
 }
+
+function spawnBossPortal()
+{
+	if (isObject($EOTW::BossPortal) && getSimTime() - $EOTW::BossPortal.spawnTime < (1000 * 60 * 30))
+		return;
+
+	if (isObject($EOTW::BossPortal))
+		$EOTW::BossPortal.delete();
+
+	%result = CreateBrick(EnvMaster, EOTWBossDoor_Heirophant, GetRandomSpawnLocation(), 0, getRandom(0, 3));
+	if (isObject(getField(%result, 0)) && getField(%result, 1) == 0)
+	{
+		$EOTW::BossPortal = getField(%result, 0);
+		$EOTW::BossPortal.spawnTime = getSimTime();
+		$EOTW::BossPortal.addEvent(true, 0, "onActivate", "Client", "ChatMessage", "\c6This door requires a \c0Boss Key\c6...");
+
+		return $EOTW::BossPortal;
+	}
+}
+
 AddDamageType("EOTWLava", '%1 went for a swim.', '%1 went for a swim.', 1, 1);
 package EOTW_Fauna
 {
@@ -457,6 +477,21 @@ package EOTW_Fauna
 			}
 			
 			%obj.setShapeName(mCeil((1 - %obj.getDamagePercent()) * 100) @ "\% HP", 8564862);
+
+			if (%obj.getState() $= "DEAD" && !%obj.dropScore && isObject(%sourceClient = %sourceObj.client))
+			{
+				%obj.dropScore = true;
+				for (%i = 0; %i < FaunaSpawnData.getCount(); %i++)
+				{
+					%spawnData = FaunaSpawnData.getObject(%i);
+					if (%spawnData.data $= %obj.getDataBlock().getName())
+					{
+						%scoreDrop = getMax(mFloor(%spawnData.spawnCost / %spawnData.spawnWeight / %spawnData.maxSpawnGroup / 3), 1);
+						%scoreDrop /= mLog(%scoreDrop + 10);
+						%sourceClient.incScore(%scoreDrop);
+					}
+				}
+			}
 		}
 	}
 };

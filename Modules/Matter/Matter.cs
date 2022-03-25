@@ -54,6 +54,9 @@ function GatherableSpawnLoop(%despawnValue)
 	{
 		if (getRandom() < 0.01)
 			SpawnOilGeyser();
+
+		if (getRandom() < 0.001 && ($EOTW::Day % 60) > 30)
+			spawnBossPortal();
 		
 		SpawnGatherableVein();
 	}
@@ -294,6 +297,10 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 			if (%reqFuel !$= "")
 				%player.ChangeMatterCount(getField(%reqFuel, 0), getField(%reqFuel, 1) * -1);
 
+			%drillData = GetVoidDrillCostData(%brick.matterType.name);
+			if (%drillData != -1)
+				%client.incScore(getField(%drillData, 1));
+				
 			$EOTW::Material[%client.bl_id, %brick.matterType.name] += %brick.matterType.spawnValue;
 			%client.centerPrint("<br><color:FFFFFF>Collected a gatherable " @ %brick.material @ " brick.<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, %brick.matterType.name] SPC %brick.matterType.name @ ".", 3);
 			%brick.killBrick();

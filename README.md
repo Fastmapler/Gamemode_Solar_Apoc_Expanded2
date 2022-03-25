@@ -7,32 +7,38 @@ Welcome to the Apocalypse of Blockland, but this time it is cooler(er) B)
 **[Link to Google Doc](https://docs.google.com/file/d/1m3-dcelrbrEDwQBHapI36xYq_OGoO1j0/edit?usp=docslist_api&filetype=msword) for actual content**
 
 
-## List of stuff to do (And approx. complexity of task):
+## List of stuff to do:
 
-Fix plant growth (medium)
+Fix foor event spam issue
 
-Machine energy I/O statistic monitoring (complex)
+Reduce spawner raycasts to fix player/enemy/material spawn issues
 
-Tutorial/Safehouse spawn (medium)
+Add proper help meny and tutorial
 
-Make machines have fun sounds (easy)
+Make weapon ammo drop on death
 
-Remaining missing machines (complex)
+Add portal and summoning altar spawning for bosses
 
-Random events (complex)
+Rare and common drops from bosses
 
-Mining C4 (medium)
+Machine energy I/O statistic monitoring
 
-Auto-drills (complex)
+Make machines have fun sounds
 
-Drones (complex)
+Two alternate bosses
 
-Megafauna/Boss (very complex)
+Random events
 
-Void Drill (easy)
+Mining C4
 
-Fission Reactor (will likely be the biggest project yet)
+Auto-drills
 
-Fusion Reactor + Infinity production (very complex)
+Drones (Mining, Combat)
 
-Tier 6 Weapons (medium)
+Modular Fission Reactor (MFR)
+
+Heavy Material Fusion Reactor (HMFuR)
+
+Infinity/Singularity production (Via HMFuR)
+
+Tier 6 Weapons

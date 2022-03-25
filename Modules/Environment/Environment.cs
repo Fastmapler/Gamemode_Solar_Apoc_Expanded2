@@ -7,7 +7,7 @@ function EnvMasterInitSetup()
 		new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 
 	$EOTW::WorldBounds = "-1024 -1024 1024 1024";
-	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap5.bls", 3, "", 2);
+	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap6.bls", 3, "", 2);
 }
 schedule(100, 0, "EnvMasterInitSetup");
 

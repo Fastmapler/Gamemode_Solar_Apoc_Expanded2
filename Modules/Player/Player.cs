@@ -22,7 +22,7 @@ function PlayerLoop()
 				}
 				else
 				{
-					%player.ChangeMatterCount("Energy", -2);
+					%player.ChangeMatterCount("Energy", -5);
 				}
 			}
 
