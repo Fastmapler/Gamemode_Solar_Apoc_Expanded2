@@ -137,7 +137,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%player.getPosition(), "5 5 5"), BlobHoleBot);
+//spawnNewFauna(vectorAdd(%player.getPosition(), "5 5 5"), RevenantHoleBot).kill();
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))
@@ -368,13 +368,20 @@ function spawnBossPortal()
 	if (isObject($EOTW::BossPortal))
 		$EOTW::BossPortal.delete();
 
-	%result = CreateBrick(EnvMaster, EOTWBossDoor_Heirophant, GetRandomSpawnLocation(), 0, getRandom(0, 3));
-	if (isObject(getField(%result, 0)) && getField(%result, 1) == 0)
+	%result = CreateBrick(EnvMaster, EOTWBossDoor_Heirophant, vectorAdd(GetRandomSpawnLocation(), "0 0 15"), 0, getRandom(0, 3));
+	talk(%result);
+	if (isObject(getField(%result, 0)))
 	{
+		if (getField(%result, 1) == 1)
+		{
+			getField(%result, 0).delete();
+			return getField(%result, 1);
+		}
+
 		$EOTW::BossPortal = getField(%result, 0);
 		$EOTW::BossPortal.spawnTime = getSimTime();
 		$EOTW::BossPortal.addEvent(true, 0, "onActivate", "Client", "ChatMessage", "\c6This door requires a \c0Boss Key\c6...");
-
+		Brickgroup_1337.add($EOTW::BossPortal);
 		return $EOTW::BossPortal;
 	}
 }

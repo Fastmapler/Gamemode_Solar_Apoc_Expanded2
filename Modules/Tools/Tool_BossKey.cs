@@ -173,5 +173,5 @@ datablock fxDTSBrickData(EOTWBossDoor_Heirophant)
 {
 	brickFile = "./Shapes/Castle3_closed.blb";
     uiName = "Heirophant Door";
-	keyTeleportTrans = "0 0 0";
+	keyTeleportTrans = "9999 9940 48.3 0 0 1 0";
 };

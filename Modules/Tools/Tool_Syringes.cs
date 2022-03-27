@@ -298,7 +298,7 @@ function Player::PotionTick_SyringeOverload(%obj, %tick)
         %obj.steroidlevel += 2;
         %obj.ammoReturnLevel += 5;
     }
-    %obj.addHealth(-5);
+    %obj.addHealth(-2);
 
     %obj.PotionSchedule["PotionTick_SyringeOverload"] = %obj.schedule(1000, "PotionTick_SyringeOverload", %tick + 1);
 }

@@ -9,7 +9,9 @@ Welcome to the Apocalypse of Blockland, but this time it is cooler(er) B)
 
 ## List of stuff to do:
 
-Fix foor event spam issue
+Fix door event spam issue
+
+Wire/Energy transfer priority
 
 Reduce spawner raycasts to fix player/enemy/material spawn issues
 
@@ -37,8 +39,8 @@ Drones (Mining, Combat)
 
 Modular Fission Reactor (MFR)
 
-Heavy Material Fusion Reactor (HMFuR)
+MetaMaterial Hyper-Compression Fusion Reactor (MMHCFR)
 
-Infinity/Singularity production (Via HMFuR)
+Infinity/Singularity production (Via MMHCFR)
 
 Tier 6 Weapons

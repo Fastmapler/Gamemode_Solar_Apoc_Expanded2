@@ -53,5 +53,5 @@ datablock PlayerData(RevenantHoleBot : UnfleshedHoleBot)
 	EOTWLootTable[0] = 0.2 TAB 4 TAB 8 TAB "Raw Thorium";
 	EOTWLootTable[1] = 0.1 TAB 4 TAB 8 TAB "Raw Uranium";
 	EOTWLootTable[2] = 0.1 TAB 16 TAB 32 TAB "Leather";
-	EOTWLootTable[3] = 0.05 TAB "ITEM" TAB BossKeyItem;
+	EOTWLootTable[3] = 0.5 TAB "ITEM" TAB BossKeyItem;
 };

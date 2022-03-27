@@ -1,8 +1,8 @@
-$EOTW::ItemCrafting["advAmmoPistolItem"] = (64 TAB "Iron") TAB (16 TAB "Copper"); //BaseWep Cost: 1x Iron, 1x Copper, 1x Lead
-$EOTW::ItemCrafting["advAmmoRevolverItem"] = (24 TAB "Lead") TAB (56 TAB "Gold"); //BaseWep Cost: 2x Iron, 1x Lead, 1x Silver
-$EOTW::ItemCrafting["advAmmoShotgunItem"] = (48 TAB "Lead") TAB (28 TAB "Gold"); //BaseWep Cost: 4x Wood, 1x Iron, 2x Gold
-$EOTW::ItemCrafting["advAmmoMachineRifleItem"] = (16 TAB "Silver") TAB (32 TAB "Copper"); //BaseWep Cost: 2x Iron, 1x Copper, 1x Silver
-$EOTW::ItemCrafting["advAmmoRifleItem"] = (32 TAB "Silver") TAB (16 TAB "Copper"); //BaseWep Cost: 4x Wood, 2x Iron, 2x Lead
+$EOTW::ItemCrafting["advAmmoPistolItem"] = (16 TAB "Iron") TAB (8 TAB "Copper"); //BaseWep Cost: 1x Iron, 1x Copper, 1x Lead
+$EOTW::ItemCrafting["advAmmoRevolverItem"] = (12 TAB "Lead") TAB (14 TAB "Gold"); //BaseWep Cost: 2x Iron, 1x Lead, 1x Silver
+$EOTW::ItemCrafting["advAmmoShotgunItem"] = (24 TAB "Lead") TAB (7 TAB "Gold"); //BaseWep Cost: 4x Wood, 1x Iron, 2x Gold
+$EOTW::ItemCrafting["advAmmoMachineRifleItem"] = (8 TAB "Silver") TAB (16 TAB "Copper"); //BaseWep Cost: 2x Iron, 1x Copper, 1x Silver
+$EOTW::ItemCrafting["advAmmoRifleItem"] = (16 TAB "Silver") TAB (8 TAB "Copper"); //BaseWep Cost: 4x Wood, 2x Iron, 2x Lead
 
 //Firearms
 //T0
