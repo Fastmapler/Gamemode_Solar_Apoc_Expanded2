@@ -111,7 +111,7 @@ datablock PlayerData(BlobChildHoleBot : UnfleshedHoleBot)
 	EOTWLootTable[1] = 0.5 TAB 8 TAB 16 TAB "Crude Oil";
 	EOTWLootTable[2] = 0.3 TAB 8 TAB 16 TAB "Gold";
 	EOTWLootTable[3] = 0.1 TAB 1 TAB 3 TAB "Diamond";
-	BlobChildHoleBot.EOTWLootTable[4] = 0.5 TAB "ITEM" TAB BossKeyItem;
+	EOTWLootTable[4] = 0.5 TAB "ITEM" TAB BossKeyItem;
 };
 
 package BlobSplit
