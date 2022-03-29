@@ -284,6 +284,9 @@ function EnvMasterSunDamageEntity()
 			if(!%hasHarmed[%obj] && !%isVehicle && %obj.getState() !$= "DEAD")
 			{
 				%hasHarmed[%obj] = 1;
+
+				if (%obj.getDatablock().sunImmune)
+					continue;
 				
 				if (%isVehicle) %hit = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType);
 				else %hit = containerRaycast(vectorAdd(%pos = %obj.getHackPosition(), %dir), %pos, $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType);

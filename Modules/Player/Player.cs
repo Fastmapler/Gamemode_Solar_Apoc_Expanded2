@@ -317,6 +317,7 @@ exec("./Player_SolarApoc.cs");
 exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
+exec("./Support_Achievements.cs");
 //exec("./BrickControlsMenu.cs");
 
 //SetMutualBrickGroupTrust

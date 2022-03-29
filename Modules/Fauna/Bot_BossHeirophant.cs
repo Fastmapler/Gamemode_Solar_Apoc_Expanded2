@@ -1,11 +1,13 @@
 datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 {
-	runforce			= 40 * 90;
+	mass				= 900;
+	runforce			= 40 * 900;
 	maxForwardSpeed		= 4;
 	maxBackwardSpeed	= 2;
 	maxSideSpeed		= 1;
 	maxDamage			= 6000;
 	lavaImmune			= true;
+	sunImmune			= true;
 	hideBody			= true;
 
 	boundingBox = VectorScale ("3.00 3.00 6.50", 4);
