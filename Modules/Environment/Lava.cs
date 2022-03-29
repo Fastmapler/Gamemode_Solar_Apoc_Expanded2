@@ -34,15 +34,15 @@ function setLavaHeight(%height)
 	else
 		setNewWater("Add-Ons/Water_BrickLava/bricklava.water");
 	
-	if (!isObject($EOTW::LavaStatic))
-		CreateLavaStatic();
+	//if (!isObject($EOTW::LavaStatic))
+		//CreateLavaStatic();
 	
 	$EOTW::LavaStatic.setTransform("0 0 " @ %height);
 
 	if (isObject(EnvMaster))
 	{
 		servercmdEnvGui_SetVar(EnvMaster, "WaterHeight", %height);
-		servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0 1 0.05");
+		servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0 1 1");
 		servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0 1 1");
 	}
 }

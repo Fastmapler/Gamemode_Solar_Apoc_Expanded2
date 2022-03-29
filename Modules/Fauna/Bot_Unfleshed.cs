@@ -1,6 +1,6 @@
-forceRequiredAddOn("Player_AnimeCustom");
+//forceRequiredAddOn("Player_AnimeCustom");
 
-datablock PlayerData(UnfleshedHoleBot : PlayerAnimeCustomNoJetArmor)
+datablock PlayerData(UnfleshedHoleBot : StandardPlayerArmor)
 {
 	uiName 				= "";
 	minJetEnergy 		= 0;

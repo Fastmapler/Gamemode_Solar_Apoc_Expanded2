@@ -152,7 +152,7 @@ function Player::PotionTick_FlaskBathSalts(%obj, %tick)
 	if (%tick >= 60)
     {
 		%client.chatMessage("\c6The effect of the Bath Salts dose wears off.");
-		return
+		return;
     }
 	
 	if (!isObject(%image = %obj.getMountedImage(0)) || %image.getName() !$= "fistImage")
