@@ -18,7 +18,7 @@ function EnvMasterSetup()
 
 	EOTW_LoadData_RopeData();
 
-	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
+	setNewSkyBox("Add-Ons/Sky_BlocklandStaff/badspot.dml");
 	
 	$EOTW::TimeScale = 1;
 	$EOTW::TimeDialation = 0.003;
@@ -31,7 +31,6 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 	servercmdEnvGui_SetVar(EnvMaster, "SunAzimuth", 75);
 	servercmdEnvGui_SetVar(EnvMaster, "GroundColor", "0.4 0.4 0.4 1.0");
-	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
 	schedule(1000, 0, "setLavaHeight", 35);
 
 	echo("Starting Environment Master Loop.");
@@ -142,8 +141,8 @@ function EnvMasterLoop()
 	}
 	else
 	{
-		EnvMasterSunDamageEntity();
-		EnvMasterSunDamageBrick();
+		//EnvMasterSunDamageEntity();
+		//EnvMasterSunDamageBrick();
 
 		if (getRandom() < $EOTW::MeteorIntensity)
 			EnvMasterSummonFireball();

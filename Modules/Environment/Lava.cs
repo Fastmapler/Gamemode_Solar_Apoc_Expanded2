@@ -15,7 +15,7 @@ function CreateLavaStatic()
 	
 	MissionCleanup.add(%shape);
 	
-	%shape.setNodeColor("ALL", "1 0.5 0 1");
+	%shape.setNodeColor("ALL", "1 0 1 1");
 	%shape.setTransform("0 0 0");
 	%shape.setScale("64 64 0.1");
 	
@@ -42,7 +42,8 @@ function setLavaHeight(%height)
 	if (isObject(EnvMaster))
 	{
 		servercmdEnvGui_SetVar(EnvMaster, "WaterHeight", %height);
-		servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0.5 0 0.05");
+		servercmdEnvGui_SetVar(EnvMaster, "WaterColor", "1 0 1 0.05");
+		servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0 1 1");
 	}
 }
 

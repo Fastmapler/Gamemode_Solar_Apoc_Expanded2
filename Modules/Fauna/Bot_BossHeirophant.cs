@@ -1,5 +1,8 @@
+forceRequiredAddOn("Player_TouhouNew");
+
 datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 {
+	shapeFile = "Add-Ons/Player_TouhouNew/Yukari/Yukari.dts";
 	mass				= 900;
 	runforce			= 40 * 900;
 	maxForwardSpeed		= 4;

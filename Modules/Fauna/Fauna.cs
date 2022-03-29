@@ -386,6 +386,7 @@ function spawnBossPortal()
 	}
 }
 
+forceRequiredAddOn("Item_Bong");
 AddDamageType("EOTWLava", '%1 went for a swim.', '%1 went for a swim.', 1, 1);
 package EOTW_Fauna
 {
@@ -445,7 +446,14 @@ package EOTW_Fauna
 		if (%obj.getDataBlock().lavaImmune)
 			return;
 
-		%obj.Damage (0, %obj.getPosition(), %amt, $DamageType::EOTWLava);
+		if (isObject(%client = %obj.client))
+		{
+			%client.ChatMessage("\c6<font:impact:64>\cp<color:ff00ff>THE LEAN OCEAN!!!\co");
+			%client.play2d(BongShot1Sound);
+			servercmdupdatebodycolors(%obj, "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1");
+		}
+
+		//%obj.Damage (0, %obj.getPosition(), %amt, $DamageType::EOTWLava);
 		if (isEventPending(%obj.lavaSchedule))
 		{
 			cancel(%obj.lavaSchedule);
@@ -468,6 +476,9 @@ package EOTW_Fauna
 	}
 	function Armor::damage(%this, %obj, %sourceObj, %position, %damage, %damageType)
 	{
+		if (%obj.damageReduction > 0)
+			%damage /= 1 + %obj.damageReduction;
+
 		Parent::damage(%this, %obj, %sourceObj, %position, %damage, %damageType);
 
 		if (%obj.getClassName() $= "AIPlayer")

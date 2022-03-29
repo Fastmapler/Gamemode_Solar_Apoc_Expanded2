@@ -311,21 +311,21 @@ swolMelee_createMeleeItem("kurgan",
 	"",
 	offset SPC			"0 0 0.22"
 );
-//Blacklisted
-//swolMelee_createMeleeItem("fist",
-//	"Fists" TAB	"",
-//	SwingSound SPC		"fist_swing",
-//	HitPlSound SPC		"fist_HitPl",
-//	HitEnvSound SPC		"fist_HitEnv",
-//	Material SPC		"wood",
-//	SwingAnim SPC		"F",
-//	SwingDelay SPC		250,
-//	Length SPC			1,
-//	Damage SPC			20,
-//	Force SPC			2,
-//	Stun SPC			600,
-//	TwoHanded SPC		1
-//);
+
+swolMelee_createMeleeItem("fist",
+	"" TAB	"",
+	SwingSound SPC		"fist_swing",
+	HitPlSound SPC		"fist_HitPl",
+	HitEnvSound SPC		"fist_HitEnv",
+	Material SPC		"wood",
+	SwingAnim SPC		"F",
+	SwingDelay SPC		150,
+	Length SPC			3,
+	Damage SPC			85,
+	Force SPC			10,
+	Stun SPC			2000,
+	TwoHanded SPC		1
+);
 
 datablock PlayerData(playerFrozen : PlayerStandardArmor)
 {
