@@ -1,3 +1,6 @@
+//Increase max object counts so we can support more players
+$Server::MaxPhysVehicles_Total = 100;
+
 function PlayerLoop()
 {
 	cancel($EOTW:PlayerLoop);
