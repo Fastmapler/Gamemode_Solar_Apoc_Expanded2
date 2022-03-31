@@ -4,7 +4,7 @@ exec("./Brick_OilGeyser.cs");
 exec("./Support_Plants.cs");
 exec("./MatterData.cs");
 
-$EOTW::MatterDensity = 25000 / (8192 * 2 * 8192 * 2);
+$EOTW::MatterDensity = 250000 / (8192 * 2 * 8192 * 2);
 
 $EOTW::BrickBlacklist["brickSpawnPointData"] = true;
 $EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;
@@ -58,7 +58,8 @@ function GatherableSpawnLoop(%despawnValue)
 		if (getRandom() < 0.001 && ($EOTW::Day % 60) > 30)
 			spawnBossPortal();
 		
-		SpawnGatherableVein();
+		for (%i = 0; %i < 25; %i++)
+			SpawnGatherableVein();
 	}
 	
 	for (%j = 0; %j < 30 && %despawnValue < BrickGroup_1337.getCount(); %j++)
