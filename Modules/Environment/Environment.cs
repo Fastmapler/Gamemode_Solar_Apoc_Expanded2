@@ -6,8 +6,9 @@ function EnvMasterInitSetup()
 	if(!isObject(EnvMaster))
 		new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 
-	$EOTW::WorldBounds = "-1024 -1024 1024 1024";
-	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap6.bls", 3, "", 2);
+	$EOTW::WorldBounds = "-8192 -8192 8192 8192";
+	schedule(5000, 0, "Server_AutoloadSave");
+	//serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap6.bls", 3, "", 2);
 }
 schedule(100, 0, "EnvMasterInitSetup");
 
@@ -31,7 +32,7 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 	servercmdEnvGui_SetVar(EnvMaster, "SunAzimuth", 75);
 	servercmdEnvGui_SetVar(EnvMaster, "GroundColor", "0.4 0.4 0.4 1.0");
-	schedule(1000, 0, "setLavaHeight", 35);
+	//schedule(1000, 0, "setLavaHeight", 35);
 
 	echo("Starting Environment Master Loop.");
 
@@ -406,8 +407,6 @@ package EOTW_Environment
 		$EOTW::MapLoadStage++;
 
 		if ($EOTW::MapLoadStage == 1)
-			schedule(5000, 0, "Server_AutoloadSave");
-		else if ($EOTW::MapLoadStage == 2)
 		{
 			EOTW_LoadData_BrickgroupTrustData();
 			schedule(200,0,"EnvMasterSetup");

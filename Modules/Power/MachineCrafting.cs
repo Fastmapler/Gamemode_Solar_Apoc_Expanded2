@@ -57,6 +57,10 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Breeder";			energycost=128;	input[0]=("Fissile Americium" TAB 1);output[0]=("Fissile Curium" 	TAB 1);		};
 
 	};
+
+	//Energy Cost Multiplier for April Fools (less grinding/waiting)
+	for (%i = 0; %i < MatterCraftingData.getCount(); %i++)
+		MatterCraftingData.getObject(%i).energycost /= 2;
 }
 SetupMatterCraftingData();
 

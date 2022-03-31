@@ -4,7 +4,7 @@ exec("./Brick_OilGeyser.cs");
 exec("./Support_Plants.cs");
 exec("./MatterData.cs");
 
-$EOTW::MatterDensity = 5000 / (2048 * 2048);
+$EOTW::MatterDensity = 25000 / (8192 * 2 * 8192 * 2);
 
 $EOTW::BrickBlacklist["brickSpawnPointData"] = true;
 $EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;
@@ -122,7 +122,7 @@ function spawnGatherableRandom(%eye)
 
 function SpawnGatherableVein()
 {
-	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 495;
+	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 245;
 	%matter = GetRandomSpawnMaterial();
 	
 	//Chance for super concentrated spawn
@@ -146,9 +146,9 @@ function SpawnGatherableVein()
 		%for = "0 1 0";
 		%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 		%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-		%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
+		%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 250)), %mask, %this);
 		%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
-		if(isObject(%hit = firstWord(%ray)) && (getWord(%pos, 2) > $EOTW::LavaHeight + 2))
+		if(isObject(%hit = firstWord(%ray)) && ((getWord(%pos, 2) > $EOTW::LavaHeight + 2) || $EOTW::LavaHeight < 1))
 		{
 			if (%hit.getClassName() !$= "FxPlane" && strPos(%hit.getDatablock().uiName,"Ramp") > -1)
 				%pos = vectorAdd(%pos,"0 0 0.4");

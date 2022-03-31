@@ -145,17 +145,17 @@ function GetRandomSpawnLocation(%initPos, %failCount)
 	{
 		%xOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16));
 		%yOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16));
-		%eye = (getWord(%initPos, 0) + %xOffset) SPC (getWord(%initPos, 1) + %yOffset) SPC 495; //getRandom(0, 1664)
+		%eye = (getWord(%initPos, 0) + %xOffset) SPC (getWord(%initPos, 1) + %yOffset) SPC 245; //getRandom(0, 1664)
 	}
 	else
-		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 1) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 1) SPC 495;
+		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) / 1) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3)) / 1) SPC 245;
 	%dir = "0 0 -1";
 	%for = "0 1 0";
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 250)), %mask, %this);
 	
-	if (getWord(%ray,3) < $EOTW::LavaHeight && %failCount < 500)
+	if ((getWord(%ray,3) < $EOTW::LavaHeight || $EOTW::LavaHeight <= 0) && %failCount < 500)
 		return GetRandomSpawnLocation(%initPos, %failCount + 1); //Try again lol
 		
 	%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);

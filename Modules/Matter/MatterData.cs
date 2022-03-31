@@ -108,6 +108,21 @@ function SetupMatterData()
 	}
 	$EOTW::MatSpawnList = trim($EOTW::MatSpawnList);
 
+	//Gathering Multipliers for April Fools (less grinding/waiting)
+	for (%i = 0; %i < MatterData.getCount(); %i++)
+	{
+		%matter = MatterData.getObject(%i);
+
+		if (%matter.spawnValue > 0)
+			%matter.spawnValue *= 3;
+
+		if (%matter.spawnVeinSize > 0)
+			%matter.spawnVeinSize++;
+
+		if (%matter.collectTime > 0)
+			%matter.collectTime /= 2;
+	}
+
 	schedule(10, 0, "EOTWbsm_PopulateRecipesMenu");
 }
 SetupMatterData();
