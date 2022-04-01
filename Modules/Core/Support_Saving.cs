@@ -369,18 +369,18 @@ function EOTW_LoadData_PlayerData(%client)
         %line = %file.readLine();
         switch$ (getField(%line, 0))
         {
-            case "POSITION":
-                %client.savedSpawnTransform = getField(%line, 1);
-            case "CHECKPOINT":
-                initContainerRadiusSearch(getField(%line, 1), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
-                while(isObject(%hit = containerSearchNext()))
-                {
-                    if(%hit.getDataBlock().getName() $= "brickCheckpointData")
-                    {
-                        %client.checkpointBrick = %hit;
-                        break;
-                    }
-                }
+            //case "POSITION":
+            //    %client.savedSpawnTransform = getField(%line, 1);
+            //case "CHECKPOINT":
+            //    initContainerRadiusSearch(getField(%line, 1), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
+            //    while(isObject(%hit = containerSearchNext()))
+            //    {
+            //        if(%hit.getDataBlock().getName() $= "brickCheckpointData")
+            //        {
+            //            %client.checkpointBrick = %hit;
+            //            break;
+            //        }
+            //    }
             case "SAVEDPLAYERTYPE":
                 %client.savedPlayerType = getField(%line, 1);
         }

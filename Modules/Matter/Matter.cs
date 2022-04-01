@@ -123,7 +123,18 @@ function spawnGatherableRandom(%eye)
 
 function SpawnGatherableVein()
 {
-	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 245;
+	if (isObject(StargateNetwork) && StargateNetwork.getCount() > 0)
+	{
+		%origin = StargateNetwork.getObject(getRandom(0, StargateNetwork.getCount() - 1)).getPosition();
+		%angleOffset = (2 * $pi * getRandom());
+		%distOffset = getRandom(20, 120);
+		%offset = vectorScale(mCos(%angleOffset) SCP mSin(%angleOffset), %distOffset);
+		%offset = vectorAdd(%offset, "0 0 250");
+		%origin = vectorAdd(%origin, %offset);
+	}
+	else
+		%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 245;
+	
 	%matter = GetRandomSpawnMaterial();
 	
 	//Chance for super concentrated spawn
