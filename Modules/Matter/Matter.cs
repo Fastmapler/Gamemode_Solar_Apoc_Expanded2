@@ -4,7 +4,7 @@ exec("./Brick_OilGeyser.cs");
 exec("./Support_Plants.cs");
 exec("./MatterData.cs");
 
-$EOTW::MatterDensity = 250000 / (8192 * 2 * 8192 * 2);
+$EOTW::MatterDensity = 75000 / (8192 * 2 * 8192 * 2);
 
 $EOTW::BrickBlacklist["brickSpawnPointData"] = true;
 $EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;
@@ -128,8 +128,8 @@ function SpawnGatherableVein()
 		%origin = StargateNetwork.getObject(getRandom(0, StargateNetwork.getCount() - 1)).getPosition();
 		%angleOffset = (2 * $pi * getRandom());
 		%distOffset = getRandom(20, 120);
-		%offset = vectorScale(mCos(%angleOffset) SCP mSin(%angleOffset), %distOffset);
-		%offset = vectorAdd(%offset, "0 0 250");
+		%offset = vectorScale(mCos(%angleOffset) SPC mSin(%angleOffset), %distOffset);
+		%offset = vectorAdd(%offset, "0 0 245");
 		%origin = vectorAdd(%origin, %offset);
 	}
 	else
