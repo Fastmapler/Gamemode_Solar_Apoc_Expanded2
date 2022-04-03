@@ -2,14 +2,23 @@ package EOTW_ItemCrafting
 {
     function Armor::onCollision(%data,%this,%col,%vec,%vel)
 	{
-		if(%col.getClassName() $= "Item" && isObject(%col.spawnBrick) && $EOTW::ItemCrafting[%col.getDatablock().getName()] !$= "")
+		if(%col.getClassName() $= "Item")
 		{
-			if(!%this.client.messagedAboutCTPU)
-			{
-				messageClient(%this.client,'',"This item must be crafted. Click it with an empty hand to craft it. (If you don't already have one)");
-				%this.client.messagedAboutCTPU = 1;
-			}
-			return 0;
+            if (isObject(%col.spawnBrick) && $EOTW::ItemCrafting[%col.getDatablock().getName()] !$= "")
+            {
+                if(!%this.client.messagedAboutCTPU)
+                {
+                    messageClient(%this.client,'',"This item must be crafted. Click it with an empty hand to craft it. (If you don't already have one)");
+                    %this.client.messagedAboutCTPU = 1;
+                }
+                return 0;
+            }
+            else
+            {
+                %this.pickup(%col);
+                return 0;
+            }
+                
 		}
 		return Parent::onCollision(%data,%this,%col,%vec,%vel);
 	}

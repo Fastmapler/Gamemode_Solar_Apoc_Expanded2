@@ -290,7 +290,8 @@ function fxDTSBrick::removeStoredItem(%brick, %item)
 					%brick.storedToolData[%index - 1] = "";
 				}
 				//item found, remove and return
-				%items = trim(strReplace(strLwr(%str), " " @ %item @ " ", " "));
+				//%items = trim(strReplace(strLwr(%str), " " @ %item @ " ", " "));
+				%items = trim(removeWord(strLwr(%str), %index));
 				%items = parseItemList(%items, 200);
 				%brick.eventOutputParameter[%i, 2] = getField(%items, 1);
 				%brick.eventOutputParameter[%i, 3] = getField(%items, 2);

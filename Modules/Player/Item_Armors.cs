@@ -2,6 +2,7 @@ function Player::SwapKitDatablock(%obj, %this)
 {
 	%data = %this.playertype;
 	%oldData = %obj.getDatablock();
+
 	%obj.changeDatablock(%data);
 	
 	%obj.setWhiteOut(0.25);
@@ -20,6 +21,10 @@ function Player::SwapKitDatablock(%obj, %this)
 		%obj.tool[%slot] = %kit.getID();
 		messageClient(%obj.client, 'MsgItemPickup', '', %slot, %kit.getID());
 	}
+
+	if (%data.maxTools < %oldData.maxTools)
+		for (%i = %data.maxTools; %i < %oldData.maxTools; %i++)
+			ServerCmdDropTool(%obj.client, %i);
 }
 
 //Defense
