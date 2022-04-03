@@ -57,7 +57,7 @@ datablock ItemData(mixMethItem : mixSyringeHealingItem)
 {
     uiName = "DRUGS - Meth";
     colorShiftColor = "1.00 1.00 1.00 1.00";
-    image = mixFlaskSteroidImage;
+    image = mixMethImage;
 };
 
 datablock ShapeBaseImageData(mixMethImage : mixSyringeHealingImage)
@@ -115,7 +115,7 @@ datablock ItemData(mixBathSaltsItem : mixFlaskHealingItem)
 {
     uiName = "DRUGS - Bath Salts";
     colorShiftColor = "1.00 1.00 1.00 1.00";
-    image = mixFlaskSteroidImage;
+    image = mixBathSaltsImage;
 };
 
 datablock ShapeBaseImageData(mixBathSaltsImage : mixFlaskHealingImage)
@@ -156,7 +156,7 @@ function Player::PotionTick_FlaskBathSalts(%obj, %tick)
     }
 	
 	if (!isObject(%image = %obj.getMountedImage(0)) || %image.getName() !$= "fistImage")
-		%obj.mountImage(0, fistImage);
+		%obj.mountImage(fistImage);
 
     %obj.PotionSchedule["PotionTick_FlaskBathSalts"] = %obj.schedule(100, "PotionTick_FlaskBathSalts", %tick + 0.1);
 }
