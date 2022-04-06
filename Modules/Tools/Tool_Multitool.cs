@@ -1,11 +1,13 @@
-$EOTW::ItemCrafting["MultitoolItem"] = (64 TAB "Iron") TAB (28 TAB "Gold");
+//$EOTW::ItemCrafting["MultitoolItem"] = (64 TAB "Iron") TAB (28 TAB "Gold");
+$EOTW::ItemCrafting["MultitoolItem"] = (1 TAB "Infinity");
+$EOTW::ItemDescription["MultitoolItem"] = "Debug tool that displays information related to bricks.";
 
 datablock itemData(MultitoolItem)
 {
-	uiName = "TLS - Multitool";
+	uiName = "TLS - Inspector";
 	iconName = "";
 	doColorShift = true;
-	colorShiftColor = "0.25 0.70 0.25 1.00";
+	colorShiftColor = "0.10 0.10 0.10 1.00";
 	
 	shapeFile = "base/data/shapes/printGun.dts";
 	image = MultitoolImage;
@@ -75,7 +77,8 @@ function MultitoolImage::onFire(%this, %obj, %slot)
 	
 	if (isObject(%col) && (%col.getType() & $TypeMasks::FxBrickObjectType))
 	{
-		
+		if (%col.getDatablock().maxHeatCapacity > 0)
+			%col.changeHeat(10);
 	}
 }
 
@@ -124,7 +127,7 @@ function Player::MultitoolMessage(%obj)
 		}
 	}
 	
-	%client.centerPrint("<just:left>\c6Machine: " @ %target @ "<br>\c6Energy: " @ %power, 1);
+	%client.centerPrint("<just:left>\c6Machine: " @ %target @ "<br>\c6Energy: " @ %power @ "<br>\c6Fission Heat: " @ (%col.fissionHeat + 0), 1);
 		
 	%obj.MultitoolMessageLoop = %obj.schedule(100, "MultitoolMessage");
 }

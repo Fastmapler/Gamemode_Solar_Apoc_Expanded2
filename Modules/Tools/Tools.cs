@@ -9,8 +9,8 @@ exec("./Tool_Syringes.cs");
 exec("./Tool_Sickle.cs");
 exec("./Tool_BossKey.cs");
 exec("./Tool_Dynamite.cs");
+exec("./Tool_Multitool.cs");
 exec("./Support_DropInventoryOnDeath.cs");
-//exec("./Tool_Multitool.cs");
 
 //Blacklist specific items
 function updateItemNames()

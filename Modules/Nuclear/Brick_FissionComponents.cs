@@ -63,6 +63,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkBasicData)
 	subCategory = "Heat Sinks";
 	uiName = "Basic Heat Sink";
 
+	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Heat Sink";
 	maxHeatCapacity = 10000;
@@ -78,6 +79,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkSuperData)
 	subCategory = "Heat Sinks";
 	uiName = "Super Heat Sink";
 
+	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Heat Sink";
 	maxHeatCapacity = 10000;
@@ -93,6 +95,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkComponentData)
 	subCategory = "Heat Sinks";
 	uiName = "Component Heat Sink";
 
+	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Heat Sink";
 	maxHeatCapacity = 10000;
@@ -108,6 +111,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkReactorData)
 	subCategory = "Heat Sinks";
 	uiName = "Reactor Heat Sink";
 
+	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Heat Sink";
 	maxHeatCapacity = 10000;
@@ -123,6 +127,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkOverclockedData)
 	subCategory = "Heat Sinks";
 	uiName = "Overclocked Heat Sink";
 
+	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Heat Sink";
 	maxHeatCapacity = 10000;
@@ -147,18 +152,17 @@ function fxDtsBrick::Fission_HeatSinkTick(%obj)
 	if (%data.adjacentHeatPushRate > 0)
 	{
 		%parts = %fission.GetAdjacentParts(%obj);
-
+		talk("Parts: " @ %parts);
 		for (%i = 0; %i < getWordCount(%parts); %i++)
 		{
 			%part = getWord(%parts, %i);
 			%partData = %part.getDatablock();
 			if (%partData.maxHeatCapacity > 0)
 			{
-				%hull.queuedHeat += %obj.changeHeat(mFloor(%data.adjacentHeatPushRate / getWordCount(%parts)) * -1) * -1;
+				%hull.queuedHeat += %part.changeHeat(mFloor(%data.adjacentHeatPushRate / getWordCount(%parts)) * -1) * -1;
 			}
 		}
 	}
-	
 }
 
 //Heat Exchangers
@@ -169,6 +173,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerBasicData)
 	subCategory = "Heat Exchangers";
 	uiName = "Basic Heat Exchanger";
 
+	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Exchanger";
 	maxHeatCapacity = 2500;
@@ -183,6 +188,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
 	subCategory = "Heat Exchangers";
 	uiName = "Super Heat Exchanger";
 
+	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Exchanger";
 	maxHeatCapacity = 2500;
@@ -197,6 +203,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 	subCategory = "Heat Exchangers";
 	uiName = "Component Heat Exchanger";
 	
+	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Exchanger";
 	maxHeatCapacity = 2500;
@@ -211,12 +218,48 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
 	subCategory = "Heat Exchangers";
 	uiName = "Reactor Heat Exchanger";
 
+	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Exchanger";
 	maxHeatCapacity = 2500;
 	adjcaentTransferRate = 0;
 	reactorTransferRate = 720;
 };
+
+function fxDtsBrick::Fission_HeatExchangerTick(%obj)
+{
+	%data = %obj.getDatablock();
+
+	%fission = %obj.fissionParent;
+	%hull = %fission.hullBrick;
+	%hullData = %hull.getDatablock();
+
+	if (%data.adjcaentTransferRate > 0)
+	{
+		%parts = %fission.GetAdjacentParts(%obj);
+
+		for (%i = 0; %i < getWordCount(%parts); %i++)
+		{
+			%part = getWord(%parts, %i);
+			%partData = %part.getDatablock();
+			if (%partData.maxHeatCapacity > 0)
+			{
+				%percentDifference = (%part.fissionHeat / %partData.maxHeatCapacity) - (%obj.fissionHeat / %data.maxHeatCapacity);
+				%average = (%partData.maxHeatCapacity + %data.maxHeatCapacity) / 2;
+				%toalChange = mRound(mClamp(%percentDifference * %average * 0.5, %data.adjcaentTransferRate * -1, %data.adjcaentTransferRate));
+				%obj.changeHeat(%part.changeHeat(%toalChange * -1) * -1);
+			}
+		}
+	}
+
+	if (%data.reactorTransferRate > 0)
+	{
+		%percentDifference = (%hull.fissionHeat / %hullData.maxHeatCapacity) - (%obj.fissionHeat / %data.maxHeatCapacity);
+		%average = (%hullData.maxHeatCapacity + %data.maxHeatCapacity) / 2;
+		%toalChange = mRound(mClamp(%percentDifference * %average * 0.5, %data.adjcaentTransferRate * -1, %data.adjcaentTransferRate));
+		%obj.changeHeat(%hull.changeHeat(%toalChange * -1) * -1);
+	}
+}
 
 //Coolant Cells
 datablock fxDTSBrickData(brickMFRCellCoolantBasicData)

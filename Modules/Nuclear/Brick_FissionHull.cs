@@ -4,6 +4,9 @@ datablock fxDTSBrickData(brickMFRHullData)
 	category = "Nuclear";
 	subCategory = "Base Parts";
 	uiName = "MFR Hull";
+	//energyGroup = "Machine";
+	loopFunc = "EOTW_FissionReactorLoop";
+	maxHeatCapacity = 20000;
 
 	blacklistFromAdjacentScan = true;
 };
@@ -25,7 +28,7 @@ function fxDtsBrick::CreateFissionHull(%obj)
 	%fission.hullBrick = %obj;
 }
 
-function EOTW_FissionHull::GetFissionPart(%obj, %x, %y)
+function SimSet::GetFissionPart(%obj, %x, %y)
 {
 	if (isObject(%obj.fissionPart[%x, %y]))
 		return %obj.fissionPart[%x, %y];
@@ -36,7 +39,7 @@ function EOTW_FissionHull::GetFissionPart(%obj, %x, %y)
 	}
 }
 
-function EOTW_FissionHull::AddFissionPart(%obj, %part)
+function SimSet::AddFissionPart(%obj, %part)
 {
 	%hull = %obj.hullBrick;
 	%part.fissionParent = %obj;
@@ -51,7 +54,7 @@ function EOTW_FissionHull::AddFissionPart(%obj, %part)
 			%obj.fissionPart[getWord(%placedPos, 0) + %x, getWord(%placedPos, 1) +  %y] = %part.getID();
 }
 
-function EOTW_FissionHull::RemoveFissionPart(%obj, %part)
+function SimSet::RemoveFissionPart(%obj, %part)
 {
 	if (%obj != %part.fissionParent)
 		return;
@@ -69,7 +72,7 @@ function EOTW_FissionHull::RemoveFissionPart(%obj, %part)
 				%obj.fissionPart[getWord(%placedPos, 0) + %x, getWord(%placedPos, 1) +  %y] = "";
 }
 
-function EOTW_FissionHull::GetComponentsByType(%obj, %type)
+function SimSet::GetComponentsByType(%obj, %type)
 {
 	for (%i = 0; %i < %obj.getCount(); %i++)
 	{
@@ -82,7 +85,7 @@ function EOTW_FissionHull::GetComponentsByType(%obj, %type)
 	return trim(%partList);
 }
 
-function EOTW_FissionHull::GetAdjacentParts(%obj, %part)
+function SimSet::GetAdjacentParts(%obj, %part)
 {
 	if (%obj != %part.fissionParent)
 		return;
@@ -112,7 +115,7 @@ function EOTW_FissionHull::GetAdjacentParts(%obj, %part)
 	return trim(%partList);
 }
 
-function EOTW_FissionHull::TestGetAdjacentParts(%obj, %part)
+function SimSet::TestGetAdjacentParts(%obj, %part)
 {
 	%list = %obj.GetAdjacentParts(%part);
 
@@ -122,4 +125,40 @@ function EOTW_FissionHull::TestGetAdjacentParts(%obj, %part)
 		%brick.setColorFx(3);
 		%brick.schedule(500, "setcolorfx",0);
 	}
+}
+
+function fxDtsBrick::EOTW_FissionReactorLoop(%obj)
+{
+	if (getSimTime() - %obj.lastFissionTick < 1000)
+		return;
+
+	%obj.lastFissionTick = getSimTime();
+	%fission = %obj.fissionParent;
+	%fission.shuffle();
+	
+	//Tick all fission components
+	for (%i = 0; %i < %fission.getCount(); %i++)
+	{
+		%part = %fission.getObject(%i);
+		%partData = %part.getDatablock();
+		if(%partData.fissionLoopFunc !$= "" && !%part.machineDisabled)
+			%part.doCall(%partData.fissionLoopFunc);
+
+		//Build list to process queued stuff later (ie heat)
+		if (%partData.ComponentType !$= "")
+			%componentList[%partData.ComponentType, %componentCount[%partData.ComponentType]++] = %part;
+	}
+
+	//Transfer queued heat to coolant or hull
+	for (%i = 0; %i < %componentCount["Port"]; %i++)
+	{
+		%part = %componentList["Port", %i];
+		if (%part.getDatablock().getName() !$= "brickMFRCoolantPortBrick")
+			continue;
+
+		//Do cooling thing
+	}
+
+	%obj.changeHeat(%obj.queuedHeat);
+	%obj.queuedHeat = 0;
 }
