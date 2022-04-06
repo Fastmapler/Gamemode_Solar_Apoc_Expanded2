@@ -38,7 +38,7 @@ function Player::PotionTick_FlaskLean(%obj, %tick)
     if (!isObject(%client = %obj.client))
         return;
 
-    servercmdupdatebodycolors(%obj, "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1");
+    servercmdupdatebodycolors(%client, "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1", "1 0 1 1");
 
     if (getRandom() < 0.3)
     {
