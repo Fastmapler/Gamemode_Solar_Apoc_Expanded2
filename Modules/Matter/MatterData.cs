@@ -52,7 +52,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Dielectrics";	color="264b38ff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Plasteel";		color="ddb389ff";	tier=5;	placable=true;	health=4.0;	heatCapacity=50;	meteorImmune=true;	};
 		//Water Based
-		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";	tier=1;	boilCapacity=1;	};
+		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";	tier=1;	boilCapacity=1;	boilMatter="Steam";	};
 		new ScriptObject(MatterType) { name="Oxygen";		color="bcc1c88e";	tier=2;	};
 		new ScriptObject(MatterType) { name="Hydrogen";		color="bcc1c88e";	tier=2;	};
 		new ScriptObject(MatterType) { name="Brine";		color="bcc1c88e";	tier=3;	};
@@ -60,8 +60,8 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Sodium";		color="ffffffff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Tritium";		color="ffffffff";	tier=5;	};
 		new ScriptObject(MatterType) { name="Deuterium";	color="ffffffff";	tier=5;	};
-		new ScriptObject(MatterType) { name="Coolant";		color="9ab6b5ff";	tier=3;	boilCapacity=10;		};
-		new ScriptObject(MatterType) { name="Cryostablizer";color="89a3b8ff";	tier=5;	boilCapacity=50;		};
+		new ScriptObject(MatterType) { name="Coolant";		color="9ab6b5ff";	tier=3;	boilCapacity=10;	boilMatter="Hot Coolant";	};
+		new ScriptObject(MatterType) { name="Cryostablizer";color="89a3b8ff";	tier=5;	boilCapacity=50;	boilMatter="Hot Cryostablizer";	};
 		//Heated Coolants
 		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";	tier=1;	};
 		new ScriptObject(MatterType) { name="Hot Coolant";	color="9ab6b5ff";	tier=3;	};

@@ -26,8 +26,8 @@ function PowerMasterLoop()
 		}
 	}
 
-	if (isObject(PowerGroupSource))
-		PowerGroupSource.Shuffle();
+	//if (isObject(PowerGroupSource))
+		//PowerGroupSource.Shuffle();
 	
 	//Move power using power cables
 	if (isObject(PowerGroupCablePower))
@@ -42,8 +42,8 @@ function PowerMasterLoop()
 	}
 
 	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
-	if (isObject(PowerGroupCablePower))
-		PowerGroupCablePower.Shuffle();
+	//if (isObject(PowerGroupCablePower))
+		//PowerGroupCablePower.Shuffle();
 
 	if (isObject(PowerGroupPipeMatter))
 	for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i++)
@@ -57,8 +57,8 @@ function PowerMasterLoop()
 	}
 	
 	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
-	if (isObject(PowerGroupPipeMatter))
-		PowerGroupPipeMatter.Shuffle();
+	//if (isObject(PowerGroupPipeMatter))
+		//PowerGroupPipeMatter.Shuffle();
 	
 	//Move matter using matter pipes
 	if (isObject(PowerGroupPipeMatter))
@@ -73,8 +73,8 @@ function PowerMasterLoop()
 	}
 	
 	//Randomize pipe list so we get a kind of even spread of matter transfer (when multiple ropes are connected)
-	if (isObject(PowerGroupCablePower))
-		PowerGroupCablePower.Shuffle();
+	//if (isObject(PowerGroupCablePower))
+		//PowerGroupCablePower.Shuffle();
 	
 	//Run storage/sorting devices
 	if (isObject(PowerGroupStorage))
@@ -89,8 +89,8 @@ function PowerMasterLoop()
 		}
 	}
 
-	if (isObject(PowerGroupStorage))
-		PowerGroupStorage.Shuffle();
+	//if (isObject(PowerGroupStorage))
+		//PowerGroupStorage.Shuffle();
 
 	//Run machines
 	if (isObject(PowerGroupMachine))
@@ -105,8 +105,8 @@ function PowerMasterLoop()
 		}
 	}
 
-	if (isObject(PowerGroupMachine))
-		PowerGroupMachine.Shuffle();
+	//if (isObject(PowerGroupMachine))
+		//PowerGroupMachine.Shuffle();
 	
 	$EOTW::PowerMasterLoop = schedule(1000 / $EOTW::PowerTickRate, 0, "PowerMasterLoop");
 }

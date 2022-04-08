@@ -8,6 +8,7 @@ datablock fxDTSBrickData(brickMFRFuelPortBrick)
 	matterMaxBuffer = 128;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
+	inspectFunc = "EOTW_DefaultInspectLoop";
 
 	ComponentType = "Port";
 	reqFissionPart = brickMFRHullData;
@@ -24,6 +25,7 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	matterMaxBuffer = 50000;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
+	inspectFunc = "EOTW_DefaultInspectLoop";
 
 	ComponentType = "Port";
 	reqFissionPart = brickMFRHullData;

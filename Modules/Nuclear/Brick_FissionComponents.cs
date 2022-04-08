@@ -7,6 +7,8 @@ datablock fxDTSBrickData(brickMFRCellReflectorData)
 	uiName = "Reflector";
 
 	reqFissionPart = brickMFRReactionPlateData;
+	allowReflection = true;
+	powerBreeders = true;
 };
 
 datablock fxDTSBrickData(brickMFRCellControlRodData)
@@ -26,9 +28,11 @@ datablock fxDTSBrickData(brickMFRCellFuelRodData)
 	subCategory = "Control Cells";
 	uiName = "Fuel Rod";
 
+	fissionLoopFunc = "Fission_FuelCellLoop";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Fuel Rod";
 	fuelBurn = 1;
+	allowReflection = true;
 };
 
 datablock fxDTSBrickData(brickMFRCellFuel2RodData)
@@ -38,9 +42,11 @@ datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 	subCategory = "Control Cells";
 	uiName = "Dual Fuel Rod";
 
+	fissionLoopFunc = "Fission_FuelCellLoop";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Fuel Rod";
 	fuelBurn = 2;
+	allowReflection = true;
 };
 
 datablock fxDTSBrickData(brickMFRCellFuel4RodData)
@@ -50,10 +56,70 @@ datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 	subCategory = "Control Cells";
 	uiName = "Quad Fuel Rod";
 
+	fissionLoopFunc = "Fission_FuelCellLoop";
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Fuel Rod";
 	fuelBurn = 4;
+	allowReflection = true;
 };
+
+function fxDtsBrick::Fission_FuelCellLoop(%obj)
+{
+	%data = %obj.getDatablock();
+
+	%fission = %obj.fissionParent;
+	%hull = %fission.hullBrick;
+
+	if (%data.fuelBurn > 0)
+	{
+		%parts = %fission.GetAdjacentParts(%obj);
+
+		for (%i = 0; %i < %fission.getCount(); %i++)
+		{
+			%port = %fission.getObject(%i);
+			%portData = %port.getDatablock();
+			if (%portData.getName() !$= "brickMFRFuelPortBrick" || !isObject(%matter = getMatterType(getField(%port.matter["Input", 0], 0))) || %matter.fissionPower <= 0)
+				continue;
+
+			%change = %port.ChangeMatter(%matter.name, %data.fuelBurn * -1, "Input");
+			%totalHeat = %change * %matter.fissionPower * -1;
+			if (%totalHeat > 0)
+			{
+				%port.ChangeMatter("Nuclear Waste", mRound(%change * -1 * %matter.fissionWasteRate), "Output");
+				break;
+			}
+		}
+
+		if (%totalHeat <= 0)
+			return;
+		
+		//Check for reflectance and possible heat targets
+		for (%i = 0; %i < getWordCount(%parts); %i++)
+		{
+			%part = getWord(%parts, %i);
+			%partData = %part.getDatablock();
+
+			if (%partData.allowReflection)
+				%totalHeat += %data.fuelBurn;
+
+			if (%partData.maxHeatCapacity > 0)
+				%heatTargets = trim(%heatTargets SPC %part);
+
+			if (%partData.powerBreeders)
+			{
+				//Give power to breeders
+			}
+		}
+
+		if (getWordCount(%heatTargets) > 0)
+		{
+			for (%i = 0; %i < getWordCount(%heatTargets); %i++)
+				getWord(%heatTargets, %i).changeHeat(%totalHeat / getWordCount(%heatTargets));
+		}
+		else
+			%hull.changeHeat(%totalHeat);
+	}
+}
 
 //Heat Sinks
 datablock fxDTSBrickData(brickMFRCellHeatSinkBasicData)

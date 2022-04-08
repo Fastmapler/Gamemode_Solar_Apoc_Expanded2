@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickMFRHullData)
 	category = "Nuclear";
 	subCategory = "Base Parts";
 	uiName = "MFR Hull";
-	//energyGroup = "Machine";
+	energyGroup = "Machine";
 	loopFunc = "EOTW_FissionReactorLoop";
 	maxHeatCapacity = 20000;
 
@@ -26,6 +26,26 @@ function fxDtsBrick::CreateFissionHull(%obj)
 	};
 	%obj.fissionParent = %fission;
 	%fission.hullBrick = %obj;
+
+	//Readd missing fission reactor components
+	%obj.AddChildrenToHull();
+}
+
+function fxDtsBrick::AddChildrenToHull(%obj)
+{
+	if (!isObject(%fission = %obj.fissionParent))
+		return %obj.CreateFissionHull();
+
+	%data = %obj.getDatablock();
+	for (%i = 0; isObject(%brick = %obj.getUpBrick(%i)); %i++)
+	{
+		%brickData = %brickData.getDatablock();
+		if (!isObject(%brick.fissionParent) && %brickData.reqFissionPart !$= "" && %brickData.reqFissionPart $= %data.getName())
+		{
+			%fission.AddFissionPart(%brick);
+			%brick.AddChildrenToHull();
+		}
+	}
 }
 
 function SimSet::GetFissionPart(%obj, %x, %y)
@@ -129,6 +149,12 @@ function SimSet::TestGetAdjacentParts(%obj, %part)
 
 function fxDtsBrick::EOTW_FissionReactorLoop(%obj)
 {
+	if (!isObject(%obj.fissionParent))
+	{
+		%obj.CreateFissionHull();
+		return;
+	}
+
 	if (getSimTime() - %obj.lastFissionTick < 1000)
 		return;
 
@@ -150,13 +176,32 @@ function fxDtsBrick::EOTW_FissionReactorLoop(%obj)
 	}
 
 	//Transfer queued heat to coolant or hull
-	for (%i = 0; %i < %componentCount["Port"]; %i++)
+	for (%i = 1; %i <= %componentCount["Port"]; %i++)
 	{
 		%part = %componentList["Port", %i];
 		if (%part.getDatablock().getName() !$= "brickMFRCoolantPortBrick")
 			continue;
 
-		//Do cooling thing
+		%matterName = getField(%part.matter["Input",0], 0);
+		%matterCount = getField(%part.matter["Input",0], 1);
+
+		if (isObject(%matter = getMatterType(%matterName)) && %matter.boilCapacity > 0)
+		{
+			%amount = getMin(%matterCount, %obj.queuedHeat) / %matter.boilCapacity;
+			%coolAmount[%matterName] += %amount;
+			%obj.queuedHeat -= getMin(%matterCount, %obj.queuedHeat);
+
+			if (%coolAmount[%matterName] >= 1)
+			{
+				%transferAmount = mFloor(%coolAmount[%matterName]);
+
+				%change = %part.ChangeMatter(%matter.boilMatter, %transferAmount, "Output");
+				%part.ChangeMatter(%matter.name, %change * -1, "Input");
+				
+
+				%coolAmount[%matterName] -= %transferAmount;
+			}
+		}
 	}
 
 	%obj.changeHeat(%obj.queuedHeat);
