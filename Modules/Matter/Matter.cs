@@ -474,9 +474,12 @@ package EOTW_Matter
 	}
 	function fxDtsBrick::setColor(%brick, %color)
 	{
+		if (!%brick.getDatablock().notRecolorable)
+			return;
+
 		%matter = getMatterType(%brick.material);
 		if(getWord(getColorIDTable(%color), 3) > 0.95 || !isObject(%matter) || decimalFromHex(getSubStr(%matter.color, 6, 2)) < 250)
-			Parent::setColor(%brick, %color);
+			return Parent::setColor(%brick, %color);
 	}
 	function Armor::onTrigger(%data, %obj, %trig, %tog)
 	{
