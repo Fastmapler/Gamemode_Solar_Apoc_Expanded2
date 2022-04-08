@@ -1,4 +1,4 @@
-$EOTW::CustomBrickCost["brickMFRDisplayPanelData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRDisplayPanelData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Steel" TAB 64 TAB "Copper" TAB 64 TAB "Silver";
 $EOTW::BrickDescription["brickMFRDisplayPanelData"] = "Displays vital information about the fission reactor.";
 datablock fxDTSBrickData(brickMFRDisplayPanelData)
 {

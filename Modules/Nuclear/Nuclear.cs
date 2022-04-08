@@ -12,7 +12,13 @@ function fxDtsBrick::ChangeHeat(%obj, %change)
     %initalheat = %obj.fissionHeat;
     %obj.fissionHeat += %change;
 
-    if (%data.maxHeatCapacity > 0 && %obj.fissionHeat > %data.maxHeatCapacity)
+    %maxCapacity = %data.maxHeatCapacity;
+
+    for (%i = 0; isObject(%brick = %obj.getUpBrick(%i); %i++))
+        if (%brick.getDatablock().maxFissionHeatBonus > 0)
+            %maxCapacity += %brick.getDatablock().maxFissionHeatBonus;
+
+    if (%maxCapacity > 0 && %obj.fissionHeat > %maxCapacity)
         %obj.killBrick();
     else if (%obj.fissionHeat < 0)
         %obj.fissionHeat = 0;

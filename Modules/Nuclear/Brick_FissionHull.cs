@@ -1,4 +1,4 @@
-$EOTW::CustomBrickCost["brickMFRHullData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRHullData"] = 1.00 TAB "7a7a7aff" TAB 1200 TAB "Boss Essence" TAB 512 TAB "Adamantine" TAB 256 TAB "Dielectrics";
 $EOTW::BrickDescription["brickMFRHullData"] = "The baseplate and control unit for a Modular Fission Reactor (MFR).";
 datablock fxDTSBrickData(brickMFRHullData)
 {

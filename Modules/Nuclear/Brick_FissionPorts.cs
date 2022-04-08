@@ -1,11 +1,12 @@
-$EOTW::CustomBrickCost["brickMFRFuelPortBrick"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickMFRFuelPortBrick"] = "Takes in nuclear fissile fuel, outputs nuclear waste.";
+$EOTW::CustomBrickCost["brickMFRFuelPortBrick"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Energium" TAB 512 TAB "Plastic";
+$EOTW::BrickDescription["brickMFRFuelPortBrick"] = "Takes in nuclear fissile fuels, outputs nuclear waste.";
 datablock fxDTSBrickData(brickMFRFuelPortBrick)
 {
 	brickFile = "./Bricks/MFRPort.blb";
 	category = "Nuclear";
 	subCategory = "Material Ports";
 	uiName = "MFR Fuel/Waste I/O";
+	notRecolorable = true;
 
 	matterMaxBuffer = 128;
 	matterSlots["Input"] = 1;
@@ -17,7 +18,7 @@ datablock fxDTSBrickData(brickMFRFuelPortBrick)
 	blacklistFromAdjacentScan = true;
 };
 
-$EOTW::CustomBrickCost["brickMFRCoolantPortBrick"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCoolantPortBrick"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Naturum" TAB 512 TAB "Plastic";
 $EOTW::BrickDescription["brickMFRCoolantPortBrick"] = "Takes in coolants, outputs heated coolants.";
 datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 {
@@ -25,8 +26,9 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	category = "Nuclear";
 	subCategory = "Material Ports";
 	uiName = "MFR Coolant/Hot Coolant I/O";
+	notRecolorable = true;
 
-	matterMaxBuffer = 50000;
+	matterMaxBuffer = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 	inspectFunc = "EOTW_DefaultInspectLoop";
@@ -36,7 +38,7 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	blacklistFromAdjacentScan = true;
 };
 
-$EOTW::CustomBrickCost["brickMFRBreederPortBrick"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRBreederPortBrick"] = 1.00 TAB "7a7a7aff" TAB 120 TAB "Sturdium" TAB 512 TAB "Teflon";
 $EOTW::BrickDescription["brickMFRBreederPortBrick"] = "Takes in specific materials, outputs neutron activated materials. Powered by placing fuel rods adjacent to reflectors.";
 datablock fxDTSBrickData(brickMFRBreederPortBrick)
 {
@@ -44,8 +46,9 @@ datablock fxDTSBrickData(brickMFRBreederPortBrick)
 	category = "Nuclear";
 	subCategory = "Material Ports";
 	uiName = "MFR Neutron Activator";
+	notRecolorable = true;
 
-	matterMaxBuffer = 4;
+	matterMaxBuffer = 64;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 

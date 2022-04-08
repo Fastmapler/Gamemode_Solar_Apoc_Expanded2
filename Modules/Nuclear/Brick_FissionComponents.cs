@@ -1,5 +1,5 @@
 //Control Cells
-$EOTW::CustomBrickCost["brickMFRCellReflectorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellReflectorData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Coal" TAB 32 TAB "Silver" TAB 64 TAB "Rosium";
 $EOTW::BrickDescription["brickMFRCellReflectorData"] = "Takes in neutrons from adjacent active fuel rods to power MFR Neutron Activators.";
 datablock fxDTSBrickData(brickMFRCellReflectorData)
 {
@@ -7,6 +7,7 @@ datablock fxDTSBrickData(brickMFRCellReflectorData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Reflector";
+	notRecolorable = true;
 
 	reqFissionPart = brickMFRReactionPlateData;
 	//allowReflection = true;
@@ -21,11 +22,12 @@ datablock fxDTSBrickData(brickMFRCellControlRodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Control Rod";
+	notRecolorable = true;
 
 	reqFissionPart = brickMFRReactionPlateData;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellFuelRodData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellFuelRodData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Lead" TAB 192 TAB "Steel" TAB 128 TAB "Fissile Uranium";
 $EOTW::BrickDescription["brickMFRCellFuelRodData"] = "Consumes fuel from fuel ports to generate fission heat (Heat Units, HU) in adjacent parts.";
 datablock fxDTSBrickData(brickMFRCellFuelRodData)
 {
@@ -33,6 +35,7 @@ datablock fxDTSBrickData(brickMFRCellFuelRodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Fuel Rod";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_FuelCellLoop";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -41,7 +44,7 @@ datablock fxDTSBrickData(brickMFRCellFuelRodData)
 	allowReflection = true;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellFuel2RodData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellFuel2RodData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Lead" TAB 192 TAB "Steel" TAB 64 TAB "Fissile Thorium";
 $EOTW::BrickDescription["brickMFRCellFuel2RodData"] = "Compact fuel rod with twice the fuel burn (and thus heat).";
 datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 {
@@ -49,6 +52,7 @@ datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Dual Fuel Rod";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_FuelCellLoop";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -57,7 +61,7 @@ datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 	allowReflection = true;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellFuel4RodData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellFuel4RodData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Lead" TAB 192 TAB "Steel" TAB 32 TAB "Fissile Americium";
 $EOTW::BrickDescription["brickMFRCellFuel4RodData"] = "Extremely compact fuel rod with quadruple the fuel burn (and thus heat).";
 datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 {
@@ -65,6 +69,7 @@ datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Quad Fuel Rod";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_FuelCellLoop";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -142,7 +147,7 @@ function fxDtsBrick::Fission_FuelCellLoop(%obj)
 }
 
 //Heat Sinks
-$EOTW::CustomBrickCost["brickMFRCellHeatSinkBasicData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatSinkBasicData"] = 1.00 TAB "7a7a7aff" TAB 96 TAB "Steel" TAB 128 TAB "Plastic";
 $EOTW::BrickDescription["brickMFRCellHeatSinkBasicData"] = "Attempts to push 60 HU/tick to coolant.";
 datablock fxDTSBrickData(brickMFRCellHeatSinkBasicData)
 {
@@ -150,6 +155,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkBasicData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Basic Heat Sink";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -160,7 +166,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkBasicData)
 	adjacentheatPushRate = 0;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatSinkSuperData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatSinkSuperData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Steel" TAB 256 TAB "Plastic" TAB 128 TAB "Dielectrics";
 $EOTW::BrickDescription["brickMFRCellHeatSinkSuperData"] = "Attempts to push 120 HU/tick to coolant.";
 datablock fxDTSBrickData(brickMFRCellHeatSinkSuperData)
 {
@@ -168,6 +174,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkSuperData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Super Heat Sink";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -178,7 +185,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkSuperData)
 	adjacentheatPushRate = 0;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatSinkComponentData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatSinkComponentData"] = 1.00 TAB "7a7a7aff" TAB 96 TAB "Steel" TAB 128 TAB "Plastic" TAB 64 TAB "Rosium";
 $EOTW::BrickDescription["brickMFRCellHeatSinkComponentData"] = "Attempts to push 40 HU/tick in adjacent parts to coolant.";
 datablock fxDTSBrickData(brickMFRCellHeatSinkComponentData)
 {
@@ -186,6 +193,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkComponentData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Component Heat Sink";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -196,7 +204,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkComponentData)
 	adjacentheatPushRate = 40;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatSinkReactorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatSinkReactorData"] = 1.00 TAB "7a7a7aff" TAB 96 TAB "Steel" TAB 128 TAB "Plastic" TAB 64 TAB "Electrum";
 $EOTW::BrickDescription["brickMFRCellHeatSinkReactorData"] = "Attempts to pull 50 HU/tick from reactor, then pushes 50 HU/tick to coolant.";
 datablock fxDTSBrickData(brickMFRCellHeatSinkReactorData)
 {
@@ -204,6 +212,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkReactorData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Reactor Heat Sink";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -214,7 +223,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkReactorData)
 	adjacentheatPushRate = 0;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatSinkOverclockedData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatSinkOverclockedData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Steel" TAB 128 TAB "Energium" TAB 128 TAB "Naturum";
 $EOTW::BrickDescription["brickMFRCellHeatSinkOverclockedData"] = "Attempts to pull 360 HU/tick from reactor, then pushes 200 HU/tick to coolant.";
 datablock fxDTSBrickData(brickMFRCellHeatSinkOverclockedData)
 {
@@ -222,6 +231,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkOverclockedData)
 	category = "Nuclear";
 	subCategory = "Heat Sinks";
 	uiName = "Overclocked Heat Sink";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatSinkTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -263,7 +273,7 @@ function fxDtsBrick::Fission_HeatSinkTick(%obj)
 
 //Heat Exchangers
 
-$EOTW::CustomBrickCost["brickMFRCellHeatExchangerBasicData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatExchangerBasicData"] = 1.00 TAB "7a7a7aff" TAB 96 TAB "Steel" TAB 128 TAB "Teflon";
 $EOTW::BrickDescription["brickMFRCellHeatExchangerBasicData"] = "Tries to equalize heat up to 120 HU in each adjacent part to itself, and then 40 HU with the reactor.";
 datablock fxDTSBrickData(brickMFRCellHeatExchangerBasicData)
 {
@@ -271,6 +281,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerBasicData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Basic Heat Exchanger";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -280,7 +291,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerBasicData)
 	reactorTransferRate = 40;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatExchangerSuperData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatExchangerSuperData"] = 1.00 TAB "7a7a7aff" TAB 192 TAB "Steel" TAB 256 TAB "Teflon" TAB 128 TAB "Dielectrics";
 $EOTW::BrickDescription["brickMFRCellHeatExchangerSuperData"] = "Tries to equalize heat up to 240 HU in each adjacent part to itself, and then 80 HU with the reactor.";
 datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
 {
@@ -288,6 +299,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Super Heat Exchanger";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -297,7 +309,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
 	reactorTransferRate = 80;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatExchangerComponentData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatExchangerComponentData"] = 1.00 TAB "7a7a7aff" TAB 96 TAB "Steel" TAB 128 TAB "Teflon" TAB 64 TAB "Rosium";
 $EOTW::BrickDescription["brickMFRCellHeatExchangerComponentData"] = "Tries to equalize heat up to 360 HU in each adjacent part to itself.";
 datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 {
@@ -305,6 +317,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Component Heat Exchanger";
+	notRecolorable = true;
 	
 	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -314,7 +327,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 	reactorTransferRate = 0;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellHeatExchangerReactorData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellHeatExchangerReactorData"] = 1.00 TAB "7a7a7aff" TAB 96 TAB "Steel" TAB 128 TAB "Teflon" TAB 64 TAB "Electrum";
 $EOTW::BrickDescription["brickMFRCellHeatExchangerReactorData"] = "Tries to equalize heat up to 720 HU with the reactor.";
 datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
 {
@@ -322,6 +335,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
 	category = "Nuclear";
 	subCategory = "Heat Exchangers";
 	uiName = "Reactor Heat Exchanger";
+	notRecolorable = true;
 
 	fissionLoopFunc = "Fission_HeatExchangerTick";
 	reqFissionPart = brickMFRReactionPlateData;
@@ -368,7 +382,7 @@ function fxDtsBrick::Fission_HeatExchangerTick(%obj)
 
 //Coolant Cells
 
-$EOTW::CustomBrickCost["brickMFRCellCoolantBasicData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellCoolantBasicData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Water" TAB 64 TAB "Copper";
 $EOTW::BrickDescription["brickMFRCellCoolantBasicData"] = "Heat capacitor ranked up to 100,000 HU.";
 datablock fxDTSBrickData(brickMFRCellCoolantBasicData)
 {
@@ -376,13 +390,14 @@ datablock fxDTSBrickData(brickMFRCellCoolantBasicData)
 	category = "Nuclear";
 	subCategory = "Coolant Cells";
 	uiName = "Basic Coolant Cell";
+	notRecolorable = true;
 
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Coolant Cell";
 	maxHeatCapacity = 100000;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellCoolantSuperData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellCoolantSuperData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Coolant" TAB 64 TAB "Copper";
 $EOTW::BrickDescription["brickMFRCellCoolantSuperData"] = "Heat capacitor ranked up to 300,000 HU.";
 datablock fxDTSBrickData(brickMFRCellCoolantSuperData)
 {
@@ -390,13 +405,14 @@ datablock fxDTSBrickData(brickMFRCellCoolantSuperData)
 	category = "Nuclear";
 	subCategory = "Coolant Cells";
 	uiName = "Super Coolant Cell";
+	notRecolorable = true;
 
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Coolant Cell";
 	maxHeatCapacity = 300000;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellCoolantUltraData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickMFRCellCoolantUltraData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Cryostablizer" TAB 64 TAB "Copper";
 $EOTW::BrickDescription["brickMFRCellCoolantUltraData"] = "Heat capacitor ranked up to 600,000 HU.";
 datablock fxDTSBrickData(brickMFRCellCoolantUltraData)
 {
@@ -404,22 +420,24 @@ datablock fxDTSBrickData(brickMFRCellCoolantUltraData)
 	category = "Nuclear";
 	subCategory = "Coolant Cells";
 	uiName = "Ultra Coolant Cell";
+	notRecolorable = true;
 
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Coolant Cell";
 	maxHeatCapacity = 600000;
 };
 
-$EOTW::CustomBrickCost["brickMFRCellCoolantOmegaData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickMFRCellCoolantOmegaData"] = "Heat capacitor ranked up to 999,999 HU.";
-datablock fxDTSBrickData(brickMFRCellCoolantOmegaData)
-{
-	brickFile = "./Bricks/MFRCell.blb";
-	category = "Nuclear";
-	subCategory = "Coolant Cells";
-	uiName = "Omega Coolant Cell";
-
-	reqFissionPart = brickMFRReactionPlateData;
-	ComponentType = "Coolant Cell";
-	maxHeatCapacity = 999999;
-};
+//$EOTW::CustomBrickCost["brickMFRCellCoolantOmegaData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+//$EOTW::BrickDescription["brickMFRCellCoolantOmegaData"] = "Heat capacitor ranked up to 999,999 HU.";
+//datablock fxDTSBrickData(brickMFRCellCoolantOmegaData)
+//{
+//	brickFile = "./Bricks/MFRCell.blb";
+//	category = "Nuclear";
+//	subCategory = "Coolant Cells";
+//	uiName = "Omega Coolant Cell";
+//	notRecolorable = true;
+//
+//	reqFissionPart = brickMFRReactionPlateData;
+//	ComponentType = "Coolant Cell";
+//	maxHeatCapacity = 999999;
+//};
