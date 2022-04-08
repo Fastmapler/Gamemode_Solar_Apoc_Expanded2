@@ -37,11 +37,18 @@ datablock fxDTSBrickData(brickMFRBreederPortBrick)
 	brickFile = "./Bricks/MFRPort.blb";
 	category = "Nuclear";
 	subCategory = "Material Ports";
-	uiName = "MFR Isotope/Breeded I/O";
+	uiName = "MFR Neutron Activator";
 
 	matterMaxBuffer = 4;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
+
+	energyGroup = "Source";
+	energyMaxBuffer = 64;
+	loopFunc = "EOTW_MatterReactorLoop";
+	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
+	energyWattage = 64;
+	inspectFunc = "EOTW_MatterReactorInspectLoop";
 
 	ComponentType = "Port";
 	reqFissionPart = brickMFRHullData;

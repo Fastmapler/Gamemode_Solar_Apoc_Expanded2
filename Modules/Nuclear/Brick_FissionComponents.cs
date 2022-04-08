@@ -107,7 +107,17 @@ function fxDtsBrick::Fission_FuelCellLoop(%obj)
 
 			if (%partData.powerBreeders)
 			{
-				//Give power to breeders
+				//Not very well optimized.. (Looping over the same list in a loop looping over said list)
+				for (%j = 0; %j < %fission.getCount(); %j++)
+				{
+					%brick = %fission.getObject(%j);
+					if (%brick.getDataBlock().getName() $= "brickMFRBreederPortBrick" && isObject(%craft = %brick.craftingProcess))
+					{
+						%brick.changePower(1);
+						break;
+					}
+				}
+					
 			}
 		}
 
