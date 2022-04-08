@@ -1,3 +1,5 @@
+$EOTW::CustomBrickCost["brickMFRFuelPortBrick"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickMFRFuelPortBrick"] = "Takes in nuclear fissile fuel, outputs nuclear waste.";
 datablock fxDTSBrickData(brickMFRFuelPortBrick)
 {
 	brickFile = "./Bricks/MFRPort.blb";
@@ -15,6 +17,8 @@ datablock fxDTSBrickData(brickMFRFuelPortBrick)
 	blacklistFromAdjacentScan = true;
 };
 
+$EOTW::CustomBrickCost["brickMFRCoolantPortBrick"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickMFRCoolantPortBrick"] = "Takes in coolants, outputs heated coolants.";
 datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 {
 	brickFile = "./Bricks/MFRPort.blb";
@@ -32,6 +36,8 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	blacklistFromAdjacentScan = true;
 };
 
+$EOTW::CustomBrickCost["brickMFRBreederPortBrick"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::BrickDescription["brickMFRBreederPortBrick"] = "Takes in specific materials, outputs neutron activated materials. Powered by placing fuel rods adjacent to reflectors.";
 datablock fxDTSBrickData(brickMFRBreederPortBrick)
 {
 	brickFile = "./Bricks/MFRPort.blb";
@@ -44,10 +50,10 @@ datablock fxDTSBrickData(brickMFRBreederPortBrick)
 	matterSlots["Output"] = 1;
 
 	energyGroup = "Source";
-	energyMaxBuffer = 64;
+	energyMaxBuffer = 80;
 	loopFunc = "EOTW_MatterReactorLoop";
 	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 64;
+	energyWattage = 40;
 	inspectFunc = "EOTW_MatterReactorInspectLoop";
 
 	ComponentType = "Port";
