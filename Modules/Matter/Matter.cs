@@ -385,7 +385,7 @@ package EOTW_Matter
 						%name = %matter.name;
 						$EOTW::Material[%cl.bl_id, %name] -= %volume;
 					}
-					%brick.setColor(getColorFromHex(getField(%cost, 1)));
+					%brick.setColorForce(getColorFromHex(getField(%cost, 1)));
 					%brick.material = "Custom";
 				}
 				else
@@ -400,7 +400,7 @@ package EOTW_Matter
 						%brick = Parent::servercmdPlantBrick(%cl); if(!isObject(%brick)) return %brick;
 						$EOTW::Material[%cl.bl_id, %mat] -= %volume;
 						%brick.material = %mat;
-						%brick.setColor(getColorFromHex(getMatterType(%mat).color));
+						%brick.setColorForce(getColorFromHex(getMatterType(%mat).color));
 					}
 				}
 			}
@@ -472,14 +472,18 @@ package EOTW_Matter
 		
 		Parent::onRemove(%brick);
 	}
+	function fxDtsBrick::setColorForce(%brick, %color)
+	{
+		Parent::setColor(%brick, %color);
+	}
 	function fxDtsBrick::setColor(%brick, %color)
 	{
-		if (!%brick.getDatablock().notRecolorable)
+		if (%brick.getDatablock().notRecolorable)
 			return;
 
 		%matter = getMatterType(%brick.material);
 		if(getWord(getColorIDTable(%color), 3) > 0.95 || !isObject(%matter) || decimalFromHex(getSubStr(%matter.color, 6, 2)) < 250)
-			return Parent::setColor(%brick, %color);
+			Parent::setColor(%brick, %color);
 	}
 	function Armor::onTrigger(%data, %obj, %trig, %tog)
 	{

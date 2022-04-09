@@ -63,9 +63,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Coolant";		color="9ab6b5ff";	tier=3;	boilCapacity=10;	boilMatter="Hot Coolant";	};
 		new ScriptObject(MatterType) { name="Cryostablizer";color="89a3b8ff";	tier=5;	boilCapacity=50;	boilMatter="Hot Cryostablizer";	};
 		//Heated Coolants
-		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";	tier=1;	};
-		new ScriptObject(MatterType) { name="Hot Coolant";	color="9ab6b5ff";	tier=3;	};
-		new ScriptObject(MatterType) { name="Hot Cryostablizer";	color="89a3b8ff";	tier=5;	};
+		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";	tier=1;	cooledMatter="Water";	};
+		new ScriptObject(MatterType) { name="Hot Coolant";	color="9ab6b5ff";	tier=3;	cooledMatter="Coolant";	};
+		new ScriptObject(MatterType) { name="Hot Cryostablizer";	color="89a3b8ff";	tier=5;	cooledMatter="Cryostablizer";	};
 		//Nuclear //Fission Power: Amount of heat units created per unboosted unit. //fissionWasteRate: Amount of nuclear waste produced per unit of fuel consumed
 		new ScriptObject(MatterType) { name="Raw Uranium";		color="007c3fff";	tier=4;	spawnWeight=15;	spawnVeinSize=2;	spawnValue=64;	collectTime=18000;	requiredCollectFuel=("Sulfur" TAB 32);	gatherableDB="brickEOTWGatherableCrystalData";	};
 		new ScriptObject(MatterType) { name="Raw Thorium";		color="007c3fff";	tier=4;	};

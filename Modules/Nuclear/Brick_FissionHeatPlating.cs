@@ -1,4 +1,4 @@
-$EOTW::CustomBrickCost["brickMFRHeatPlatingData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Copper" TAB 80 TAB "Sturdium";
+$EOTW::CustomBrickCost["brickMFRHeatPlatingData"] = 1.00 TAB "2f2d2fff" TAB 256 TAB "Copper" TAB 80 TAB "Sturdium";
 $EOTW::BrickDescription["brickMFRHeatPlatingData"] = "Increases the reactor's max heat by 5000 HU.";
 datablock fxDTSBrickData(brickMFRHeatPlatingData)
 {

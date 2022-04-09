@@ -41,7 +41,7 @@ function fxDtsBrick::AddChildrenToHull(%obj)
 	%data = %obj.getDatablock();
 	for (%i = 0; isObject(%brick = %obj.getUpBrick(%i)); %i++)
 	{
-		%brickData = %brickData.getDatablock();
+		%brickData = %brick.getDatablock();
 		if (!isObject(%brick.fissionParent) && %brickData.reqFissionPart !$= "" && %brickData.reqFissionPart $= %data.getName())
 		{
 			%fission.AddFissionPart(%brick);
