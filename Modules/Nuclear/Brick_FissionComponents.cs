@@ -31,7 +31,7 @@ $EOTW::CustomBrickCost["brickMFRCellFuelRodData"] = 1.00 TAB "503623ff" TAB 192 
 $EOTW::BrickDescription["brickMFRCellFuelRodData"] = "Consumes fuel from fuel ports to generate fission heat (Heat Units, HU) in adjacent parts.";
 datablock fxDTSBrickData(brickMFRCellFuelRodData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRFuelRod.blb";
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Fuel Rod";
@@ -48,7 +48,7 @@ $EOTW::CustomBrickCost["brickMFRCellFuel2RodData"] = 1.00 TAB "9e7250ff" TAB 192
 $EOTW::BrickDescription["brickMFRCellFuel2RodData"] = "Compact fuel rod with twice the fuel burn (and thus heat).";
 datablock fxDTSBrickData(brickMFRCellFuel2RodData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRFuelRod.blb";
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Dual Fuel Rod";
@@ -65,7 +65,7 @@ $EOTW::CustomBrickCost["brickMFRCellFuel4RodData"] = 1.00 TAB "ddb389ff" TAB 192
 $EOTW::BrickDescription["brickMFRCellFuel4RodData"] = "Extremely compact fuel rod with quadruple the fuel burn (and thus heat).";
 datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRFuelRod.blb";
 	category = "Nuclear";
 	subCategory = "Control Cells";
 	uiName = "Quad Fuel Rod";
@@ -258,7 +258,6 @@ function fxDtsBrick::Fission_HeatSinkTick(%obj)
 	if (%data.adjacentHeatPushRate > 0)
 	{
 		%parts = %fission.GetAdjacentParts(%obj);
-		talk("Parts: " @ %parts);
 		for (%i = 0; %i < getWordCount(%parts); %i++)
 		{
 			%part = getWord(%parts, %i);
@@ -386,7 +385,7 @@ $EOTW::CustomBrickCost["brickMFRCellCoolantBasicData"] = 1.00 TAB "1c496bff" TAB
 $EOTW::BrickDescription["brickMFRCellCoolantBasicData"] = "Heat capacitor ranked up to 100,000 HU.";
 datablock fxDTSBrickData(brickMFRCellCoolantBasicData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRCoolantCell.blb";
 	category = "Nuclear";
 	subCategory = "Coolant Cells";
 	uiName = "Basic Coolant Cell";
@@ -401,7 +400,7 @@ $EOTW::CustomBrickCost["brickMFRCellCoolantSuperData"] = 1.00 TAB "507582ff" TAB
 $EOTW::BrickDescription["brickMFRCellCoolantSuperData"] = "Heat capacitor ranked up to 300,000 HU.";
 datablock fxDTSBrickData(brickMFRCellCoolantSuperData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRCoolantCell.blb";
 	category = "Nuclear";
 	subCategory = "Coolant Cells";
 	uiName = "Super Coolant Cell";
@@ -416,7 +415,7 @@ $EOTW::CustomBrickCost["brickMFRCellCoolantUltraData"] = 1.00 TAB "9ab6b5ff" TAB
 $EOTW::BrickDescription["brickMFRCellCoolantUltraData"] = "Heat capacitor ranked up to 600,000 HU.";
 datablock fxDTSBrickData(brickMFRCellCoolantUltraData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRCoolantCell.blb";
 	category = "Nuclear";
 	subCategory = "Coolant Cells";
 	uiName = "Ultra Coolant Cell";
