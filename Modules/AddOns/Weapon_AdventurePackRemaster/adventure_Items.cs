@@ -96,6 +96,16 @@ datablock ItemData(advAmmoShotgunItem : advAmmoItem)
 	ammoType = "Shotgun";
 };
 
+datablock ItemData(advAmmoMininukeItem : advAmmoItem)
+{
+	shapeFile = "./shapes/items/AMMO_MININUKE.dts";
+	uiName = "Ammo [Nuclear]";
+	iconName = "";
+	image = "";
+	ammoBox = true;
+	ammoType = "Mini-Nuke";
+};
+
 //datablock ItemData(advAmmoHMGItem : advAmmoItem)
 //{
 //	shapeFile = "./shapes/items/AMMO_708.dts";

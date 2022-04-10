@@ -27,7 +27,10 @@ $hl2Weapons::AddAmmo["Machine Rifle"] = 24;
 //$hl2Weapons::AddAmmo["Taser"] = 3;
 
 $hl2Weapons::MaxAmmo["Machine Gun"] = 2000;
-$hl2Weapons::AddAmmo["Machine Gun"] = 50; 
+$hl2Weapons::AddAmmo["Machine Gun"] = 50;
+
+$hl2Weapons::MaxAmmo["Mini-Nuke"] = 10;
+$hl2Weapons::AddAmmo["Mini-Nuke"] = 1;
 
 //$hl2Weapons::MaxAmmo["riflenade"] = 2;
 //$hl2Weapons::AddAmmo["riflenade"] = 1;

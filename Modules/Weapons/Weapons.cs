@@ -3,6 +3,7 @@ $EOTW::ItemCrafting["advAmmoRevolverItem"] = (12 TAB "Lead") TAB (14 TAB "Gold")
 $EOTW::ItemCrafting["advAmmoShotgunItem"] = (24 TAB "Lead") TAB (7 TAB "Gold"); //BaseWep Cost: 4x Wood, 1x Iron, 2x Gold
 $EOTW::ItemCrafting["advAmmoMachineRifleItem"] = (8 TAB "Silver") TAB (16 TAB "Copper"); //BaseWep Cost: 2x Iron, 1x Copper, 1x Silver
 $EOTW::ItemCrafting["advAmmoRifleItem"] = (16 TAB "Silver") TAB (8 TAB "Copper"); //BaseWep Cost: 4x Wood, 2x Iron, 2x Lead
+$EOTW::ItemCrafting["advAmmoMininukeItem"] = (32 TAB "Tritium") TAB (8 TAB "Plutonium");
 
 //Firearms
 //T0
@@ -34,6 +35,11 @@ $EOTW::ItemCrafting["machinePistolItem"] = (144 TAB "Steel") TAB (192 TAB "Rosiu
 $EOTW::ItemCrafting["sniperRepeaterItem"] = (128 TAB "Leather") TAB (256 TAB "Adamantine") TAB (112 TAB "Lead");
 $EOTW::ItemCrafting["pairedShotgunItem"] = (128 TAB "Leather") TAB (128 TAB "Adamantine") TAB (112 TAB "Gold");
 $EOTW::ItemCrafting["assaultRifleItem"] = (256 TAB "Adamantine") TAB (128 TAB "Naturum") TAB (128 TAB "Energium");
+//T6 //Special Weapons, uses different crafting cost setup
+$EOTW::ItemCrafting["nukeLauncherItem"] = (600 TAB "Boss Essence") TAB (128 TAB "Tritium") TAB (64 TAB "Plutonium");
+$EOTW::ItemDescription["nukeLauncherItem"] = "The embodiment of nuclear hellfire. [REQUIRES AMMO!!!]";
+$EOTW::ItemCrafting["IonCannonItem"] = (1200 TAB "Boss Essence") TAB (8 TAB "Infinity") TAB (1 TAB "Singularity");
+$EOTW::ItemDescription["IonCannonItem"] = "The embodiment of ionic hellfire. [REQUIRES 100,000 EU PER USE!!!]";
 //bruh
 $EOTW::ItemCrafting["ACNItem"] = (999999 TAB "Adamantine");
 $EOTW::ItemDescription["ACNItem"] = "If you are able to obtain this then I probably messed up somewhere.";

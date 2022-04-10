@@ -47,8 +47,11 @@
 		exec("./weapon_sniperRepeater.cs");
 		exec("./weapon_pairedShotgun.cs");
 		exec("./weapon_assaultRifle.cs");
+
+		//////// tier 6
+		exec("./weapon_miniNuke.cs");
 		
-		 //////// tier 6 (extra)
+		 //////// tier --- (extra)
 		//exec("./weapon_taser.cs");
 		//exec("./Weapon_HMachineGun.cs");
 		//exec("./weapon_modernRifle.cs");
