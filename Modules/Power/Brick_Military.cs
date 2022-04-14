@@ -232,22 +232,84 @@ function fxDtsBrick::EOTW_TeslaCoilLoop(%obj)
     }
 }
 
-$EOTW::CustomBrickCost["brickEOTWLandmineData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
-$EOTW::BrickDescription["brickEOTWLandmineData"] = "A landmine that regenerates overtime. Requires 8 Rocket Fuel per use.";
+$EOTW::CustomBrickCost["brickEOTWLandmineData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Plastic" TAB 48 TAB "Steel" TAB 8 TAB "Plutonium";
+$EOTW::BrickDescription["brickEOTWLandmineData"] = "A reusable very-mini-mini-nuke landmine. Requires 8 Rocket Fuel per use.";
 datablock fxDTSBrickData(brickEOTWLandmineData)
 {
-	brickFile = "./Bricks/Generator.blb";
+	brickFile = "base/data/bricks/rounds/2x2disc.blb";
 	category = "Solar Apoc";
 	subCategory = "Military";
 	uiName = "Landmine";
 	energyGroup = "Machine";
-	loopFunc = "EOTW_TurretLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 
-    matterMaxBuffer = 128;
+    matterMaxBuffer = 256;
 	matterSlots["Input"] = 1;
-
-	portGoToEdge["PowerOut"] = true;
-	portHeight["PowerOut"] = "0.0";
 };
+
+function fxDTSBrick::forceSpawnExplosion(%obj, %projectileData, %scale, %client)
+{
+	%WB = %obj.getWorldBox ();
+	%wbX = getWord (%WB, 0);
+	%wbY = getWord (%WB, 1);
+	%wbZ = getWord (%WB, 2);
+	%wbXSize = getWord (%WB, 3) - %wbX;
+	%wbYSize = getWord (%WB, 4) - %wbY;
+	%wbZSize = getWord (%WB, 5) - %wbZ;
+	if (%wbXSize < 1.05)
+	{
+		%wbX += %wbXSize / 2;
+		%wbXSize = 0;
+	}
+	if (%wbYSize < 1.05)
+	{
+		%wbY += %wbYSize / 2;
+		%wbYSize = 0;
+	}
+	if (%wbZSize < 0.65)
+	{
+		%wbZ += %wbZSize / 2;
+		%wbZSize = 0;
+	}
+	%pos = %wbX + (getRandom () * %wbXSize) SPC %wbY + (getRandom () * %wbYSize) SPC %wbZ + (getRandom () * %wbZSize);
+	%p = new Projectile ("")
+	{
+		dataBlock = %projectileData;
+		initialVelocity = "0 0 1";
+		initialPosition = %pos;
+		sourceClient = %client;
+		sourceObject = %obj;
+		client = %client;
+	};
+	if (!isObject (%p))
+		return;
+
+	MissionCleanup.add (%p);
+	%p.setScale (%scale SPC %scale SPC %scale);
+	%p.spawnBrick = %obj;
+	%p.explode();
+    return %p;
+}
+
+package EOTW_Landmines
+{
+    function Armor::onCollision(%this, %obj, %col, %vec, %speed)
+    {
+        Parent::onCollision(%this, %obj, %col, %vec, %speed);
+
+        %cost = 8;
+        %cooldown = 1000;
+        if (%obj.getClassName() $= "AIPlayer" && %obj.getState() !$= "DEAD" && %col.getDatablock().getName() $= "brickEOTWLandmineData" && getSimTime() - %col.lastExplosion > %cooldown && %col.GetMatter("Rocket Fuel", "Input") >= %cost)
+        {
+            %proj = %col.forceSpawnExplosion(nukeProjectile, 0.1, %col.getGroup().client);
+            if (isObject(%proj))
+            {
+                %col.disappear(%cooldown / 1000);
+                %col.lastExplosion = getSimTime();
+                %col.ChangeMatter("Rocket Fuel", %cost * -1, "Input");
+            }
+        }
+    }
+};
+activatePackage("EOTW_Landmines");
