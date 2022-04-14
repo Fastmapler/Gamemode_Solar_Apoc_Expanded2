@@ -224,7 +224,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 
 };
 $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Adamantine" TAB 64 TAB "Teflon" TAB 16 TAB "Silver";
-$EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality. Will eventually burn out and need to be replaced.";
+$EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality."; // Will eventually burn out and need to be replaced.
 
 function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 {
@@ -246,8 +246,8 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 				%obj.ChangePower(%ProcessTimeChange);
 				%obj.ProcessTime -= %ProcessTimeChange;
 
-				if (getRandom() < 0.05)
-					%obj.decayAmount += %ProcessTimeChange;
+				//if (getRandom() < 0.05)
+					//%obj.decayAmount += %ProcessTimeChange;
 
 				if (%obj.decayAmount >= 15000)
 					%obj.setShapeFX(2);

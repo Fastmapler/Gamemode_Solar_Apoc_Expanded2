@@ -114,8 +114,7 @@ function Player::RepairKitMessage(%obj)
 	%hitpos = getWords(%ray, 1, 3);
 	
 	%target = "--";
-	%power = "--";
-	%heat = "--";
+	%cost = "--";
 	
 	if (isObject(%col) && (%col.getType() & $TypeMasks::FxBrickObjectType))
 	{
@@ -123,7 +122,7 @@ function Player::RepairKitMessage(%obj)
 		%target = %db.uiName;
 	}
 	
-	%client.centerPrint("<just:left>\c6Machine: " @ %target @ "<br>\c6Repair Cost: " @ %e, 1);
+	%client.centerPrint("<just:left>\c6Machine: " @ %target @ "<br>\c6Repair Cost: " @ %cost, 1);
 		
 	%obj.RepairKitMessageLoop = %obj.schedule(100, "RepairKitMessage");
 }
