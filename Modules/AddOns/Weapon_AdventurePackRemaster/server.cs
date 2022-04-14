@@ -18,24 +18,25 @@
 		exec("./adventure_Sounds.cs");
 		exec("./adventure_AmmoTypes.cs");
 
-		  //////// tier 1
+		//Note: all resulting values are rounded down to the nearest integer.
+		  //////// tier 1 //1.0x Damage, 1.0x Fire rate, 1x Mag Size
 		exec("./weapon_automaticPistol.cs");
 		exec("./weapon_revolver.cs");
 		exec("./weapon_singleShotgun.cs");
 
-		  //////// tier 2
+		  //////// tier 2 //1.1x Damage, 1.0x Fire rate, 1.2x Mag Size
 		exec("./weapon_servicePistol.cs");
 		exec("./weapon_huntingShotgun.cs");
-		exec("./weapon_brushPistol.cs");
-		exec("./weapon_doubleShotgun.cs");
+		exec("./weapon_brushPistol.cs"); //Special: 1.0x Mag Size, 1.1x Fire Rate
+		exec("./weapon_doubleShotgun.cs"); //Special: 2x Fire Rate
 
-		  //////// tier 3
+		  //////// tier 3 //1.2x Damage, 1.25x Fire rate, 1.4x Mag Size
 		exec("./weapon_leverShotgun.cs");
-		exec("./weapon_automaticRifle.cs");
-		exec("./weapon_huntingMagnum.cs");
+		exec("./weapon_automaticRifle.cs"); //Special: Instant burst
+		exec("./weapon_huntingMagnum.cs"); //Special: 1.0 Mag Size
 		exec("./weapon_leverRifle.cs");
 
-		  //////// tier 4
+		  //////// tier 4 //1.3x Damage, 1.25x Fire rate, 1.6x Mag Size
 		exec("./weapon_serviceRifle.cs");
 		exec("./weapon_riotShotgun.cs");
 		exec("./weapon_combatRifle.cs");
@@ -43,12 +44,12 @@
 		exec("./weapon_fieldRifle.cs");	
 		exec("./weapon_machinePistol.cs");
 
-		  //////// tier 5
+		  //////// tier 5 //1.4x Damage, 1.5x Fire rate, 1.8x Mag Size
 		exec("./weapon_sniperRepeater.cs");
-		exec("./weapon_pairedShotgun.cs");
+		exec("./weapon_pairedShotgun.cs"); //Special: No balancing modifiers, OP as is
 		exec("./weapon_assaultRifle.cs");
 
-		//////// tier 6
+		//////// tier 6 //Special
 		exec("./weapon_miniNuke.cs");
 		
 		 //////// tier --- (extra)

@@ -69,8 +69,9 @@ function SetupMatterData()
 		//Nuclear //Fission Power: Amount of heat units created per unboosted unit. //fissionWasteRate: Amount of nuclear waste produced per unit of fuel consumed
 		new ScriptObject(MatterType) { name="Raw Uranium";		color="007c3fff";	tier=4;	spawnWeight=15;	spawnVeinSize=2;	spawnValue=64;	collectTime=18000;	requiredCollectFuel=("Sulfur" TAB 32);	gatherableDB="brickEOTWGatherableCrystalData";	};
 		new ScriptObject(MatterType) { name="Raw Thorium";		color="007c3fff";	tier=4;	};
+		new ScriptObject(MatterType) { name="Yellow Cake";		color="d8d1ccff";	tier=6;	};
 		new ScriptObject(MatterType) { name="Fissile Uranium";		color="56643bff";	tier=6;	fuelCapacity=3800/128;	fissionPower=40;  fissionWasteRate=1;	};
-		new ScriptObject(MatterType) { name="Fissile Thorium";		color="56643bff";	tier=6;	fuelCapacity=4800/128;	fissionPower=80;  fissionWasteRate=0.5;	};
+		new ScriptObject(MatterType) { name="Fissile Thorium";		color="56643bff";	tier=6;	fuelCapacity=4800/128;	fissionPower=80;  fissionWasteRate=2;	};
 		new ScriptObject(MatterType) { name="Fissile Americium";	color="56643bff";	tier=7;	fuelCapacity=5800/128;	fissionPower=320; fissionWasteRate=4;	};
 		new ScriptObject(MatterType) { name="Fissile Curium";		color="56643bff";	tier=7;	fuelCapacity=6800/128;	fissionPower=1600;fissionWasteRate=8;	};
 		new ScriptObject(MatterType) { name="Nuclear Waste";color="605042ff";	tier=3;	};

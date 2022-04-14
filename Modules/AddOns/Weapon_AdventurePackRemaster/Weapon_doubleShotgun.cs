@@ -10,7 +10,7 @@ datablock AudioProfile(doubleShotgunFireSound)
 //muzzle flash effects
 datablock ProjectileData(doubleShotgunProjectile : gunProjectile)
 {
-   directDamage        = 12;//8;
+   directDamage        = 13;//8;
    explosion           = QuieterGunExplosion;
    impactImpulse       = 200;
    verticalImpulse     = 150;
@@ -32,7 +32,7 @@ datablock ProjectileData(doubleShotgunProjectile : gunProjectile)
 
 datablock ProjectileData(doubleShotgunBlastProjectile : gunProjectile)
 {
-   directDamage        = 40;//8;
+   directDamage        = 44;//8;
    explosion           = QuieterGunExplosion;
    impactImpulse       = 700;
    verticalImpulse     = 250;
@@ -150,7 +150,7 @@ datablock ShapeBaseImageData(doubleShotgunImage)
 
    // Initial start up state
    stateName[0]                     = "Activate";
-   stateTimeoutValue[0]             = 0.5;
+   stateTimeoutValue[0]             = 0.52/2;
    stateScript[0]                   = "onAmmoCheck";
    stateTransitionOnTimeout[0]      = "AmmoCheckReady";
    stateSound[0]                    = "";
@@ -161,7 +161,7 @@ datablock ShapeBaseImageData(doubleShotgunImage)
    stateAllowImageChange[1]         = true;
 
    stateName[2]                     = "Fire";
-   stateTimeoutValue[2]             = 0.27;
+   stateTimeoutValue[2]             = 0.27/2;
    stateTransitionOnTimeout[2]      = "Smoke";
    stateFire[2]                     = true;
    stateAllowImageChange[2]         = false;
@@ -174,15 +174,15 @@ datablock ShapeBaseImageData(doubleShotgunImage)
 
    stateName[3]                     = "Smoke";
    stateEmitter[3]                  = advSmallBulletSmokeEmitter;
-   stateEmitterTime[3]              = 0.05;
+   stateEmitterTime[3]              = 0.05/2;
    stateEmitterNode[3]              = "muzzleNode";
-   stateTimeoutValue[3]             = 0.07;
+   stateTimeoutValue[3]             = 0.07/2;
    stateTransitionOnTimeout[3]    = "AmmoCheck";
    stateWaitForTimeout[3]           = true;
    stateSound[3]                    = "";
 
    stateName[4]                     = "Cycle";
-   stateTimeoutValue[4]             = 0.15;
+   stateTimeoutValue[4]             = 0.15/2;
    stateTransitionOnTimeout[4]      = "Ready";
    stateSound[4]                    = "";
 
@@ -193,14 +193,14 @@ datablock ShapeBaseImageData(doubleShotgunImage)
    
   stateName[6]                     = "Reload";
    stateTransitionOnTimeout[6]      = "ReloadA";
-   stateTimeoutValue[6]             = 0.01;
+   stateTimeoutValue[6]             = 0.01/2;
    stateAllowImageChange[6]         = true;
    stateScript[6]                   = "onReloadStart";
    stateSound[6]                    = advSound;
 
    stateName[7]                     = "ReloadReady";
    stateTransitionOnTimeout[7]      = "Ready";
-   stateTimeoutValue[7]             = 0.1;
+   stateTimeoutValue[7]             = 0.1/2;
    stateAllowImageChange[7]         = true;
    stateScript[7]                   = "onReload";
 
@@ -214,7 +214,7 @@ datablock ShapeBaseImageData(doubleShotgunImage)
    stateName[9]                     = "EmptyFireA";
    stateTransitionOnTriggerUp[9]    = "EmptyFireB";
    stateScript[9]                   = "onEmptyFire";
-   stateTimeoutValue[9]             = 0.05;
+   stateTimeoutValue[9]             = 0.05/2;
    stateAllowImageChange[9]         = false;
    stateWaitForTimeout[9]           = false;
    stateSound[9]                    = baadEmptySound;
@@ -223,7 +223,7 @@ datablock ShapeBaseImageData(doubleShotgunImage)
    stateName[10]                     = "EmptyFireB";
    stateTransitionOnTimeout[10]  = "Empty";
    stateAllowImageChange[10]         = false;
-   stateTimeoutValue[10]             = 0.05;
+   stateTimeoutValue[10]             = 0.05/2;
    stateWaitForTimeout[10]           = false;
    stateSequence[10]                 = "untrig";
    
@@ -232,17 +232,17 @@ datablock ShapeBaseImageData(doubleShotgunImage)
    stateAllowImageChange[11]         = true;
    stateScript[11]                   = "OnClipRemoved";
    stateSequence[11]                 = "open";
-   stateTimeoutValue[11]             = 0.25;
+   stateTimeoutValue[11]             = 0.25/2;
      
    stateName[12]                     = "ReloadInter";
    stateTransitionOnTimeout[12]      = "ReloadB";
-   stateTimeoutValue[12]             = 0.3;
+   stateTimeoutValue[12]             = 0.3/2;
    stateAllowImageChange[12]         = true;
 	 
    stateName[13]                     = "ReloadB";
    stateTransitionOnTimeout[13]  = "ReloadC";
    stateAllowImageChange[13]         = true;
-   stateTimeoutValue[13]             = 0.3;
+   stateTimeoutValue[13]             = 0.3/2;
    stateScript[13]                   = "OnReloadB";
    stateSequence[13]                 = "shella";
      
@@ -250,17 +250,17 @@ datablock ShapeBaseImageData(doubleShotgunImage)
    stateTransitionOnTimeout[14]  = "ReloadD";
    stateAllowImageChange[14]         = true;
    stateScript[14]                   = "OnReloadC";
-   stateTimeoutValue[14]             = 0.3;
+   stateTimeoutValue[14]             = 0.3/2;
    stateSequence[14]                 = "shellb";
    
    stateName[15]                     = "ReloadD";
    stateTransitionOnTimeout[15]  = "ReloadReady";
    stateSequence[15]                 = "close";
    stateAllowImageChange[15]         = true;
-   stateTimeoutValue[15]             = 0.1;
+   stateTimeoutValue[15]             = 0.1/2;
 
    stateName[16]                     = "untrig";
-   stateTimeoutValue[16]             = 0.05;
+   stateTimeoutValue[16]             = 0.05/2;
    stateSequence[16]                 = "untrig";
    stateTransitionOnTimeout[16]      = "Ready";
    stateSound[16]                    = "";
@@ -437,26 +437,26 @@ function doubleShotgunProjectile3::damage( %this, %obj, %col, %fade, %pos, %norm
 
 function doubleShotgunImage::OnClipRemoved(%this, %obj, %slot)
 {
-        schedule(getRandom(600,700),0,serverPlay3D,BAADShellShotty @ getRandom(1,7) @ Sound,%obj.getPosition());
-        schedule(getRandom(600,700),0,serverPlay3D,BAADShellShotty @ getRandom(1,7) @ Sound,%obj.getPosition());
+        schedule(getRandom(600,700)/2,0,serverPlay3D,BAADShellShotty @ getRandom(1,7) @ Sound,%obj.getPosition());
+        schedule(getRandom(600,700)/2,0,serverPlay3D,BAADShellShotty @ getRandom(1,7) @ Sound,%obj.getPosition());
        	%obj.playThread(2,shiftTo);
         schedule(0, 0, serverPlay3D, baadReload2Sound, %obj.getPosition());
-        %obj.schedule(100, "playThread", "3", "plant");
-        %obj.schedule(390, "playThread", "2", "shiftRight");
-        %obj.schedule(390, "playThread", "3", "leftRecoil");
-        schedule(getRandom(350,390),0,serverPlay3D,BAADHeavyInsert @ getRandom(1,3) @ Sound,%obj.getPosition());
+        %obj.schedule(100/2, "playThread", "3", "plant");
+        %obj.schedule(390/2, "playThread", "2", "shiftRight");
+        %obj.schedule(390/2, "playThread", "3", "leftRecoil");
+        schedule(getRandom(350,390)/2,0,serverPlay3D,BAADHeavyInsert @ getRandom(1,3) @ Sound,%obj.getPosition());
 }
 
 function doubleShotgunImage::OnReloadB(%this, %obj, %slot) 
 {
-   %obj.schedule(245, "playThread", "2", "shiftLeft");
-   %obj.schedule(245, "playThread", "3", "leftRecoil");
-   schedule(getRandom(210,245),0,serverPlay3D,BAADHeavyInsert @ getRandom(1,3) @ Sound,%obj.getPosition());
+   %obj.schedule(245/2, "playThread", "2", "shiftLeft");
+   %obj.schedule(245/2, "playThread", "3", "leftRecoil");
+   schedule(getRandom(210,245)/2,0,serverPlay3D,BAADHeavyInsert @ getRandom(1,3) @ Sound,%obj.getPosition());
 }
 
 function doubleShotgunImage::OnReloadC(%this, %obj, %slot)
 {
-   %obj.schedule(275, "playThread", "3", "plant");
-   %obj.schedule(300, "playThread", "2", "shiftAway");
-   schedule(275, 0, serverPlay3D, baadCock6Sound, %obj.getPosition());
+   %obj.schedule(275/2, "playThread", "3", "plant");
+   %obj.schedule(300/2, "playThread", "2", "shiftAway");
+   schedule(275/2, 0, serverPlay3D, baadCock6Sound, %obj.getPosition());
 }

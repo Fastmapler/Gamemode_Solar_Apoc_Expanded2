@@ -374,8 +374,8 @@ function fxDtsBrick::Fission_HeatExchangerTick(%obj)
 	{
 		%percentDifference = (%hull.fissionHeat / %hullData.maxHeatCapacity) - (%obj.fissionHeat / %data.maxHeatCapacity);
 		%average = (%hullData.maxHeatCapacity + %data.maxHeatCapacity) / 2;
-		%toalChange = mRound(mClamp(%percentDifference * %average * 0.5, %data.adjcaentTransferRate * -1, %data.adjcaentTransferRate));
-		%obj.changeHeat(%hull.changeHeat(%toalChange * -1) * -1);
+		%toalChange = mRound(mClamp(%percentDifference * %average * 0.5, %data.reactorTransferRate * -1, %data.reactorTransferRate));
+		%test = %obj.changeHeat(%hull.changeHeat(%toalChange * -1) * -1);
 	}
 }
 

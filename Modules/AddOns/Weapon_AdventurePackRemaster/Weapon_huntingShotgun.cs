@@ -16,7 +16,7 @@ datablock AudioProfile(huntingShotgunCycleSound)
 //muzzle flash effects
 datablock ProjectileData(huntingShotgunProjectile : gunProjectile)
 {
-   directDamage        = 10;//8;
+   directDamage        = 11;//8;
    explosion           = QuieterGunExplosion;
    impactImpulse       = 400;
    verticalImpulse     = 150;
@@ -38,7 +38,7 @@ datablock ProjectileData(huntingShotgunProjectile : gunProjectile)
 
 datablock ProjectileData(huntingShotgunBlastProjectile : gunProjectile)
 {
-   directDamage        = 40;//8;
+   directDamage        = 44;//8;
    explosion           = QuieterGunExplosion;
    impactImpulse       = 700;
    verticalImpulse     = 250;

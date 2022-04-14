@@ -340,7 +340,7 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 	
 	energyGroup = "Machine";
 	energyMaxBuffer = 1200;
-	energyWattage = 400;
+	energyWattage = 2000;
 	inspectFunc = "EOTW_VoidDrillInspectLoop";
 	loopFunc = "EOTW_VoidDrillLoop";
 	matterUpdateFunc = "";

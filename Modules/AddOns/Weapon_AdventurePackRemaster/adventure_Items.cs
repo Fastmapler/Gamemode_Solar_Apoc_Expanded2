@@ -99,7 +99,7 @@ datablock ItemData(advAmmoShotgunItem : advAmmoItem)
 datablock ItemData(advAmmoMininukeItem : advAmmoItem)
 {
 	shapeFile = "./shapes/items/AMMO_MININUKE.dts";
-	uiName = "Ammo [Nuclear]";
+	uiName = "Ammo [Mini-Nuke]";
 	iconName = "";
 	image = "";
 	ammoBox = true;

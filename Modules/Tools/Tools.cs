@@ -6,6 +6,7 @@ exec("./Tool_OilPump.cs");
 exec("./Tool_Pickaxes.cs");
 exec("./Tool_Flasks.cs");
 exec("./Tool_Syringes.cs");
+exec("./Tool_Drugs.cs");
 exec("./Tool_Sickle.cs");
 exec("./Tool_BossKey.cs");
 exec("./Tool_Dynamite.cs");
@@ -27,6 +28,10 @@ function updateItemNames()
     
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "acidItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BioRifleItem";
+
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "Dragonbreathprojectile";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBallItem";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBarrageItem";
 
 	for(%i = 0; $EOTW::BacklistedItem[%i] !$= ""; %i++)
 	{

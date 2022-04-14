@@ -279,7 +279,7 @@ datablock DebrisData(nukeBitsDebris)
 datablock ExplosionData(nukeExplosion)
 {
    explosionShape = "";
-   explosionShape = "./shapes/nukeExplosion.dts";
+   explosionShape = "./shapes/weapons/nukeExplosion.dts";
 	soundProfile = nukeExplodeSound;
 
    debris = nukeBitsDebris;
@@ -324,7 +324,7 @@ datablock ExplosionData(nukeExplosion)
 
 datablock ProjectileData(nukeProjectile)
 {
-   projectileShapeName = "./shapes/missile.dts";
+   projectileShapeName = "./shapes/weapons/missile.dts";
    directDamage        = 160;
    directDamageType = $DamageType::RocketDirect;
    radiusDamageType = $DamageType::RocketRadius;
@@ -366,7 +366,7 @@ datablock ItemData(nukeLauncherItem)
 	className = "Weapon"; // For inventory system
 
 	 // Basic Item Properties
-	shapeFile = "./shapes/MISSILELAUNCHER.dts";
+	shapeFile = "./shapes/weapons/MISSILELAUNCHER.dts";
 	rotate = false;
 	mass = 1;
 	density = 0.2;
@@ -376,7 +376,7 @@ datablock ItemData(nukeLauncherItem)
 
 	//gui stuff
 	uiName = "AP6 - Mini-Nuke";
-	iconName = "./shapes/CI_WTFNUKE";
+	iconName = "./shapes/weapons/CI_WTFNUKE";
 	doColorShift = false;
 	colorShiftColor = "0.100 0.500 0.250 1.000";
 
@@ -389,6 +389,11 @@ datablock ItemData(nukeLauncherItem)
 	 // Dynamic properties defined by the scripts
 	image = nukeLauncherImage;
 	canDrop = true;
+
+   shellCollisionThreshold = 2;
+   shellCollisionSFX = WeaponSoftImpactSFX;
+
+   itemPropsClass = "SimpleMagWeaponProps";
 };
 
 ////////////////
@@ -397,7 +402,7 @@ datablock ItemData(nukeLauncherItem)
 datablock ShapeBaseImageData(nukeLauncherImage)
 {
    // Basic Item properties
-   shapeFile = "./shapes/MISSILELAUNCHER.dts";
+   shapeFile = "./shapes/weapons/MISSILELAUNCHER.dts";
    emap = true;
 
    // Specify mount point & offset for 3rd person, and eye offset
@@ -418,7 +423,7 @@ datablock ShapeBaseImageData(nukeLauncherImage)
    className = "WeaponImage";
 
    // Projectile && Ammo.
-   item = BowItem;
+   item = nukeLauncherItem;
    ammo = " ";
    projectile = nukeProjectile;
    projectileType = Projectile;
@@ -433,7 +438,7 @@ datablock ShapeBaseImageData(nukeLauncherImage)
    melee = false;
    //raise your arm up or not
    armReady = true;
-   LarmReady = true;
+   LarmReady = false;
    minShotTime = 10;   //minimum time allowed between shots (needed to prevent equip/dequip exploit)
 
    doColorShift = true;
@@ -575,8 +580,7 @@ datablock ShapeBaseImageData(nukeLauncherImage)
 
 function nukeLauncherImage::onMount(%this,%obj,%slot)
 {
-	Parent::onMount(%this,%obj,%slot);	
-   %obj.playThread(0, armreadyboth);
+	Parent::onMount(%this,%obj,%slot);
    hl2DisplayAmmo(%this,%obj,%slot,0);
    schedule(getRandom(0,50),0,serverPlay3D,BAADEquip @ getRandom(1,3) @ Sound,%obj.getPosition());
 }
@@ -639,4 +643,22 @@ function nukeLauncherImage::onFire(%this,%obj,%slot)
    hl2DisplayAmmo(%this,%obj,%slot);
 
    Parent::onFire(%this,%obj,%slot);
+}
+
+function nukeLauncherImage::OnClipRemoved(%this, %obj, %slot)
+{
+        schedule(getRandom(700,800),0,serverPlay3D,BAADShellShotty @ getRandom(1,7) @ Sound,%obj.getPosition());
+      	%obj.playThread(2,shiftTo);
+        schedule(0, 0, serverPlay3D, baadReload2Sound, %obj.getPosition());
+        %obj.schedule(100, "playThread", "3", "plant");
+        %obj.schedule(390, "playThread", "2", "shiftRight");
+        %obj.schedule(390, "playThread", "3", "leftRecoil");
+        schedule(getRandom(350,390),0,serverPlay3D,BAADHeavyInsert @ getRandom(1,3) @ Sound,%obj.getPosition());
+}
+
+function nukeLauncherImage::OnReloadC(%this, %obj, %slot)
+{
+   %obj.schedule(275, "playThread", "3", "plant");
+   %obj.schedule(300, "playThread", "2", "shiftAway");
+   schedule(275, 0, serverPlay3D, baadCock6Sound, %obj.getPosition());
 }

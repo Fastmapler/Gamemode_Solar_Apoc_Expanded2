@@ -25,7 +25,7 @@ datablock PlayerData(BlobHoleBot : UnfleshedHoleBot)
 
 	//Attack Options
 	hMelee = 1;							//Melee
-		hAttackDamage = 32;				//Melee Damage
+		hAttackDamage = 20;				//Melee Damage
 		hDamageType = "";
 	hShoot = 0;
 		hWep = "gunImage";
@@ -78,7 +78,7 @@ datablock PlayerData(BlobChildHoleBot : UnfleshedHoleBot)
 
 	//Attack Options
 	hMelee = 1;							//Melee
-		hAttackDamage = 10;				//Melee Damage
+		hAttackDamage = 20;				//Melee Damage
 		hDamageType = "";
 	hShoot = 0;
 		hWep = "gunImage";

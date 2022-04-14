@@ -60,7 +60,7 @@ datablock ProjectileData(brushPistolShellProjectile)
 //muzzle flash effects
 datablock ProjectileData(brushPistolProjectile1 : gunProjectile)
 {
-   directDamage        = 35;//8;
+   directDamage        = 38;//8;
    explosion           = QuietGunExplosion;
    impactImpulse       = 500;
    verticalImpulse     = 450;
@@ -189,7 +189,7 @@ datablock ShapeBaseImageData(brushPistolImage)
 
    // Initial start up state
    stateName[0]                     = "Activate";
-   stateTimeoutValue[0]             = 0.5;
+   stateTimeoutValue[0]             = 0.45;
    stateScript[0]                   = "onAmmoCheck";
    stateSequence[0]                 = "yup";
    stateTransitionOnTimeout[0]      = "AmmoCheckReady";
@@ -202,7 +202,7 @@ datablock ShapeBaseImageData(brushPistolImage)
    stateSequence[1]                 = "root";
 
    stateName[2]                     = "Fire";
-   stateTimeoutValue[2]             = 0.2;
+   stateTimeoutValue[2]             = 0.18;
    stateTransitionOnTimeout[2]      = "Smoke";
    stateFire[2]                     = true;
    stateAllowImageChange[2]         = false;
@@ -224,7 +224,7 @@ datablock ShapeBaseImageData(brushPistolImage)
    stateSound[3]                    = "";
 
    stateName[4]                     = "Cycle";
-   stateTimeoutValue[4]             = 0.35;
+   stateTimeoutValue[4]             = 0.32;
    stateTransitionOnTriggerUp[4]      = "Ready";
 
    stateName[5]                     = "AmmoCheck";
@@ -241,7 +241,7 @@ datablock ShapeBaseImageData(brushPistolImage)
 
    stateName[7]                     = "ReloadReady";
    stateTransitionOnTimeout[7]      = "Ready";
-   stateTimeoutValue[7]             = 0.1;
+   stateTimeoutValue[7]             = 0.09;
    stateAllowImageChange[7]         = true;
    stateScript[7]                   = "onReload";
 
@@ -272,7 +272,7 @@ datablock ShapeBaseImageData(brushPistolImage)
    stateTransitionOnTimeout[11]  = "ReloadB";
    stateAllowImageChange[11]         = true;
    stateScript[11]                   = "OnReloadA";
-   stateTimeoutValue[11]             = 0.1;
+   stateTimeoutValue[11]             = 0.09;
    stateSequence[11]                 = "opencylinder";
    
    stateName[12]                     = "ReloadB";
@@ -280,21 +280,21 @@ datablock ShapeBaseImageData(brushPistolImage)
    stateAllowImageChange[12]         = true;
    stateSequence[12]                 = "openedcylinder";
    stateScript[12]                   = "OnReloadB";
-   stateTimeoutValue[12]             = 0.5;
+   stateTimeoutValue[12]             = 0.45;
      
    stateName[14]                     = "ReloadD";
    stateTransitionOnTimeout[14]  = "ReloadF";
    stateAllowImageChange[14]         = true;
    stateSequence[14]                 = "loaderinsert";
    stateScript[14]                   = "OnReloadD";
-   stateTimeoutValue[14]             = 0.3;
+   stateTimeoutValue[14]             = 0.27;
    
    stateName[16]                     = "ReloadF";
    stateTransitionOnTimeout[16]  = "ReloadReady";
    stateAllowImageChange[16]         = true;
    stateSequence[16]                 = "closecylinder";
    stateScript[16]                   = "OnLoaderRemoved";
-   stateTimeoutValue[16]             = 0.1;
+   stateTimeoutValue[16]             = 0.09;
 
    stateName[17]                     = "untrig";
    stateTimeoutValue[17]             = 0.05;
@@ -310,19 +310,19 @@ datablock ShapeBaseImageData(brushPistolImage)
    stateAllowImageChange[18]         = true;
 
    stateName[19]                     = "Cock";
-   stateTimeoutValue[19]             = 0.15;
+   stateTimeoutValue[19]             = 0.14;
    stateTransitionOnTimeout[19]      = "Cycle";
    stateScript[19]                   = "onCock";
    stateSequence[19]                 = "cock";
 
    stateName[20]                     = "CockEmpty";
-   stateTimeoutValue[20]             = 0.15;
+   stateTimeoutValue[20]             = 0.14;
    stateTransitionOnTimeout[20]      = "CycleEmpty";
    stateScript[20]                   = "onCock";
    stateSequence[20]                 = "cock";
 
    stateName[22]                     = "CycleEmpty";
-   stateTimeoutValue[22]             = 0.35;
+   stateTimeoutValue[22]             = 0.32;
    stateTransitionOnTriggerUp[22]      = "Empty";
 };
 

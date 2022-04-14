@@ -1,16 +1,15 @@
-$EOTW::ItemCrafting["MultitoolItem"] = (64 TAB "Iron") TAB (28 TAB "Gold");
-//$EOTW::ItemCrafting["MultitoolItem"] = (1 TAB "Infinity");
-$EOTW::ItemDescription["MultitoolItem"] = "Debug tool that displays information related to bricks.";
+$EOTW::ItemCrafting["RepairKitItem"] = (64 TAB "Iron") TAB (64 TAB "Plastic");
+$EOTW::ItemDescription["RepairKitItem"] = "Allows bricks to be quickly repaired.";
 
-datablock itemData(MultitoolItem)
+datablock itemData(RepairKitItem)
 {
-	uiName = "TLS - Inspector";
+	uiName = "TLS - Repair Kit";
 	iconName = "";
 	doColorShift = true;
-	colorShiftColor = "0.10 0.10 0.10 1.00";
+	colorShiftColor = "1.00 0.00 1.00 1.00";
 	
 	shapeFile = "base/data/shapes/printGun.dts";
-	image = MultitoolImage;
+	image = RepairKitImage;
 	canDrop = true;
 	
 	rotate = false;
@@ -23,10 +22,10 @@ datablock itemData(MultitoolItem)
 	category = "Tools";
 };
 
-datablock shapeBaseImageData(MultitoolImage)
+datablock shapeBaseImageData(RepairKitImage)
 {
 	shapeFile = "base/data/shapes/printGun.dts";
-	item = MultitoolItem;
+	item = RepairKitItem;
 	
 	mountPoint = 0;
 	offset = "0 0.25 0.15";
@@ -41,8 +40,8 @@ datablock shapeBaseImageData(MultitoolImage)
 	melee = false;
 	armReady = true;
 
-	doColorShift = MultitoolItem.doColorShift;
-	colorShiftColor = MultitoolItem.colorShiftColor;
+	doColorShift = RepairKitItem.doColorShift;
+	colorShiftColor = RepairKitItem.colorShiftColor;
 	
 	stateName[0]					= "Start";
 	stateTimeoutValue[0]			= 0.5;
@@ -63,7 +62,7 @@ datablock shapeBaseImageData(MultitoolImage)
 	stateTransitionOnTriggerUp[3] 	= "Ready";
 };
 
-function MultitoolImage::onFire(%this, %obj, %slot)
+function RepairKitImage::onFire(%this, %obj, %slot)
 {
 	if(!isObject(%client = %obj.client))
 		return;
@@ -82,27 +81,27 @@ function MultitoolImage::onFire(%this, %obj, %slot)
 	}
 }
 
-function MultitoolImage::onMount(%this, %obj, %slot)
+function RepairKitImage::onMount(%this, %obj, %slot)
 {
 	Parent::onMount(%this, %obj, %slot);
    
    if (!isObject(%client = %obj.client))
 		return;
 	
-	%obj.MultitoolMessage();
+	%obj.RepairKitMessage();
 }
 
-function MultitoolImage::onUnMount(%this, %obj, %slot)
+function RepairKitImage::onUnMount(%this, %obj, %slot)
 {
 	Parent::onUnMount(%this, %obj, %slot);
 	
-	cancel(%obj.MultitoolMessageLoop);
+	cancel(%obj.RepairKitMessageLoop);
    
 }
 
-function Player::MultitoolMessage(%obj)
+function Player::RepairKitMessage(%obj)
 {
-	cancel(%obj.MultitoolMessageLoop);
+	cancel(%obj.RepairKitMessageLoop);
 	
 	if (!isObject(%client = %obj.client))
 		return;
@@ -122,13 +121,9 @@ function Player::MultitoolMessage(%obj)
 	{
 		%db = %col.getDatablock();
 		%target = %db.uiName;
-		if (%db.energyGroup !$= "")
-			%power = (%col.energy + 0) @ "/" @ (%db.energyMaxBuffer + 0);
-		if (%db.maxHeatCapacity > 0)
-			%heat = (%col.fissionHeat + 0) @ "/" @ (%db.maxHeatCapacity + 0);
 	}
 	
-	%client.centerPrint("<just:left>\c6Machine: " @ %target @ "<br>\c6Energy: " @ %power @ "<br>\c6Fission Heat: " @ %heat, 1);
+	%client.centerPrint("<just:left>\c6Machine: " @ %target @ "<br>\c6Repair Cost: " @ %e, 1);
 		
-	%obj.MultitoolMessageLoop = %obj.schedule(100, "MultitoolMessage");
+	%obj.RepairKitMessageLoop = %obj.schedule(100, "RepairKitMessage");
 }

@@ -4,6 +4,8 @@ exec("./Bot_Swarmer.cs");
 exec("./Bot_Intoxicated.cs");
 exec("./Bot_Revenant.cs");
 
+exec("./Bot_FireWisp.cs");
+
 exec("./Bot_Blob.cs");
 exec("./Bot_Hunter.cs");
 
@@ -25,7 +27,7 @@ function SetupFaunaSpawnData()
 		new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.6;	spawnCost=40;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Tank Grunt
 		new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";		spawnWeight=0.6;	spawnCost=20;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
-		//new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";	spawnWeight=0.5;	spawnCost=45;	maxSpawnGroup=4; 	timeRange=(16 TAB 24);	}; //Basic Elemental
+		new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";	spawnWeight=0.5;	spawnCost=45;	maxSpawnGroup=4; 	timeRange=(16 TAB 24);	}; //Basic Elemental
 		//new ScriptObject(FaunaSpawnType) { data="ElementalHoleBot";	spawnWeight=0.3;	spawnCost=100;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Upgraded Elemental
 
 		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.4;	spawnCost=75;	maxSpawnGroup=2; 	timeRange=(12 TAB 21);	}; //Splitting Blob Infernal

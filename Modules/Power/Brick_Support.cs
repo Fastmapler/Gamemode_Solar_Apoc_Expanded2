@@ -116,7 +116,7 @@ function Player::EOTW_ThumperInspectLoop(%player, %brick)
 	%printText = %printText @ (%brick.getPower() + 0) @ " EU (" @ %data.energyWattage @ " EU/s when active)\n";
 
 	if (getSimTime() - %brick.lastThump < 1000)
-		%printText = %printText @ "Now boosting by +100% in a 64 stud radius.";
+		%printText = %printText @ "Now boosting by +100% in a 128 stud radius.";
 
 	%client.centerPrint(%printText, 1);
 	
@@ -152,7 +152,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	portHeight["PowerOut"] = "0.0";
 };
 $EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 128 TAB "Silver" TAB 128 TAB "Lithium";
-$EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Efficiently applies potion mixes to nearby players.";
+$EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Efficently applies mixes to all players alive. Fuel burn does not increase with more players.";
 
 function fxDtsBrick::EOTW_ChemDiffuserLoop(%obj)
 {

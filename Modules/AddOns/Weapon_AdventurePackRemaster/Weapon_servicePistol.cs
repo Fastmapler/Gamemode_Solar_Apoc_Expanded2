@@ -43,7 +43,7 @@ datablock ProjectileData(servicePistolClipProjectile)
 //muzzle flash effects
 datablock ProjectileData(servicePistolProjectile1)
 {
-   directDamage        = 25;//8;
+   directDamage        = 27;//8;
    explosion           = QuietGunExplosion;
    impactImpulse       = 100;
    verticalImpulse     = 50;
@@ -99,7 +99,7 @@ datablock ItemData(servicePistolItem)
    doColorShift = false;
    colorShiftColor = "0.25 0.25 0.25 1.000";
 
-   maxmag = 15;
+   maxmag = 18;
    ammotype = "Pistol";
    reload = true;
 

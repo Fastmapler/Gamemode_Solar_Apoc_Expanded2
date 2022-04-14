@@ -215,7 +215,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 	energyGroup = "Source";
 	energyMaxBuffer = 100;
 	loopFunc = "EOTW_SolarPanelLoop";
-    inspectFunc = "EOTW_DefaultInspectLoop";
+    inspectFunc = "EOTW_SolarPanelInspectLoop";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
 
 	//port info
@@ -224,7 +224,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 
 };
 $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Adamantine" TAB 64 TAB "Teflon" TAB 16 TAB "Silver";
-$EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality.";
+$EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality. Will eventually burn out and need to be replaced.";
 
 function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 {
@@ -240,14 +240,51 @@ function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
 			%wattage = 10 * $EOTW::TimeBoost;
 			%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
-			if (%obj.ProcessTime >= 1)
+			if (%obj.ProcessTime >= 1 && %obj.decayAmount < 15000)
 			{
 				%ProcessTimeChange = mFloor(%obj.ProcessTime);
 				%obj.ChangePower(%ProcessTimeChange);
 				%obj.ProcessTime -= %ProcessTimeChange;
+
+				if (getRandom() < 0.05)
+					%obj.decayAmount += %ProcessTimeChange;
+
+				if (%obj.decayAmount >= 15000)
+					%obj.setShapeFX(2);
 			}
 		}
 	}
+}
+
+function Player::EOTW_SolarPanelInspectLoop(%player, %brick)
+{
+	cancel(%player.PoweredBlockInspectLoop);
+	
+	if (!isObject(%client = %player.client))
+		return;
+
+	if (!isObject(%brick) || !%player.LookingAtBrick(%brick))
+	{
+		%client.centerPrint("", 1);
+		return;
+	}
+
+	%data = %brick.getDatablock();
+	%printText = "<color:ffffff>";
+
+
+    %printText = %printText @ (%brick.getPower()) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+
+	%wattage = 10 * $EOTW::TimeBoost;
+
+	if (%obj.decayAmount < 15000)
+		%printText = %printText @ "Producing " @ %obj.RTGWattageValue() @ " EU/s.";
+	else
+		%printText = %printText @ "\c0Cells burnt out! Replace brick or fix!";
+
+	%client.centerPrint(%printText, 1);
+	
+	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_SolarPanelInspectLoop", %brick);
 }
 
 //Radioisotope
@@ -263,13 +300,14 @@ datablock fxDTSBrickData(brickEOTWRadioIsotopeGeneratorData)
 	inspectFunc = "EOTW_RTGInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 };
+
 $EOTW::CustomBrickCost["brickEOTWRadioIsotopeGeneratorData"] = 0.85 TAB "7a7a7aff" TAB 128 TAB "Adamantine" TAB 64 TAB "Plutonium" TAB 480 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWRadioIsotopeGeneratorData"] = "Passively produces power. Decays slowly overtime.";
 
 function fxDtsBrick::RTGWattageValue(%obj)
 {
 	//Wattage is based off of half-life formula.
-	%baseWattage = 5;
+	%baseWattage = 25;
 	%halflife3isrealyoucandownloaditby = 86400;
 	%wattage = %baseWattage * mPow(0.5, (%obj.decayAmount + 0) / %halflife3isrealyoucandownloaditby);
 	return %wattage;
