@@ -16,6 +16,9 @@ exec("./Support_DropInventoryOnDeath.cs");
 //Blacklist specific items
 function updateItemNames()
 {
+    if ($Pref::Server::SAEX2::DevMode)
+        return;
+
 	$EOTW::BacklistedItems = 0;
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BowItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "GunItem";

@@ -9,108 +9,78 @@ exec("./Brick_WaterWorks.cs");
 exec("./Brick_Military.cs");
 exec("./Brick_Support.cs");
 
+$EOTW::ObjectsPerLoop = 200;
 function PowerMasterLoop()
 {
 	cancel($EOTW::PowerMasterLoop);
 	
 	//Cycle power generators
 	if (isObject(PowerGroupSource))
-	for (%i = 0; %i < PowerGroupSource.getCount(); %i++)
-	{
-		%brick = PowerGroupSource.getObject(%i);
-		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
-		{
-			%brick.lastEnergyUpdate = getSimTime();
-			if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
-				%brick.doCall(%brick.getDatablock().loopFunc);
-		}
-	}
+		for (%i = 0; %i < PowerGroupSource.getCount(); %i += $EOTW::ObjectsPerLoop)
+			PowerGroupSource.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 
-	//if (isObject(PowerGroupSource))
-		//PowerGroupSource.Shuffle();
-	
-	//Move power using power cables
+	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
+	if (getRandom() < 0.02 && isObject(PowerGroupCablePower))
+		PowerGroupCablePower.Shuffle();
+
 	if (isObject(PowerGroupCablePower))
-	for (%i = 0; %i < PowerGroupCablePower.getCount(); %i++)
-	{
-		%cable = PowerGroupCablePower.getObject(%i);
-		if (getSimTime() - %cable.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
-		{
-			%cable.lastEnergyUpdate = getSimTime();
-			%cable.doPowerTransferFull();
-		}
-	}
-
-	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
-	//if (isObject(PowerGroupCablePower))
-		//PowerGroupCablePower.Shuffle();
-
-	if (isObject(PowerGroupPipeMatter))
-	for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i++)
-	{
-		%cable = PowerGroupPipeMatter.getObject(%i);
-		if (getSimTime() - %cable.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
-		{
-			%cable.lastEnergyUpdate = getSimTime();
-			%cable.doMatterTransferFull();
-		}
-	}
+		for (%i = 0; %i < PowerGroupCablePower.getCount(); %i += $EOTW::ObjectsPerLoop)
+			PowerGroupCablePower.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 	
 	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
-	//if (isObject(PowerGroupPipeMatter))
-		//PowerGroupPipeMatter.Shuffle();
+	if (getRandom() < 0.02 && isObject(PowerGroupPipeMatter))
+		PowerGroupPipeMatter.Shuffle();
 	
 	//Move matter using matter pipes
 	if (isObject(PowerGroupPipeMatter))
-	for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i++)
-	{
-		%pipe = PowerGroupPipeMatter.getObject(%i);
-		if (getSimTime() - %pipe.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
-		{
-			%pipe.lastEnergyUpdate = getSimTime();
-			%pipe.doMatterTransferFull();
-		}
-	}
+		for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i += $EOTW::ObjectsPerLoop)
+			PowerGroupPipeMatter.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 	
 	//Randomize pipe list so we get a kind of even spread of matter transfer (when multiple ropes are connected)
-	//if (isObject(PowerGroupCablePower))
-		//PowerGroupCablePower.Shuffle();
+	if (getRandom() < 0.02 && isObject(PowerGroupCablePower))
+		PowerGroupCablePower.Shuffle();
 	
 	//Run storage/sorting devices
 	if (isObject(PowerGroupStorage))
-	for (%i = 0; %i < PowerGroupStorage.getCount(); %i++)
-	{
-		%brick = PowerGroupStorage.getObject(%i);
-		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
-		{
-			%brick.lastEnergyUpdate = getSimTime();
-			if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
-				%brick.doCall(%brick.getDatablock().loopFunc);
-		}
-	}
+		for (%i = 0; %i < PowerGroupStorage.getCount(); %i += $EOTW::ObjectsPerLoop)
+			PowerGroupStorage.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 
-	//if (isObject(PowerGroupStorage))
-		//PowerGroupStorage.Shuffle();
+	if (getRandom() < 0.02 && isObject(PowerGroupStorage))
+		PowerGroupStorage.Shuffle();
 
 	//Run machines
 	if (isObject(PowerGroupMachine))
-	for (%i = 0; %i < PowerGroupMachine.getCount(); %i++)
-	{
-		%brick = PowerGroupMachine.getObject(%i);
-		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
-		{
-			%brick.lastEnergyUpdate = getSimTime();
-			if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
-				%brick.doCall(%brick.getDatablock().loopFunc);
-		}
-	}
+		for (%i = 0; %i < PowerGroupMachine.getCount(); %i += $EOTW::ObjectsPerLoop)
+			PowerGroupMachine.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 
-	//if (isObject(PowerGroupMachine))
-		//PowerGroupMachine.Shuffle();
+	if (getRandom() < 0.02 && isObject(PowerGroupMachine))
+		PowerGroupMachine.Shuffle();
 	
 	$EOTW::PowerMasterLoop = schedule(1000 / $EOTW::PowerTickRate, 0, "PowerMasterLoop");
 }
 schedule(10, 0, "PowerMasterLoop");
+
+function SimSet::IterateLoopCalled(%obj, %start, %length)
+{
+	for (%i = %start; (%i < %i + %length) && %i < %obj.getCount(); %i++)
+	{
+		%brick = %obj.getObject(%i);
+		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
+		{
+			%brick.lastEnergyUpdate = getSimTime();
+			if (%brick.getClassName() $= "SimObject")
+			{
+				switch$ (%brick.transferType)
+				{
+					case "Power": %brick.doPowerTransferFull();
+					case "Matter":%brick.doMatterTransferFull();
+				}
+			}
+			else if(%brick.getDatablock().loopFunc !$= "" && !%brick.machineDisabled)
+				%brick.doCall(%brick.getDatablock().loopFunc);
+		}
+	}
+}
 
 function SimObject::doPowerTransferFull(%obj)
 {

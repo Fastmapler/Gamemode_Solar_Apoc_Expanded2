@@ -204,9 +204,31 @@ function SimSet::Shuffle(%set)
 	}
 }
 
+function ServerCmdServerStats(%client)
+{
+	if (%client.viewingServerStats)
+	{
+		cancel(%client.ssLoop);
+		%client.chatMessage("Server Stats view OFF.");
+	}
+	else
+	{
+		%client.ssLoop = %client.schedule(100, "viewServerStats");
+		%client.chatMessage("Server Stats view ON.");
+	}
+	%client.viewingServerStats = !%client.viewingServerStats;
+}
+
+function GameConnection::viewServerStats(%client)
+{
+	cancel(%client.ssLoop);
+	%client.centerPrint("<just:left>Server FPS: " @ $FPS::Real @ "<br>Schedules: " @ getNumSchedules() @ "<br>Sim Time: " @ getSimTime(), 2);
+	%client.ssLoop = %client.schedule(1000, "viewServerStats");
+}
+
 function ServerCmdGetAllMats(%client)
 {
-	if (%client.isSuperAdmin)
+	if (%client.isSuperAdmin || $Pref::Server::SAEX2::DevMode)
 	{
 		for (%i = 0; %i < MatterData.getCount(); %i++)
 			$EOTW::Material[%client.bl_id, MatterData.getObject(%i).name] += 500000;

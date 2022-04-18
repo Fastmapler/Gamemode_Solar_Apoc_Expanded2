@@ -62,3 +62,8 @@ function createDefaultMinigame()
     MiniGameGroup.add ($DefaultMiniGame);
 }
 schedule(10, 0, "createDefaultMinigame");
+
+if ($Pref::Server::SAEX2::DevMode)
+{
+    forceRequiredAddon("Script_FreeOrb");
+}
