@@ -216,7 +216,7 @@ function swolMelee_Mount(%pl,%db)
 	{
 		%ai = new aiPlayer()
 		{
-			datablock = (%db.item.uiName $= "Fists" ? meleeFistsPlayer : meleeAnimPlayer);
+			datablock = (%db.item.getName() $= "fistItem" ? meleeFistsPlayer : meleeAnimPlayer);
 			position = %pl.getPosition();
 		};
 		%ai.lastDamageType = $DamageType::Direct;

@@ -4,7 +4,7 @@ datablock ItemData(mixLeanItem : mixFlaskHealingItem)
 {
     uiName = "Mix - Illicit Lean";
     colorShiftColor = "1.00 0.00 1.00 1.00";
-    image = mixFlaskSteroidImage;
+    image = mixLeanImage;
 };
 
 datablock ShapeBaseImageData(mixLeanImage : mixFlaskHealingImage)
@@ -109,7 +109,7 @@ function Player::PotionTick_FlaskMeth(%obj, %tick)
     %obj.PotionSchedule["PotionTick_FlaskMeth"] = %obj.schedule(250, "PotionTick_FlaskMeth", %tick + 0.25);
 }
 
-$EOTW::ItemCrafting["mixBathSaltsItem"] = (16 TAB "Gatherer Mix") TAB (16 TAB "Steroids Mix") TAB (32 TAB "Plastic");
+$EOTW::ItemCrafting["mixBathSaltsItem"] = (16 TAB "Gatherer Mix") TAB (16 TAB "Steroid Mix") TAB (32 TAB "Plastic");
 $EOTW::ItemDescription["mixBathSaltsItem"] = "Forces you to wield extremely powerful melee fists.";
 datablock ItemData(mixBathSaltsItem : mixFlaskHealingItem)
 {
@@ -151,12 +151,21 @@ function Player::PotionTick_FlaskBathSalts(%obj, %tick)
 	
 	if (%tick >= 60)
     {
+		swolMelee_UnMount(%obj, %obj.meleeHand);
 		%client.chatMessage("\c6The effect of the Bath Salts dose wears off.");
+		%obj.steroidlevel -= 10;
 		return;
     }
-	
-	if (!isObject(%image = %obj.getMountedImage(0)) || %image.getName() !$= "fistImage")
-		%obj.mountImage(fistImage);
+	else if (%tick == 0)
+	{
+		%obj.steroidlevel += 10;
+	}
+
+	if (isObject(%image = %obj.getMountedImage(0)) || !isObject(%obj.meleeHand) || %obj.meleeHand.getDatablock().getID() != meleeFistsPlayer.getID())
+	{
+		%obj.unMountImage(0);
+		swolMelee_Mount(%obj, fistImage);
+	}
 
     %obj.PotionSchedule["PotionTick_FlaskBathSalts"] = %obj.schedule(100, "PotionTick_FlaskBathSalts", %tick + 0.1);
 }
