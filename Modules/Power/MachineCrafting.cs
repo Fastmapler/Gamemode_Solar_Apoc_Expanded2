@@ -52,9 +52,9 @@ function SetupMatterCraftingData()
 		//Isotope Bombarder/Breeder //"energy" cost is reached by the production of nuclear waste rather than actual energy.
 		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=128;	input[0]=("Nuclear Waste" TAB 32);	 output[0]=("Plutonium" TAB 1);				};
 		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=8;	input[0]=("Lithium" TAB 1);			 output[0]=("Tritium" TAB 1);				};
-		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=16;	input[0]=("Raw Thorium" TAB 1);		 output[0]=("Fissile Thorium" TAB 1);		};
-		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=32;	input[0]=("Plutonium" TAB 1);		 output[0]=("Fissile Americium" TAB 1);		};
-		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=128;	input[0]=("Fissile Americium" TAB 1);output[0]=("Fissile Curium" 	TAB 1);		};
+		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=8;	input[0]=("Raw Thorium" TAB 1);		 output[0]=("Fissile Thorium" TAB 1);		};
+		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=16;	input[0]=("Plutonium" TAB 1);		 output[0]=("Fissile Americium" TAB 1);		};
+		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=64;	input[0]=("Fissile Americium" TAB 1);output[0]=("Fissile Curium" 	TAB 1);		};
 
 	};
 }
