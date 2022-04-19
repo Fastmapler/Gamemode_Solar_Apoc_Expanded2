@@ -187,7 +187,7 @@ function fxDtsBrick::EOTW_FissionReactorLoop(%obj)
 		%matterName = getField(%part.matter["Input",0], 0);
 		%matterCount = getField(%part.matter["Input",0], 1);
 
-		if (isObject(%matter = getMatterType(%matterName)) && %matter.boilCapacity > 0)
+		if (isObject(%matter = getMatterType(%matterName)) && %matter.boilCapacity > 0 && %matter.boilMatter !$= "")
 		{
 			%amount = getMin(%matterCount, %obj.queuedHeat) / %matter.boilCapacity;
 			%coolAmount[%matterName] += %amount;

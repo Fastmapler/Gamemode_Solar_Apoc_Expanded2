@@ -168,10 +168,48 @@ datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 	matterSlots["Output"] = 2;
 	//iconName = "./Bricks/Icon_Generator";
 };
-$EOTW::CustomBrickCost["brickEOTWThermoelectricBoilerData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity";
+$EOTW::CustomBrickCost["brickEOTWThermoelectricBoilerData"] = 1.00 TAB "7a7a7aff" TAB 160 TAB "Copper" TAB 96 TAB "Steel" TAB 64 TAB "Dielectrics";
 $EOTW::BrickDescription["brickEOTWThermoelectricBoilerData"] = "Uses hot coolant or hot cryostablizer to heat water into steam.";
 
 function fxDtsBrick::EOTW_ThermoelectricBoilerLoop(%obj)
 {
 	%data = %obj.getDatablock();
+
+	%matter1 = %obj.matter["Input", 0];
+	%matter2 = %obj.matter["Input", 1];
+
+	if (isObject(%matter = getMatterType(getField(%matter1, 0))))
+	{
+		if (%matter.boilMatter !$= "")
+			%cooling = %matter1;
+		if (%matter.cooledMatter !$= "")
+			%heating = %matter1;
+	}
+	if (isObject(%matter = getMatterType(getField(%matter2, 0))))
+	{
+		if (%matter.boilMatter !$= "")
+			%cooling = %matter2;
+		if (%matter.cooledMatter !$= "")
+			%heating = %matter2;
+	}
+
+	if (isObject(%cooling) && isObject(%heating) && %cooling != %heating)
+	{
+		%coolingAmount = getField(%obj.GetMatter(%cooling.name, "Input"), 1);
+		%heatingAmount = getField(%obj.GetMatter(%heating.name, "Input"), 1);
+		%coolingChange = %cooling.boilCapacity * %coolingAmount;
+		%heatingChange = %heating.boilCapacity * %heatingAmount;
+
+		%boilRatio	   = %heating.boilCapacity / %cooling.boilCapacity;
+		%totalExchange = %coolingChange / %heatingChange;
+
+		if (%totalExchange >= 1)
+		{
+			%change1 = %obj.changeMatter(%heating.cooledMatter.name, mFloor(%totalExchange * %boilRatio), "Output");
+			%obj.changeMatter(%heating.name, %change1 * -1, "Input");
+
+			%change2 = %obj.changeMatter(%cooling.cooledMatter.name, mFloor((%totalExchange * %change1) / %boilRatio), "Output");
+			%obj.changeMatter(%cooling.name, %change2 * -1, "Input");
+		}
+	}
 }

@@ -280,7 +280,7 @@ function Player::EOTW_SolarPanelInspectLoop(%player, %brick)
 	if (%obj.decayAmount < 15000)
 		%printText = %printText @ "Producing " @ %obj.RTGWattageValue() @ " EU/s.";
 	else
-		%printText = %printText @ "\c0Cells burnt out! Replace brick or fix!";
+		%printText = %printText @ "\c0The voltaic cells are burnt out! Replace brick or fix!";
 
 	%client.centerPrint(%printText, 1);
 	

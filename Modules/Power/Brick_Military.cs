@@ -233,10 +233,10 @@ function fxDtsBrick::EOTW_TeslaCoilLoop(%obj)
 }
 
 $EOTW::CustomBrickCost["brickEOTWLandmineData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Plastic" TAB 48 TAB "Steel" TAB 8 TAB "Plutonium";
-$EOTW::BrickDescription["brickEOTWLandmineData"] = "A reusable very-mini-mini-nuke landmine. Requires 8 Rocket Fuel per use.";
+$EOTW::BrickDescription["brickEOTWLandmineData"] = "A reusable very-mini mini-nuke landmine. Requires 8 Rocket Fuel per use.";
 datablock fxDTSBrickData(brickEOTWLandmineData)
 {
-	brickFile = "base/data/bricks/rounds/2x2disc.blb";
+	brickFile = "base/data/bricks/flats/2x2f.blb";
 	category = "Solar Apoc";
 	subCategory = "Military";
 	uiName = "Landmine";
