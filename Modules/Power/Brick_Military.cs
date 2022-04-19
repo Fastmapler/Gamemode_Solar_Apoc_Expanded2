@@ -54,7 +54,7 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
 	energyMaxBuffer = 250;
 	loopFunc = "EOTW_TurretLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
-	iconName = "./Icons/TurretHeavy";
+	//iconName = "./Icons/TurretHeavy";
 
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
