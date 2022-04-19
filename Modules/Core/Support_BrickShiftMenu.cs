@@ -437,7 +437,7 @@ new ScriptObject(EOTWbsmMenu)
 
 	entryCount = 5;
 
-	submenu["HelpMenu"] = "";
+	submenu["HelpMenu"] = EOTWbsmGeneralHelpMenu;
 	submenu["CommandMenu"] = EOTWbsmCommandMenu;
 	submenu["MatRecipes"] = EOTWbsmMaterialRecipesMenu;
 	submenu["MatDict"] = EOTWbsmMaterialDictonaryMenu;
@@ -516,6 +516,24 @@ new ScriptObject(EOTWbsmMaterialDictonaryMenu)
 	parent = EOTWbsmMenu;
 
 	title = "<font:arial:24>\c2Material Recipes";
+	format = EOTWbsmMenu.format;
+
+	entry[0] = "Work in Progress... [Close]" TAB "closeMenu";
+
+	entryCount = 1;
+
+	submenu["closeMenu"] = EOTWbsmMenu;
+
+	disableSelect = true;
+};
+
+new ScriptObject(EOTWbsmGeneralHelpMenu)
+{
+	superClass = "BSMObject";
+
+	parent = EOTWbsmMenu;
+
+	title = "<font:arial:24>\c2General Help";
 	format = EOTWbsmMenu.format;
 
 	entry[0] = "Work in Progress... [Close]" TAB "closeMenu";
