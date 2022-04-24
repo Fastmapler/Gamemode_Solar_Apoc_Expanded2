@@ -349,7 +349,7 @@ function Player::EOTW_RTGInspectLoop(%player, %brick)
 
 
     %printText = %printText @ (%brick.getPower()) @ "/" @ %data.energyMaxBuffer @ " EU\n";
-	%printText = %printText @ "Producing " @ %obj.RTGWattageValue() @ " EU/s.";
+	%printText = %printText @ "Producing " @ %brick.RTGWattageValue() @ " EU/s.";
 
 	%client.centerPrint(%printText, 1);
 	

@@ -62,7 +62,7 @@ schedule(10, 0, "PowerMasterLoop");
 
 function SimSet::IterateLoopCalled(%obj, %start, %length)
 {
-	for (%i = %start; (%i < %i + %length) && %i < %obj.getCount(); %i++)
+	for (%i = %start; (%i < %start + %length) && %i < %obj.getCount(); %i++)
 	{
 		%brick = %obj.getObject(%i);
 		if (getSimTime() - %brick.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
