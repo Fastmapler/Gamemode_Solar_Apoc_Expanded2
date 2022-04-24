@@ -15,29 +15,21 @@ Wire/Energy transfer priority
 
 Reduce spawner raycasts to fix player/enemy/material spawn issues
 
-Add proper help meny and tutorial
+Add proper help menu and tutorial
 
 Make weapon ammo drop on death
-
-Add portal and summoning altar spawning for bosses
 
 Rare and common drops from bosses
 
 Machine energy I/O statistic monitoring
 
-Make machines have fun sounds
-
 Two alternate bosses
 
 Random events
 
-Mining C4
-
 Auto-drills
 
 Drones (Mining, Combat)
-
-Modular Fission Reactor (MFR)
 
 MetaMaterial Hyper-Compression Fusion Reactor (MMHCFR)
 

@@ -204,7 +204,7 @@ function Player::EOTW_MatterReactorInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_MatterReactorInspectLoop", %brick);
 }
 
-function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
+function EOTW_MatterReactorLoop(%obj)
 {
 	if (!isObject(%craft = %obj.craftingProcess))
 		return;
@@ -239,7 +239,7 @@ function fxDtsBrick::EOTW_MatterReactorLoop(%obj)
 	}
 }
 
-function fxDtsBrick::EOTW_MatterReactorMatterUpdate(%obj)
+function EOTW_MatterReactorMatterUpdate(%obj)
 {
 	%data = %obj.getDatablock();
 	//Check to see if we can still process a running process, otherwise check to see if we can craft something.
@@ -366,7 +366,7 @@ function GetVoidDrillCostData(%name)
 	return %matter.name TAB %essence TAB %power;
 }
 
-function fxDtsBrick::EOTW_VoidDrillLoop(%obj)
+function EOTW_VoidDrillLoop(%obj)
 {
 	if (%obj.DrillRecipe $= "" || %obj.DrillRecipe == -1)
 		return;

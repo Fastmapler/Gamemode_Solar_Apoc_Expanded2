@@ -175,6 +175,8 @@ function RGBToHex(%rgb) {
 
 function SimObject::doCall(%this, %method, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9)
 {
+	return call(%method, %this, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9);
+
 	for (%i = 0; %arg[%i] !$= ""; %i++)
 		%args = %args @ %arg[%i] @ ",";
 		

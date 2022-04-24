@@ -52,7 +52,7 @@ function Player::EOTW_WaterPumpInspectLoop(%player, %brick)
 }
 
 
-function fxDtsBrick::EOTW_WaterPumpLoop(%obj)
+function EOTW_WaterPumpLoop(%obj)
 {
     %data = %obj.getDatablock();
     %costPerUnit = 20;
@@ -87,7 +87,7 @@ datablock fxDTSBrickData(brickEOTWSteamEngineData)
 $EOTW::CustomBrickCost["brickEOTWSteamEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Electrum" TAB 128 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWSteamEngineData"] = "A more advanced and efficent stirling engine that takes inputted water and fuel and creates steam. Use the steam turbine with this.";
 
-function fxDtsBrick::EOTW_SteamEngineLoop(%obj)
+function EOTW_SteamEngineLoop(%obj)
 {
 	%wattage = 100;
 	if (%obj.storedFuel > 0)
@@ -171,7 +171,7 @@ datablock fxDTSBrickData(brickEOTWThermoelectricBoilerData)
 $EOTW::CustomBrickCost["brickEOTWThermoelectricBoilerData"] = 1.00 TAB "7a7a7aff" TAB 160 TAB "Copper" TAB 96 TAB "Steel" TAB 64 TAB "Dielectrics";
 $EOTW::BrickDescription["brickEOTWThermoelectricBoilerData"] = "Uses hot coolant or hot cryostablizer to heat water into steam.";
 
-function fxDtsBrick::EOTW_ThermoelectricBoilerLoop(%obj)
+function EOTW_ThermoelectricBoilerLoop(%obj)
 {
 	%data = %obj.getDatablock();
 
@@ -181,35 +181,36 @@ function fxDtsBrick::EOTW_ThermoelectricBoilerLoop(%obj)
 	if (isObject(%matter = getMatterType(getField(%matter1, 0))))
 	{
 		if (%matter.boilMatter !$= "")
-			%cooling = %matter1;
+			%cooling = %matter;
 		if (%matter.cooledMatter !$= "")
-			%heating = %matter1;
+			%heating = %matter;
 	}
 	if (isObject(%matter = getMatterType(getField(%matter2, 0))))
 	{
 		if (%matter.boilMatter !$= "")
-			%cooling = %matter2;
+			%cooling = %matter;
 		if (%matter.cooledMatter !$= "")
-			%heating = %matter2;
+			%heating = %matter;
 	}
-
 	if (isObject(%cooling) && isObject(%heating) && %cooling != %heating)
 	{
-		%coolingAmount = getField(%obj.GetMatter(%cooling.name, "Input"), 1);
-		%heatingAmount = getField(%obj.GetMatter(%heating.name, "Input"), 1);
+		%coolingAmount = %obj.GetMatter(%cooling.name, "Input");
+		%heatingAmount = %obj.GetMatter(%heating.name, "Input");
 		%coolingChange = %cooling.boilCapacity * %coolingAmount;
 		%heatingChange = %heating.boilCapacity * %heatingAmount;
 
 		%boilRatio	   = %heating.boilCapacity / %cooling.boilCapacity;
 		%totalExchange = %coolingChange / %heatingChange;
 
+		echo("Test" SPC %coolingAmount SPC "|" SPC %heatingAmount SPC "|" SPC  %coolingChange SPC "|" SPC  %heatingChange SPC "|" SPC  %boilRatio SPC "|" SPC  %totalExchange);
 		if (%totalExchange >= 1)
 		{
-			%change1 = %obj.changeMatter(%heating.cooledMatter.name, mFloor(%totalExchange * %boilRatio), "Output");
-			%obj.changeMatter(%heating.name, %change1 * -1, "Input");
+			%change1 = %obj.changeMatter(%cooling.boilMatter, mFloor(%totalExchange) * mFloor(%boilRatio), "Output");
+			%obj.changeMatter(%cooling.name, %change1 * -1, "Input");
 
-			%change2 = %obj.changeMatter(%cooling.cooledMatter.name, mFloor((%totalExchange * %change1) / %boilRatio), "Output");
-			%obj.changeMatter(%cooling.name, %change2 * -1, "Input");
+			%change2 = %obj.changeMatter(%heating.cooledMatter, mFloor((%totalExchange * %change1) / mFloor(%boilRatio)), "Output");
+			%obj.changeMatter(%heating.name, %change2 * -1, "Input");
+			echo("Test2" SPC %change1 SPC %change2);
 		}
 	}
 }

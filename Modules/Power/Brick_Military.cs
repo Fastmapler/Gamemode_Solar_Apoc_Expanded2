@@ -64,7 +64,7 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
     attackCooldown = 1000;
 };
 
-function fxDtsBrick::EOTW_TurretLoop(%obj)
+function EOTW_TurretLoop(%obj)
 {
     %range = 8;
     %data = %obj.getDataBlock();
@@ -202,7 +202,7 @@ datablock fxDTSBrickData(brickEOTWTeslaCoilData)
     attackCooldown = 2000;
 };
 
-function fxDtsBrick::EOTW_TeslaCoilLoop(%obj)
+function EOTW_TeslaCoilLoop(%obj)
 {
     %range = 7;
     %data = %obj.getDataBlock();

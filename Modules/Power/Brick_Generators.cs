@@ -67,7 +67,7 @@ datablock fxDTSBrickData(brickEOTWStirlingEngineData)
 $EOTW::CustomBrickCost["brickEOTWStirlingEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Glass" TAB 112 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWStirlingEngineData"] = "Burns various materials to produce decent amounts of power.";
 
-function fxDtsBrick::EOTW_StirlingEngineUpdate(%obj)
+function EOTW_StirlingEngineUpdate(%obj)
 {
 	%wattage = 40;
 	if (%obj.storedFuel > 0)
@@ -130,7 +130,7 @@ datablock fxDTSBrickData(brickEOTWSoulReactorData)
 $EOTW::CustomBrickCost["brickEOTWSoulReactorData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 64 TAB "Leather" TAB 64 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWSoulReactorData"] = "Dusts nearby monster corpses for power.";
 
-function fxDtsBrick::EOTW_SoulReactorLoop(%obj)
+function EOTW_SoulReactorLoop(%obj)
 {
 	initContainerRadiusSearch(%obj.getPosition(), 16, $TypeMasks::CorpseObjectType);
 
@@ -185,7 +185,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 $EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 288 TAB "Steel" TAB 256 TAB "Glass" TAB 128 TAB "Rosium";
 $EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Uses steam to create large amounts of power. Returns most steam as water.";
 
-function fxDtsBrick::EOTW_SteamTurbineLoop(%obj)
+function EOTW_SteamTurbineLoop(%obj)
 {
 	if (%obj.CondensatorBuffer > 0)
 	{
@@ -226,7 +226,7 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Adamantine" TAB 64 TAB "Teflon" TAB 16 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality."; // Will eventually burn out and need to be replaced.
 
-function fxDtsBrick::EOTW_SolarPanelLoop(%obj)
+function EOTW_SolarPanelLoop(%obj)
 {
 	if ($EOTW::Time < 12)
 	{
@@ -313,7 +313,7 @@ function fxDtsBrick::RTGWattageValue(%obj)
 	return %wattage;
 }
 
-function fxDtsBrick::EOTW_RadioIsotopeGeneratorLoop(%obj)
+function EOTW_RadioIsotopeGeneratorLoop(%obj)
 {
 	%obj.ProcessTime += %obj.RTGWattageValue();
 

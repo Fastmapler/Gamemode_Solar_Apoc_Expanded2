@@ -149,7 +149,7 @@ function SimSet::TestGetAdjacentParts(%obj, %part)
 	}
 }
 
-function fxDtsBrick::EOTW_FissionReactorLoop(%obj)
+function EOTW_FissionReactorLoop(%obj)
 {
 	if (!isObject(%obj.fissionParent))
 	{

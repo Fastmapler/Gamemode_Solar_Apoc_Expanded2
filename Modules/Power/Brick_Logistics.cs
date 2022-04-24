@@ -15,7 +15,7 @@ datablock fxDTSBrickData(brickEOTWTrashBinData)
 $EOTW::CustomBrickCost["brickEOTWTrashBinData"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Iron" TAB 256 TAB "Granite";
 $EOTW::BrickDescription["brickEOTWTrashBinData"] = "_Permanently_ destroys any inputted energy or materials.";
 
-function fxDtsBrick::EOTW_TrashBinLoop(%obj)
+function EOTW_TrashBinLoop(%obj)
 {
     %obj.energy = 0;
     %obj.matter["Input", 0] = "";
@@ -83,7 +83,7 @@ function Player::EOTW_SplitterInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_SplitterInspectLoop", %brick);
 }
 
-function fxDtsBrick::EOTW_SplitterUpdate(%obj)
+function EOTW_SplitterUpdate(%obj)
 {
     if (isObject(%downBrick = %obj.getDownBrick(0)))
         if(!%downBrick.getDatablock().isSplitter)

@@ -1,5 +1,3 @@
-$EOTW::PowerTickRate = 20;
-
 exec("./MachineCrafting.cs");
 exec("./Brick_Generators.cs");
 exec("./Brick_Storage.cs");
@@ -9,7 +7,9 @@ exec("./Brick_WaterWorks.cs");
 exec("./Brick_Military.cs");
 exec("./Brick_Support.cs");
 
+$EOTW::PowerTickRate = 20;
 $EOTW::ObjectsPerLoop = 200;
+
 function PowerMasterLoop()
 {
 	cancel($EOTW::PowerMasterLoop);

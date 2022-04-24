@@ -16,7 +16,7 @@ datablock fxDTSBrickData(brickEOTWChargePadData)
 $EOTW::CustomBrickCost["brickEOTWChargePadData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Wood" TAB 128 TAB "Iron" TAB 32 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWChargePadData"] = "Charges the player's internal battery.";
 
-function fxDtsBrick::EOTW_ChargePadLoop(%obj)
+function EOTW_ChargePadLoop(%obj)
 {
 	if (getSimTime() - %obj.LastChargeLoop < 100)
 		return;
@@ -56,7 +56,7 @@ datablock fxDTSBrickData(brickEOTWEnergyRecoveryPadData)
 $EOTW::CustomBrickCost["brickEOTWEnergyRecoveryPadData"] = 1.00 TAB "ff0000ff" TAB 2048 TAB "Wood" TAB 96 TAB "Steel" TAB 16 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWEnergyRecoveryPadData"] = "Drain's the player's battery into its own energy storage.";
 
-function fxDtsBrick::EOTW_EnergyRecoveryPadLoop(%obj)
+function EOTW_EnergyRecoveryPadLoop(%obj)
 {
 	if (getSimTime() - %obj.LastChargeLoop < 100)
 		return;
@@ -123,7 +123,7 @@ function Player::EOTW_ThumperInspectLoop(%player, %brick)
 	%player.PoweredBlockInspectLoop = %player.schedule(1000 / $EOTW::PowerTickRate, "EOTW_ThumperInspectLoop", %brick);
 }
 
-function fxDtsBrick::EOTW_ThumperLoop(%obj)
+function EOTW_ThumperLoop(%obj)
 {
 	%data = %obj.getDatablock();
 	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
@@ -154,7 +154,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 $EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 128 TAB "Silver" TAB 128 TAB "Lithium";
 $EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Efficently applies mixes to all players alive. Fuel burn does not increase with more players.";
 
-function fxDtsBrick::EOTW_ChemDiffuserLoop(%obj)
+function EOTW_ChemDiffuserLoop(%obj)
 {
 	%data = %obj.getDatablock();
 	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
@@ -298,7 +298,7 @@ datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 $EOTW::CustomBrickCost["brickEOTWSolarShieldProjectorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Energium" TAB 256 TAB "Teflon" TAB 128 TAB "Dielectrics";
 $EOTW::BrickDescription["brickEOTWSolarShieldProjectorData"] = "When powered for long enough produces a large bubble shield that grants all living entities immunity to the sun.";
 
-function fxDtsBrick::EOTW_SolarShieldProjectorLoop(%obj)
+function EOTW_SolarShieldProjectorLoop(%obj)
 {
 	%data = %obj.getDatablock();
 	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());

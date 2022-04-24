@@ -78,7 +78,7 @@ datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 	allowReflection = true;
 };
 
-function fxDtsBrick::Fission_FuelCellLoop(%obj)
+function Fission_FuelCellLoop(%obj)
 {
 	%data = %obj.getDatablock();
 
@@ -242,7 +242,7 @@ datablock fxDTSBrickData(brickMFRCellHeatSinkOverclockedData)
 	adjacentHeatPushRate = 0;
 };
 
-function fxDtsBrick::Fission_HeatSinkTick(%obj)
+function Fission_HeatSinkTick(%obj)
 {
 	%data = %obj.getDatablock();
 
@@ -344,7 +344,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
 	reactorTransferRate = 720;
 };
 
-function fxDtsBrick::Fission_HeatExchangerTick(%obj)
+function Fission_HeatExchangerTick(%obj)
 {
 	%data = %obj.getDatablock();
 
