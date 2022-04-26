@@ -1845,7 +1845,7 @@ function fxDTSBrick::spawnHoleBot( %obj )
 		%damageType = %player.getDataBlock().hMeleeCI;
 
 		if(strlen(%damageType))
-			eval("%player.hDamageType = $DamageType::" @ %damageType @ ";");
+			%player.hDamageType = $DamageType["::" @ %damageType];
 		else
 			%player.hDamageType = $DamageType::HoleMelee;
 
