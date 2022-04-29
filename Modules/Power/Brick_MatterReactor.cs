@@ -384,7 +384,7 @@ function EOTW_VoidDrillLoop(%obj)
 	%matter = getMatterType(getField(%obj.DrillRecipe, 0));
 	if (%obj.craftingPower >= getField(%obj.DrillRecipe, 2) && %obj.GetMatter("Boss Essence", "Input") >= getField(%obj.DrillRecipe, 1) && (getField(%obj.matter["Output", 0], 1) + %matter.spawnValue) <= %data.matterMaxBuffer && (%matter.requiredCollectFuel $= "" || %obj.GetMatter(getField(%matter.requiredCollectFuel, 0), "Input") >= getField(%matter.requiredCollectFuel, 1)))
 	{
-		%obj.craftingPower = 0;
+		%obj.craftingPower -= getField(%obj.DrillRecipe, 2);
 		%obj.playSoundLooping();
 		
 		if (%matter.requiredCollectFuel !$= "")
