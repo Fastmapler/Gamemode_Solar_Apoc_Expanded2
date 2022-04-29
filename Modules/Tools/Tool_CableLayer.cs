@@ -296,14 +296,17 @@ function Player::CableLayerMessage(%obj)
 			
 			if (isObject(%group) && %group.material !$= "")
 			{
+				if(%group.isTransmission)
+					%tm = " (TRANSMISSION)";
+
 				%matter = getMatterType(getField(%group.material, 0));
 				%source = "\c6Rope (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
 				%target = "\c7(Remove)";
 			}
 		}	
 	}
-			
-	%client.centerPrint("<just:left>\c6Source: " @ %source @ "<br>\c6Target: " @ %target @ "<br>\c6Material: " @ %matInv @ "\c6/" @ %cost @ " <color:" @ %cableType.color @ ">" @ %cableType.name @ "\c6 (" @ %cableType.cableTransfer @ "W)", 1);
+
+	%client.centerPrint("<just:left>\c6Source: " @ %source @ %tm @"<br>\c6Target: " @ %target @ "<br>\c6Material: " @ %matInv @ "\c6/" @ %cost @ " <color:" @ %cableType.color @ ">" @ %cableType.name @ "\c6 (" @ %cableType.cableTransfer @ "W)", 1);
 		
 	%obj.CableLayerMessageLoop = %obj.schedule(100, "CableLayerMessage");
 }

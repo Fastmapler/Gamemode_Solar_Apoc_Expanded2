@@ -294,6 +294,13 @@ function SimGroup::RemoveCableData(%this)
 	{
 		if (isObject(%source = %cable.powerSource))
 		{
+			if(%source.isTransmission)
+			{
+				%source.transNextNode = "";
+				%source.transRate = 0;
+				%source.isTransmission = 0;
+			}
+
 			%newGroupList = "";
 			for (%i = 0; %i < getWordCount(%source.ropeGroups); %i++)
 			{
@@ -307,6 +314,13 @@ function SimGroup::RemoveCableData(%this)
 
 		if (isObject(%target = %cable.powerTarget))
 		{
+			if(%target.isTransmission)
+			{
+				%target.transPrevNode = "";
+				%target.transRate = 0;
+				%target.isTransmission = 0;
+			}
+
 			%newGroupList = "";
 			for (%i = 0; %i < getWordCount(%target.ropeGroups); %i++)
 			{

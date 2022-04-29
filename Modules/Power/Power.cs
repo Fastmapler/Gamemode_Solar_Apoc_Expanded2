@@ -55,6 +55,14 @@ function PowerMasterLoop()
 
 	if (getRandom() < 0.02 && isObject(PowerGroupMachine))
 		PowerGroupMachine.Shuffle();
+
+	//Run transmission
+	//if (isObject(PowerGroupTransmission))
+	//	for (%i = 0; %i < PowerGroupTransmission.getCount(); %i += $EOTW::ObjectsPerLoop)
+	//		PowerGroupTransmission.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
+
+	//if (getRandom() < 0.02 && isObject(PowerGroupTransmission))
+	//	PowerGroupTransmission.Shuffle();
 	
 	$EOTW::PowerMasterLoop = schedule(1000 / $EOTW::PowerTickRate, 0, "PowerMasterLoop");
 }
@@ -93,19 +101,48 @@ function SimObject::doPowerTransferFull(%obj)
 			
 		return;
 	}
-	%obj.powerTransfer = mCeil(%obj.powerTransfer);
+
+	if(%obj.isTransmission)
+		return;
+
+
+	//TODO: how to control for power rate?
+	%powerTransfer = %obj.powerTransfer = mCeil(%obj.powerTransfer);
 	
 	if (%obj.buffer > 0)
 	{
-		%transferAmount = getMin(%obj.buffer, %obj.powerTarget.getDatablock().energyMaxBuffer - %obj.powerTarget.energy);
-		%obj.powerTarget.changePower(%transferAmount);
+		%powerTarget = %obj.powerTarget;
+		if(%powerTarget.isTransmission == 1)
+		{
+			//look for the next non-transmission
+			%temp_target = %powerTarget.transNextNode;
+			while(isObject(%temp_target))
+			{
+				%powerTarget = %temp_target;
+				//control for rate here
+				%temp_target = %temp_target.transNextNode;
+			}
+
+			//echo("Target: "@ %obj.powerTarget);
+			//echo("newPowerTarget: "@ %newPowerTarget);
+		}
+
+		%transferAmount = getMin(%obj.buffer, %powerTarget.getDatablock().energyMaxBuffer - %powerTarget.energy);
+		%powerTarget.changePower(%transferAmount);
+		
+		if(%transferAmount > 0)
+		{
+			//%obj.powerTarget.setColor(0);
+			//%obj.powerTarget.schedule(500, setColor, 6);
+		}
 		%obj.buffer += (%transferAmount * -1);
 	}
 	
 	if (%obj.buffer <= 0)
 	{
-		%transferAmount = getMin(%obj.powerSource.energy, %obj.powerTransfer);
+		%transferAmount = getMin(%obj.powerSource.energy, %powerTransfer);
 		%obj.powerSource.changePower(%transferAmount * -1);
+
 		%obj.buffer += (%transferAmount);
 	}
 }
@@ -290,7 +327,37 @@ package EOTWPower
 				case "Power":
 					%diameter = 0.1;
 					%slack = 0.25;
+
+					%src_trans = %source.getDatablock().energyGroup $= "Transmission";
+					%dst_trans = %target.getDatablock().energyGroup $= "Transmission";
+					if(%src_trans)
+					{
+						//talk("network cable - ignored");
+						//talk(" "@ %material SPC %rate);
+
+						%source.transRate = %rate;
+						%source.transNextNode = %target;
+						%source.isTransmission = 1;
+
+						if(%dst_trans)
+						{
+							%target.transRate = %rate;
+							%target.transPrevNode = %source;
+							%target.isTransmission = 1;
+						}
+
+						%cable.isTransmission = 1;
+					}
+
+					if(%dst_trans)
+					{
+						%target.transRate = %rate;
+						%target.isTransmission = 1;
+					}
+
+
 					PowerGroupCablePower.add(%cable);
+
 				case "Matter":
 					%diameter = 0.2;
 					%slack = 0;
@@ -309,6 +376,9 @@ package EOTWPower
 		%group.material = %material TAB %amt;
 		%group.cable = %cable;
 		%cable.parent = %group;
+
+		if(%cable.isTransmission)
+			%group.isTransmission = 1;
 
 		%source.ropeGroups = trim(%source.ropeGroups SPC %group);
 		%target.ropeGroups = trim(%target.ropeGroups SPC %group);

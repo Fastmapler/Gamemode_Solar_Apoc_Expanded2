@@ -9,7 +9,8 @@ function EnvMasterInitSetup()
 	$EOTW::WorldBounds = "-1024 -1024 1024 1024";
 	serverDirectSaveFileLoad("Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Environment/MainMap6.bls", 3, "", 2);
 }
-schedule(100, 0, "EnvMasterInitSetup");
+if(!$EOTW::Initilized)
+	schedule(100, 0, "EnvMasterInitSetup");
 
 function EnvMasterSetup()
 {

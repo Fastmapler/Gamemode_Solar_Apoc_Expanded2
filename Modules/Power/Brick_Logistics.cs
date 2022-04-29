@@ -1,3 +1,20 @@
+//TODO: how to limit input to 1 and output to 1?
+datablock fxDTSBrickData(brickEOTWTransmissionNodeData)
+{
+	brickFile = "./Bricks/MicroCapacitor.blb";
+	category = "Solar Apoc";
+	subCategory = "Logistics";
+	uiName = "Transmission Node";
+	energyGroup = "Transmission";
+	energyMaxBuffer = 0;
+	loopFunc = "";
+	inspectFunc = "EOTW_DefaultInspectLoop";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
+};
+$EOTW::CustomBrickCost["brickEOTWTransmissionNodeData"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Iron" TAB 4 TAB "Silver" TAB 8 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWTransmissionNodeData"] = "A transmission node";
+
+
 datablock fxDTSBrickData(brickEOTWTrashBinData)
 {
 	brickFile = "./Bricks/Generator.blb";
