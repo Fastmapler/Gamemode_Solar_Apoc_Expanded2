@@ -69,3 +69,41 @@ function updateWeaponDamage()
         acidProjectile.directDamage = 4;
 }
 schedule(100, 0, "updateWeaponDamage");
+
+
+
+//Theoretical weapon rework:
+
+//Four different tiers of weapons:
+//Basic: Iron/Copper/Silver
+//Advanced: Steel/Rosium/Electrum
+//Super: Adamantine/Naturum/Energium
+//Ultimate: Plutonium/Singularity/Infinity
+
+//Five different types of weapons
+//Higher tier gives better firerate, accuracy, and automatic fire.
+//All weapons do not need to reload and directly feed from player's materials (to avoid annoying data handling for stored or dropped weapons)
+//One type of ammo, Bullet, Shotgun, and Explosive Ammo respectively.
+//Melee: Baseball Bat -> Machete -> Claymore -> Phase Blade or something, also switch to projectile melee since raycasts suck with server lag //Cheap high DPS melee
+//Bullet: Pistol -> Machine Gun -> LMG -> Minigun //Long range targeting
+//Shotgun: Single Barrel -> Combat -> Automatic -> Shard Rifle //Short range targeting
+//Rocket: Atlatl -> Grenade L -> Rotary L -> Gyrojet //Crowd control
+//Energy: Taser(Slowdown) -> Hellfrost Pistol(Ice/Fire) -> Microwaver(Armor-Breaking) -> Ion Cannon(Die) //Debuff Infliction/Boss Support
+
+
+////Option for multiple ammo types, too much maybe?
+//Three Types of ammo for bullet/shotgun/rocket
+//Swap between projectiles by pressing light button
+//Projectiles are identical between different tiers of weapons
+//Could just have 1 type of ammo. DPS will depend on accuracy and firerate of gun.
+//Higher tiers give higher velocity and damage
+//Bullet: Basic -> Advanced -> Dense
+//Shotgun: Hunting -> Militry -> Experimental
+//Rocket: Impact -> Explosive -> Nuclear
+
+
+////Why change the weapon system anyways???
+//The current weapon system, while suitable enough, was never intended to be balanced
+//into different tiers, despite attempts by me to do so. This new system should give a better and more defined
+//Progression system. Furthermore, the guns will feel more integrated into SolarApoc (as they will use crafted materials)
+//and won't suffer from various bugs by attempting to attaching limited mag sizes to it.

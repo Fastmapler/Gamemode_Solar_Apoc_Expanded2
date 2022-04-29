@@ -9,13 +9,13 @@ Welcome to the Apocalypse of Blockland, but this time it is cooler(er) B)
 
 ## List of stuff to do:
 
-Fix door event spam issue
+Optimize power system (Highest Priority)
 
-Wire/Energy transfer priority
+Add proper help menu and tutorial (High Priority)
 
-Reduce spawner raycasts to fix player/enemy/material spawn issues
+Threat System (Monsters + Sun system prioritizes more progressed players)
 
-Add proper help menu and tutorial
+Reduce spawner raycasts heights to fix player/enemy/material spawn issues
 
 Make weapon ammo drop on death
 
@@ -25,9 +25,9 @@ Machine energy I/O statistic monitoring
 
 Two alternate bosses
 
-Random events
+Random events (Solar flares, trading caravans, etc.)
 
-Auto-drills
+Auto-drills (Placable drill to automatically mine materials)
 
 Drones (Mining, Combat)
 
@@ -35,4 +35,10 @@ MetaMaterial Hyper-Compression Fusion Reactor (MMHCFR)
 
 Infinity/Singularity production (Via MMHCFR)
 
-Tier 6 Weapons
+Tier 6 Weapons (Mini-Nuke, Ion Cannon, Ryno V, etc.)
+
+### Low priority
+
+Weapon system rework (Custom weapons, integrated with solar apoc's systems)
+    -Only three well defined tiers of items
+    -Conistant and well defined weapons for each tier (Bullet, Shell, Explosive, Energy, etc.)
