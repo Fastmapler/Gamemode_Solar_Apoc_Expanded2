@@ -36,10 +36,6 @@ function PowerMasterLoop()
 		for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i += $EOTW::ObjectsPerLoop)
 			PowerGroupPipeMatter.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 	
-	//Randomize pipe list so we get a kind of even spread of matter transfer (when multiple ropes are connected)
-	if (getRandom() < 0.02 && isObject(PowerGroupCablePower))
-		PowerGroupCablePower.Shuffle();
-	
 	//Run storage/sorting devices
 	if (isObject(PowerGroupStorage))
 		for (%i = 0; %i < PowerGroupStorage.getCount(); %i += $EOTW::ObjectsPerLoop)
