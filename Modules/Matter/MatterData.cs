@@ -38,9 +38,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Rubber";		color="18161aff";	tier=3;																																																									helpText="Bouncy matter used for some specific crafting recipes.";	};
 		new ScriptObject(MatterType) { name="Leather";		color="503623ff";	tier=3;																																																									helpText="In reality it is just monster skin. Gross.";	};
 		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=96;	collectTime=10000;	fuelCapacity=800/96;	gatherableDB="brickEOTWGatherableBasicData";	};
-		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";	tier=3;	};
-		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=015;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	gatherableDB="brickEOTWGatherableCrystalData";	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	tier=3;	spawnWeight=050;	spawnVeinSize=4;	spawnValue=96;	collectTime=10000;	fuelCapacity=800/96;	gatherableDB="brickEOTWGatherableBasicData";																				helpText="Burnable carbon useful as both fuel and steel production.";	};
+		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";	tier=3;																																																									helpText="Unrefined fossil fuels ready to be refined into valuable petroleum.";	};
+		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=015;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	gatherableDB="brickEOTWGatherableCrystalData";																helpText="A special material with some useful applications in lategame materials.";	};
 		//Chemicals
 		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=1600/96;	};
 		new ScriptObject(MatterType) { name="Sulfur";		color="93690eff";	tier=4;	};

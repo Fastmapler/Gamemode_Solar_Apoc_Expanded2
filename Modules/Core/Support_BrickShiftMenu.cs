@@ -536,14 +536,40 @@ new ScriptObject(EOTWbsmGeneralHelpMenu)
 	title = "<font:arial:24>\c2General Help";
 	format = EOTWbsmMenu.format;
 
-	entry[0] = "Work in Progress... [Close]" TAB "closeMenu";
+	entry[0] = "[Close]" TAB "closeMenu";
+	entry[1] = "How to Survive!" TAB "survive";
+	entry[3] = "How to Expand!" TAB "expand";
 
-	entryCount = 1;
+	entryCount = 4;
 
 	submenu["closeMenu"] = EOTWbsmMenu;
 
 	disableSelect = true;
 };
+
+function EOTWbsmGeneralHelpMenu::onUserMove(%obj, %cl, %id, %move, %val)
+{
+	if(%move == $BSM::PLT)
+	{
+		switch$(%id)
+		{
+			case "survive":
+				%client.chatMessage("\c6Welcome to Solar Apoc, here are some vital tips if you want to play this game for more than a minute:");
+				%client.chatMessage("\c6- Do not go out during the day: The sunlight is deadly and will melt you in seconds. Either build a primitive shelter or wait out the sun at spawn.");
+				%client.chatMessage("\c6- Build a shelter AND a checkpoint brick: The two most dangerous aspects, the sun and monsters, can be negated with just a stone or iron house. Use a checkpoint brick to return to your shelter.");
+				%client.chatMessage("\c6- Collect Materials: Duing the night, click on the 1x1f sized bricks laying about. You will then be able to extract its material. Stone and Iron are your best building materials.");
+				%client.chatMessage("\c6- Avoid Monsters: Many of the monsters are extremely powerful and will almost instantly take down any underprepared player. If you are starting out and see some enemies approaching, RUN!");
+				%client.chatMessage("\c6- Keep a good pace: Monsters will swarm you and the sun will eventually rise. Take advantage of the night as much as possible.");
+			case "expand":
+				%client.chatMessage("\c6To build a glorious palace of machines, we must start simple. Here are some tips to start out:");
+				%client.chatMessage("\c6- Make a power generator: You need power to power the machines. The Manual Crank and Stirling Engine are good for starters, and can be found under the \"Solar Apoc\" tab in the brick menu.");
+				%client.chatMessage("\c6- Obtain a Cable Layer: The cable layer tool is absolutely vital for machine development. It allows directional power cables to be placed between a power source and a machine.");
+				%client.chatMessage("\c6- Make Steel: All of the cool firearms and machines are gated behind Steel production. Steel can be made in an alloy forge. Use the /i and /e commands to add materials to the forge. Check the \"Material Recipes\" menu to see all recipes.");
+		}
+	}
+	else
+		Parent::onUserMove(%obj, %cl, %id, %move, %val);
+}
 
 function EOTWbsm_PopulateRecipesMenu()
 {
