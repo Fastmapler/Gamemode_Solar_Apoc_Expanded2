@@ -1,4 +1,5 @@
 //TODO: how to limit input to 1 and output to 1?
+$EOTW::BrickBlacklist["brickEOTWTransmissionNodeData"] = true;
 datablock fxDTSBrickData(brickEOTWTransmissionNodeData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
