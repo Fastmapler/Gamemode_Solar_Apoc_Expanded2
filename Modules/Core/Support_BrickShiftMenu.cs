@@ -554,7 +554,7 @@ function EOTWbsmGeneralHelpMenu::onUserMove(%obj, %cl, %id, %move, %val)
 		switch$(%id)
 		{
 			case "survive":
-				%client.chatMessage("\c6Welcome to Solar Apoc, here are some vital tips if you want to play this game for more than a minute:");
+				%client.chatMessage("\c6Welcome to Solar Apoc! here are some vital tips to get started and survive:");
 				%client.chatMessage("\c6- Do not go out during the day: The sunlight is deadly and will melt you in seconds. Either build a primitive shelter or wait out the sun at spawn.");
 				%client.chatMessage("\c6- Build a shelter AND a checkpoint brick: The two most dangerous aspects, the sun and monsters, can be negated with just a stone or iron house. Use a checkpoint brick to return to your shelter.");
 				%client.chatMessage("\c6- Collect Materials: Duing the night, click on the 1x1f sized bricks laying about. You will then be able to extract its material. Stone and Iron are your best building materials.");

@@ -42,9 +42,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";	tier=3;																																																									helpText="Unrefined fossil fuels ready to be refined into valuable petroleum.";	};
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";	tier=4;	spawnWeight=015;	spawnVeinSize=4;	spawnValue=32;	collectTime=10000;	requiredCollectFuel=("Sulfur" TAB 16);	gatherableDB="brickEOTWGatherableCrystalData";																helpText="A special material with some useful applications in lategame materials.";	};
 		//Chemicals
-		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=1600/96;	};
-		new ScriptObject(MatterType) { name="Sulfur";		color="93690eff";	tier=4;	};
-		new ScriptObject(MatterType) { name="Ethanol";		color="953800ff";	tier=3;	};
+		new ScriptObject(MatterType) { name="Petroleum";	color="4f494bff";	tier=3;	fuelCapacity=1600/96;																																																			helpText="Refined oil with powerful fuel capabilities and can be further processed in to ethylene.";	};
+		new ScriptObject(MatterType) { name="Sulfur";		color="93690eff";	tier=4;																																																									helpText="Stinky element primarily used in chemical production.";	};
+		new ScriptObject(MatterType) { name="Ethanol";		color="953800ff";	tier=3;																																																									helpText="Alcaholic chemical with some important uses in chemical production.";	};
 		new ScriptObject(MatterType) { name="Ethylene";		color="a5a189ff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff";	tier=4;	};
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff";	tier=5;	};
