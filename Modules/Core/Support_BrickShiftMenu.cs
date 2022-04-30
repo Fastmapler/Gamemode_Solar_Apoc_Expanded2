@@ -560,6 +560,8 @@ function EOTWbsmGeneralHelpMenu::onUserMove(%obj, %cl, %id, %move, %val)
 				%client.chatMessage("\c6- Collect Materials: Duing the night, click on the 1x1f sized bricks laying about. You will then be able to extract its material. Stone and Iron are your best building materials.");
 				%client.chatMessage("\c6- Avoid Monsters: Many of the monsters are extremely powerful and will almost instantly take down any underprepared player. If you are starting out and see some enemies approaching, RUN!");
 				%client.chatMessage("\c6- Keep a good pace: Monsters will swarm you and the sun will eventually rise. Take advantage of the night as much as possible.");
+				%client.chatMessage("\c6- Persevere: The early game is unfortunately extremely difficult and confusing. Press on and try to get help from other players.");
+				%client.chatMessage("\c6[You might have to scroll up to see more text]");
 			case "expand":
 				%client.chatMessage("\c6To build a glorious palace of machines, we must start simple. Here are some tips to start out:");
 				%client.chatMessage("\c6- Make a power generator: You need power to power the machines. The Manual Crank and Stirling Engine are good for starters, and can be found under the \"Solar Apoc\" tab in the brick menu.");
