@@ -40,5 +40,3 @@ Tier 6 Weapons (Mini-Nuke, Ion Cannon, Ryno V, etc.)
 ### Low priority
 
 Weapon system rework (Custom weapons, integrated with solar apoc's systems)
-    -Only three well defined tiers of items
-    -Conistant and well defined weapons for each tier (Bullet, Shell, Explosive, Energy, etc.)
