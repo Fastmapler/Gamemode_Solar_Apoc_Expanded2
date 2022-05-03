@@ -7,7 +7,7 @@ exec("./Brick_WaterWorks.cs");
 exec("./Brick_Military.cs");
 exec("./Brick_Support.cs");
 
-$EOTW::PowerTickRate = 20;
+$EOTW::PowerTickRate = 1;
 $EOTW::ObjectsPerLoop = 200;
 
 function PowerMasterLoop()
