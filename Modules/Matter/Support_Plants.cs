@@ -115,75 +115,23 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
         if (isObject(%obj.getUpBrick(0)) && !%obj.isplanted)
             return;
 
-        if(%obj.length > 16 || isObject(%obj.split1) || isObject(%obj.split2))
-        {
+        if(%obj.length > 16)
             return;
-        }
 
-        if(getRandom() < 0.1 && !%obj.straight)
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID);
+        %brick = getField(%output, 0);
+        %err = getField(%output, 1);
+        if (isObject(%brick))
         {
-            %angleID = getRandom(0, 1);
-
-            switch (%angleID)
+            if (%err > 0)
             {
-                case 0: %dir = "0.5 0 0";
-                        %dir2 = "-0.5 0 0";
-                case 1: %dir = "0 0.5 0";
-                        %dir2 = "0 -0.5 0";
+                %brick.dontRefund = true;
+                %brick.delete();
             }
-            %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir), %obj.getColorID(), %angleID);
-            %brick = getField(%output, 0);
-            %err = getField(%output, 1);
-            if (isObject(%brick))
+            else
             {
-                if (%err > 0 && %err != 2)
-                {
-                    %brick.dontRefund = true;
-                    %brick.delete();
-                }
-                else
-                {
-                    %brick.Material = "Custom";
-                    %brick.length = %obj.length + 1;
-                    %obj.split1 = %brick;
-                }
-            }
-            %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir2), %obj.getColorID(), %angleID);
-            %brick = getField(%output, 0);
-            %err = getField(%output, 1);
-            if (isObject(%brick))
-            {
-                if (%err > 0 && %err != 2)
-                {
-                    %brick.dontRefund = true;
-                    %brick.delete();
-                }
-                else
-                {
-                    %brick.Material = "Custom";
-                    %brick.length = %obj.length + 1;
-                    %obj.split2 = %brick;
-                }
-            }
-        }
-        else
-        {
-            %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID);
-            %brick = getField(%output, 0);
-            %err = getField(%output, 1);
-            if (isObject(%brick))
-            {
-                if (%err > 0)
-                {
-                    %brick.dontRefund = true;
-                    %brick.delete();
-                }
-                else
-                {
-                    %brick.Material = "Custom";
-                    %brick.length = %obj.length + 1;
-                    %obj.straight = true;
-                }
+                %brick.Material = "Custom";
+                %brick.length = %obj.length + 1;
             }
         }
         
