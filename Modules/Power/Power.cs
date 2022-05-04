@@ -104,6 +104,7 @@ function SimObject::doPowerTransferFull(%obj)
 
 	//TODO: how to control for power rate?
 	%powerTransfer = %obj.powerTransfer = mCeil(%obj.powerTransfer);
+	%powerTransfer = mCeil(%powerTransfer / $EOTW::PowerTickRate);
 	
 	if (%obj.buffer > 0)
 	{
@@ -150,7 +151,9 @@ function SimObject::doMatterTransferFull(%obj)
 		%obj.parent.RemoveCableData();
 		return;
 	}
-	%obj.powerTransfer = mCeil(%obj.powerTransfer);
+	
+	%powerTransfer = %obj.powerTransfer = mCeil(%obj.powerTransfer);
+	%powerTransfer = mCeil(%powerTransfer / $EOTW::PowerTickRate);
 	
 	if (%obj.buffer !$= "")
 	{

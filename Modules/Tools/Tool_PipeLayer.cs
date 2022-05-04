@@ -134,7 +134,7 @@ function PipeLayerImage::onFire(%this, %obj, %slot)
 						$EOTW::Material[%client.bl_id, %PipeType.name] -= %cost;
 						
 						if (%PipeType.PipeTransfer > 0)
-							%transferRate = %PipeType.PipeTransfer / $EOTW::PowerTickRate;
+							%transferRate = %PipeType.PipeTransfer;
 						else
 							%transferRate = 2;
 							

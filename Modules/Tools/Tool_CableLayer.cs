@@ -158,7 +158,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 							$EOTW::Material[%client.bl_id, %cableType.name] -= %cost;
 							
 							if (%cableType.cableTransfer > 0)
-								%transferRate = %cableType.cableTransfer / $EOTW::PowerTickRate;
+								%transferRate = %cableType.cableTransfer;
 							else
 								%transferRate = 2;
 								
