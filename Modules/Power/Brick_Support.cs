@@ -269,6 +269,7 @@ datablock fxDTSBrickData(brickEOTWDroneServerData)
 	uiName = "Droner Server";
 	energyGroup = "Machine";
 	energyMaxBuffer = 640;
+	energyWattage = 90;
 	loopFunc = "EOTW_DroneServerLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/SolarPanel";
@@ -276,8 +277,15 @@ datablock fxDTSBrickData(brickEOTWDroneServerData)
 	portGoToEdge["PowerOut"] = true;
 	portHeight["PowerOut"] = "0.0";
 };
-$EOTW::CustomBrickCost["brickEOTWDroneServerData"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "Infinity"; //1.00 TAB "7a7a7aff" TAB 512 TAB "Naturum" TAB 256 TAB "Energium" TAB 256 TAB "Coolant";
+$EOTW::CustomBrickCost["brickEOTWDroneServerData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Naturum" TAB 256 TAB "Energium" TAB 256 TAB "Coolant";
 $EOTW::BrickDescription["brickEOTWDroneServerData"] = "While active grants the owner Server Points (SP). SP is required for drones to run.";
+
+function EOTW_DroneServerLoop(%obj)
+{
+	if (!isObject(%client = %obj.getGroup().client))
+		return;
+	%client.ServerPoints += 1 / $EOTW::PowerTickRate;
+}
 
 datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 {
@@ -304,7 +312,7 @@ function EOTW_SolarShieldProjectorLoop(%obj)
 	%change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
 	%obj.changePower(%change * -1);
     
-	if (%obj.getPower() / %data.energyMaxBuffer > 0.5)
+	if (%obj.getPower() / %data.energyMaxBuffer > 0.5 && $EOTW::Time < 12)
 	{
 		if (!isObject(%obj.shieldShape))
 		{
@@ -323,7 +331,7 @@ function EOTW_SolarShieldProjectorLoop(%obj)
 		//Using schedules to make sure we stop the projector if we get shutoff via events
 		//Or if the bricks get hammered.
 		cancel(%obj.shieldShape.shieldSchedule);
-		%obj.shieldShape.shieldSchedule = %obj.shieldShape.schedule(1000, "EOTW_SolarShieldProjectorEnd");
+		%obj.shieldShape.shieldSchedule = %obj.shieldShape.schedule(2000, "EOTW_SolarShieldProjectorEnd");
 	}
 }
 

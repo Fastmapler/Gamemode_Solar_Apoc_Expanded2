@@ -32,6 +32,11 @@ function PlayerLoop()
 			if (%player.getDamageLevel() > 0)
 				%player.setDamageLevel(%player.getDamageLevel() - 0.01);
 		}
+		if (%client.ServerPoints > 0)
+		{
+			%client.ServerPoints -= mPow(%client.ServerPoints / 4, 1.25) / 10;
+			%client.ServerPoints = mClamp(%client.ServerPoints, 0, 99);
+		} 
 	}
 	
 	$EOTW:PlayerLoop = schedule(100,ClientGroup,"PlayerLoop");
@@ -296,7 +301,7 @@ package EOTW_Player
 					if (%data.inspectFunc !$= "")
 					{
 						cancel(%obj.PoweredBlockInspectLoop);
-						%obj.PoweredBlockInspectLoop = %obj.schedule(2000 / $EOTW::PowerTickRate, %data.inspectFunc, %hit);
+						%obj.PoweredBlockInspectLoop = %obj.schedule(100, %data.inspectFunc, %hit);
 					}
 				}
 			}
