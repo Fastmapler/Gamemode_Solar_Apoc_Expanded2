@@ -31,9 +31,9 @@ Auto-drills (Placable drill to automatically mine materials)
 
 Drones (Mining, Combat)
 
-MetaMaterial Hyper-Compression Fusion Reactor (MMHCFR)
+Alchemical Transmutation Fusion Reactor (ATFR)
 
-Infinity/Singularity production (Via MMHCFR)
+Infinity/Singularity production (Via ATFR)
 
 Tier 6 Weapons (Mini-Nuke, Ion Cannon, Ryno V, etc.)
 
