@@ -29,7 +29,7 @@ datablock fxDTSBrickData(brickEOTWTurretRepeaterData)
 	subCategory = "Military";
 	uiName = "Turret - Repeater";
 	energyGroup = "Machine";
-	energyMaxBuffer = 180;
+	energyMaxBuffer = 360;
 	loopFunc = "EOTW_TurretLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Icons/TurretRepeater";
@@ -38,8 +38,9 @@ datablock fxDTSBrickData(brickEOTWTurretRepeaterData)
 	portHeight["PowerOut"] = "0.0";
 
     projectile = "";
-    attackCost = 18;
-    attackCooldown = 100;
+    attackCost = 60;
+    attackBurst = 3;
+    attackCooldown = 1000;
 };
 
 $EOTW::CustomBrickCost["brickEOTWTurretHeavyData"] = 1.00 TAB "ff0000ff" TAB 288 TAB "Steel" TAB 128 TAB "Naturum" TAB 128 TAB "Dielectrics";
@@ -51,7 +52,7 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
 	subCategory = "Military";
 	uiName = "Turret - Heavy";
 	energyGroup = "Machine";
-	energyMaxBuffer = 250;
+	energyMaxBuffer = 400;
 	loopFunc = "EOTW_TurretLoop";
     inspectFunc = "EOTW_DefaultInspectLoop";
 	//iconName = "./Icons/TurretHeavy";
@@ -61,18 +62,19 @@ datablock fxDTSBrickData(brickEOTWTurretHeavyData)
 
     projectile = rocketLauncherProjectile;
     attackCost = 200;
-    attackCooldown = 1000;
+    attackCooldown = 2000;
 };
 
-function EOTW_TurretLoop(%obj)
+function EOTW_TurretLoop(%obj, %burst)
 {
     %range = 8;
     %data = %obj.getDataBlock();
 
-	if (getSimTime() - %obj.LastChargeLoop < %data.attackCooldown)
+    if ((getSimTime() - %obj.LastChargeLoop < %data.attackCooldown) && %burst == 0)
 		return;
 
-	%obj.LastChargeLoop = getSimTime();
+    if (%burst == 0)
+	    %obj.LastChargeLoop = getSimTime();
 
     if (isObject(%obj.turretTarget))
     {
@@ -161,6 +163,10 @@ function EOTW_TurretLoop(%obj)
         }
         %obj.changePower(%costPerShot * -1);
     }
+    
+    if (%data.attackBurst > 1 && %burst == 0)
+        for (%i = 1; %i < %data.attackBurst; %i++)
+            schedule((%data.attackCooldown / %data.attackBurst) * %i, %obj, "EOTW_TurretLoop", %obj, %i);
 }
 
 function Player::EOTW_TurretInspectLoop(%player, %brick)
