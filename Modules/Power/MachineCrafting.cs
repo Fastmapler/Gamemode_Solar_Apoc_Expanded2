@@ -50,7 +50,7 @@ function SetupMatterCraftingData()
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Brine" TAB 64);			input[1]=("Yellow Cake" TAB 64);	input[2]=("Deuterium" TAB 32);	input[3]=("Lithium" TAB 32);	output[0]=("Overload Mix" TAB 64);		};
 		new ScriptObject(MatterCraftType) { type="Brewery";			energycost=100;	input[0]=("Brine" TAB 64);			input[1]=("Leather"	 TAB 64);		input[2]=("Iron" TAB 128);		input[3]=("Sodium" TAB 32);		output[0]=("Leatherskin Mix" TAB 64);	};
 		//Isotope Bombarder/Breeder //"energy" cost is reached by the production of nuclear waste rather than actual energy.
-		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=128;	input[0]=("Nuclear Waste" TAB 32);	 output[0]=("Plutonium" TAB 1);				};
+		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=64;	input[0]=("Nuclear Waste" TAB 32);	 output[0]=("Plutonium" TAB 1);				};
 		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=8;	input[0]=("Lithium" TAB 1);			 output[0]=("Tritium" TAB 1);				};
 		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=8;	input[0]=("Raw Thorium" TAB 1);		 output[0]=("Fissile Thorium" TAB 1);		};
 		new ScriptObject(MatterCraftType) { type="MFR Neutron Activator";			energycost=16;	input[0]=("Plutonium" TAB 1);		 output[0]=("Fissile Americium" TAB 1);		};
