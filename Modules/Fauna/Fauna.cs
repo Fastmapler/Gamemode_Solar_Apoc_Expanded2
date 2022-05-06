@@ -371,7 +371,7 @@ function spawnBossPortal()
 		$EOTW::BossPortal.delete();
 
 	%result = CreateBrick(EnvMaster, EOTWBossDoor_Heirophant, vectorAdd(GetRandomSpawnLocation(), "0 0 15"), 0, getRandom(0, 3));
-	talk(%result);
+	//talk(%result);
 	if (isObject(getField(%result, 0)))
 	{
 		if (getField(%result, 1) == 1)

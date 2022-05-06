@@ -202,7 +202,7 @@ function EOTW_ThermoelectricBoilerLoop(%obj)
 		%boilRatio	   = %heating.boilCapacity / %cooling.boilCapacity;
 		%totalExchange = %coolingChange / %heatingChange;
 
-		echo("Test" SPC %coolingAmount SPC "|" SPC %heatingAmount SPC "|" SPC  %coolingChange SPC "|" SPC  %heatingChange SPC "|" SPC  %boilRatio SPC "|" SPC  %totalExchange);
+		//echo("Test" SPC %coolingAmount SPC "|" SPC %heatingAmount SPC "|" SPC  %coolingChange SPC "|" SPC  %heatingChange SPC "|" SPC  %boilRatio SPC "|" SPC  %totalExchange);
 		if (%totalExchange >= 1)
 		{
 			%change1 = %obj.changeMatter(%cooling.boilMatter, mFloor(%totalExchange) * mFloor(%boilRatio), "Output");

@@ -19,7 +19,7 @@ function CreateLavaStatic()
 	%shape.setTransform("0 0 0");
 	%shape.setScale("64 64 0.1");
 	
-	talk(%shape);
+	//talk(%shape);
 	
 	$EOTW::LavaStatic = %shape;
 }
