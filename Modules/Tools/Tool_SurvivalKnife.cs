@@ -81,7 +81,7 @@ datablock ExplosionData(KnifethrownExplosion)
     lightEndColor = "0 0 0";
 };
 
-AddDamageType("Knifestab",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded22/Modules/Tools/Shapes/ci_knifestab> %1',    '%2 <bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded22/Modules/Tools/Shapes/ci_knifestab> %1',0.75,1);
+AddDamageType("Knifestab",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Shapes/ci_knifestab> %1',    '%2 <bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Shapes/ci_knifestab> %1',0.75,1);
 datablock ProjectileData(SurvivalKnifeStabProjectile)
 {
     shapeFile = "base/data/shapes/empty.dts";
