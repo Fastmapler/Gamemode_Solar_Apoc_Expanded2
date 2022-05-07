@@ -128,6 +128,10 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					{
 						%client.chatMessage("\c6Too many connected ropes! Max ropes: " @ $EOTW::MaxRopeCount, 3);
 					}
+					else if(%col.getDatablock().energyGroup $= "Transmission" && isObject(%tg=%col.cableInputs) && %tg.getCount() > 0)
+					{
+						%client.chatMessage("\c6Too many connected ropes! Transmission nodes may only have a single input.");
+					}
 					else
 					{
 						%cost = mCeil(vectorDist(%obj.cableLayerBuffer.getPosition(), %col.getPosition()) * $EOTW::CableCostMulti);
@@ -158,7 +162,7 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 							$EOTW::Material[%client.bl_id, %cableType.name] -= %cost;
 							
 							if (%cableType.cableTransfer > 0)
-								%transferRate = %cableType.cableTransfer;
+								%transferRate = %cableType.cableTransfer / $EOTW::PowerTickRate;
 							else
 								%transferRate = 2;
 								
@@ -181,6 +185,10 @@ function CableLayerImage::onFire(%this, %obj, %slot)
 					else if (getWordCount(%col.ropeGroups) >= $EOTW::MaxRopeCount)
 					{
 						%client.chatMessage("\c6Too many connected ropes! Max ropes: " @ $EOTW::MaxRopeCount, 3);
+					}
+					else if(%col.getDatablock().energyGroup $= "Transmission" && isObject(%tg=%col.cableOutputs) && %tg.getCount() > 0)
+					{
+						%client.chatMessage("\c6Too many connected ropes! Transmission nodes may only have a single output.");
 					}
 					else
 					{
@@ -283,6 +291,9 @@ function Player::CableLayerMessage(%obj)
 	{
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
+			if(strlen(%col.transmission_error))
+				%target = " - "@ %col.transmission_error @" - ";
+
 			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{
 				%source = "\c6" @ %col.getDatablock().uiName SPC "(" @ %col.energy @ "/" @ %col.getDatablock().energyMaxBuffer @ ")";
@@ -296,9 +307,6 @@ function Player::CableLayerMessage(%obj)
 			
 			if (isObject(%group) && %group.material !$= "")
 			{
-				if(%group.isTransmission)
-					%tm = " (TRANSMISSION)";
-
 				%matter = getMatterType(getField(%group.material, 0));
 				%source = "\c6Rope (" @ getField(%group.material, 1) SPC "<color:" @ %matter.color @ ">" @ %matter.name @ "\c6)";
 				%target = "\c7(Remove)";
