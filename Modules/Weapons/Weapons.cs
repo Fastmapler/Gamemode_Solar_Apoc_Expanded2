@@ -118,8 +118,8 @@ activatePackage("EOTW_WeaponBalancing");
 //Bullet: Pistol -> Machine Gun -> LMG -> Minigun //Long range targeting
 //Shotgun: Single Barrel -> Combat -> Automatic -> Shard Rifle //Short range targeting
 //Rocket: Atlatl -> Grenade L -> Rotary L -> Gyrojet //Crowd control
-//Energy: Taser(Slowdown) -> Hellfrost Pistol(Ice/Fire) -> Microwaver(Armor-Breaking) -> Ion Cannon(Die) //Debuff Infliction/Boss Support
-
+//Energy: Taser(Slowdown) -> Hellfrost Pistol(Ice/Fire) -> Microwaver(Armor-Breaking) -> ??? //Debuff Infliction/Boss Support
+//Unique: Mini-Nuke, Ion-Cannon, Chidori
 
 ////Option for multiple ammo types, too much maybe?
 //Three Types of ammo for bullet/shotgun/rocket

@@ -89,6 +89,16 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Scrip";		color="507582ff";	tier=7;	};
 		new ScriptObject(MatterType) { name="Boss Essence";	color="000000ff";	tier=7;	};
 		new ScriptObject(MatterType) { name="Energy";		color="00d0ffa8";	tier=1;	};
+		//Ammo
+		new ScriptObject(MatterType) { name="Basic Bullet";			color="ffffffff";	tier=1;	ammoGroup="Bullet"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Advanced Bullet";		color="ffffffff";	tier=1;	ammoGroup="Bullet"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Dense Bullet";			color="ffffffff";	tier=1;	ammoGroup="Bullet"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Hunting Shell";		color="ffffffff";	tier=1;	ammoGroup="Shell"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Military Shell";		color="ffffffff";	tier=1;	ammoGroup="Shell"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Experimental Shell";	color="ffffffff";	tier=1;	ammoGroup="Shell"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Impact Payload";		color="ffffffff";	tier=1;	ammoGroup="Payload"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Explosive Payload";	color="ffffffff";	tier=1;	ammoGroup="Payload"; ammoProjectile=gunProjectile;	};
+		new ScriptObject(MatterType) { name="Nuclear Payload";		color="ffffffff";	tier=1;	ammoGroup="Payload"; ammoProjectile=gunProjectile;	};
 	};
 	
 	$EOTW::PlacableList = "";
