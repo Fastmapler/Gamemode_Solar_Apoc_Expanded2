@@ -1,11 +1,9 @@
-//TODO: how to limit input to 1 and output to 1?
-$EOTW::BrickBlacklist["brickEOTWTransmissionNodeData"] = true;
 datablock fxDTSBrickData(brickEOTWTransmissionNodeData)
 {
 	brickFile = "./Bricks/MicroCapacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Logistics";
-	uiName = "Transmission Node";
+	uiName = "Transmission Node Down";
 	energyGroup = "Transmission";
 	energyMaxBuffer = 0;
 	loopFunc = "";
@@ -13,7 +11,10 @@ datablock fxDTSBrickData(brickEOTWTransmissionNodeData)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Power/Icons/MicroCapacitor";
 };
 $EOTW::CustomBrickCost["brickEOTWTransmissionNodeData"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Iron" TAB 4 TAB "Silver" TAB 8 TAB "Copper";
-$EOTW::BrickDescription["brickEOTWTransmissionNodeData"] = "A transmission node";
+$EOTW::BrickDescription["brickEOTWTransmissionNodeData"] = "A transmission node (down)";
+
+//transmission node up
+//need model or figure out how to relocate wire to top of node
 
 
 datablock fxDTSBrickData(brickEOTWTrashBinData)

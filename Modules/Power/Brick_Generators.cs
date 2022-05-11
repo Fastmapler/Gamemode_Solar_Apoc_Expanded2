@@ -226,18 +226,24 @@ datablock fxDTSBrickData(brickEOTWSolarPanelData)
 $EOTW::CustomBrickCost["brickEOTWSolarPanelData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Adamantine" TAB 64 TAB "Teflon" TAB 16 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWSolarPanelData"] = "Produces power when exposed to direct sunlight. Topside must be completely untouched for functionality."; // Will eventually burn out and need to be replaced.
 
+if(!$EOTW::solarBonus)
+	$EOTW::solarBonus = 1;
+
 function EOTW_SolarPanelLoop(%obj)
 {
+	if($disableSolar == 1)
+		return;
+
 	if ($EOTW::Time < 12)
 	{
 		%val = ($EOTW::Time / 12) * $pi;
-	    %ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
-	    %dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 500);
+		%ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
+		%dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 500);
 		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType);
 		%hit = firstWord(%ray);
 		if((!isObject(%hit) || (%hit == %obj)) && !%obj.getUpBrick(0))
 		{
-			%wattage = 10 * $EOTW::TimeBoost;
+			%wattage = 10 * $EOTW::TimeBoost * $EOTW::solarBonus;
 			%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
 			if (%obj.ProcessTime >= 1 && %obj.decayAmount < 15000)
