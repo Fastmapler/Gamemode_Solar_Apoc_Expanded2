@@ -292,7 +292,7 @@ function Player::CableLayerMessage(%obj)
 		if (%col.getType() & $TypeMasks::FxBrickObjectType)
 		{
 			if(strlen(%col.transmission_error))
-				%target = " - "@ %col.transmission_error @" - ";
+				%target = "\c4 -- "@ %col.transmission_error @" --";
 
 			if (%col.getDatablock().energyGroup !$= "" && getTrustLevel(%obj, %col) >= $TrustLevel::Hammer)
 			{

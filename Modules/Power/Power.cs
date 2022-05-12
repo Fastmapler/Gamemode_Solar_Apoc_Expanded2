@@ -48,9 +48,14 @@ function journalPower(%brick, %entry)
 function PowerMasterLoop()
 {
 	cancel($EOTW::PowerMasterLoop);
-	
+
+	if(!isObject(PowerMasterLoopGroup))
+		new SimSet(PowerMasterLoopGroup);
+
+	PowerMasterLoopGroup.clear();
+
 	//Cycle power generators
-	if (isObject(PowerGroupSource))
+	if(!$EB_disableSource && isObject(PowerGroupSource))
 		for (%i = 0; %i < PowerGroupSource.getCount(); %i += $EOTW::ObjectsPerLoop)
 			PowerGroupSource.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 
@@ -70,7 +75,7 @@ function PowerMasterLoop()
 	//	PowerGroupCablePower.Shuffle();
 	
 	//Move matter using matter pipes
-	if(isObject(PowerGroupPipeMatter))
+	if(!$EB_disableMatter && isObject(PowerGroupPipeMatter))
 		for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i += $EOTW::ObjectsPerLoop)
 			PowerGroupPipeMatter.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 	
@@ -114,7 +119,7 @@ function PowerMasterLoop()
 	}
 
 	//3. Run dirty storage/sorting devices
-	if(isObject(PowerGroupDirtyStorage))
+	if(!$EB_disableStorage && isObject(PowerGroupDirtyStorage))
 		for (%i = 0; %i < PowerGroupDirtyStorage.getCount(); %i += $EOTW::ObjectsPerLoop)
 		{
 			//talk("Processed "@ $EOTW::ObjectsPerLoop @" objects for PowerGroupDirtyStorage");
@@ -126,11 +131,11 @@ function PowerMasterLoop()
 
 	//Run machines
 	//TODO: only hungry machines shall be allowed
-	if (isObject(PowerGroupMachine))
+	if(!$EB_disableMachine && isObject(PowerGroupMachine))
 		for (%i = 0; %i < PowerGroupMachine.getCount(); %i += $EOTW::ObjectsPerLoop)
 			PowerGroupMachine.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 
-	if (getRandom() < 0.02 && isObject(PowerGroupMachine))
+	if(getRandom() < 0.02 && isObject(PowerGroupMachine))
 		PowerGroupMachine.Shuffle();
 
 	$EOTW::PowerMasterLoop = schedule(1000 / $EOTW::PowerTickRate, 0, "PowerMasterLoop");
@@ -165,8 +170,8 @@ function SimSet::IterateLoopCalled(%obj, %start, %length)
 
 			//if there is energy stored here - try to move it
 			//special rules for solar panel - dont release under 30 (except after sunset)
-			//or if last energy release time was > 3 seconds ago
-			if(%item.getDatablock().uiName $= "Solar Panel")
+			//or if [TODO] last energy release time was > 3 seconds ago
+			if(%item.getClassName() $= "FxDTSBrick" && %item.getDatablock().uiName $= "Solar Panel")
 			{
 				//TODO: allow release of < 30 energy at 100% decay (whenever it's implemented...)
 				if(%item.energy >= 30 || $EOTW::Time >= 12)
@@ -209,13 +214,15 @@ function SimSet::IterateLoopCalled(%obj, %start, %length)
 					if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
 						journalPower(%item, "SimSet::IterateLoopCalled detected full. what about outputs?");
 
+					//Non-Storage objects are out of scope for determining sleep state
+					// (all nodes feeding machines/whatever stay awake)
 					%cant_forward = 1;
 					if(isObject(%g=%item.cableOutputs))
 						for(%i = 0; %i < %g.getCount(); %i++)
 						{
 							%dst = %g.getObject(%i).powerTarget;
 							%dst_free = %dst.getDatablock().energyMaxBuffer - %dst.energy;
-							if(%dst_free > 0)
+							if(%dst_free > 0 || %dst.getDatablock().energyGroup !$= "Storage")
 							{
 								%cant_forward = 0;
 								break;
@@ -475,7 +482,7 @@ function fxDTSBrick::tryPowerTransfer(%obj)
 	{
 		%destCable = %obj.cableOutputs.getObject(%i);
 		%dest = %destCable.powerTarget;
-		%dest_free = %dest.getDatablock().energyMaxBuffer - %dest.getPower();
+		%dest_free = %dest.getDatablock().energyMaxBuffer - %dest.energy;
 		if(%dest_free > 0)
 			break;
 	}
@@ -495,6 +502,7 @@ function fxDTSBrick::tryPowerTransfer(%obj)
 
 	%i2 = 0; //limit normal nodes
 	%last_was_transmission = 0;
+	%reached_nontransmission = 0;
 	for(%i = 0; %i < $EOTW::PowerNodeTransSkip; %i++)
 	{
 		%detected_transmission = 0;
@@ -548,8 +556,10 @@ function fxDTSBrick::tryPowerTransfer(%obj)
 		}
 
 		//object is full, set to brown and kill loop (but not transmission nodes)
-		else if(%nextObj.getPower() >= %nextObj.getDatablock().energyMaxBuffer)
+		//make sure transmission line doesn't think this is a failure (%reached_nontransmission)
+		else if(%nextObj.energy >= %nextObj.getDatablock().energyMaxBuffer)
 		{
+			%reached_nontransmission = 1;
 			if($EOTW::powerDebug)
 			{
 				if(strpos(%nextObj.getName(), "_journal") == 0)
@@ -568,18 +578,15 @@ function fxDTSBrick::tryPowerTransfer(%obj)
 		if(%nextObj.getDatablock().energyMaxBuffer > $EOTW::PowerNodePathCapLimit)
 			break;
 
-		//If just ended a transmission line, this is a break point
+		//If just ended a transmission line, but current is not a transmission: this is a break point
 		if(%last_was_transmission && !%detected_transmission)
 				break;
 
 		if(!isObject(%nextObj.cableOutputs) || %nextObj.cableOutputs.getCount() != 1)
 			break;
 
-
 		if(!%detected_transmission)
 			%i2++;
-
-
 
 		if(%i2 > $EOTW::PowerNodePathSkip)
 			break;
@@ -588,10 +595,15 @@ function fxDTSBrick::tryPowerTransfer(%obj)
 		%nextObj = %nextCable.powerTarget;
 	}
 
-	//TODO: cannot disambiguate between
+	//TODO: cannot disambiguate between [full objects at the end]
 	//if last object is a transmission node - big oops!
 	if((%c=%chain.getCount()) > 0 && (%o=%chain.getObject(%c-1)).getDatablock().energyGroup $= "Transmission")
-		%first_transmission.transmission_error="\c4-- Transmission line unfinished or too long --";
+	{
+		if(%reached_nontransmission)
+			%first_transmission.transmission_error="";
+		else
+			%first_transmission.transmission_error="Transmission line unfinished or too long";
+	}
 
 	//%rope.setNodeColor("ALL", getColorIDTable(%color));
 
@@ -609,7 +621,7 @@ function fxDTSBrick::tryPowerTransfer(%obj)
 		%dest = %chain.getObject(%i);
 
 		//TODO: do i need the dest_free check with the changePower below?
-		%dest_free = %dest.getDatablock().energyMaxBuffer - %dest.getPower();
+		%dest_free = %dest.getDatablock().energyMaxBuffer - %dest.energy;
 
 		//is %dest full?
 		if(%dest_free <= 0)
@@ -1034,3 +1046,135 @@ function fxDTSBrick::playSoundLooping(%obj, %data)
 	%obj.AudioEmitter = %audioEmitter;
 	%audioEmitter.setTransform(%obj.getTransform());
 }
+
+function serverCmdPowerData(%client)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	%eye = %player.getEyePoint();
+	%dir = %player.getEyeVector();
+	%for = %player.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType | $TypeMasks::StaticShapeObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	if(isObject(%hit = firstWord(%ray)))
+	{
+		if(%hit.getType() & $Typemasks::fxBrickAlwaysObjectType)
+		{
+			%client.chatMessage("["@ %hit.getDatablock().uiName @"]");
+
+			if(!PowerGroupTransmission.isMember(%hit))
+				%client.chatMessage("  \c6Energy: \c4"@ %hit.energy);
+
+			if(PowerGroupStorage.isMember(%hit))
+			{
+				%msg = "  \c6Storage: \c2YES\c6;";
+
+				%isDirty = PowerGroupDirtyStorage.isMember(%hit);
+
+				if(%isDirty)
+					%msg = %msg @" \c6Storage active: \c2YES";
+				else
+					%msg = %msg @" \c6Storage active: \c0NO";
+
+				%client.chatMessage(%msg);
+			}
+
+			else if(PowerGroupTransmission.isMember(%hit))
+			{
+				%msg = "  \c6Transmission: \c2YES\c6;";
+
+				%error = %hit.transmission_error;
+
+				if(strlen(%error) > 0)
+					%msg = %msg @" \c6Error: \c2"@ %error;
+				else
+					%msg = %msg @" \c6Error: \c7(none)";
+
+				%client.chatMessage(%msg);
+			}
+
+			%g[0] = "Inputs";
+			%g[1] = "Outputs";
+			for(%i = 0; %i < 2; %i++)
+			{
+				%g = %hit.cable[%g[%i]];
+
+				if(!isObject(%g) || %g.getCount() == 0)
+				{
+					%client.chatMessage("\c6    ["@ %g[%i] @"] \c7(none)");
+					continue;
+				}
+
+				%client.chatMessage("\c6    ["@ %g[%i] @"] \c2"@ %g.getCount());
+				for(%c = 0; %c < %g.getCount(); %c++)
+				{
+					%cable = %g.getObject(%c);
+
+					%mat = getField(%cable.parent.material, 0);
+					%mat_hex = getMatterType(%mat).color;
+
+					%len = getField(%cable.parent.material, 1);
+
+					%prep = "to";
+					%other_obj_name = %cable.powerTarget.getDatablock().uiName;
+					if(%g[%i] $= "Inputs")
+					{
+						%other_obj_name = %cable.powerSource.getDatablock().uiName;
+						%prep = "from";
+					}
+
+					%client.chatMessage("\c6        - "@ %len @" <color:"@ %mat_hex @">"@ %mat @" \c6"@ %prep @" \c5"@ %other_obj_name);
+				}
+			}
+		}
+
+		else if(%hit.getType() & $TypeMasks::StaticShapeObjectType && %hit.isRope)
+		{
+			if(!isObject(%hit.getGroup()) || !isObject(%hit.getGroup().cable))
+				return;
+
+			%cable = %hit.getGroup().cable;
+
+			%mat = getField(%cable.parent.material, 0);
+			%mat_hex = getMatterType(%mat).color;
+
+			%len = getField(%cable.parent.material, 1);
+
+			%client.chatMessage("[Cable: <color:"@ %mat_hex @">"@ %mat @"\c0]");
+			%client.chatMessage("\c6  Length: "@ %len);
+			%client.chatMessage("\c6  Source: \c3"@ %cable.powerSource.getDatablock().uiName @"");
+			%client.chatMessage("\c6  Target: \c3"@ %cable.powerTarget.getDatablock().uiName @"");
+			if(%cable.periodLimit > 0)
+			{
+				%client.chatMessage("\c6  Wattage: \c3"@ %cable.periodLimit @" EU / sec");
+				%cable_expiry = getSimTime() - %cable.periodStart;
+				%expiry_text = "in last \c3"@ %cable_expiry @"ms";
+				if(%cable_expiry >= 1000)
+					%expiry_text = "(expired \c3"@ mRound((%cable_expiry / 1000) - 1) @" seconds\c6 ago)";
+
+				%client.chatMessage("\c6  Power transfered: \c3"@ %cable.periodTransfered @"\c6 EU "@ %expiry_text);
+			}
+			else
+				%client.chatMessage("\c6    - No power transfered during lifetime");
+		}
+	}
+}
+
+function serverCmdPD(%client)
+{
+	serverCmdPowerData(%client);
+}
+
+function serverCmdGetPD(%client)
+{
+	serverCmdPowerData(%client);
+}
+
+function serverCmdGetPowerData(%client)
+{
+	serverCmdPowerData(%client);
+}
+
+
