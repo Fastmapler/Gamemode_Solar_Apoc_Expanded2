@@ -25,7 +25,6 @@ if(!$EOTW::powerDebug)
 if(!$EOTW::journalPowerNonce)
 	$EOTW::journalPowerNonce = 1;
 
-
 function journalPower(%brick, %entry)
 {
 	if(!%brick.journalCounter || %brick.journalNonce != $EOTW::journalPowerNonce)
@@ -49,16 +48,21 @@ function PowerMasterLoop()
 {
 	cancel($EOTW::PowerMasterLoop);
 
+	$EOTW::ITERATE_DIFF = getSimTime() - $EOTW::LAST_POWER_ITERATE;
+
 	if(!isObject(PowerMasterLoopGroup))
 		new SimSet(PowerMasterLoopGroup);
 
+	//Probably not necessary: (with proper removal)
 	PowerMasterLoopGroup.clear();
 
-	//Cycle power generators
-	if(!$EB_disableSource && isObject(PowerGroupSource))
-		for (%i = 0; %i < PowerGroupSource.getCount(); %i += $EOTW::ObjectsPerLoop)
-			PowerGroupSource.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
+	if(!isObject(PowerGroupTransmission))
+		new SimSet(PowerGroupTransmission);
 
+	//Cycle power generators
+	if(isObject(%g=PowerGroupSource))
+		for(%i = 0; %i < %g.getCount(); %i++)
+			PowerMasterLoopGroup.add(%g.getObject(%i));
 
 	//TODO: remove cable processing: no more energy on cables
 	//TODO: currently just does isObject checks on source and target, then deletes self if there's a problem
@@ -66,42 +70,48 @@ function PowerMasterLoop()
 	//if (getRandom() < 0.02 && isObject(PowerGroupCablePower))
 	//	PowerGroupCablePower.Shuffle();
 
-	//if (isObject(PowerGroupCablePower))
-	//	for (%i = 0; %i < PowerGroupCablePower.getCount(); %i += $EOTW::ObjectsPerLoop)
-	//		PowerGroupCablePower.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
+	//if(isObject(%g=PowerGroupCablePower))
+	//	for(%i = 0; %i < %g.getCount(); %i++)
+	//		PowerMasterLoopGroup.add(%g.getObject(%i));
 	
 	//Randomize cable list so we get a kind of even spread of power transfer (when multiple ropes are connected)
 	//if(getRandom() < 0.02 && isObject(PowerGroupPipeMatter))
 	//	PowerGroupCablePower.Shuffle();
 	
 	//Move matter using matter pipes
-	if(!$EB_disableMatter && isObject(PowerGroupPipeMatter))
-		for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i += $EOTW::ObjectsPerLoop)
-			PowerGroupPipeMatter.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
+	if(isObject(%g=PowerGroupPipeMatter))
+		for(%i = 0; %i < %g.getCount(); %i++)
+			PowerMasterLoopGroup.add(%g.getObject(%i));
 	
 	//Randomize pipe list so we get a kind of even spread of matter transfer (when multiple ropes are connected)
 	if(getRandom() < 0.02 && isObject(PowerGroupPipeMatter))
 		PowerGroupPipeMatter.Shuffle();
 
 	//Run storage/sorting devices
-	//if(isObject(PowerGroupStorage))
-	//	for (%i = 0; %i < PowerGroupStorage.getCount(); %i += $EOTW::ObjectsPerLoop)
-	//		PowerGroupStorage.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
 
 	//if(getRandom() < 0.02 && isObject(PowerGroupStorage))
 	//	PowerGroupStorage.Shuffle();
 
 
+
+	//TODO: improve step1-2-3 storage code (can't omit #3 loop??)
+
 	//1. Remove outbound power storage objects
 	if(isObject(%g = PowerGroupDirtyExitStorage))
 	{
 		for(%i = 0; %i < %g.getCount(); %i++)
+		{
 			if(PowerGroupDirtyStorage.isMember(%o = %g.getObject(%i)))
 			{
 				if($EOTW::powerDebug && strpos(%o.getName(), "_journal") == 0)
 					journalPower(%o, "REALEXIT");
+
 				PowerGroupDirtyStorage.remove(%o);
+
+				if(PowerMasterLoopGroup.isMember(%o))
+					PowerMasterLoopGroup.remove(%o);
 			}
+		}
 		%g.clear();
 	}
 
@@ -113,91 +123,139 @@ function PowerMasterLoop()
 			{
 				if($EOTW::powerDebug && strpos(%o.getName(), "_journal") == 0)
 					journalPower(%o, "REALENTER");
+
 				PowerGroupDirtyStorage.add(%o);
+				PowerMasterLoopGroup.add(%o);
 			}
 		%g.clear();
 	}
 
 	//3. Run dirty storage/sorting devices
-	if(!$EB_disableStorage && isObject(PowerGroupDirtyStorage))
-		for (%i = 0; %i < PowerGroupDirtyStorage.getCount(); %i += $EOTW::ObjectsPerLoop)
-		{
-			//talk("Processed "@ $EOTW::ObjectsPerLoop @" objects for PowerGroupDirtyStorage");
-			PowerGroupDirtyStorage.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
-		}
+	if(isObject(%g=PowerGroupDirtyStorage))
+		for(%i = 0; %i < %g.getCount(); %i++)
+			PowerMasterLoopGroup.add(%g.getObject(%i));
 
 	if(getRandom() < 0.02 && isObject(PowerGroupDirtyStorage))
 		PowerGroupDirtyStorage.Shuffle();
 
 	//Run machines
 	//TODO: only hungry machines shall be allowed
-	if(!$EB_disableMachine && isObject(PowerGroupMachine))
-		for (%i = 0; %i < PowerGroupMachine.getCount(); %i += $EOTW::ObjectsPerLoop)
-			PowerGroupMachine.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
+	if(isObject(%g=PowerGroupMachine))
+		for(%i = 0; %i < %g.getCount(); %i++)
+			PowerMasterLoopGroup.add(%g.getObject(%i));
 
 	if(getRandom() < 0.02 && isObject(PowerGroupMachine))
 		PowerGroupMachine.Shuffle();
+
+	//Run master set
+	for (%i = 0; %i < PowerMasterLoopGroup.getCount(); %i++)
+	{
+		//TODO: scheduling on a large SimSet is perhaps really bad?
+		//PowerMasterLoopGroup.schedule(0, "IterateLoopCalled", %i, $EOTW::ObjectsPerLoop);
+		schedule(0, 0, IterateLoopCalled, PowerMasterLoopGroup.getObject(%i));
+	}
 
 	$EOTW::PowerMasterLoop = schedule(1000 / $EOTW::PowerTickRate, 0, "PowerMasterLoop");
 }
 
 $EOTW::PowerMasterLoop = schedule(10, 0, "PowerMasterLoop");
 
-function SimSet::IterateLoopCalled(%obj, %start, %length)
+function IterateLoopCalled(%item)
 {
-	for (%i = %start; (%i < %start + %length) && %i < %obj.getCount(); %i++)
+	$EOTW::LAST_POWER_ITERATE = getSimTime();
+
+	if(!isObject(%item))
+		return;
+
+	if(%item.energy $= "" || %item.energy < 0)
+		%item.energy = 0;
+
+	if(getSimTime() - %item.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
 	{
-		%item = %obj.getObject(%i);
-
-		if(%item.energy $= "" || %item.energy < 0)
-			%item.energy = 0;
-
-		if(getSimTime() - %item.lastEnergyUpdate >= (1000 / $EOTW::PowerTickRate))
+		%item.lastEnergyUpdate = getSimTime();
+		if (%item.getClassName() $= "SimObject")
 		{
-			%item.lastEnergyUpdate = getSimTime();
-			if (%item.getClassName() $= "SimObject")
+			switch$ (%item.transferType)
 			{
-				switch$ (%item.transferType)
-				{
-					case "Power":  %item.doPowerTransferFull();
-					case "Matter": %item.doMatterTransferFull();
-				}
+				//case "Power": %item.doPowerTransferFull();
+				case "Matter": %item.doMatterTransferFull();
 			}
+		}
 
-			else if(%item.getDatablock().loopFunc !$= "" && !%item.machineDisabled)
-				%item.doCall(%item.getDatablock().loopFunc);
+		else if(%item.getDatablock().loopFunc !$= "" && !%item.machineDisabled)
+			%item.doCall(%item.getDatablock().loopFunc);
 
 
-			//if there is energy stored here - try to move it
-			//special rules for solar panel - dont release under 30 (except after sunset)
-			//or if [TODO] last energy release time was > 3 seconds ago
-			if(%item.getClassName() $= "FxDTSBrick" && %item.getDatablock().uiName $= "Solar Panel")
-			{
-				//TODO: allow release of < 30 energy at 100% decay (whenever it's implemented...)
-				if(%item.energy >= 30 || $EOTW::Time >= 12)
-					%item.tryPowerTransfer();
-			}
-
-			else if(%item.energy > 0)
-			{
+		//if there is energy stored here - try to move it
+		//special rules for solar panel - dont release under 30 (except after sunset)
+		//or if [TODO] last energy release time was > 3 seconds ago
+		if(%item.getClassName() $= "FxDTSBrick" && %item.getDatablock().uiName $= "Solar Panel")
+		{
+			//TODO: allow release of < 30 energy at 100% decay (whenever it's implemented...)
+			if(%item.energy >= 30 || $EOTW::Time >= 12)
 				%item.tryPowerTransfer();
-			}
+		}
 
-			//Is it in Dirty Storage, where it might need to be removed?
-			if(PowerGroupDirtyStorage.isMember(%item))
+		else if(%item.energy > 0)
+		{
+			%item.tryPowerTransfer();
+		}
+
+		//Is it in Dirty Storage, where it might need to be removed?
+		if(PowerGroupDirtyStorage.isMember(%item))
+		{
+			if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
+				journalPower(%item, "IterateLoopCalled detected as member of DirtyStorage. need removal?");
+
+			//nowhere to move energy, or I'm empty and can't forward anthing more
+			if(%item.cableOutputs.getCount() == 0 || %item.energy <= 0)
 			{
 				if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
-					journalPower(%item, "SimSet::IterateLoopCalled detected as member of DirtyStorage. need removal?");
-
-				//nowhere to move energy, or I'm empty and can't forward anthing more
-				if(%item.cableOutputs.getCount() == 0 || %item.energy <= 0)
 				{
-					if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
+					if(%item.cableOutputs.getCount() == 0)
+						journalPower(%item, "EXIT: IterateLoopCalled no outputs");
+					else
+						journalPower(%item, "EXIT: IterateLoopCalled energy <= 0");
+				}
+
+				if(PowerGroupDirtyEnterStorage.isMember(%item))
+					PowerGroupDirtyEnterStorage.remove(%item);
+
+				PowerGroupDirtyExitStorage.add(%item);
+			}
+
+			//but I may need to wake up inputs, only if i have room
+
+			//I'm full; i can go to sleep if all of my outputs are full
+			if(%item.getDatablock().energyMaxBuffer - %item.energy <= 0)
+			{
+				if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
+					journalPower(%item, "IterateLoopCalled detected full. what about outputs?");
+
+				//Non-Storage objects are out of scope for determining sleep state
+				// (all nodes feeding machines/whatever stay awake)
+				%cant_forward = 1;
+				if(isObject(%g=%item.cableOutputs))
+					for(%i = 0; %i < %g.getCount(); %i++)
 					{
-						if(%item.cableOutputs.getCount() == 0)
-							journalPower(%item, "EXIT: SimSet::IterateLoopCalled no outputs");
-						else
-							journalPower(%item, "EXIT: SimSet::IterateLoopCalled energy <= 0");
+						%dst = %g.getObject(%i).powerTarget;
+						%dst_free = %dst.getDatablock().energyMaxBuffer - %dst.energy;
+						if(%dst_free > 0 || %dst.getDatablock().energyGroup !$= "Storage")
+						{
+							%cant_forward = 0;
+							break;
+						}
+					}
+
+				if(%cant_forward)
+				{
+					if($EOTW::powerDebug)
+					{
+						if(strpos(%item.getName(), "_journal") == 0)
+							journalPower(%item, "EXIT: IterateLoopCalled [set brown] no non-full outputs - energy on elem0 is: "@ %g.getObject(0).powerTarget.energy);
+
+						cancel(%item.colorSched);
+						%item.setColor(8);
 					}
 
 					if(PowerGroupDirtyEnterStorage.isMember(%item))
@@ -205,100 +263,25 @@ function SimSet::IterateLoopCalled(%obj, %start, %length)
 
 					PowerGroupDirtyExitStorage.add(%item);
 				}
+			}
 
-				//but I may need to wake up inputs, only if i have room
-
-				//I'm full; i can go to sleep if all of my outputs are full
-				if(%item.getDatablock().energyMaxBuffer - %item.energy <= 0)
+			//i have some room, so wake up non-empty input objects
+			else if(isObject(%g=%item.cableInputs))
+				for(%i = 0; %i < %g.getCount(); %i++)
 				{
-					if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
-						journalPower(%item, "SimSet::IterateLoopCalled detected full. what about outputs?");
-
-					//Non-Storage objects are out of scope for determining sleep state
-					// (all nodes feeding machines/whatever stay awake)
-					%cant_forward = 1;
-					if(isObject(%g=%item.cableOutputs))
-						for(%i = 0; %i < %g.getCount(); %i++)
-						{
-							%dst = %g.getObject(%i).powerTarget;
-							%dst_free = %dst.getDatablock().energyMaxBuffer - %dst.energy;
-							if(%dst_free > 0 || %dst.getDatablock().energyGroup !$= "Storage")
-							{
-								%cant_forward = 0;
-								break;
-							}
-						}
-
-					if(%cant_forward)
+					%src = %g.getObject(%i).powerSource;
+					if(%src.energy > 0 && %src.getDatablock().energyGroup $= "Storage")
 					{
-						if($EOTW::powerDebug)
-						{
-							if(strpos(%item.getName(), "_journal") == 0)
-								journalPower(%item, "EXIT: SimSet::IterateLoopCalled [set brown] no non-full outputs - energy on elem0 is: "@ %g.getObject(0).powerTarget.energy);
+						if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
+							journalPower(%item, "IterateLoopCalled Waking up input due to loss of energy: "@ %src.getName());
 
-							cancel(%item.colorSched);
-							%item.setColor(8);
-						}
+						if($EOTW::powerDebug && strpos(%src.getName(), "_journal") == 0)
+							journalPower(%src, "ENTER: IterateLoopCalled output "@ %item.getName() @" now has room and i'm not empty");
 
-						if(PowerGroupDirtyEnterStorage.isMember(%item))
-							PowerGroupDirtyEnterStorage.remove(%item);
-
-						PowerGroupDirtyExitStorage.add(%item);
+						PowerGroupDirtyEnterStorage.add(%src);
 					}
 				}
-
-				//i have some room, so wake up non-empty input objects
-				else if(isObject(%g=%item.cableInputs))
-					for(%i = 0; %i < %g.getCount(); %i++)
-					{
-						%src = %g.getObject(%i).powerSource;
-						if(%src.energy > 0 && %src.getDatablock().energyGroup $= "Storage")
-						{
-							if($EOTW::powerDebug && strpos(%item.getName(), "_journal") == 0)
-								journalPower(%item, "SimSet::IterateLoopCalled Waking up input due to loss of energy: "@ %src.getName());
-
-							if($EOTW::powerDebug && strpos(%src.getName(), "_journal") == 0)
-								journalPower(%src, "ENTER: SimSet::IterateLoopCalled output "@ %item.getName() @" now has room and i'm not empty");
-
-							PowerGroupDirtyEnterStorage.add(%src);
-						}
-					}
-			}
 		}
-	}
-}
-
-function SimObject::doPowerTransferFull(%obj)
-{
-	//Should be no more on this code
-
-	if (!isObject(%obj.powerSource) || !isObject(%obj.powerTarget) || %obj.powerTransfer <= 0)
-	{
-		if (isObject(%obj.parent))
-			%obj.parent.RemoveCableData();
-		else
-			%obj.delete();
-			
-		return;
-	}
-
-	return;
-	//TODO: OMIT BELOW...
-
-	%obj.powerTransfer = mCeil(%obj.powerTransfer);
-	
-	if (%obj.buffer > 0)
-	{
-		%transferAmount = getMin(%obj.buffer, %obj.powerTarget.getDatablock().energyMaxBuffer - %obj.powerTarget.energy);
-		%obj.powerTarget.changePower(%transferAmount);
-		%obj.buffer += (%transferAmount * -1);
-	}
-
-	if (%obj.buffer <= 0)
-	{
-		%transferAmount = getMin(%obj.powerSource.energy, %obj.powerTransfer);
-		%obj.powerSource.changePower(%transferAmount * -1);
-		%obj.buffer += (%transferAmount);
 	}
 }
 
