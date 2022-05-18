@@ -206,8 +206,11 @@ function Player::EOTW_MatterReactorInspectLoop(%player, %brick)
 
 function EOTW_MatterReactorLoop(%obj)
 {
-	if (!isObject(%craft = %obj.craftingProcess))
+	if(!isObject(%craft = %obj.craftingProcess))
+	{
+		%obj.power_simtime_block = getSimTime() + 10000 + mRound(getRandom() * 1000);
 		return;
+	}
 
 	%data = %obj.getDatablock();
 	
@@ -241,6 +244,7 @@ function EOTW_MatterReactorLoop(%obj)
 
 function EOTW_MatterReactorMatterUpdate(%obj)
 {
+	%obj.power_simtime_block = 0;
 	%data = %obj.getDatablock();
 	//Check to see if we can still process a running process, otherwise check to see if we can craft something.
 	if (isObject(%craftData = %obj.craftingProcess))

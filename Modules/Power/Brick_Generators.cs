@@ -234,21 +234,23 @@ function EOTW_SolarPanelLoop(%obj)
 	if($disableSolar == 1)
 		return;
 
-	if ($EOTW::Time < 12)
+	//generate in the day
+	if($EOTW::Time < 12)
 	{
 		%val = ($EOTW::Time / 12) * $pi;
 		%ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
 		%dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 500);
 		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType);
-		%hit = firstWord(%ray);
-		if((!isObject(%hit) || (%hit == %obj)) && !%obj.getUpBrick(0))
+		if((!%ray || !isObject(%hit=firstWord(%ray)) || (%hit == %obj)) && !%obj.getUpBrick(0))
 		{
-			%wattage = 10 * $EOTW::TimeBoost * $EOTW::solarBonus;
+			//New: sleep 75 ticks (3.75 sec at 20 ticks/sec) but produce 75x the power
+			%wattage = 10 * $EOTW::TimeBoost * $EOTW::solarBonus * 75;
 			%obj.ProcessTime += %wattage / $EOTW::PowerTickRate;
 
 			if (%obj.ProcessTime >= 1 && %obj.decayAmount < 15000)
 			{
 				%ProcessTimeChange = mFloor(%obj.ProcessTime);
+
 				%obj.ChangePower(%ProcessTimeChange);
 				%obj.ProcessTime -= %ProcessTimeChange;
 
@@ -259,6 +261,21 @@ function EOTW_SolarPanelLoop(%obj)
 					%obj.setShapeFX(2);
 			}
 		}
+	
+		//New: sleep 75 ticks (3.75 sec at 20 ticks/sec) but produce 75x the power
+		%obj.power_simtime_block = getSimTime() + 75 * (1000 / $EOTW::PowerTickRate) + mRound(getRandom() * 250);
+	}
+
+	//sleep for 30 seconds at night except last hour
+	else if($EOTW::Time <= 23)
+	{
+		%obj.power_simtime_block = getSimTime() + 30000 + mRound(getRandom() * 1000);
+	}
+
+	//sleep for 5 seconds in the pre-dawn hour
+	else
+	{
+		%obj.power_simtime_block = getSimTime() + 5000 + mRound(getRandom() * 1000);
 	}
 }
 

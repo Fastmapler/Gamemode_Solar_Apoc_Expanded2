@@ -272,15 +272,31 @@ function serverCmdClearRopes(%this)
 
 //registerOutputEvent("fxDTSBrick", "ropeClearAll");
 
+//Issue: RemoveCableData() deletes itself and modifies ropeGroups variable.
+//Fixed to not use variable.
 function fxDTSBrick::ropeClearAll(%this)
 {
+	%removeGroup = new SimSet();
+	%removeGroup.schedule(0, delete);
+
 	for(%i = 0; %i < getWordCount(%this.ropeGroups); %i++)
 	{
-		%g = getWord(%this.ropeGroups, %i);
-		
+		%g = getWord(%this.ropeGroups, %i);		
 		if(isObject(%g))
-			%g.RemoveCableData();
+			%removeGroup.add(%g);
+			//%g.RemoveCableData();
 	}
+
+	while(%removeGroup.getCount() > 0)
+	{
+		%g = %removeGroup.getObject(0);
+		%g.RemoveCableData();
+
+		if(isObject(%g))
+			%g.delete();
+	}
+
+	%removeGroup.delete();
 
 	%this.ropeGroups = "";
 }
@@ -289,18 +305,12 @@ function SimGroup::RemoveCableData(%this)
 {
 	if (%this.material !$= "")
 		$EOTW::Material[%this.bl_id, getField(%this.material, 0)] += getField(%this.material, 1);
-			
+
+	//TODO: transition to cableInputs and cableOutputs?
 	if (isObject(%cable = %this.cable))
 	{
 		if (isObject(%source = %cable.powerSource))
 		{
-			if(%source.isTransmission)
-			{
-				%source.transNextNode = "";
-				%source.transRate = 0;
-				%source.isTransmission = 0;
-			}
-
 			%newGroupList = "";
 			for (%i = 0; %i < getWordCount(%source.ropeGroups); %i++)
 			{
@@ -314,13 +324,6 @@ function SimGroup::RemoveCableData(%this)
 
 		if (isObject(%target = %cable.powerTarget))
 		{
-			if(%target.isTransmission)
-			{
-				%target.transPrevNode = "";
-				%target.transRate = 0;
-				%target.isTransmission = 0;
-			}
-
 			%newGroupList = "";
 			for (%i = 0; %i < getWordCount(%target.ropeGroups); %i++)
 			{
@@ -344,8 +347,8 @@ function SimGroup::RemoveCableData(%this)
 
 		%cable.delete();
 	}
-		
-		
+
+
 	%this.delete();
 }
 

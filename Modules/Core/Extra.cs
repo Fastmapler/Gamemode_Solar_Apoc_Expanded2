@@ -173,16 +173,17 @@ function RGBToHex(%rgb) {
 	return %hexstr;
 }
 
+//TODO: delete:
 function SimObject::doCall(%this, %method, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9)
 {
 	return call(%method, %this, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9);
 
-	for (%i = 0; %arg[%i] !$= ""; %i++)
-		%args = %args @ %arg[%i] @ ",";
+	//for (%i = 0; %arg[%i] !$= ""; %i++)
+	//	%args = %args @ %arg[%i] @ ",";
 		
-	%args = getSubStr(%args, 0, getMax(strLen(%args) - 1, 0));
+	//%args = getSubStr(%args, 0, getMax(strLen(%args) - 1, 0));
 	
-	eval(%this @ "." @ %method @ "(" @ %args @ ");");
+	//eval(%this @ "." @ %method @ "(" @ %args @ ");");
 }
 
 function hasWord(%str, %word)
@@ -239,11 +240,20 @@ function ServerCmdGetAllMats(%client)
 	}
 }
 
-function ServerCmdReloadCode(%client)
+function ServerCmdReloadCode(%client, %section)
 {
-	if (%client.isSuperAdmin)
+	if(%client.isSuperAdmin)
 	{
-		exec("add-ons/gamemode_solar_apoc_expanded2/server.cs");
+		if(%section $= "Power")
+		{
+			exec("add-ons/gamemode_solar_apoc_expanded2/Modules/Power/Power.cs");
+		}
+
+		else
+		{
+			exec("add-ons/gamemode_solar_apoc_expanded2/server.cs");
+		}
+
 		createuinametable();
 		transmitdatablocks();
 		commandtoall('missionstartphase3');
@@ -265,6 +275,28 @@ function ServerCmdDumpMatSpawnRates(%client)
 			}
 		}
 	}
+}
+
+function traceSecond()
+{
+	cancel($traceSecondSched);
+	echo("----traceSecond started");
+	$traceSecondStart = getSimTime();
+	$traceSecondSched = schedule(33, 0, traceSecondLoop);
+	trace(1);
+}
+
+function traceSecondLoop()
+{
+	if(getSimTime() - $traceSecondStart > 1000)
+	{
+		trace(0);
+		echo("----traceSecond ended");
+		return;
+	}
+
+	cancel($traceSecondSched);
+	$traceSecondSched = schedule(33, 0, traceSecondLoop);
 }
 
 function serverCmdDonate(%client,%receiver,%amt,%mat1,%mat2,%mat3,%mat4)
@@ -363,6 +395,7 @@ function periodicConsoleLogReset()
 	$EOTW::LogReset = schedule(1000 * 120, 0, "periodicConsoleLogReset");
 }
 
+//TODO: getMin, getMax (lol)
 function mMin(%a, %b)
 {
 	if (%a > %b)
@@ -378,8 +411,6 @@ function mMax(%a, %b)
 	else
 		return %a;
 }
-
-
 
 
 function serverCmdGullible(%cl)

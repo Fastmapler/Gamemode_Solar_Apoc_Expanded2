@@ -8,9 +8,9 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	uiName = "Water Pump";
 	energyGroup = "Machine";
 	energyMaxBuffer = 100;
-    energyWattage = 10;
+	//energyWattage = 10; //moved to method
 	loopFunc = "EOTW_WaterPumpLoop";
-    inspectFunc = "EOTW_WaterPumpInspectLoop";
+	inspectFunc = "EOTW_WaterPumpInspectLoop";
 	//iconName = "./Bricks/Icon_Generator";
 
     matterMaxBuffer = 128;
@@ -35,8 +35,8 @@ function Player::EOTW_WaterPumpInspectLoop(%player, %brick)
 	%data = %brick.getDatablock();
 	%printText = "<color:ffffff>";
 
-    %printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
-    for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
+	%printText = %printText @ (%brick.getPower() + 0) @ "/" @ %data.energyMaxBuffer @ " EU\n";
+	for (%i = 0; %i < %data.matterSlots["Output"]; %i++)
 	{
 		%matter = %brick.Matter["Output", %i];
 
@@ -54,19 +54,24 @@ function Player::EOTW_WaterPumpInspectLoop(%player, %brick)
 
 function EOTW_WaterPumpLoop(%obj)
 {
-    %data = %obj.getDatablock();
-    %costPerUnit = 20;
-	if (%obj.craftingPower >= %costPerUnit)
+	//Adjusted:
+	//1 water per 2 seconds
+
+	//Produce some water - then bar for 2 seconds
+
+	%costPerUnit = 20;
+	if(%obj.energy >= %costPerUnit)
 	{
 		%change = %obj.changeMatter("Water", 1, "Output");
-        %obj.craftingPower -= %change * %costPerUnit;
+		%obj.changePower(-%costPerUnit);
+
+		//sleep 1 second
+		%obj.power_simtime_block = getSimTime() + 2000;
+		return;
 	}
-    else
-    {
-        %change = mMin(mCeil(%data.energyWattage / $EOTW::PowerTickRate), %obj.getPower());
-        %obj.craftingPower += %change;
-        %obj.changePower(%change * -1);
-    }
+
+	//Sleep 6 seconds if there is no energy left
+	%obj.power_simtime_block = getSimTime() + 6000 + mRound(getRandom() * 1000);
 }
 
 datablock fxDTSBrickData(brickEOTWSteamEngineData)
