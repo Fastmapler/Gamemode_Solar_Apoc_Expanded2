@@ -10,7 +10,7 @@ exec("./Brick_Support.cs");
 if(!$EOTW::bricksDirty)
 	$EOTW::bricksDirty = 0;
 
-$EOTW::PowerTickRate = 10;
+$EOTW::PowerTickRate = 8;
 $EOTW::ObjectsPerLoop = 1; //temp 1 obj (not used, only in the cut code)
 
 //look to next 100 normal power nodes
@@ -381,7 +381,7 @@ function IterateLoopCalled(%item)
 							break;
 						}
 
-						if(%dst.getDatablock().energyGroup !$= "Storage")
+						if(%dst.getDatablock().energyGroup !$= "Storage" && %dst.getDatablock().energyGroup !$= "Transmission")
 							%nonstorage_outputs = 1;
 						
 					}
