@@ -10,7 +10,7 @@ exec("./Brick_Support.cs");
 if(!$EOTW::bricksDirty)
 	$EOTW::bricksDirty = 0;
 
-$EOTW::PowerTickRate = 8;
+$EOTW::PowerTickRate = 6;
 $EOTW::ObjectsPerLoop = 1; //temp 1 obj (not used, only in the cut code)
 
 //look to next 100 normal power nodes
@@ -366,8 +366,10 @@ function IterateLoopCalled(%item)
 
 				//Non-Storage objects are out of scope for determining sleep state
 				// (all nodes feeding machines/whatever stay awake)
-				%nonfull_outputs = 0;
-				%nonstorage_outputs = 0;
+
+				%present_nonfull_nodes = 0;
+				%present_nonstorage_nodes = 0;
+				%present_trans_nodes = 0;
 				if(isObject(%g=%item.cableOutputs))
 				{
 					for(%i = 0; %i < %g.getCount(); %i++)
@@ -375,21 +377,24 @@ function IterateLoopCalled(%item)
 						%dst = %g.getObject(%i).powerTarget;
 						%dst_free = %dst.getDatablock().energyMaxBuffer - %dst.energy;
 
+						%energyGroup = %dst.getDatablock().energyGroup;
 						if(%dst_free > 0)
 						{
-							%nonfull_outputs = 1;
+							%present_nonfull_nodes = 1;
 							break;
 						}
 
-						if(%dst.getDatablock().energyGroup !$= "Storage" && %dst.getDatablock().energyGroup !$= "Transmission")
-							%nonstorage_outputs = 1;
-						
+						if(%energyGroup !$= "Storage" && %energyGroup !$= "Transmission")
+							%present_nonstorage_nodes = 1;
+
+						if(%energyGroup $= "Transmission")
+							%present_trans_nodes = 1;
 					}
 				}
 
-				if(!%nonfull_outputs)
+				if(!%present_nonfull_nodes && !%present_trans_nodes)
 				{
-					if(%nonstorage_outputs)
+					if(%present_nonstorage_nodes)
 					{
 						//TODO: to be replaced by more efficient system of machines waking up storage inputs
 						//Temp fix is just sleep this node for 10 sec in case machines wake up
@@ -658,6 +663,10 @@ function fxDTSBrick__tryPowerTransfer(%obj)
 	%i2 = 0; //limit normal nodes
 	%last_was_transmission = 0;
 	%reached_nontransmission = 0;
+
+	//Stop chain if leaving a capacitor bank
+	%inCapacitorBank = 0;
+
 	for(%i = 0; %i < $EOTW::PowerNodeTransSkip; %i++)
 	{
 		%detected_transmission = 0;
@@ -710,7 +719,7 @@ function fxDTSBrick__tryPowerTransfer(%obj)
 				journalPower(%nextObj, "fxDTSBrick::tryPowerTransfer located transmission");
 		}
 
-		//object is full, set to brown and kill loop (but not transmission nodes)
+		//object is full, kill loop
 		//make sure transmission line doesn't think this is a failure (%reached_nontransmission)
 		else if(%nextObj.energy >= %nextObj.getDatablock().energyMaxBuffer)
 		{
@@ -726,12 +735,19 @@ function fxDTSBrick__tryPowerTransfer(%obj)
 			break;
 		}
 
+		if(%nextObj.getDatablock().energyMaxBuffer >= $EOTW::PowerNodePathCapLimit)
+			%inCapacitorBank = 1;
+
+		//Energy dropped below capacitor limit while in a cap. bank, so the chain breaks
+		else if(%inCapacitorBank)
+			break;
+
 		%chain.add(%nextObj);
 		%cableChain.add(%nextCable);
 
 		//Large capacitors are automatic break points
-		if(%nextObj.getDatablock().energyMaxBuffer > $EOTW::PowerNodePathCapLimit)
-			break;
+		//if(%nextObj.getDatablock().energyMaxBuffer > $EOTW::PowerNodePathCapLimit)
+		//	break;
 
 		//If just ended a transmission line, but current is not a transmission: this is a break point
 		if(%last_was_transmission && !%detected_transmission)
