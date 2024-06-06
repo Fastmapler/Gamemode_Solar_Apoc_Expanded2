@@ -1,3 +1,5 @@
+> # **This is the old outdated version of Solar Apoc, you can find a more recent version [here](https://github.com/Fastmapler/Gamemode_Solar_Apoc_Expanded2_Fixed).**
+
 # Gamemode_Solar_Apoc_Expanded2
 
 Welcome to the Apocalypse of Blockland, but this time it is cooler(er) B)
